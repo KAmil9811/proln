@@ -1,0 +1,233 @@
+﻿import React, { Component } from 'react';
+import { MDBDataTable } from 'mdbreact';
+import './MachineTable.css'
+
+
+export class MachineTable extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            table: {
+                columns: [],
+                rows: []
+            },
+        };
+    }
+
+
+
+    componentDidMount() {
+        var table2 = [];
+        fetch(`api/Machine/Return_All_Machines`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json.length);
+                console.log(json);
+
+                for (var i = 0; i < json.length; i++) {
+                    var deleted = '';
+                    if (json[i].stan === false) {
+                        deleted = 'Aktywna'
+                    }
+                    else {
+                        deleted = 'Usunięta'
+                    }
+                    table2.push({
+                        number: json[i].no,
+                        status: json[i].status,
+                        type: json[i].type,
+                        deleted: deleted,
+                        chstatus: <button type="button" className="status" id={i} onClick={
+                            (e) => {
+                                this.machineBroken(table2[e.target.id].number, table2[e.target.id].status)
+                            }}
+                        >Zmień status</button>,
+                        delete: <button className="delete1" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted )}}> Usuń/Przywróć  </button> 
+                    })
+                };
+                this.setState({
+                    table: {
+                        columns: [
+                            {
+                                label: 'Nr',
+                                field: 'number',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Rodzaj',
+                                field: 'type',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            {
+                                label: 'Status',
+                                field: 'status',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            {
+                                label: 'Zmień status',
+                                field: 'chstatus',
+                                width: 30
+                            },
+                            {
+                                label: 'Stan',
+                                field: 'deleted',
+                                width: 30
+                            },
+                            {
+                                label: 'Usuń',
+                                field: 'delete',
+                                width: 30
+                            }
+                        ],
+                        rows: table2
+                    }
+                });
+            })
+    };
+
+    machineBroken(id, status ) {
+        const receiver = {
+            user: {
+                login: sessionStorage.getItem('login')
+            },
+            machines: {
+                no: id,
+                status: status
+            }
+        }
+        console.log(receiver)
+
+        if (status === 'Ready') { //Zmieniamy na broken
+            fetch(`api/Machine/Change_Status_Machine`, {
+                method: "post",
+                body: JSON.stringify(receiver),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    return (json);
+                })
+                .then(json => {
+                    alert("Maszyna zepsuta!")
+                })
+                .then(json => {
+                    window.location.reload();
+                })
+        }
+        else if (status === 'InUse') { ///w użyciu 
+            alert("Maszyna w użyciu, nie można zmienić stanu")
+        }
+        else {
+            fetch(`api/Machine/Change_Status_Machine`, {
+                method: "post",
+                body: JSON.stringify(receiver),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    return (json);
+                })
+                .then(json => {
+                    alert("Naprawiono maszynę")
+                })
+                .then(json => {
+                    window.location.reload();
+                })
+        }
+    }
+
+    delete(id, deleted) {
+        const receiver = {
+            user: {
+                login: sessionStorage.getItem('login')
+            },
+            machines: {
+                no: id
+            }
+        }
+        console.log(receiver)
+
+        if (deleted === 'Aktywna') {
+            fetch(`api/Machine/Remove_Machine`, {
+                method: "post",
+                body: JSON.stringify(receiver),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    return (json);
+                })
+                .then(json => {
+                    alert("Usunięto maszyne")
+                })
+                .then(json => {
+                    window.location.reload();
+                })
+        }
+        else {
+            fetch(`api/Machine/Restore_Machine`, {
+                method: "post",
+                body: JSON.stringify(receiver),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    return (json);
+                })
+                .then(json => {
+                    alert("Aktywowano maszyne")
+                })
+                .then(json => {
+                    window.location.reload();
+                })
+        }
+
+
+    }
+
+    table() {
+        return (
+            <MDBDataTable
+              
+                bordered
+                small
+                data={this.state.table}
+            />
+        )
+    }
+
+    render() {
+        let xd = this.table();
+        return (
+
+            <div>
+                {xd}
+            </div>
+        )
+    }
+
+}

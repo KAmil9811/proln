@@ -1,0 +1,9 @@
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\bin\Debug\Inz_Base.exe.config
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\bin\Debug\Inz_Base.exe
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\bin\Debug\Inz_Base.pdb
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\obj\Debug\Inz_Base.csprojAssemblyReference.cache
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\obj\Debug\Inz_Base.Properties.Resources.resources
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\obj\Debug\Inz_Base.csproj.GenerateResource.cache
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\obj\Debug\Inz_Base.csproj.CoreCompileInputs.cache
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\obj\Debug\Inz_Base.exe
+C:\Users\micha\Desktop\inz\ProIn-2020\Backend\Inz_Base\Inz_Base\obj\Debug\Inz_Base.pdb
