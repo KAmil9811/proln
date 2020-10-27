@@ -26,5 +26,7 @@ namespace CGC.Models
         public string Sub_Shape { get; set; }
         public string Desk { get; set; }
         public int Amount { get; set; }
+
+        public string Error_Messege { get; set; }
     }
 }

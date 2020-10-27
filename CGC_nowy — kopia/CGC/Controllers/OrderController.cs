@@ -13,7 +13,7 @@ namespace CGC.Controllers
     [Route("api/[controller]")]
     public sealed class OrderController : Controller
     {
-        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Inżynierka\ProIn-2020\Backend\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
+        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\micha\Desktop\INZ V1\proln\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
         SqlConnection cnn = new SqlConnection(connetionString);
         private static OrderController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -203,6 +203,7 @@ namespace CGC.Controllers
 
             return count;
         }
+
         public int Item_To_Cut(Order order)
         {
             int count = 0;

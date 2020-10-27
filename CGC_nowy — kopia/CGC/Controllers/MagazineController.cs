@@ -13,7 +13,7 @@ namespace CGC.Controllers
     [Route("api/[controller]")]
     public sealed class MagazineController : Controller
     {
-        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Inżynierka\ProIn-2020\Backend\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
+        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\micha\Desktop\INZ V1\proln\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
         SqlConnection cnn = new SqlConnection(connetionString);
         private static MagazineController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -286,8 +286,8 @@ namespace CGC.Controllers
                         //SetOrderStan();
 
                         temp.Add(glass);
-                        return temp;
                     }
+                    return temp;
                 }
             }
             glass.Error_Messege = "User_no_exist";
@@ -301,50 +301,29 @@ namespace CGC.Controllers
             List<Glass> temp = new List<Glass>();
             User user = receiver.user;
             Glass glass = receiver.glass;
-            List<Glass_Id> glass_Id = receiver.glass_Ids;
 
-            foreach (Glass glasse in Getglass())
+            foreach(Glass_Id glass_Id in receiver.glass_Ids)
             {
-                foreach (Glass_Id glasstoEdit in glasse.Glass_info)
-                {
-                    foreach (Glass_Id glassEdit in glass_Id)
-                    {
-                        if (glasstoEdit.Id == glassEdit.Id)
-                        {
-                            if  (glasse.Color != glass.Color)
-                            {
-                                glasse.Color = glass.Color;
-                            }
-                            if (glasse.Type != glass.Type)
-                            {
-                                glasse.Type = glass.Type;
-                            }
-                            if (glasse.Width != glass.Width)
-                            {
-                                glasse.Width = glass.Width;
-                            }
-                            if (glasse.Hight != glass.Hight)
-                            {
-                                glasse.Hight = glass.Hight;
-                            }
-                            if (glasse.Length != glass.Length)
-                            {
-                                glasse.Length = glass.Length;
-                            }
-                            if (glasse.Desk != glass.Desk)
-                            {
-                                glasse.Desk = glass.Desk;
-                            }
-                            if (glasse.Owner != glass.Owner)
-                            {
-                                glasse.Owner = glass.Owner;
-                            }
-                        }
-                    }
-                }
+                string query = "UPDATE dbo.[Glass] SET Hight = @Hight Width = @Width Length = @Length Type = @Type Color = @Color Owner = @Owner Desk = @Desk WHERE Glass_Id = @Glass_Id;";
+                SqlCommand command = new SqlCommand(query, cnn);
 
+                command.Parameters.Add("@Hight", SqlDbType.Bit).Value = glass.Hight;
+                command.Parameters.Add("@Width", SqlDbType.Bit).Value = glass.Width;
+                command.Parameters.Add("@Length", SqlDbType.Bit).Value = glass.Length;
+                command.Parameters.Add("@Type", SqlDbType.Bit).Value = glass.Type;
+                command.Parameters.Add("@Color", SqlDbType.Bit).Value = glass.Color;
+                command.Parameters.Add("@Owner", SqlDbType.Bit).Value = glass.Owner;
+                command.Parameters.Add("@Desk", SqlDbType.Bit).Value = glass.Desk;
+
+                command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass_Id.Id;
+
+                cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
             }
-            return temp;
+
+        return temp;
         }
 
         //do dogadania z Frontem

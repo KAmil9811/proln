@@ -14,7 +14,7 @@ namespace CGC.Controllers
     [Route("api/[controller]")]
     public class MachineController : Controller
     {
-        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\Inżynierka\ProIn-2020\Backend\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
+        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\micha\Desktop\INZ V1\proln\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
         SqlConnection cnn = new SqlConnection(connetionString);
         private static MachineController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -151,13 +151,7 @@ namespace CGC.Controllers
         [HttpGet("Return_All_Machines")]
         public async Task<List<Machines>> Return_All_Machines()
         {
-            List<Machines> temp = new List<Machines>();
-
-            foreach (Machines machines in GetMachines())
-            {
-                temp.Add(machines);
-            }
-            return temp;
+            return GetMachines();
         }
 
         [HttpPost("Add_Machine")]
