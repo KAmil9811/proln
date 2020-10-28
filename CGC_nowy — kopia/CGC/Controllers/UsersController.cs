@@ -12,14 +12,24 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Data.SqlClient;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
     public sealed class UsersController : Controller
     {
-        public static string connetionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\micha\Desktop\INZ V1\proln\Inz_Base\Inz_Base\DataBaseInz.mdf;Integrated Security=True;Connect Timeout=30";
-        SqlConnection cnn = new SqlConnection(connetionString);
+        static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
+        {
+            Server = "projekt-inz.database.windows.net",
+            Database = "projekt-inz",
+            UserID = "Michal",
+            Password = "lemES98naw141",
+            //SslMode = MySqlSslMode.Required,
+        };
+
+       
+        SqlConnection cnn = new SqlConnection(builder.ConnectionString);
         private static UsersController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
 
@@ -214,7 +224,8 @@ namespace CGC.Controllers
             command.Dispose();
             cnn.Close();
             return temp;
-        }
+         
+}
 
         public void Insert_User_History(string Description, string Login)
         {
