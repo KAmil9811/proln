@@ -224,8 +224,8 @@ namespace CGC.Controllers
             command.Dispose();
             cnn.Close();
             return temp;
-         
-}
+
+        }
 
         public void Insert_User_History(string Description, string Login)
         {
