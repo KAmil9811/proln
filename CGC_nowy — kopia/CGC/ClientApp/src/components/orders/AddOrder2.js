@@ -259,14 +259,15 @@ export class AddOrderTwo extends Component {
                 </form>
                 <div className="form-group">
                         <button type="submit" className="then2" onClick={this.addItem}>Dodaj element</button>
-                        <button type="submit" className="then3" onClick={this.handleAddOrder}>Dodaj</button>
-                        <button type="submit" className="cancel_order3" onClick={this.cancelAdding}>Anuluj</button>
+                        
+                        <button type="submit" className="cancel_order3" onClick={this.cancelAdding}>Anuluj zlecenie</button>
                         <button type="submit" className="cancel_order2" onClick={this.goBack} >Cofnij</button>
                         
                     </div>
                 <div className="ordertable">
                     {table}
                 </div>
+                <button type="submit" className="then3" onClick={this.handleAddOrder}>Dodaj</button>
             </div>
         )
     }

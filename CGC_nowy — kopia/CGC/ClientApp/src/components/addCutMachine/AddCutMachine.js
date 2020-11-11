@@ -52,8 +52,8 @@ export class AddCutMachine extends Component {
 
     
 
-    cancel() {
-        this.props.history.push('machinewarehouse')
+    cancel = (event) => {
+        this.props.history.push('/machinewarehouse')
     }
 
     render() {        
