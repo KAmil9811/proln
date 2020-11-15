@@ -103,8 +103,8 @@ export class UsersTable extends Component {
                     table333: {
                         columns: [
                             {
-                                label: 'Id',
-                                field: 'id',
+                                label: 'Login',
+                                field: 'login',
                                 sort: 'asc',
                                 width: 150
                             },
