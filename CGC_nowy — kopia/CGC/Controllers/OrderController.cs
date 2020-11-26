@@ -437,9 +437,39 @@ namespace CGC.Controllers
                         if (ord.Id_Order == order.Id_Order)
                         {
                             ord.Deadline = order.Deadline;
-                            ord.items = order.items;
                             ord.Owner = order.Owner;
                             ord.Priority = order.Priority;
+
+                            ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
+                            usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                        }
+                    }
+                }
+            }
+            order.Error_Messege = "User_not_found";
+            temp.Add(order);
+            return temp;
+        }
+
+        [HttpPost("Edit_Order_Items")]
+        public async Task<List<Order>> Edit_Order_Items([FromBody] Receiver receiver)
+        {
+            List<Order> temp = new List<Order>();
+
+            
+            Order order = receiver.order;
+            User user = receiver.user;
+            List<Item> items = receiver.items;
+
+            foreach (User usere in usersController.GetUsers())
+            {
+                if (usere.Login == user.Login)
+                {
+                    foreach (Order ord in orders)
+                    {
+                        if (ord.Id_Order == order.Id_Order)
+                        {
+                            ord.items = items;
 
                             ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
                             usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });

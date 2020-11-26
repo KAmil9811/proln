@@ -193,6 +193,7 @@ namespace CGC.Controllers
             }
             return false;
         }
+
         public List<User> GetUsers()
         {
             List<User> temp = new List<User>();
@@ -855,6 +856,14 @@ namespace CGC.Controllers
             if (check == true)
             {
                 user.Error_Messege = "Email_taken";
+                temp.Add(user);
+                return temp;
+            }
+
+            check = Is_Email_Correct(user.Email);
+            if(check == false)
+            {
+                user.Error_Messege = "Wrong_email";
                 temp.Add(user);
                 return temp;
             }
