@@ -309,15 +309,16 @@ namespace CGC.Controllers
         [HttpPost("Edit_Glass")]
         public async Task<List<Glass>> Edit_Glass([FromBody] Receiver receiver)
         {
-            List<Glass> temp = new List<Glass>();
+            List<Glass> temp = new List<Glass>(); //breakpoint
             User user = receiver.user;
             Glass glass = receiver.glass;
+            glass.Glass_info = receiver.glass_Ids;
 
             foreach(User usere in usersController.GetUsers())
             {
                 if(user.Login == usere.Login)
                 {
-                    foreach (Glass_Id glass_Id in receiver.glass_Ids)
+                    foreach (Glass_Id glass_Id in glass.Glass_info)
                     {
                         string query = "UPDATE dbo.[Glass] SET Hight = @Hight Width = @Width Length = @Length Type = @Type Color = @Color Owner = @Owner Desk = @Desk WHERE Glass_Id = @Glass_Id;";
                         SqlCommand command = new SqlCommand(query, cnn);

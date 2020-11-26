@@ -363,7 +363,7 @@ namespace CGC.Controllers
                         SqlCommand command;
                         foreach (Item item in order.items)
                         {
-                            query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status, Shape, Sub_Shape,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Shape, @Sub_Shape, @Desk, @Order_id)";
+                            query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id)";
                             command = new SqlCommand(query, cnn);
 
                             command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
@@ -373,10 +373,8 @@ namespace CGC.Controllers
                             command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
                             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
                             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
-                            command.Parameters.Add("@Shape", SqlDbType.VarChar, 40).Value = item.Shape;
-                            command.Parameters.Add("@Sub_Shape", SqlDbType.VarChar, 40).Value = "";
                             command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-                            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = item.Order_id;
+                            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
                             cnn.Open();
                             command.ExecuteNonQuery();
@@ -423,7 +421,7 @@ namespace CGC.Controllers
         [HttpPost("Edit_Order")]
         public async Task<List<Order>> Edit_Order([FromBody] Receiver receiver)
         {
-            List<Order> temp = new List<Order>();
+            List<Order> temp = new List<Order>(); //breakpoint
 
             Order order = receiver.order;
             User user = receiver.user;
@@ -432,7 +430,7 @@ namespace CGC.Controllers
             {
                 if (usere.Login == user.Login)
                 {
-                    foreach (Order ord in orders)
+                    foreach (Order ord in GetOrders())
                     {
                         if (ord.Id_Order == order.Id_Order)
                         {
@@ -464,7 +462,7 @@ namespace CGC.Controllers
         [HttpPost("Edit_Order_Items")]
         public async Task<List<Order>> Edit_Order_Items([FromBody] Receiver receiver)
         {
-            List<Order> temp = new List<Order>();
+            List<Order> temp = new List<Order>(); //breakpoint
      
             Order order = receiver.order;
             User user = receiver.user;

@@ -20,7 +20,7 @@ export class EditOrder extends Component {
                 id_order: this.refs.deadline.value,
             },
             user: {
-                login: sessionStorage.getItem('login')
+                login: sessionStorage.getItem('login'),
             }
         }
 
