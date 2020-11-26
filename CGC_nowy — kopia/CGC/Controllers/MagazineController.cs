@@ -313,28 +313,38 @@ namespace CGC.Controllers
             User user = receiver.user;
             Glass glass = receiver.glass;
 
-            foreach(Glass_Id glass_Id in receiver.glass_Ids)
+            foreach(User usere in usersController.GetUsers())
             {
-                string query = "UPDATE dbo.[Glass] SET Hight = @Hight Width = @Width Length = @Length Type = @Type Color = @Color Owner = @Owner Desk = @Desk WHERE Glass_Id = @Glass_Id;";
-                SqlCommand command = new SqlCommand(query, cnn);
+                if(user.Login == usere.Login)
+                {
+                    foreach (Glass_Id glass_Id in receiver.glass_Ids)
+                    {
+                        string query = "UPDATE dbo.[Glass] SET Hight = @Hight Width = @Width Length = @Length Type = @Type Color = @Color Owner = @Owner Desk = @Desk WHERE Glass_Id = @Glass_Id;";
+                        SqlCommand command = new SqlCommand(query, cnn);
 
-                command.Parameters.Add("@Hight", SqlDbType.Bit).Value = glass.Hight;
-                command.Parameters.Add("@Width", SqlDbType.Bit).Value = glass.Width;
-                command.Parameters.Add("@Length", SqlDbType.Bit).Value = glass.Length;
-                command.Parameters.Add("@Type", SqlDbType.Bit).Value = glass.Type;
-                command.Parameters.Add("@Color", SqlDbType.Bit).Value = glass.Color;
-                command.Parameters.Add("@Owner", SqlDbType.Bit).Value = glass.Owner;
-                command.Parameters.Add("@Desk", SqlDbType.Bit).Value = glass.Desk;
+                        command.Parameters.Add("@Hight", SqlDbType.Decimal).Value = glass.Hight;
+                        command.Parameters.Add("@Width", SqlDbType.Decimal).Value = glass.Width;
+                        command.Parameters.Add("@Length", SqlDbType.Decimal).Value = glass.Length;
+                        command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
+                        command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
+                        command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
+                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
 
-                command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass_Id.Id;
+                        command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass_Id.Id;
 
-                cnn.Open();
-                command.ExecuteNonQuery();
-                command.Dispose();
-                cnn.Close();
+                        cnn.Open();
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        cnn.Close();
+                    }
+
+                    return temp;
+                }
             }
+            glass.Error_Messege = "Zły login";
+            temp.Add(glass);
 
-        return temp;
+            return temp;
         }
 
         //do dogadania z Frontem

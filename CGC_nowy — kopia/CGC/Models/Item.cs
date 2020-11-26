@@ -23,7 +23,7 @@ namespace CGC.Models
         public int Id { get; set; }
         public string Status { get; set; }
         public string Shape { get; set; }
-        public string Sub_Shape { get; set; }
+        public string Order_id { get; set; }
         public string Desk { get; set; }
         public int Amount { get; set; }
 
