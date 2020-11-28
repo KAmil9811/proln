@@ -10,14 +10,32 @@ export class EditOrder extends Component {
         }
     }
 
+    handleEdit = (event) => {
+        event.preventDefault();
+        const receiver = {
+            order: {
+                deadline: this.refs.deadline.value,
+                owner: this.refs.klient.value,
+                priority: sessionStorage.getItem('priority'),
+                id_order: sessionStorage.getItem('orderId'),
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            }
+        }
+
+        console.log(receiver);
+    }
+
+
     handleEditOrder = (event) => {
         event.preventDefault();
         const receiver = {
             order: {
-                deadline: sessionStorage.getItem('orderId'),
+                deadline: this.refs.deadline.value,
                 owner: this.refs.klient.value,
                 priority: sessionStorage.getItem('priority'),
-                id_order: this.refs.deadline.value,
+                id_order: sessionStorage.getItem('orderId'),
             },
             user: {
                 login: sessionStorage.getItem('login'),
@@ -39,7 +57,7 @@ export class EditOrder extends Component {
                 return (json)
             })
         //this.props.history.push('/oneorder');    
-        // this.props.history.push('/oneorder');
+      this.props.history.push('/oneorder');
     }
     cancelEditOrder = (event) => {
         //dane z cache usuwają się przy wyjściu ze zlecenia
@@ -75,7 +93,7 @@ export class EditOrder extends Component {
                     <div className="form-group">
                         <button type="submit" className="cancel_order_e" onClick={this.cancelEditOrder}>Anuluj</button>
                         <button type="submit" className="confirm_order_e" onClick={this.handleEditOrder}>Zastosuj zmiany</button>
-
+                        <button type="submit" className="confirm_order_e" onClick={this.handleEdit}>asdasdasdad</button>
                     </div>
 
                 </form>

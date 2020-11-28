@@ -434,22 +434,29 @@ namespace CGC.Controllers
                     {
                         if (ord.Id_Order == order.Id_Order)
                         {
-                            string query = "UPDATE dbo.[Glass] SET Deadline = @Deadline Owner = @Owner Priority = @Priority WHERE Id_Order = @Id_Order;";
-                            SqlCommand command = new SqlCommand(query, cnn);
+                            try
+                            {
+                                string query = "UPDATE dbo.[Order] SET Deadline = @Deadline, Owner = @Owner, Priority = @Priority WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                            command.Parameters.Add("@Deadline", SqlDbType.VarChar,40).Value = order.Deadline;
-                            command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
-                            command.Parameters.Add("@Priority", SqlDbType.Decimal).Value = order.Priority;
+                                command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
+                                command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
+                                command.Parameters.Add("@Priority", SqlDbType.Decimal).Value = order.Priority;
 
-                            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
-                            cnn.Open();
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-                            cnn.Close();
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+                            }
+                            catch(SqlException e)
+                            {
+                                Console.WriteLine(e);
+                            }
 
-                            ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
-                            usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                            //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
+                            //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
                         }
                     }
                 }
@@ -466,7 +473,7 @@ namespace CGC.Controllers
      
             Order order = receiver.order;
             User user = receiver.user;
-            List<Item> items = receiver.items;
+            Item items = receiver.item;
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -474,27 +481,36 @@ namespace CGC.Controllers
                 {
                     foreach (Item item in GetItems(order))
                     {
-                        string query = "UPDATE dbo.[Glass] SET Thickness = @Thickness Length = @Length Width = @Width Type = @Type Color = @Color Status = @Status Desk = @Desk Amount = @Amount  WHERE Id = @Id;";
-                        SqlCommand command = new SqlCommand(query, cnn);
+                        if(item.Id == items.Id)
+                        {
+                            try
+                            {
+                                string query = "UPDATE dbo.[Item] SET Height = @Height, Lenght = @Lenght, Weight = @Weight, Glass_Type = @Glass_Type, Color = @Color, Status = @Status, Desk = @Desk WHERE Id = @Id;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                        command.Parameters.Add("@Thickness", SqlDbType.Decimal).Value = item.Thickness;
-                        command.Parameters.Add("@Length", SqlDbType.Decimal).Value = item.Length;
-                        command.Parameters.Add("@Width", SqlDbType.Decimal).Value = item.Width;
-                        command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = item.Type;
-                        command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
-                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = item.Status;
-                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = item.Desk;
-                        command.Parameters.Add("@Amount", SqlDbType.Decimal, 40).Value = item.Desk;
+                                command.Parameters.Add("@Height", SqlDbType.Decimal).Value = items.Thickness;
+                                command.Parameters.Add("@Lenght", SqlDbType.Decimal).Value = items.Length;
+                                command.Parameters.Add("@Weight", SqlDbType.Decimal).Value = items.Width;
+                                command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = items.Type;
+                                command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = items.Color;
+                                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = items.Status;
+                                command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = items.Desk;
 
-                        command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
+                                command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = items.Id;
 
-                        cnn.Open();
-                        command.ExecuteNonQuery();
-                        command.Dispose();
-                        cnn.Close();
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
 
-                        //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
-                        //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                                //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
+                                //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                            }
+                            catch (SqlException e)
+                            {
+                                Console.WriteLine(e);
+                            }
+                        }
                     }
                 }
             }

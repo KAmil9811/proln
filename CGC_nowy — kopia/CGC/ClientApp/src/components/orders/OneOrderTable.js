@@ -41,8 +41,24 @@ export class OneOrderTable extends Component {
                         thickness: json[i].thickness,
                         color: json[i].color,
                         type: json[i].type,
-                        id: json[i].id,
+                        ids: json[i].id,
                         status: json[i].status,
+                        desk: json[i].desk,
+                        more: <Link to="/edit_order_item"><button className="details3" id={i}
+                            onClick={
+                                (e) => {
+                                    /* console.log(table2[e.target.id].items);*/
+                                    sessionStorage.setItem('thickness', table2[e.target.id].thickness);
+                                    sessionStorage.setItem('length', table2[e.target.id].length);
+                                    sessionStorage.setItem('width', table2[e.target.id].width);
+                                    sessionStorage.setItem('color', table2[e.target.id].color);
+                                    sessionStorage.setItem('type', table2[e.target.id].type);
+                                    sessionStorage.setItem('status', table2[e.target.id].status);
+                                    sessionStorage.setItem('desk', table2[e.target.id].desk);
+                                    sessionStorage.setItem('itemId', table2[e.target.id].ids);
+                                }
+                            }>Edytuj szkło</button></Link>
+                            
                     })
                 };
                 this.setState({
@@ -80,13 +96,19 @@ export class OneOrderTable extends Component {
                             },
                             {
                                 label: 'Id',
-                                field: 'id',
+                                field: 'ids',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
                                 label: 'Status',
                                 field: 'status',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Edytuj',
+                                field: 'more',
                                 sort: 'asc',
                                 width: 30
                             },

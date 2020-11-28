@@ -243,6 +243,15 @@ namespace CGC.Controllers
                     temp.Add(glass);
                 }
             }
+
+            foreach(Glass tmp in temp)
+            {
+                foreach(Glass_Id glass_Id in tmp.Glass_info)
+                {
+                    tmp.Glass_id.Add(glass_Id.Id);
+                }
+            }
+
             return temp;
         }
 
@@ -312,15 +321,15 @@ namespace CGC.Controllers
             List<Glass> temp = new List<Glass>(); //breakpoint
             User user = receiver.user;
             Glass glass = receiver.glass;
-            glass.Glass_info = receiver.glass_Ids;
+            glass.Glass_id = receiver.glass.Glass_id;
 
             foreach(User usere in usersController.GetUsers())
             {
                 if(user.Login == usere.Login)
                 {
-                    foreach (Glass_Id glass_Id in glass.Glass_info)
+                    foreach (int glass_Id in glass.Glass_id)
                     {
-                        string query = "UPDATE dbo.[Glass] SET Hight = @Hight Width = @Width Length = @Length Type = @Type Color = @Color Owner = @Owner Desk = @Desk WHERE Glass_Id = @Glass_Id;";
+                        string query = "UPDATE dbo.[Glass] SET Hight = @Hight, Width = @Width, Length = @Length, Type = @Type, Color = @Color, Owner = @Owner, Desk = @Desk WHERE Glass_Id = @Glass_Id;";
                         SqlCommand command = new SqlCommand(query, cnn);
 
                         command.Parameters.Add("@Hight", SqlDbType.Decimal).Value = glass.Hight;
@@ -331,7 +340,7 @@ namespace CGC.Controllers
                         command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
                         command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
 
-                        command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass_Id.Id;
+                        command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass_Id;
 
                         cnn.Open();
                         command.ExecuteNonQuery();

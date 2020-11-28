@@ -20,6 +20,7 @@ export class GlassTable extends Component {
 
     componentDidMount() {
         var table2 = [];       
+        var tableIds = [];
         fetch(`api/Magazine/Return_All_Glass`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ export class GlassTable extends Component {
                                         sessionStorage.setItem('amount', json[e.target.id].glass_info.length);
                                         sessionStorage.setItem('owner', json[e.target.id].owner);
                                         sessionStorage.setItem('desk', json[e.target.id].desk);
-                                        sessionStorage.setItem('id', json[e.target.id].glass_info.id);
+                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_id));
                                     }
                                 }>Edytuj</button>
                             </Link>
@@ -97,11 +98,13 @@ export class GlassTable extends Component {
 
                 for (var k = 0; k < table2.length; k++) {
                     var amount = json[k].glass_info.length;
-                    console.log(amount)
+                    //console.log(amount)
                     for (var j = 0; j < amount; j++) {
                         table2[k].id = table2[k].id + json[k].glass_info[j].id + ', '
-                    }
+                    };
                 }
+
+                
                 this.setState({
                     table: {
                         columns: [

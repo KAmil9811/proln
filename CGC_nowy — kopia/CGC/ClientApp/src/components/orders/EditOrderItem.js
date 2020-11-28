@@ -1,8 +1,8 @@
 ﻿import React, { Component } from "react";
-import './GlassEdit.css'
+import './EditOrderItem.css'
 
-export class GlassEdit extends Component {
-    displayName = GlassEdit.name;
+export class EditOrderItem extends Component {
+    displayName = EditOrderItem.name;
     constructor(props) {
         super(props);
         this.state = {
@@ -12,29 +12,30 @@ export class GlassEdit extends Component {
     
 
 
-    handleGlassEdit = (event) => {
+    handleItemEdit = (event) => {
         event.preventDefault();
         const receiver = {
-            glass: {
+            item: {
                 type: this.refs.type.value,
-                hight: this.refs.thickness.value,
                 width: this.refs.width.value,
                 length: this.refs.length.value,
                 color: this.refs.color.value,
-                owner: this.refs.owner.value,
                 desk: sessionStorage.getItem('desk'),
-                glass_Id: JSON.parse(sessionStorage.getItem('id')),
+                status: this.refs.status.value,
+                thickness: this.refs.thickness.value,
+                id: sessionStorage.getItem('itemId')
             },
-            
-                  
-            
             user: {
                 login: sessionStorage.getItem('login')
+            },
+            order:
+            {
+                id_order: sessionStorage.getItem('orderId')
             }
         }
 
 
-        fetch(`api/Magazine/Edit_Glass`, {
+        fetch(`api/Order/Edit_Order_Items`, {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
@@ -47,27 +48,28 @@ export class GlassEdit extends Component {
                 console.log(json)
                 return (json)
             })
-        this.props.history.push('/glasswarehouse');
+        //this.props.history.push('/one_order');
 
         console.log(receiver)
     }
 
-    cancelGlassEdit = (event) => {
+    cancelItemEdit = (event) => {
         sessionStorage.removeItem('length');
         sessionStorage.removeItem('width');
         sessionStorage.removeItem('thickness');
         sessionStorage.removeItem('color');
         sessionStorage.removeItem('type');
-        sessionStorage.removeItem('amount');
-        sessionStorage.removeItem('owner');
-        this.props.history.push('/glasswarehouse');
+        sessionStorage.removeItem('status');
+        sessionStorage.removeItem('desk');
+        sessionStorage.removeItem('itemId');
+        this.props.history.push('/one_order');
     }
     render() {
         return (
             <div className="userChange">
                 <form>
                     <div className="form-group">
-                        <h2>Edycja szkła</h2>
+                        <h2>Edycja element</h2>
                         <label>Długość</label>
                         <input
                             type="number"
@@ -123,23 +125,22 @@ export class GlassEdit extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Właściciel</label>
+                        <label>Status</label>
                         <input
                             type="text"
                             className="form-control"
-                            id="inputOwner"
-                            placeholder={sessionStorage.getItem('owner')}
-                            defaultValue={sessionStorage.getItem('owner')}
-                            ref="owner"
+                            id="inputStatus"
+                            placeholder={sessionStorage.getItem('status')}
+                            defaultValue={sessionStorage.getItem('status')}
+                            ref="status"
                         />
                     </div>
-                    
-                    <div className="form-group">
-                        <button type="submit" className="cancel_glass_e" onClick={this.cancelGlassEdit}>Anuluj</button>
-                        <button type="submit" className="confirm_glass_e" onClick={this.handleGlassEdit}>Zastosuj zmiany</button>
                   
-                    </div>
 
+                    <div className="form-group">
+                        <button type="submit" className="cancel_glass_e" onClick={this.cancelItemEdit}>Anuluj</button>
+                        <button type="submit" className="confirm_glass_e" onClick={this.handleItemEdit}>Zastosuj zmiany</button>
+                    </div>
                 </form>
             </div>
         );
