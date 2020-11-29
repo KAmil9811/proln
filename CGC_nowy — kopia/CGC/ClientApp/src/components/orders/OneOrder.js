@@ -38,6 +38,9 @@ export class OneOrder extends Component {
                         <p>Zleceniodawca: {sessionStorage.getItem('klient')}</p>
                         <p>Deadline: {sessionStorage.getItem('deadline')}</p>
                         </div>
+                        
+
+
                         <div className="oneordertable">
                             <OneOrderTable />
                     </div>

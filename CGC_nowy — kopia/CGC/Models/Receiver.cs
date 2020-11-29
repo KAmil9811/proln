@@ -9,6 +9,7 @@ namespace CGC.Models
         public Order order { get; set; }
         public Glass glass { get; set; }
         public Machines machines { get; set; }
+        public Product product { get; set; }
         public List<Item> items = new List<Item>();
         public List<Glass_Id> glass_Ids = new List<Glass_Id>();
         public string type { get; set; }

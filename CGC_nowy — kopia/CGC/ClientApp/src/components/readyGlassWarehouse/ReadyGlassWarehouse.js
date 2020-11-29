@@ -46,7 +46,7 @@ export class ReadyGlassWarehouse extends Component {
                 <div className="conteiner_rgw">
 
                         <div className= "tablerdy">
-                            
+                            <ReadyGlassTable />
                         </div>
                 </div>
             </div>

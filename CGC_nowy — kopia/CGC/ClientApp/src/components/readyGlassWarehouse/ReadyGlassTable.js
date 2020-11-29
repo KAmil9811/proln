@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 import './ReadyGlassTable.css'
+import { Link } from 'react-router-dom';
 
 
 export class ReadyGlassTable extends Component {
@@ -11,6 +12,7 @@ export class ReadyGlassTable extends Component {
                 columns: [],
                 rows: []
             },
+            ids:'',
         };
     }
 
@@ -18,7 +20,8 @@ export class ReadyGlassTable extends Component {
 
     componentDidMount() {
         var table2 = [];
-        fetch(`api/Magazine/Return_All_Glass`, {
+        var tableIds = [];
+        fetch(`api/Product/Get_Products`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -29,88 +32,42 @@ export class ReadyGlassTable extends Component {
                 console.log(json.length);
                 console.log(json);
                 for (var i = 0; i < json.length; i++) {
+                    var deleted = '';
+                    if (json[i].deleted === false) {
+                        deleted === 'Send' || 'In magazine' ||'Send to magazine'
+                    }
+                    else {
+                        deleted = 'Usunięty'
+                    }
                     table2.push({
-                        length: json[i].length,
-                        width: json[i].width,
-                        thickness: json[i].hight,
-                        color: json[i].color,
+                        id: json[i].id,
+                        id_item: json[i].id_item,
                         owner: json[i].owner,
-                        type: json[i].type,
-                        amount: json[i].glass_info.length,
-                        id: '',
-                        action: <button className="delate1" id={i} onClick={
-                            (e) => {
-                                e.preventDefault();
-                                console.log(json[e.target.id].glass_info.length)
-                                var amount = prompt("Podaj ilość sztuk do usunięcia z przedziału od 1 do " + json[e.target.id].glass_info.length);
-                                var amount2 = parseInt(amount)
-                                if (amount === null) {
-                                    return;
-                                }
-                                else if (isNaN(amount2)) {
-                                    alert("Proszę wprowadzić liczbę!");
-                                    console.log(amount2)
-                                }
-                                else if (amount2 > json[e.target.id].glass_info.length) {
-                                    alert("Wprowadź liczbę z odpowiedniego przedziału!")
-                                }
-                                    else { console.log(amount2) }
-                            }
-                        }>Usuń</button>
+                        status: json[i].status,
+                        desk: json[i].desk,
+                        edit:
+                            <Link to="/product_edit"><button className="delete1" id={i}
+                                onClick={
+                                    (e) => {
+                                        //console.log(e.target.id)
+             
+                                        sessionStorage.setItem('owner', json[e.target.id].owner);
+                                        sessionStorage.setItem('status', json[e.target.id].status);
+                                        sessionStorage.setItem('desk', json[e.target.id].desk);
+                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_id));
+                                    }
+                                }>Edytuj</button>
+                            </Link>,
+                        del: <button className="delete" id={i} onClick={(e) => { this.delete(table2[e.target.id].id, table2[e.target.id].status) }}> Usuń  </button> 
+     
+                           
                     })
                 };
-                for (var k = 0; k < table2.length; k++) {
-                    var amount = json[k].glass_info.length;
-                    console.log(amount)
-                    for (var j = 0; j < amount; j++) {
-                        table2[k].id = table2[k].id + json[k].glass_info[j].id + ', '
-                    }
-                }
                 this.setState({
                     table: {
                         columns: [
-                            {
-                                label: 'Długość',
-                                field: 'length',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Szerokość',
-                                field: 'width',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Grubość',
-                                field: 'thickness',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Kolor',
-                                field: 'color',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Rodzaj',
-                                field: 'type',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Właściciel',
-                                field: 'owner',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Ilość',
-                                field: 'amount',
-                                sort: 'asc',
-                                width: 150
-                            },
+                            
+                         
                             {
                                 label: 'ID',
                                 field: 'id',
@@ -118,8 +75,41 @@ export class ReadyGlassTable extends Component {
                                 width: 150
                             },
                             {
+                                label: 'ID Item',
+                                field: 'id_item',
+                                sort: 'asc',
+                                width: 150
+                            },
+                          
+                            {
+                                label: 'Właściciel',
+                                field: 'owner',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            {
+                                label: 'Półka',
+                                field: 'desk',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            {
+                                label: 'Status_product',
+                                field: 'status',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            
+                           
+                            {
+                                label: 'Edytuj',
+                                field: 'edit',
+                                sort: 'asc',
+                                width: 150
+                            },
+                            {
                                 label: 'Usuń',
-                                field: 'action',
+                                field: 'del',
                                 sort: 'asc',
                                 width: 150
                             }
@@ -139,6 +129,44 @@ export class ReadyGlassTable extends Component {
                 data={this.state.table}
             />
         )
+    }
+    delete(product, deleted) {
+        const receiver = {
+            product: {
+                id: product,
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            }
+        }
+        //console.log(receiver)
+
+        if (deleted === 'Send' || 'In magazine' || 'Send to magazine') {
+            fetch(`api/Product/Delete_Product`, {
+                method: "post",
+                body: JSON.stringify(receiver),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+                .then(res => res.json())
+                .then(json => {
+                    console.log(json)
+                    return (json);
+                })
+                .then(json => {
+                    alert("Usunięto produkt")
+                })
+                .then(json => {
+                    window.location.reload();
+                })
+        }
+        else {
+            alert('Nie możesz usunąć tego przedmiotu!')
+        }
+
+
     }
 
     render() {
