@@ -96,9 +96,6 @@ export class Login extends Component {
                     <button type="submit" className="log_in" onClick={this.handleLoging} >Zaloguj</button>
                     <button className="reset_password" onClick={this.resetPassword1} >Zresetuj hasło</button>
                    </form>
-                    
-                    
-                    
             </div>
         );
     }

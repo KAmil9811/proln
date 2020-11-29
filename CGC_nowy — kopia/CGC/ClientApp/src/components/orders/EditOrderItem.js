@@ -1,12 +1,13 @@
 ﻿import React, { Component } from "react";
-import './EditOrderItem.css'
+import './EditOrderItem.css';
+import { Link } from 'react-router-dom';
 
 export class EditOrderItem extends Component {
     displayName = EditOrderItem.name;
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
+            value: sessionStorage.getItem('status')
         }
     }
     
@@ -21,7 +22,7 @@ export class EditOrderItem extends Component {
                 length: this.refs.length.value,
                 color: this.refs.color.value,
                 desk: sessionStorage.getItem('desk'),
-                status: this.refs.status.value,
+                status: this.state.value,
                 thickness: this.refs.thickness.value,
                 id: sessionStorage.getItem('itemId')
             },
@@ -48,9 +49,12 @@ export class EditOrderItem extends Component {
                 console.log(json)
                 return (json)
             })
-        //this.props.history.push('/one_order');
+            .then(json => {
+                this.props.history.push('/oneorder');
+            })   
+        
 
-        console.log(receiver)
+       // console.log(receiver)
     }
 
     cancelItemEdit = (event) => {
@@ -62,14 +66,14 @@ export class EditOrderItem extends Component {
         sessionStorage.removeItem('status');
         sessionStorage.removeItem('desk');
         sessionStorage.removeItem('itemId');
-        this.props.history.push('/one_order');
+        this.props.history.push('/oneorder');
     }
     render() {
         return (
             <div className="userChange">
                 <form>
                     <div className="form-group">
-                        <h2>Edycja element</h2>
+                        <h2>Edycja elementu</h2>
                         <label>Długość</label>
                         <input
                             type="number"
@@ -125,21 +129,25 @@ export class EditOrderItem extends Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Status</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputStatus"
-                            placeholder={sessionStorage.getItem('status')}
-                            defaultValue={sessionStorage.getItem('status')}
-                            ref="status"
-                        />
+
+
+                        <label>Status:</label><br />
+                        <select onChange={(e) => {
+                            this.setState({ value: e.target.value });
+                            console.log(this.state)
+                        }} >
+                            <option value={sessionStorage.getItem('status')}>...</option>
+                            <option value="awaiting">Oczekujące</option>
+                            <option value="ready">Gotowe</option>
+                            <option value="cut">W trakcie</option>
+                            <option value="deleted">Usunięte</option>
+                        </select>
                     </div>
                   
 
                     <div className="form-group">
                         <button type="submit" className="cancel_glass_e" onClick={this.cancelItemEdit}>Anuluj</button>
-                        <button type="submit" className="confirm_glass_e" onClick={this.handleItemEdit}>Zastosuj zmiany</button>
+                        <Link to="/oneorder"><button type="submit" className="confirm_glass_e" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
                     </div>
                 </form>
             </div>

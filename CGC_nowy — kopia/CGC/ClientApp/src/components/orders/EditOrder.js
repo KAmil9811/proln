@@ -1,5 +1,5 @@
 ﻿import React, { Component } from "react";
-import './EditOrder.css'
+import './EditOrder.css';
 
 export class EditOrder extends Component {
     displayName = EditOrder.name;
@@ -34,7 +34,7 @@ export class EditOrder extends Component {
             order: {
                 deadline: this.refs.deadline.value,
                 owner: this.refs.klient.value,
-                priority: sessionStorage.getItem('priority'),
+                priority: this.refs.priority.value,
                 id_order: sessionStorage.getItem('orderId'),
             },
             user: {
@@ -42,6 +42,10 @@ export class EditOrder extends Component {
             }
         }
 
+        if (this.refs.deadline.value === '') {
+            alert("Podaj deadline");
+        }
+        else {
 
         fetch(`api/Order/Edit_Order`, {
             method: "post",
@@ -56,12 +60,20 @@ export class EditOrder extends Component {
                 console.log(json)
                 return (json)
             })
-        //this.props.history.push('/oneorder');    
-      this.props.history.push('/oneorder');
+        sessionStorage.setItem('klient', this.refs.klient.value);
+        sessionStorage.setItem('priority', this.refs.priority.value);
+        sessionStorage.setItem('deadline', this.refs.deadline.value);
+            this.props.history.push('/oneorder');
+        }
     }
     cancelEditOrder = (event) => {
         //dane z cache usuwają się przy wyjściu ze zlecenia
-        this.props.history.push('/oneorder');
+        sessionStorage.removeItem('orderId');
+        sessionStorage.removeItem('klient');
+        sessionStorage.removeItem('deadline');
+        sessionStorage.removeItem('priority');  
+        this.props.history.push('/orderwarehouse');
+        
     }
     render() {
         return (
@@ -80,6 +92,17 @@ export class EditOrder extends Component {
                         />
                     </div>
                     <div className="form-group">
+                        <label>Priorytet</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="inputPriority"
+                            placeholder={sessionStorage.getItem('priority')}
+                            defaultValue={sessionStorage.getItem('priority')}
+                            ref="priority"
+                        />
+                    </div>
+                    <div className="form-group">
                         <label>Deadline</label>
                         <input
                             type="date"
@@ -93,7 +116,6 @@ export class EditOrder extends Component {
                     <div className="form-group">
                         <button type="submit" className="cancel_order_e" onClick={this.cancelEditOrder}>Anuluj</button>
                         <button type="submit" className="confirm_order_e" onClick={this.handleEditOrder}>Zastosuj zmiany</button>
-                        <button type="submit" className="confirm_order_e" onClick={this.handleEdit}>asdasdasdad</button>
                     </div>
 
                 </form>
