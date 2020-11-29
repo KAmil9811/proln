@@ -58,7 +58,7 @@ export class HomePage extends Component {
                     <div className="conteiner">
                         <button className="ele2">Produkcja</button>
                         <button className="ele2" onClick={this.glassWarehouse}>Magazyn</button>
-                        <button className="ele2" >Gotowe produkty</button>
+                        <button className="ele2" onClick={this.readyGlassWarehouse}>Gotowe produkty</button>
                         
                         <button className="ele2" onClick={this.orderWarehouse}>Zlecenia</button>
                         <button className="ele2" onClick={this.machineWarehouse}>Maszyny</button>

@@ -42,6 +42,8 @@ namespace CGC.Controllers
             }
         }
 
+        UsersController usersController = new UsersController();
+
         public List<Order> GetOrders()
         {
             List<Order> temp = new List<Order>();
@@ -109,73 +111,161 @@ namespace CGC.Controllers
             return temp;
         }
 
-        [HttpGet("Released_Order")]
-        public async Task<List<Order>> Released_Order([FromBody] Order order)
+
+        public List<Product> Get_All_Products()
+        {
+            List<Product> temp = new List<Product>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Product];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                if (sqlDataReader["Status"].ToString() == "Send" || sqlDataReader["Status"].ToString() == "In magazine" || sqlDataReader["Status"].ToString() == "Send to magazine")
+                {
+                    Product product = new Product();
+                    product.Id = Convert.ToInt32(sqlDataReader["Id"]);
+                    product.Owner = sqlDataReader["Owner"].ToString();
+                    product.Status = sqlDataReader["Status"].ToString();
+                    product.Desk = sqlDataReader["Desk"].ToString();
+                    product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
+
+                    temp.Add(product);
+                }
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return temp;
+        }
+
+        [HttpGet("Get_Products")]
+        public async Task<List<Product>> Get_Products()
+        {
+            return Get_All_Products();
+        }
+
+
+        [HttpPost("Released_Order")]
+        public async Task<List<Order>> Released_Order([FromBody] Receiver receiver)
         {
             List<Order> temp = new List<Order>();
+            Order order = receiver.order;
+            User user = receiver.user;
 
-            if(order.Status == "ready")
+            foreach(User use in usersController.GetUsers())
             {
-                string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id;";
-                SqlCommand command = new SqlCommand(query, cnn);
-
-                command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
-                command.Parameters.Add("@Order_Id", SqlDbType.Int).Value = order.Id_Order;
-
-                cnn.Open();
-                command.ExecuteNonQuery();
-                command.Dispose();
-                cnn.Close();
-
-                foreach (Item item in GetItems(order))
+                if(use.Login == user.Login)
                 {
-                    query = "UPDATE dbo.[Order] SET Status = @Status WHERE Order_Id = @Order_Id;";
-                    command = new SqlCommand(query, cnn);
+                    if (order.Status == "ready")
+                    {
+                        string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id;";
+                        SqlCommand command = new SqlCommand(query, cnn);
 
-                    command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
-                    command.Parameters.Add("@Order_Id", SqlDbType.Int).Value = order.Id_Order;
+                        command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
+                        command.Parameters.Add("@Order_Id", SqlDbType.Int).Value = order.Id_Order;
 
-                    cnn.Open();
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                    cnn.Close();
+                        cnn.Open();
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        cnn.Close();
+
+                        foreach (Item item in GetItems(order))
+                        {
+                            query = "UPDATE dbo.[Order] SET Status = @Status WHERE Order_Id = @Order_Id;";
+                            command = new SqlCommand(query, cnn);
+
+                            command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                            command.Parameters.Add("@Order_Id", SqlDbType.Int).Value = order.Id_Order;
+
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+                        }
+                        temp.Add(order);
+                        return temp;
+                    }
+                    order.Error_Messege = "Orders status is not ready";
+                    temp.Add(order);
+                    return temp;
                 }
-                temp.Add(order);
-                return temp;
             }
-
-            order.Error_Messege = "Orders status is not ready";
+            order.Error_Messege = "User not found";
             temp.Add(order);
             return temp;
         }
 
-        [HttpGet("Released_Item")]
+        [HttpPost("Released_Item")]
         public async Task<List<Item>> Released_Item([FromBody] Receiver receiver)
         {
             List<Item> temp = new List<Item>();
             Item temp_item = new Item();
 
-            foreach(Item item in receiver.items)
+            User user = receiver.user;
+
+            foreach (User use in usersController.GetUsers())
             {
-                if (item.Status == "ready")
+                if (use.Login == user.Login)
                 {
-                    string query = "UPDATE dbo.[Order] SET Status = @Status WHERE Id = @Id;";
+                    foreach (Item item in receiver.items)
+                    {
+                        if (item.Status == "ready")
+                        {
+                            string query = "UPDATE dbo.[Order] SET Status = @Status WHERE Id = @Id;";
+                            SqlCommand command = new SqlCommand(query, cnn);
+
+                            command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                            command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+                        }
+                        return temp;
+                    }
+                    temp_item.Error_Messege = "No good id to change";
+                    temp.Add(temp_item);
+                    return temp;
+                }
+            }
+
+            temp_item.Error_Messege = "No user found";
+            temp.Add(temp_item);
+            return temp;
+        }
+
+        [HttpPost("Delete_Product")]
+        public async Task<List<Product>> Delete_Product([FromBody] Receiver receiver)
+        {
+            List<Product> temp = new List<Product>();
+            Product product = receiver.product;
+            User user = receiver.user;
+
+            foreach (User use in usersController.GetUsers())
+            {
+                if (use.Login == user.Login)
+                {           
+                    string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
                     SqlCommand command = new SqlCommand(query, cnn);
 
-                    command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
-                    command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+                    command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Deleted";
+                    command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id;
 
                     cnn.Open();
                     command.ExecuteNonQuery();
                     command.Dispose();
                     cnn.Close();
+                        
+                    return temp;
                 }
-                return temp;
             }
-            temp_item.Error_Messege = "No good id to change";
-            temp.Add(temp_item);
+
+            product.Error_Messege = "No user found";
+            temp.Add(product);
             return temp;
         }
-
     }
 }

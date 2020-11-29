@@ -29,6 +29,7 @@ import { MachineTypeEdit } from './components/machineAndGlass/editTypeMachine';
 import { ReadyGlassWarehouse } from './components/readyGlassWarehouse/ReadyGlassWarehouse';
 import { EditOrder } from './components/orders/EditOrder';
 import { EditOrderItem } from './components/orders/EditOrderItem';
+import { EditProduct } from './components/readyGlassWarehouse/EditProduct';
 
 export default class App extends Component {
     displayName = App.name
@@ -65,6 +66,8 @@ export default class App extends Component {
                 <Route path='/ready_glass_warehouse' component={ReadyGlassWarehouse} />
                 <Route path='/edit_order' component={EditOrder} />
                 <Route path='/edit_order_item' component={EditOrderItem} />
+                <Route path='/product_edit' component={EditProduct} />
+
 
             </div>
         );
