@@ -46,6 +46,8 @@ export class OrderTable extends Component {
                                     sessionStorage.setItem('orderId', table2[e.target.id].number);
                                     sessionStorage.setItem('klient', table2[e.target.id].klient);
                                     sessionStorage.setItem('deadline', table2[e.target.id].deadline);
+                                    sessionStorage.setItem('priority', table2[e.target.id].priority);
+                                    
                                 }
                             }>Szczegóły</button></Link>
                     })

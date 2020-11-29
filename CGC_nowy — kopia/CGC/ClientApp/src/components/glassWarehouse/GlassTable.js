@@ -20,6 +20,7 @@ export class GlassTable extends Component {
 
     componentDidMount() {
         var table2 = [];       
+        var tableIds = [];
         fetch(`api/Magazine/Return_All_Glass`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -39,6 +40,7 @@ export class GlassTable extends Component {
                         type: json[i].type,
                         amount: json[i].glass_info.length,
                         owner: json[i].owner,
+                        desk: json[i].desk,
                         id: '',
                         /*action: <button className="delete" id={i} onClick={
                             (e) => {
@@ -76,7 +78,7 @@ export class GlassTable extends Component {
                             <Link to="/glass_edit"><button className="glass_edit" id={i}
                                 onClick={
                                     (e) => {
-                                        console.log(e.target.id);
+                                        //console.log(e.target.id);
                                         sessionStorage.setItem('length', json[e.target.id].length);
                                         sessionStorage.setItem('width', json[e.target.id].width);
                                         sessionStorage.setItem('thickness', json[e.target.id].hight);
@@ -84,19 +86,25 @@ export class GlassTable extends Component {
                                         sessionStorage.setItem('type', json[e.target.id].type);
                                         sessionStorage.setItem('amount', json[e.target.id].glass_info.length);
                                         sessionStorage.setItem('owner', json[e.target.id].owner);
+                                        sessionStorage.setItem('desk', json[e.target.id].desk);
+                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_id));
                                     }
                                 }>Edytuj</button>
                             </Link>
 
                     })
                 };
+                ///kod zamienia id w stringa do wyświetlenia
+
                 for (var k = 0; k < table2.length; k++) {
                     var amount = json[k].glass_info.length;
-                    console.log(amount)
+                    //console.log(amount)
                     for (var j = 0; j < amount; j++) {
                         table2[k].id = table2[k].id + json[k].glass_info[j].id + ', '
-                    }
+                    };
                 }
+
+                
                 this.setState({
                     table: {
                         columns: [

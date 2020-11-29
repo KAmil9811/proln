@@ -98,7 +98,7 @@ namespace CGC.Controllers
                     item.Color = sqlDataReader["Color"].ToString();
                     item.Status = sqlDataReader["Status"].ToString();
                     item.Shape = sqlDataReader["Shape"].ToString();
-                    item.Sub_Shape = sqlDataReader["Sub_Shape"].ToString();
+                    item.Order_id = sqlDataReader["Order_id"].ToString();
                     item.Desk = sqlDataReader["Desk"].ToString();
 
                     temp.Add(item);

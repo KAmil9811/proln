@@ -100,7 +100,7 @@ namespace CGC.Controllers
                     item.Color = sqlDataReader["Color"].ToString();
                     item.Status = sqlDataReader["Status"].ToString();
                     item.Shape = sqlDataReader["Shape"].ToString();
-                    item.Sub_Shape = sqlDataReader["Sub_Shape"].ToString();
+                    item.Order_id = sqlDataReader["Order_id"].ToString();
                     item.Desk = sqlDataReader["Desk"].ToString();
 
                     temp.Add(item);
@@ -327,7 +327,7 @@ namespace CGC.Controllers
                         new_item.Can_Be_Createad = false;
                         new_item.Color = item.Color;
                         new_item.Desk = item.Desk;
-                        new_item.Sub_Shape = item.Sub_Shape;
+                        new_item.Order_id = item.Order_id;
                         new_item.Thickness = item.Thickness;
                         new_item.Type = item.Type;
 
@@ -363,7 +363,7 @@ namespace CGC.Controllers
                         SqlCommand command;
                         foreach (Item item in order.items)
                         {
-                            query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status, Shape, Sub_Shape,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Shape, @Sub_Shape, @Desk, @Order_id)";
+                            query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id)";
                             command = new SqlCommand(query, cnn);
 
                             command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
@@ -373,8 +373,6 @@ namespace CGC.Controllers
                             command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
                             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
                             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
-                            command.Parameters.Add("@Shape", SqlDbType.VarChar, 40).Value = item.Shape;
-                            command.Parameters.Add("@Sub_Shape", SqlDbType.VarChar, 40).Value = "";
                             command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
                             command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
@@ -423,7 +421,7 @@ namespace CGC.Controllers
         [HttpPost("Edit_Order")]
         public async Task<List<Order>> Edit_Order([FromBody] Receiver receiver)
         {
-            List<Order> temp = new List<Order>();
+            List<Order> temp = new List<Order>(); //breakpoint
 
             Order order = receiver.order;
             User user = receiver.user;
@@ -432,17 +430,86 @@ namespace CGC.Controllers
             {
                 if (usere.Login == user.Login)
                 {
-                    foreach (Order ord in orders)
+                    foreach (Order ord in GetOrders())
                     {
                         if (ord.Id_Order == order.Id_Order)
                         {
-                            ord.Deadline = order.Deadline;
-                            ord.items = order.items;
-                            ord.Owner = order.Owner;
-                            ord.Priority = order.Priority;
+                            try
+                            {
+                                string query = "UPDATE dbo.[Order] SET Deadline = @Deadline, Owner = @Owner, Priority = @Priority WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                            ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
-                            usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                                command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
+                                command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
+                                command.Parameters.Add("@Priority", SqlDbType.Decimal).Value = order.Priority;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+                            }
+                            catch(SqlException e)
+                            {
+                                Console.WriteLine(e);
+                            }
+
+                            //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
+                            //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                        }
+                    }
+                }
+            }
+            order.Error_Messege = "User_not_found";
+            temp.Add(order);
+            return temp;
+        }
+
+        [HttpPost("Edit_Order_Items")]
+        public async Task<List<Order>> Edit_Order_Items([FromBody] Receiver receiver)
+        {
+            List<Order> temp = new List<Order>(); //breakpoint
+     
+            Order order = receiver.order;
+            User user = receiver.user;
+            Item items = receiver.item;
+
+            foreach (User usere in usersController.GetUsers())
+            {
+                if (usere.Login == user.Login)
+                {
+                    foreach (Item item in GetItems(order))
+                    {
+                        if(item.Id == items.Id)
+                        {
+                            try
+                            {
+                                string query = "UPDATE dbo.[Item] SET Height = @Height, Lenght = @Lenght, Weight = @Weight, Glass_Type = @Glass_Type, Color = @Color, Status = @Status, Desk = @Desk WHERE Id = @Id;";
+                                SqlCommand command = new SqlCommand(query, cnn);
+
+                                command.Parameters.Add("@Height", SqlDbType.Decimal).Value = items.Thickness;
+                                command.Parameters.Add("@Lenght", SqlDbType.Decimal).Value = items.Length;
+                                command.Parameters.Add("@Weight", SqlDbType.Decimal).Value = items.Width;
+                                command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = items.Type;
+                                command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = items.Color;
+                                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = items.Status;
+                                command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = items.Desk;
+
+                                command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = items.Id;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
+                                //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                            }
+                            catch (SqlException e)
+                            {
+                                Console.WriteLine(e);
+                            }
                         }
                     }
                 }

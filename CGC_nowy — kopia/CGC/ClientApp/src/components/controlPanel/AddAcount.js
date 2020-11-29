@@ -72,7 +72,7 @@ export class AddAcount extends Component{
                     alert("Hasło musi zawierać dużą i małą literę oraz cyfrę i zawierać min 8 znaków!")
                 }
                 else if (access2 == "Wrong_login") {
-                    alert("Login moze zawieraćjedynie znaki angielskiego alfabetu!")
+                    alert("Login moze zawierać jedynie znaki angielskiego alfabetu!")
                 }
                 else if (access2 == "Login_taken") {
                     alert("Login zajęty!")

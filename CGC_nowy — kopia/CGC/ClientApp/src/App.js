@@ -27,9 +27,14 @@ import { GlassColorEdit } from './components/machineAndGlass/glassColorEdit';
 import { GlassTypeEdit } from './components/machineAndGlass/glassTypeEdit';
 import { MachineTypeEdit } from './components/machineAndGlass/editTypeMachine';
 import { ReadyGlassWarehouse } from './components/readyGlassWarehouse/ReadyGlassWarehouse';
+<<<<<<< HEAD
 import { ProductEdit } from './components/readyGlassWarehouse/EditProduct';
 
 
+=======
+import { EditOrder } from './components/orders/EditOrder';
+import { EditOrderItem } from './components/orders/EditOrderItem';
+>>>>>>> 70578189a31bf14233d9ed4c81fed8f300334ed3
 
 export default class App extends Component {
     displayName = App.name
@@ -64,9 +69,14 @@ export default class App extends Component {
                 <Route path='/glasstypeedit' component={GlassTypeEdit} />
                 <Route path='/machinetypeedit' component={MachineTypeEdit} />
                 <Route path='/ready_glass_warehouse' component={ReadyGlassWarehouse} />
+<<<<<<< HEAD
                 <Route path='/product_edit' component={ProductEdit} />
                 
 
+=======
+                <Route path='/edit_order' component={EditOrder} />
+                <Route path='/edit_order_item' component={EditOrderItem} />
+>>>>>>> 70578189a31bf14233d9ed4c81fed8f300334ed3
 
             </div>
         );
