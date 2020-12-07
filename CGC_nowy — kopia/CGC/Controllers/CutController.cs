@@ -82,7 +82,7 @@ namespace CGC.Controllers
                 order.Deadline2 = Convert.ToDateTime(order.Deadline);
             }
 
-            orders.GroupBy(Order => Order.Deadline2);
+            orders.Sort((order1,  order2) => order1.Deadline2.CompareTo(order2.Deadline2));
 
                 //foreach(Order order in orders)
                 //{
@@ -196,9 +196,75 @@ namespace CGC.Controllers
             return machines;
         }
 
-        public List<Piece> Package_Piece(double glass_lenght, double glass_widht, Package package)
+        public void Return_Area(Package package)
+        {
+            foreach(Item item in package.Item)
+            {
+                item.Area = item.Length * item.Width;
+            }
+        }
+
+        public void Set_Package(Package package)
+        {
+            double temp;
+
+            foreach(Item item in package.Item)
+            {
+                if(item.Width > item.Length)
+                {
+                    temp = item.Length;
+                    item.Length = item.Width;
+                    item.Width = temp;
+                }
+            }
+        }
+
+        public void Sort_Package(Package package)
+        {
+            package.Item.Sort((item1, item2) => (item1.Width.CompareTo(item2.Width)) * (-1));
+
+            package.Item.Sort((item1,  item2) => (item1.Length.CompareTo(item2.Length)) * (-1));
+
+            package.Item.Sort((item1, item2) => (item1.Area.CompareTo(item2.Area)) * (-1));
+
+            package.Item.Sort((item1, item2) => (item1.Fit_pos.CompareTo(item2.Fit_pos)) * (-1));
+        }
+
+        public List<Piece> Package_Piece(double x, double y, Package package)
         {
             List<Piece> wynik = new List<Piece>();
+            double glass_lenght = x;
+            double glass_widht = y;
+            int Fit;
+
+            foreach(Item item in package.Item)
+            {
+                Fit = 0;
+                if (glass_lenght < item.Length || glass_widht < item.Width)
+                {
+                    Fit = 0;
+                }
+                else
+                {
+                    Fit++;
+                    if (glass_lenght == item.Length)
+                    {
+                        Fit++;
+                    }
+                    if (glass_widht == item.Width)
+                    {
+                        Fit++;
+                    }
+                }
+                item.Fit_pos = Fit;
+            }
+
+            Sort_Package(package);
+
+            //if (package.Item.First().Fit_pos > 0)
+            //{
+
+            //}
 
             return wynik;
         }
@@ -214,7 +280,13 @@ namespace CGC.Controllers
             
             Package packages = receiver.package;
 
-            foreach(User usere in usersController.GetUsers())
+
+
+            Return_Area(packages);
+            Set_Package(packages);
+            Sort_Package(packages);
+
+            foreach (User usere in usersController.GetUsers())
             {
                 if(usere.Login == user.Login)
                 {
@@ -231,6 +303,8 @@ namespace CGC.Controllers
                             wynik.Add(tmp);
                         }
                     }
+
+                    return wynik;
                 }            
             }
            

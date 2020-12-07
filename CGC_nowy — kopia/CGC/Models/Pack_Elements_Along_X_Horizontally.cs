@@ -1,7 +1,6 @@
 ﻿//using System;
 //using System.ComponentModel;
 //using System.Windows.Forms;
-
 //namespace Packing_two_dimensional_rectangular_elements_at_orthogonal_table
 //{
 //    public class Pack_Elements_Along_X_Horizontally
@@ -19,7 +18,7 @@
 //        int n, k, p, i; // counters  //liczniki
 //        int x, l, w, a, f; // element index, length, width, area and fitting factor   // cos
 //        int Lmin, Wmin; // smalest element length and width  // wymiary najmniejszy item
-//        int X11, Y11, L11, W11, A11; // new position I coordinates, length, width and area  
+//        int X11, Y11, L11, W11, A11; // new position I coordinates, length, width and area  //area - pole powierzchni
 //        int X12, Y12, L12, W12, A12; // new position II coordinates, length, width and area  
 //        int p_X; // old position X  
 //        int p_Y; // old position Y  

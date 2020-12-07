@@ -27,6 +27,11 @@ namespace CGC.Models
         public string Desk { get; set; }
         public int Amount { get; set; }
 
+        //Ciecie
+        public double Area { get; set; }
+        public int Fit_pos { get; set; }
+
+
         public string Error_Messege { get; set; }
     }
 }
