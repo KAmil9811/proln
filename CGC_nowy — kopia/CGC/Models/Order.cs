@@ -12,7 +12,7 @@ namespace CGC.Models
         public string Status { get; set; } //oczekujacy(expectant), wykonany(done), wstrzymany(stopped) 
         public int Priority { get; set; }
         public string Deadline { get; set; }
-        //public DateTime Deadline { get; set; }
+        public DateTime Deadline2 { get; set; }
         public string Stan { get; set; }
         public bool Deletead { get; set; }
         public bool Frozen { get; set; }

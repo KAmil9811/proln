@@ -11,6 +11,7 @@ namespace CGC.Models
         public Machines machines { get; set; }
         public Product product { get; set; }
         public Item item { get; set; }
+        public Package package { get; set; }
 
         public List<Glass> glasses = new List<Glass>();
         public List<Item> items = new List<Item>();

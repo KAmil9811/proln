@@ -44,6 +44,7 @@ namespace CGC.Controllers
         OrderController orderController = new OrderController();
         MachineController machineController = new MachineController();
         MagazineController magazineController = new MagazineController();
+        UsersController usersController = new UsersController();
 
         [HttpGet("Return_Orders_To_Cut")]
         public async Task<List<Order>> Return_Orders_To_Cut()
@@ -76,54 +77,58 @@ namespace CGC.Controllers
                 }
             }
 
-            foreach(Order order in orders)
+            foreach (Order order in orders)
             {
-                counter = 0;
-                help2 = "";
-                help = order.Deadline;
-
-                datetime = Convert.ToDateTime(help);
-
-                foreach(char i in help)
-                {
-                    if(counter < 4)
-                    {
-                        help2 = help2 + i;
-                        counter++;
-
-                        if (counter == 4)
-                        {
-                            year = Convert.ToInt32(help2);
-                            help2 = "";
-                        }
-
-                    }
-                    else if(counter < 7)
-                    {
-                        help2 = help2 + i;
-                        counter++;
-
-                        if (counter == 7)
-                        {
-                            month = Convert.ToInt32(help2);
-                            help2 = "";
-                        }
-                    }                
-                    else if (counter < 10)
-                    {
-                        help2 = help2 + i;
-                        counter++;
-
-                        if (counter == 10)
-                        {
-                            day = Convert.ToInt32(help2);
-                        }
-                    }
-                }
-
-
-    
+                order.Deadline2 = Convert.ToDateTime(order.Deadline);
             }
+
+            orders.GroupBy(Order => Order.Deadline2);
+
+                //foreach(Order order in orders)
+                //{
+                //    counter = 0;
+                //    help2 = "";
+                //    help = order.Deadline;
+
+                //    datetime = Convert.ToDateTime(help);
+
+                //    foreach(char i in help)
+                //    {
+                //        if(counter < 4)
+                //        {
+                //            help2 = help2 + i;
+                //            counter++;
+
+                //            if (counter == 4)
+                //            {
+                //                year = Convert.ToInt32(help2);
+                //                help2 = "";
+                //            }
+
+                //        }
+                //        else if(counter < 7)
+                //        {
+                //            help2 = help2 + i;
+                //            counter++;
+
+                //            if (counter == 7)
+                //            {
+                //                month = Convert.ToInt32(help2);
+                //                help2 = "";
+                //            }
+                //        }                
+                //        else if (counter < 10)
+                //        {
+                //            help2 = help2 + i;
+                //            counter++;
+
+                //            if (counter == 10)
+                //            {
+                //                day = Convert.ToInt32(help2);
+                //            }
+                //        }
+                //    }
+                //  }
 
             return temp;
         }
@@ -191,20 +196,47 @@ namespace CGC.Controllers
             return machines;
         }
 
-        [HttpGet("Return_Machine_To_Cut")]
-        public async Task<List<Piece>> Magic(Receiver receiver)
+        public List<Piece> Package_Piece(double glass_lenght, double glass_widht, Package package)
         {
-            List<Piece> pieces = new List<Piece>();
+            List<Piece> wynik = new List<Piece>();
 
+            return wynik;
+        }
+
+        [HttpGet("Magic")]
+        public async Task<List<Glass>> Magic(Receiver receiver)
+        { 
             List<Glass> glasses = receiver.glasses;
+            List<Glass> wynik = new List<Glass>();
             User user = receiver.user;
+
             Machines machines = receiver.machines;
-            List<Package> packages = receiver.packages;
+            
+            Package packages = receiver.package;
 
+            foreach(User usere in usersController.GetUsers())
+            {
+                if(usere.Login == user.Login)
+                {
+                    foreach (Glass glass in glasses)
+                    {
+                        if (packages.Item.Count > 0)
+                        {
+                            Glass tmp = new Glass();
 
+                            tmp.Glass_id = glass.Glass_id;
 
+                            tmp.Pieces = Package_Piece(glass.Length, glass.Width, packages);
 
-            return pieces;
+                            wynik.Add(tmp);
+                        }
+                    }
+                }            
+            }
+           
+            //błąd nie ma takiego usera
+
+            return wynik;
         }
     }
 }
