@@ -23,6 +23,7 @@ namespace CGC.Models
         public string Error_Messege { get; set; }
 
         public List<int> Glass_id = new List<int>();
+        public List<Piece> Pieces = new List<Piece>();
 
        
     }
