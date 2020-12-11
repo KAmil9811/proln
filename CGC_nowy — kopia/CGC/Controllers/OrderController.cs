@@ -191,22 +191,22 @@ namespace CGC.Controllers
         public int Avaible_Cut(Order order)
         {
             int count = 0;
-            foreach (Item item in order.items)
+            foreach (Item item in GetItems(order))
             {
                 if  (item.Status == "awaiting")
                 {
                     foreach (Glass glass in magazineController.Getglass())
                     {
-                        if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Hight && glass.Color == item.Color && glass.Type == item.Type)
-                        {
+                       // if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Hight && glass.Color == item.Color && glass.Type == item.Type)
+                        //{
                             foreach  (Glass_Id glass_Id in glass.Glass_info)
                             {
-                                if  (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false)
-                                {
-                                    
-                                }
+                               // if  (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false)
+                                //{
+                                    count++;
+                                //}
                             }
-                        }
+                       // }
                     }
                 }
             }
