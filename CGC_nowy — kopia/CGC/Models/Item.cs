@@ -11,12 +11,12 @@ namespace CGC.Models
     {
         //Zalezne od shape
         
-        public double Thickness { get; set; }
         public double Length { get; set; }
+        public double Width { get; set; }
 
 
         //Ogólne
-        public double Width { get; set; }
+        public double Thickness { get; set; }
         public string Type { get; set; }
         public bool Can_Be_Createad { get; set; }
         public string Color { get; set; }

@@ -230,41 +230,186 @@ namespace CGC.Controllers
             package.Item.Sort((item1, item2) => (item1.Fit_pos.CompareTo(item2.Fit_pos)) * (-1));
         }
 
-        public List<Piece> Package_Piece(double x, double y, Package package)
+        public List<Piece> Package_Pieces(List<Position> positions ,double x, double y, Package package)
         {
             List<Piece> wynik = new List<Piece>();
-            double glass_lenght = x;
-            double glass_widht = y;
-            int Fit;
+            double glass_lenght = x; //Tl
+            double glass_widht = y; //Tw
+            int Fit = 0;
+            int First_Fit = 0;
+            double P_x = 0;
+            double P_y = 0;
+            double Pl = 0;
+            double Pw =  0;
+            double I_x = 0;
+            double I_l = 0;
+            double I_w = 0;
+            bool P_ok = true;
+            double Wmin = 0;
+            double Lmin = 0;
+            double Pos_x_1 = 0;
+            double Pos_y_1 = 0;
+            double L_1 = 0;
+            double W_1 = 0;
+            double A_1 = 0;
+            double temp_area = 0;
+            int i = 0;
+            double Pos_x_2 = 0;
+            double Pos_y_2 = 0;
+            double L_2 = 0;
+            double W_2 = 0;
+            double A_2 = 0;
 
-            foreach(Item item in package.Item)
+
+            while (positions.Count > 0 && package.Item.Count > 0)
             {
-                Fit = 0;
-                if (glass_lenght < item.Length || glass_widht < item.Width)
+                positions.Sort((x1, x2) => (x1.X_pos.CompareTo(x2.X_pos)));
+                positions.Sort((y1, y2) => (y1.Y_pos.CompareTo(y2.Y_pos)));
+
+                Pl = positions.First().Lenght;
+                Pw = positions.First().Widht;
+
+                foreach (Item item in package.Item)
                 {
                     Fit = 0;
+                    if (Pl < item.Length || Pw < item.Width)
+                    {
+                        Fit = 0;
+                    }
+                    else
+                    {
+                        Fit++;
+                        if (Pl == item.Length)
+                        {
+                            Fit++;
+                        }
+                        if (Pw == item.Width)
+                        {
+                            Fit++;
+                        }
+                    }
+                    item.Fit_pos = Fit;
                 }
-                else
+
+                Sort_Package(package);
+
+                First_Fit = package.Item.First().Fit_pos;
+
+                if(First_Fit > 0)
                 {
-                    Fit++;
-                    if (glass_lenght == item.Length)
+                    P_x = positions.First().X_pos;
+                    P_y = positions.First().Y_pos;
+
+                    I_x = package.Item.First().Id;
+                    I_l = package.Item.First().Length;
+                    I_w = package.Item.First().Width;
+
+                    Piece piece = new Piece { id = I_x, Lenght = I_l, Widht = I_w, X = P_x, Y = P_y };
+
+                    wynik.Add(piece);
+
+                    package.Item.RemoveAt(0);
+
+                    if(package.Item.Count > 0)
                     {
-                        Fit++;
-                    }
-                    if (glass_widht == item.Width)
-                    {
-                        Fit++;
+                        Sort_Package(package);
+
+                        P_ok = true;
+
+                        if(Pw > I_w)
+                        {
+                            Pos_x_2 = 0;
+                            Pos_y_2 = 0;
+                            L_2 = 0;
+                            W_2 = 0;
+                            A_2 = 0;
+                            temp_area = 0;
+                            i = 0;
+
+                            P_ok = false;
+
+                            Pos_x_2 = P_x;
+                            Pos_y_2 = P_y + I_w;
+
+                            L_2 = glass_lenght - Pos_x_2;
+                            W_2 = Pw - I_w;
+                            A_2 = L_2 * W_2;
+
+                            temp_area = package.Item.Last().Area;
+                            i = package.Item.Count();
+
+                            while(temp_area <= A_2 && i > -1)
+                            {
+                                temp_area = package.Item.ElementAt(i).Amount;
+
+                                Lmin = package.Item.ElementAt(i).Length;
+                                Wmin = package.Item.ElementAt(i).Width;
+
+                                if (L_2 >= Lmin && W_2 >= Wmin)
+                                {
+                                    Position position = new Position {X_pos = Pos_x_2, Y_pos = Pos_y_2, Lenght = L_2, Widht = W_2 };
+
+                                    positions.Add(position);
+
+                                    P_ok = true;
+                                    i = -1;
+                                }
+                                i--;
+                            }
+                        }
+
+                        if (Pl > I_l)
+                        {
+                            Pos_x_1 = 0;
+                            Pos_y_1 = 0;
+                            L_1 = 0;
+                            W_1 = 0;
+                            A_1 = 0;
+                            temp_area = 0;
+                            i = 0;
+
+                            Pos_x_1 = P_x + I_l;
+                            Pos_y_1 = P_y;
+
+                            L_1 = glass_lenght - Pos_x_1;
+                            W_1 = I_w;
+                            A_1 = L_1 * W_1;
+
+                            if (!P_ok)
+                            {
+                                W_1 = W_1 + W_2;
+                                A_1 = L_1 * W_1;
+                            }
+
+                            temp_area = package.Item.Last().Area;
+                            i = package.Item.Count();
+
+                            while (temp_area <= A_1 && i > -1)
+                            {
+                                temp_area = package.Item.ElementAt(i).Amount;
+
+                                Lmin = package.Item.ElementAt(i).Length;
+                                Wmin = package.Item.ElementAt(i).Width;
+
+                                if (L_1 >= Lmin && W_1 >= Wmin)
+                                {
+                                    Position position = new Position { X_pos = Pos_x_1, Y_pos = Pos_y_1, Lenght = L_1, Widht = W_1 };
+
+                                    positions.Add(position);
+
+                                    i = -1;
+                                }
+                                i--;
+                            }
+                        }
                     }
                 }
-                item.Fit_pos = Fit;
-            }
 
-            Sort_Package(package);
-
-            //if (package.Item.First().Fit_pos > 0)
-            //{
-
-            //}
+                if(package.Item.Count > 0)
+                {
+                    package.Item.RemoveAt(0);
+                }
+            }          
 
             return wynik;
         }
@@ -274,6 +419,7 @@ namespace CGC.Controllers
         { 
             List<Glass> glasses = receiver.glasses;
             List<Glass> wynik = new List<Glass>();
+            List<Position> positions = new List<Position>();
             User user = receiver.user;
 
             Machines machines = receiver.machines;
@@ -298,12 +444,13 @@ namespace CGC.Controllers
 
                             tmp.Glass_id = glass.Glass_id;
 
-                            tmp.Pieces = Package_Piece(glass.Length, glass.Width, packages);
+                            Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
+
+                            tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
 
                             wynik.Add(tmp);
                         }
                     }
-
                     return wynik;
                 }            
             }
