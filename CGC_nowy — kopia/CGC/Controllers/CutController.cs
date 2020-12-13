@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,6 +46,34 @@ namespace CGC.Controllers
         MachineController machineController = new MachineController();
         MagazineController magazineController = new MagazineController();
         UsersController usersController = new UsersController();
+        ProductController productController = new ProductController();
+
+        public bool Check_Code(int code)
+        {
+            foreach (Product product in productController.Get_All_Products())
+            {
+                if (code == product.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void Repeat(int code)
+        {
+            bool check;
+            check = Check_Code(code);
+
+            Random rand = new Random();
+
+            if (check == false)
+            {
+                code = rand.Next(1, 900);
+                Repeat(code);
+            }
+        }
+
 
         [HttpGet("Return_Orders_To_Cut")]
         public async Task<List<Order>> Return_Orders_To_Cut()
@@ -143,23 +172,26 @@ namespace CGC.Controllers
 
             foreach (Item item in order.items)
             {
-                kontrol = false;
-
-                foreach (Package package in temp)
+                if(item.Status == "awaiting")
                 {
-                    if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                    kontrol = false;
+
+                    foreach (Package package in temp)
                     {
-                        package.Item.Add(item);
-                        kontrol = true;
+                        if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                        {
+                            package.Item.Add(item);
+                            kontrol = true;
+                        }
                     }
-                }
 
-                if (kontrol == false)
-                {
-                    Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
-                    package.Item.Add(item);
+                    if (kontrol == false)
+                    {
+                        Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
+                        package.Item.Add(item);
 
-                    temp.Add(package);
+                        temp.Add(package);
+                    }
                 }
             }
 
@@ -421,12 +453,8 @@ namespace CGC.Controllers
             List<Glass> wynik = new List<Glass>();
             List<Position> positions = new List<Position>();
             User user = receiver.user;
-
-            Machines machines = receiver.machines;
             
             Package packages = receiver.package;
-
-
 
             Return_Area(packages);
             Set_Package(packages);
@@ -458,6 +486,87 @@ namespace CGC.Controllers
             //błąd nie ma takiego usera
 
             return wynik;
+        }
+
+        [HttpPost("Post_Production")]
+        public async Task<string> Post_Production(Receiver receiver)
+        {
+            Order order = receiver.order;
+            Package package = receiver.package;
+            User user = receiver.user;
+            Machines machines = receiver.machines;
+            bool kontrolka;
+
+            foreach(User usere in usersController.GetUsers())
+            {
+                if(usere.Login == user.Login)
+                {
+                    foreach(Order ord in orderController.GetOrders())
+                    {
+                        if(order.Id_Order == ord.Id_Order)
+                        {
+                            foreach(Item item in orderController.GetItems(ord))
+                            {
+                                foreach(Item item_cutted in package.Item)
+                                {
+                                    if(item.Id == item_cutted.Id)
+                                    {
+                                        item.Status = "ready";
+
+                                        Random rand = new Random();
+                                        var code = rand.Next(1, 9000);
+
+                                        Repeat(code);
+
+                                        string query = "INSERT INTO dbo.[Product](@Id,@Owner,@Desk,@Status,@Id_item)";
+                                        SqlCommand command = new SqlCommand(query, cnn);
+
+                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = code;
+                                        command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
+                                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = item.Status;
+                                        command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
+
+                                        cnn.Open();
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+                                        cnn.Close();
+                                    }
+                                }
+                            }
+
+                            kontrolka = true;
+
+                            foreach (Item itm in orderController.GetItems(ord))
+                            {
+                                if(itm.Status == "awaiting" || itm.Status == "cut")
+                                {
+                                    kontrolka = false;
+                                }
+                            }
+
+                            string query2 = "Update dbo.[Machines](SET Status = @Status WHERE No = @No)";
+                            SqlCommand command2 = new SqlCommand(query2, cnn);
+
+                            command2.Parameters.Add("@No", SqlDbType.Int, 40).Value = machines.No;
+                            command2.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "ready";
+
+
+                            cnn.Open();
+                            command2.ExecuteNonQuery();
+                            command2.Dispose();
+                            cnn.Close();
+
+
+
+                            return "Done";
+                        }
+                    }
+                }
+            }
+
+
+            return "Not Done";
         }
     }
 }
