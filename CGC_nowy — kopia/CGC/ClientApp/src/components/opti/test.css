@@ -1,0 +1,29 @@
+﻿.body{
+    background-color:white;
+    background-image: unset;
+}
+.canvas {
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+.canva{
+    
+    margin: 30px;
+    float: right;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+}
+.table2 {
+    margin: 30px;
+    width: 40%;
+    float: left;
+}
+.table3 {
+    margin: 30px;
+    width: 40%;
+    float: left;
+}
