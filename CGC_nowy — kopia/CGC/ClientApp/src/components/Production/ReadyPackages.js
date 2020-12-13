@@ -44,15 +44,9 @@ export class ReadyPackages extends Component {
                     <button type="button" className="home" onClick={this.homePage}>Strona główna</button>
                 </div>
                 <div className="conteiner_ow">
-                    <div className="key">
-                        <h3>LEGENDA</h3>
-                        <p>X- ilość sztuk, na które brakuje materiału</p>
-                        <p>Y- ilość oczekujących</p>
-                        <p>Z- ilość w trakcie</p>
-                    </div>
-                    
+
                     <div className="tablewar">
-                        <PackagesTable/>
+                        <PackagesTable />
                     </div>
                 </div>
 

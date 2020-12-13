@@ -9,12 +9,46 @@ export class Test extends Component {
         super(props);
         this.state = {
             value: '',
+            value2:'',
+            table: [],
+
         }
     }
 
     componentDidMount() {
+        const receiver = {
+            order: {
+                id_order: sessionStorage.getItem('idOpti'),
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
+            item: {
+                color: sessionStorage.getItem('colorOpti'),
+                type: sessionStorage.getItem('typeOpti'),
+                thickness: sessionStorage.getItem('thicknessOpti'),
+
+            }
+        }
+        fetch(`api/Cut/Magic`, {
+            method: "post",
+            body: JSON.stringify(receiver),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return (json)
+            })
+
+
+
+
+
+
         var canvas = document.getElementById('canvas');
-        
         var x = 0;
         var y = 0;
         var w = 50;
@@ -34,9 +68,9 @@ export class Test extends Component {
             var ctx = canvas.getContext('2d');
             //ctx.fillText("tekst", x, y);
             ctx.font = "40px Arial";
-            ctx.fillText("600x450", 0, 40);
+            ctx.fillText("450x450", 0, 40);
             ctx.font = "10px Arial";
-            ctx.strokeRect(0, 50, 600, 400); ///tafla
+            ctx.strokeRect(0, 50, 450, 450); ///tafla
             ctx.strokeRect(x, y+50, w, h);///itemy
             ctx.fillText("50x50", x+5, 60);
             ctx.strokeRect(x2, y2+50, w2, h2);
@@ -55,7 +89,7 @@ export class Test extends Component {
         return (
             <div>
                 <div className="canva">
-                    <canvas className="canvas" id="canvas" width="600" height="450" ></canvas>
+                    <canvas className="canvas" id="canvas" width="600" height="600" ></canvas>
                 </div>
                 <div className="table2">
                     <OptiTable />

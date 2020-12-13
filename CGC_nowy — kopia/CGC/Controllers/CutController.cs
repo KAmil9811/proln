@@ -162,7 +162,6 @@ namespace CGC.Controllers
             return orders;
         }
 
-
         [HttpPost("Return_Package_To_Cut")]
         public async Task<List<Package>> Return_Package_To_Cut([FromBody]Receiver receiver)
         {
@@ -170,45 +169,34 @@ namespace CGC.Controllers
             List<Package> temp = new List<Package>();
             bool kontrol;
 
-
-
             foreach (Item item in orderController.GetItems(order))
             {
-<<<<<<< HEAD
                 kontrol = false;
 
-                if(temp.Count != 0)
-                {
-=======
                 if(item.Status == "awaiting")
                 {
                     kontrol = false;
-
->>>>>>> d3f502c4bd52ed4b962b828116d8100c4b40a3f1
-                    foreach (Package package in temp)
+                    if (temp.Count != 0)
                     {
-                        if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                        foreach (Package package in temp)
                         {
-                            package.Item.Add(item);
-                            kontrol = true;
+                            if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                            {
+                                package.Item.Add(item);
+                                kontrol = true;
+                            }
                         }
                     }
-<<<<<<< HEAD
-                }
-                
-=======
->>>>>>> d3f502c4bd52ed4b962b828116d8100c4b40a3f1
 
                     if (kontrol == false)
                     {
-                        Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
+                        Package package = new Package {Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
                         package.Item.Add(item);
 
                         temp.Add(package);
-                    }
+                    }              
                 }
             }
-
             return temp;
         }
 
@@ -460,37 +448,51 @@ namespace CGC.Controllers
             return wynik;
         }
 
-        [HttpGet("Magic")]
-        public async Task<List<Glass>> Magic(Receiver receiver)
+        [HttpPost("Magic")]
+        public async Task<List<Glass>> Magic([FromBody] Receiver receiver)
         { 
-            List<Glass> glasses = receiver.glasses;
             List<Glass> wynik = new List<Glass>();
             List<Position> positions = new List<Position>();
             User user = receiver.user;
+            Order order = receiver.order;
+            Item item1 = receiver.item;
             
-            Package packages = receiver.package;
+            Package packages = new Package();
 
             Return_Area(packages);
             Set_Package(packages);
             Sort_Package(packages);
 
+            foreach (Item item in orderController.GetItems(order))
+            {
+                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness)
+                {
+                    packages.Item.Add(item);
+                }
+            }
+
             foreach (User usere in usersController.GetUsers())
             {
                 if(usere.Login == user.Login)
                 {
-                    foreach (Glass glass in glasses)
+                    foreach (Glass glass in magazineController.Getglass())
                     {
-                        if (packages.Item.Count > 0)
+                        if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness <= glass.Width)
                         {
-                            Glass tmp = new Glass();
+                            if (packages.Item.Count > 0)
+                            {
+                                Glass tmp = glass;
 
-                            tmp.Glass_id = glass.Glass_id;
+                                tmp.Glass_id = glass.Glass_id;
 
-                            Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
+                                Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
 
-                            tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
+                                positions.Add(position);
 
-                            wynik.Add(tmp);
+                                tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
+
+                                wynik.Add(tmp);
+                            }
                         }
                     }
                     return wynik;

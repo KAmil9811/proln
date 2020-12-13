@@ -182,12 +182,6 @@ namespace CGC.Controllers
             return true;
         }
 
-        public List<Order> orders = new List<Order>
-        {           
-            //new Order("1","Kamil",1,DateTime.Today.ToString("d"), new List<Item>{ new Item  {  Height = 1, Weight = 2, Lenght = 3, Id = "1", Color = "blue", Glass_Type = "cos", Status = "haha dziala"  } }),
-            //new Order("2","Michal",2,DateTime.Today.ToString("d"), new List<Item>{ new Item  {  Height = 10, Weight = 20, Lenght = 3, Id = "2", Color = "red", Glass_Type = "cos2", Status = "haha znowu dziala" }, new Item  { Height = 100, Weight = 200, Lenght = 30, Id = "3", Color = "red2", Glass_Type = "cos3" } })
-        };
-
         public int Avaible_Cut(Order order)
         {
             int count = 0;
@@ -197,16 +191,16 @@ namespace CGC.Controllers
                 {
                     foreach (Glass glass in magazineController.Getglass())
                     {
-                       // if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Hight && glass.Color == item.Color && glass.Type == item.Type)
-                        //{
+                        if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type)
+                        {
                             foreach  (Glass_Id glass_Id in glass.Glass_info)
                             {
-                               // if  (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false)
-                                //{
+                                if  (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false)
+                                {
                                     count++;
-                                //}
+                                }
                             }
-                       // }
+                        }
                     }
                 }
             }
@@ -413,7 +407,7 @@ namespace CGC.Controllers
             //Insert_Order_History(Orderhistory,user.Login);
 
             temp.Add(order);
-            orders.Add(order);
+   
             return temp;
         }
 
@@ -530,7 +524,7 @@ namespace CGC.Controllers
             {
                 if (usere.Login == user.Login)
                 {
-                    foreach (Order ord in orders)
+                    foreach (Order ord in GetOrders())
                     {
                         if (ord.Id_Order == ord.Id_Order)
                         {

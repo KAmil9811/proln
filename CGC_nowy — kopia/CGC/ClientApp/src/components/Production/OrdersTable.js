@@ -17,7 +17,7 @@ export class OrdersTable extends Component {
     }
 
 
-    
+
 
     //`api/Order/Return_All_Orders`
     componentDidMount() {
@@ -43,14 +43,14 @@ export class OrdersTable extends Component {
                         items: json[i].items,
                         choose: <Link to="/ready_packages"> <button className="choose_order" id={i}
                             onClick={(e) => {
-                            this.chooseOrder( table2[e.target.id].number);
-                            
-                            
-                            }
-                        } > Wybierz </button></Link>
+                                //this.chooseOrder( table2[e.target.id].number);
+                                sessionStorage.setItem('orderId2', table2[e.target.id].number)
 
-                      
-                       
+                            }
+                            } > Wybierz </button></Link>
+
+
+
                     })
                 };
                 this.setState({
@@ -74,7 +74,7 @@ export class OrdersTable extends Component {
                                 sort: 'asc',
                                 width: 150
                             },
-                        
+
                             {
                                 label: 'Priorytet',
                                 field: 'priority',
@@ -118,20 +118,20 @@ export class OrdersTable extends Component {
             headers: {
                 'Content-Type': 'application/json'
             }
-        
+
         })
 
 
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    return (json);
-                    
-                })
-   //   .then(json => this.props.history.push('/ready_packages'))
-          
-        
-        
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return (json);
+
+            })
+        //   .then(json => this.props.history.push('/ready_packages'))
+
+
+
     }
 
     table() {

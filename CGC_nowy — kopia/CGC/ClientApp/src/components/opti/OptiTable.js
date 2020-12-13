@@ -17,12 +17,23 @@ export class OptiTable extends Component {
 
 
     componentDidMount() {
-        const order = {
-            id_Order: sessionStorage.getItem('orderId')
+        const receiver = {
+            order: {
+                id_order: sessionStorage.getItem('idOpti'),
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
+            item:  {
+                color: sessionStorage.getItem('colorOpti'),
+                type: sessionStorage.getItem('typeOpti'),
+                thickness: sessionStorage.getItem('thicknessOpti'),
+
+            }
         }
-        fetch(`api/Order/Return_All_Items`, {
+        fetch(`api/Cut/Magic`, {
             method: "post",
-            body: JSON.stringify(order),
+            body: JSON.stringify(receiver),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -38,7 +49,7 @@ export class OptiTable extends Component {
                     table2.push({
                         length: json[i].length,
                         width: json[i].width,
-                        thickness: json[i].thickness,
+                        thickness: json[i].hight,
                         color: json[i].color,
                         type: json[i].type,
                         ids: json[i].id,
