@@ -7,12 +7,12 @@ namespace CGC.Models
 {
     public class Piece
     {
-        public double x { get; set; }
-        public double y { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
 
-        public double lenght { get; set; }
-        public double hight { get; set; }
+        public double Lenght { get; set; }
+        public double Widht { get; set; }
 
-        public int id_slab { get; set; }
+        public double id { get; set; }
     }
 }

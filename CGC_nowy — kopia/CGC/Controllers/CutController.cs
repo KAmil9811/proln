@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,6 +46,34 @@ namespace CGC.Controllers
         MachineController machineController = new MachineController();
         MagazineController magazineController = new MagazineController();
         UsersController usersController = new UsersController();
+        ProductController productController = new ProductController();
+
+        public bool Check_Code(int code)
+        {
+            foreach (Product product in productController.Get_All_Products())
+            {
+                if (code == product.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void Repeat(int code)
+        {
+            bool check;
+            check = Check_Code(code);
+
+            Random rand = new Random();
+
+            if (check == false)
+            {
+                code = rand.Next(1, 900);
+                Repeat(code);
+            }
+        }
+
 
         [HttpGet("Return_Orders_To_Cut")]
         public async Task<List<Order>> Return_Orders_To_Cut()
@@ -145,10 +174,17 @@ namespace CGC.Controllers
 
             foreach (Item item in orderController.GetItems(order))
             {
+<<<<<<< HEAD
                 kontrol = false;
 
                 if(temp.Count != 0)
                 {
+=======
+                if(item.Status == "awaiting")
+                {
+                    kontrol = false;
+
+>>>>>>> d3f502c4bd52ed4b962b828116d8100c4b40a3f1
                     foreach (Package package in temp)
                     {
                         if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
@@ -157,15 +193,19 @@ namespace CGC.Controllers
                             kontrol = true;
                         }
                     }
+<<<<<<< HEAD
                 }
                 
+=======
+>>>>>>> d3f502c4bd52ed4b962b828116d8100c4b40a3f1
 
-                if (kontrol == false)
-                {
-                    Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
-                    package.Item.Add(item);
+                    if (kontrol == false)
+                    {
+                        Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
+                        package.Item.Add(item);
 
-                    temp.Add(package);
+                        temp.Add(package);
+                    }
                 }
             }
 
@@ -236,41 +276,186 @@ namespace CGC.Controllers
             package.Item.Sort((item1, item2) => (item1.Fit_pos.CompareTo(item2.Fit_pos)) * (-1));
         }
 
-        public List<Piece> Package_Piece(double x, double y, Package package)
+        public List<Piece> Package_Pieces(List<Position> positions ,double x, double y, Package package)
         {
             List<Piece> wynik = new List<Piece>();
-            double glass_lenght = x;
-            double glass_widht = y;
-            int Fit;
+            double glass_lenght = x; //Tl
+            double glass_widht = y; //Tw
+            int Fit = 0;
+            int First_Fit = 0;
+            double P_x = 0;
+            double P_y = 0;
+            double Pl = 0;
+            double Pw =  0;
+            double I_x = 0;
+            double I_l = 0;
+            double I_w = 0;
+            bool P_ok = true;
+            double Wmin = 0;
+            double Lmin = 0;
+            double Pos_x_1 = 0;
+            double Pos_y_1 = 0;
+            double L_1 = 0;
+            double W_1 = 0;
+            double A_1 = 0;
+            double temp_area = 0;
+            int i = 0;
+            double Pos_x_2 = 0;
+            double Pos_y_2 = 0;
+            double L_2 = 0;
+            double W_2 = 0;
+            double A_2 = 0;
 
-            foreach(Item item in package.Item)
+
+            while (positions.Count > 0 && package.Item.Count > 0)
             {
-                Fit = 0;
-                if (glass_lenght < item.Length || glass_widht < item.Width)
+                positions.Sort((x1, x2) => (x1.X_pos.CompareTo(x2.X_pos)));
+                positions.Sort((y1, y2) => (y1.Y_pos.CompareTo(y2.Y_pos)));
+
+                Pl = positions.First().Lenght;
+                Pw = positions.First().Widht;
+
+                foreach (Item item in package.Item)
                 {
                     Fit = 0;
+                    if (Pl < item.Length || Pw < item.Width)
+                    {
+                        Fit = 0;
+                    }
+                    else
+                    {
+                        Fit++;
+                        if (Pl == item.Length)
+                        {
+                            Fit++;
+                        }
+                        if (Pw == item.Width)
+                        {
+                            Fit++;
+                        }
+                    }
+                    item.Fit_pos = Fit;
                 }
-                else
+
+                Sort_Package(package);
+
+                First_Fit = package.Item.First().Fit_pos;
+
+                if(First_Fit > 0)
                 {
-                    Fit++;
-                    if (glass_lenght == item.Length)
+                    P_x = positions.First().X_pos;
+                    P_y = positions.First().Y_pos;
+
+                    I_x = package.Item.First().Id;
+                    I_l = package.Item.First().Length;
+                    I_w = package.Item.First().Width;
+
+                    Piece piece = new Piece { id = I_x, Lenght = I_l, Widht = I_w, X = P_x, Y = P_y };
+
+                    wynik.Add(piece);
+
+                    package.Item.RemoveAt(0);
+
+                    if(package.Item.Count > 0)
                     {
-                        Fit++;
-                    }
-                    if (glass_widht == item.Width)
-                    {
-                        Fit++;
+                        Sort_Package(package);
+
+                        P_ok = true;
+
+                        if(Pw > I_w)
+                        {
+                            Pos_x_2 = 0;
+                            Pos_y_2 = 0;
+                            L_2 = 0;
+                            W_2 = 0;
+                            A_2 = 0;
+                            temp_area = 0;
+                            i = 0;
+
+                            P_ok = false;
+
+                            Pos_x_2 = P_x;
+                            Pos_y_2 = P_y + I_w;
+
+                            L_2 = glass_lenght - Pos_x_2;
+                            W_2 = Pw - I_w;
+                            A_2 = L_2 * W_2;
+
+                            temp_area = package.Item.Last().Area;
+                            i = package.Item.Count();
+
+                            while(temp_area <= A_2 && i > -1)
+                            {
+                                temp_area = package.Item.ElementAt(i).Amount;
+
+                                Lmin = package.Item.ElementAt(i).Length;
+                                Wmin = package.Item.ElementAt(i).Width;
+
+                                if (L_2 >= Lmin && W_2 >= Wmin)
+                                {
+                                    Position position = new Position {X_pos = Pos_x_2, Y_pos = Pos_y_2, Lenght = L_2, Widht = W_2 };
+
+                                    positions.Add(position);
+
+                                    P_ok = true;
+                                    i = -1;
+                                }
+                                i--;
+                            }
+                        }
+
+                        if (Pl > I_l)
+                        {
+                            Pos_x_1 = 0;
+                            Pos_y_1 = 0;
+                            L_1 = 0;
+                            W_1 = 0;
+                            A_1 = 0;
+                            temp_area = 0;
+                            i = 0;
+
+                            Pos_x_1 = P_x + I_l;
+                            Pos_y_1 = P_y;
+
+                            L_1 = glass_lenght - Pos_x_1;
+                            W_1 = I_w;
+                            A_1 = L_1 * W_1;
+
+                            if (!P_ok)
+                            {
+                                W_1 = W_1 + W_2;
+                                A_1 = L_1 * W_1;
+                            }
+
+                            temp_area = package.Item.Last().Area;
+                            i = package.Item.Count();
+
+                            while (temp_area <= A_1 && i > -1)
+                            {
+                                temp_area = package.Item.ElementAt(i).Amount;
+
+                                Lmin = package.Item.ElementAt(i).Length;
+                                Wmin = package.Item.ElementAt(i).Width;
+
+                                if (L_1 >= Lmin && W_1 >= Wmin)
+                                {
+                                    Position position = new Position { X_pos = Pos_x_1, Y_pos = Pos_y_1, Lenght = L_1, Widht = W_1 };
+
+                                    positions.Add(position);
+
+                                    i = -1;
+                                }
+                                i--;
+                            }
+                        }
                     }
                 }
-                item.Fit_pos = Fit;
-            }
 
-            Sort_Package(package);
-
-            //if (package.Item.First().Fit_pos > 0)
-            //{
-
-            //}
+                if(package.Item.Count > 0)
+                {
+                    package.Item.RemoveAt(0);
+                }
+            }          
 
             return wynik;
         }
@@ -280,13 +465,10 @@ namespace CGC.Controllers
         { 
             List<Glass> glasses = receiver.glasses;
             List<Glass> wynik = new List<Glass>();
+            List<Position> positions = new List<Position>();
             User user = receiver.user;
-
-            Machines machines = receiver.machines;
             
             Package packages = receiver.package;
-
-
 
             Return_Area(packages);
             Set_Package(packages);
@@ -304,12 +486,13 @@ namespace CGC.Controllers
 
                             tmp.Glass_id = glass.Glass_id;
 
-                            tmp.Pieces = Package_Piece(glass.Length, glass.Width, packages);
+                            Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
+
+                            tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
 
                             wynik.Add(tmp);
                         }
                     }
-
                     return wynik;
                 }            
             }
@@ -317,6 +500,87 @@ namespace CGC.Controllers
             //błąd nie ma takiego usera
 
             return wynik;
+        }
+
+        [HttpPost("Post_Production")]
+        public async Task<string> Post_Production(Receiver receiver)
+        {
+            Order order = receiver.order;
+            Package package = receiver.package;
+            User user = receiver.user;
+            Machines machines = receiver.machines;
+            bool kontrolka;
+
+            foreach(User usere in usersController.GetUsers())
+            {
+                if(usere.Login == user.Login)
+                {
+                    foreach(Order ord in orderController.GetOrders())
+                    {
+                        if(order.Id_Order == ord.Id_Order)
+                        {
+                            foreach(Item item in orderController.GetItems(ord))
+                            {
+                                foreach(Item item_cutted in package.Item)
+                                {
+                                    if(item.Id == item_cutted.Id)
+                                    {
+                                        item.Status = "ready";
+
+                                        Random rand = new Random();
+                                        var code = rand.Next(1, 9000);
+
+                                        Repeat(code);
+
+                                        string query = "INSERT INTO dbo.[Product](@Id,@Owner,@Desk,@Status,@Id_item)";
+                                        SqlCommand command = new SqlCommand(query, cnn);
+
+                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = code;
+                                        command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
+                                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = item.Status;
+                                        command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
+
+                                        cnn.Open();
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+                                        cnn.Close();
+                                    }
+                                }
+                            }
+
+                            kontrolka = true;
+
+                            foreach (Item itm in orderController.GetItems(ord))
+                            {
+                                if(itm.Status == "awaiting" || itm.Status == "cut")
+                                {
+                                    kontrolka = false;
+                                }
+                            }
+
+                            string query2 = "Update dbo.[Machines](SET Status = @Status WHERE No = @No)";
+                            SqlCommand command2 = new SqlCommand(query2, cnn);
+
+                            command2.Parameters.Add("@No", SqlDbType.Int, 40).Value = machines.No;
+                            command2.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "ready";
+
+
+                            cnn.Open();
+                            command2.ExecuteNonQuery();
+                            command2.Dispose();
+                            cnn.Close();
+
+
+
+                            return "Done";
+                        }
+                    }
+                }
+            }
+
+
+            return "Not Done";
         }
     }
 }
