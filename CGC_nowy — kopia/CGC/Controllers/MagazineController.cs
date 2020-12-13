@@ -213,6 +213,39 @@ namespace CGC.Controllers
             cnn.Close();
         }
 
+        public List<Glass> Set_Filter(List<Glass> temporary)
+        {
+            List<Glass> temp = new List<Glass>();
+
+            foreach (Glass glass in temporary)
+            {
+                List<Glass_Id> temp2 = new List<Glass_Id>();
+                foreach (Glass_Id glass_Id in glass.Glass_info)
+                {
+                    if (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false)
+                    {
+                        temp2.Add(glass_Id);
+                    }
+                }
+                if (temp2.Count != 0)
+                {
+                    glass.Glass_info = temp2;
+
+                    temp.Add(glass);
+                }
+            }
+
+            foreach (Glass tmp in temp)
+            {
+                foreach (Glass_Id glass_Id in tmp.Glass_info)
+                {
+                    tmp.Glass_id.Add(glass_Id.Id);
+                }
+            }
+
+            return temp;
+        }
+
         public UsersController usersController = new UsersController();
 
         [HttpGet("Return_All_Colors")]
@@ -224,33 +257,7 @@ namespace CGC.Controllers
         [HttpGet("Return_All_Glass")]
         public async Task<List<Glass>> Return_All_Glass()
         {
-            List<Glass> temp = new List<Glass>();
-
-            foreach (Glass glass in Getglass())
-            {
-                List<Glass_Id> temp2 = new List<Glass_Id>();
-                foreach (Glass_Id glass_Id in glass.Glass_info)
-                {
-                    if  (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false)
-                    {
-                        temp2.Add(glass_Id);
-                    }
-                }
-                if(temp2.Count != 0)
-                {
-                    glass.Glass_info = temp2;
-
-                    temp.Add(glass);
-                }
-            }
-
-            foreach(Glass tmp in temp)
-            {
-                foreach(Glass_Id glass_Id in tmp.Glass_info)
-                {
-                    tmp.Glass_id.Add(glass_Id.Id);
-                }
-            }
+            List<Glass> temp = Set_Filter(Getglass());
 
             return temp;
         }

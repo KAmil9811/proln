@@ -47,6 +47,9 @@ export class HomePage extends Component {
     readyGlassWarehouse = (event) => {
         this.props.history.push('/ready_glass_warehouse')
     }
+    Production = (event) => {
+        this.props.history.push('/selection_of_orders')
+    }
 
     render() {
         return (
@@ -56,7 +59,7 @@ export class HomePage extends Component {
                          <button className="ele1" onClick={this.logOut}>Wyloguj</button>
                     </div>
                     <div className="conteiner">
-                        <button className="ele2">Produkcja</button>
+                        <button className="ele2" onClick={this.Production}>Produkcja</button>
                         <button className="ele2" onClick={this.glassWarehouse}>Magazyn</button>
                         <button className="ele2" onClick={this.readyGlassWarehouse}>Gotowe produkty</button>
                         

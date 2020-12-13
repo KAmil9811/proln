@@ -30,7 +30,12 @@ import { ReadyGlassWarehouse } from './components/readyGlassWarehouse/ReadyGlass
 import { EditOrder } from './components/orders/EditOrder';
 import { EditOrderItem } from './components/orders/EditOrderItem';
 import { EditProduct } from './components/readyGlassWarehouse/EditProduct';
+
 import { Test } from './components/opti/test';
+
+import { SelectionOfOrders } from './components/Production/SelectionOfOrders';
+import { ReadyPackages } from './components/Production/ReadyPackages';
+
 
 export default class App extends Component {
     displayName = App.name
@@ -68,7 +73,13 @@ export default class App extends Component {
                 <Route path='/edit_order' component={EditOrder} />
                 <Route path='/edit_order_item' component={EditOrderItem} />
                 <Route path='/product_edit' component={EditProduct} />
+
                 <Route path='/test' component={Test} />
+
+                <Route path='/selection_of_orders' component={SelectionOfOrders} />
+                <Route path='/ready_packages' component={ReadyPackages} />
+                
+
 
             </div>
         );

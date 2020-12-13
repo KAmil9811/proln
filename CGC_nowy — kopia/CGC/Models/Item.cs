@@ -11,12 +11,12 @@ namespace CGC.Models
     {
         //Zalezne od shape
         
-        public double Thickness { get; set; }
         public double Length { get; set; }
+        public double Width { get; set; }
 
 
         //Ogólne
-        public double Width { get; set; }
+        public double Thickness { get; set; }
         public string Type { get; set; }
         public bool Can_Be_Createad { get; set; }
         public string Color { get; set; }
@@ -26,6 +26,11 @@ namespace CGC.Models
         public string Order_id { get; set; }
         public string Desk { get; set; }
         public int Amount { get; set; }
+
+        //Ciecie
+        public double Area { get; set; }
+        public int Fit_pos { get; set; }
+
 
         public string Error_Messege { get; set; }
     }
