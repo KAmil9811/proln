@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 
-export class OrdersTable extends Component {
+export class PackagesTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,11 +16,11 @@ export class OrdersTable extends Component {
         };
     }
 
-
-
+    //`api/Order/Return_All_Orders`
+    //`api/Cut/Return_Package_To_Cut`
     componentDidMount() {
         var table2 = [];
-        fetch(`api/Order/Return_All_Orders`, {
+        fetch(`api/Cut/Return_Package_To_Cut`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -35,22 +35,12 @@ export class OrdersTable extends Component {
                         number: json[i].id_Order,
                         //status: json[i].status,
                         klient: json[i].owner,
-                        x: json[i].stan,
-                        priority: json[i].priority,
-                        deadline: json[i].deadline,
+                        thickness: json[i].hight,
+                        color: json[i].color,
+                        type: json[i].type,
                         items: json[i].items,
                         choose: <button className="user_delete" > Wybierz </button>
-                        /* more: <Link to="/oneorder"><button className="details3" id={i}
-                             onClick={
-                                 (e) => {
-                                     // console.log(table2[e.target.id].items);
-                                     sessionStorage.setItem('orderId', table2[e.target.id].number);
-                                     sessionStorage.setItem('klient', table2[e.target.id].klient);
-                                     sessionStorage.setItem('deadline', table2[e.target.id].deadline);
-                                     sessionStorage.setItem('priority', table2[e.target.id].priority);
- 
-                                 }
-                             }>Szczegóły</button></Link>*/
+                      
                     })
                 };
                 this.setState({
@@ -69,30 +59,25 @@ export class OrdersTable extends Component {
                                 width: 150
                             },
                             {
-                                label: 'X/Y/Z',
-                                field: 'x',
+                                label: 'Typ',
+                                field: 'type',
                                 sort: 'asc',
                                 width: 150
                             },
 
                             {
-                                label: 'Priorytet',
-                                field: 'priority',
+                                label: 'Kolor',
+                                field: 'color',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Deadline',
-                                field: 'deadline',
+                                label: 'Grubość',
+                                field: 'thickness',
                                 sort: 'asc',
                                 width: 30
                             },
-                            /*  {
-                                  label: 'Status',
-                                  field: 'status',
-                                  sort: 'asc',
-                                  width: 30
-                              },*/
+                         
                             {
                                 label: 'Więcej',
                                 field: 'choose',

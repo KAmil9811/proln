@@ -134,25 +134,31 @@ namespace CGC.Controllers
         }
 
 
-        [HttpGet("Return_Package_To_Cut")]
-        public async Task<List<Package>> Return_Package_To_Cut(Receiver receiver)
+        [HttpPost("Return_Package_To_Cut")]
+        public async Task<List<Package>> Return_Package_To_Cut([FromBody]Receiver receiver)
         {
             Order order = receiver.order;
             List<Package> temp = new List<Package>();
             bool kontrol;
 
-            foreach (Item item in order.items)
+
+
+            foreach (Item item in orderController.GetItems(order))
             {
                 kontrol = false;
 
-                foreach (Package package in temp)
+                if(temp.Count != 0)
                 {
-                    if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                    foreach (Package package in temp)
                     {
-                        package.Item.Add(item);
-                        kontrol = true;
+                        if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                        {
+                            package.Item.Add(item);
+                            kontrol = true;
+                        }
                     }
                 }
+                
 
                 if (kontrol == false)
                 {

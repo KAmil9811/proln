@@ -14,7 +14,5 @@ namespace CGC.Models
         public double Thickness { get; set; }
 
         public List<Item> Item = new List<Item>();
-
-
     }
 }

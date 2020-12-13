@@ -41,11 +41,15 @@ export class OrdersTable extends Component {
                         priority: json[i].priority,
                         deadline: json[i].deadline,
                         items: json[i].items,
-                        choose: <button className="choose_order" id={i} onClick={(e) => {
+                        choose: <Link to="/ready_packages"> <button className="choose_order" id={i}
+                            onClick={(e) => {
                             this.chooseOrder( table2[e.target.id].number);
                             
+                            
+                            }
+                        } > Wybierz </button></Link>
 
-                        }} > Wybierz </button  >
+                      
                        
                     })
                 };
@@ -103,60 +107,31 @@ export class OrdersTable extends Component {
 
     chooseOrder(id) {
         const receiver = {
-            user: {
-                login: sessionStorage.getItem('login')
-            },
             order: {
-                no: id
+                id_order: id
             }
         }
         console.log(receiver)
+        fetch(`api/Cut/Return_Package_To_Cut`, {
+            method: "post",
+            body: JSON.stringify(receiver),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        
+        })
 
-       /* if (status === 'Ready') { //Zmieniamy na broken
-            fetch(`api/Machine/Change_Status_Machine`, {
-                method: "post",
-                body: JSON.stringify(receiver),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    return (json);
-                })
-                .then(json => {
-                    alert("Maszyna zepsuta!")
-                })
-                .then(json => {
-                    window.location.reload();
-                })
-        }
-        else if (status === 'InUse') { ///w użyciu 
-            alert("Maszyna w użyciu, nie można zmienić stanu")
-        }
-        else {
-            fetch(`api/Machine/Change_Status_Machine`, {
-                method: "post",
-                body: JSON.stringify(receiver),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
 
                 .then(res => res.json())
                 .then(json => {
                     console.log(json)
                     return (json);
+                    
                 })
-                .then(json => {
-                    alert("Naprawiono maszynę")
-                })
-                .then(json => {
-                    window.location.reload();
-                })
-        }*/
+   //   .then(json => this.props.history.push('/ready_packages'))
+          
+        
+        
     }
 
     table() {

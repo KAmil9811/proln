@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { OrdersTable } from './OrdersTable';
+import { PackagesTable } from './PackagesTable';
 
 
 
@@ -52,7 +52,7 @@ export class ReadyPackages extends Component {
                     </div>
                     
                     <div className="tablewar">
-                        <OrdersTable />
+                        <PackagesTable/>
                     </div>
                 </div>
 
