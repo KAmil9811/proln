@@ -456,12 +456,9 @@ namespace CGC.Controllers
             User user = receiver.user;
             Order order = receiver.order;
             Item item1 = receiver.item;
+            List<Glass> glasses = new List<Glass>();
             
             Package packages = new Package();
-
-            Return_Area(packages);
-            Set_Package(packages);
-            Sort_Package(packages);
 
             foreach (Item item in orderController.GetItems(order))
             {
@@ -471,29 +468,36 @@ namespace CGC.Controllers
                 }
             }
 
+            Return_Area(packages);
+            Set_Package(packages);
+            Sort_Package(packages);
+
+            foreach (Glass glass in magazineController.Getglass())
+            {
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness <= glass.Width)
+                {
+                    glasses.Add(glass);
+
+                    Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
+
+                    positions.Add(position);
+                }
+            }
+
             foreach (User usere in usersController.GetUsers())
             {
                 if(usere.Login == user.Login)
                 {
-                    foreach (Glass glass in magazineController.Getglass())
+                    foreach (Glass glass in glasses)
                     {
-                        if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness <= glass.Width)
+                        if (packages.Item.Count > 0)
                         {
-                            if (packages.Item.Count > 0)
-                            {
-                                Glass tmp = glass;
+                            Glass tmp = glass;
 
-                                tmp.Glass_id = glass.Glass_id;
+                            tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
 
-                                Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
-
-                                positions.Add(position);
-
-                                tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
-
-                                wynik.Add(tmp);
-                            }
-                        }
+                            wynik.Add(tmp);
+                        }                       
                     }
                     return wynik;
                 }            
