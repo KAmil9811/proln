@@ -40,7 +40,31 @@ export class Test extends Component {
             .then(res => res.json())
             .then(json => {
                 console.log(json)
-                return (json)
+                for(var i = 0; i < json.length; i++) {
+                    /*table2.push({
+                        length: json[i].length,
+                        width: json[i].width,
+                        thickness: json[i].hight,
+                        color: json[i].color,
+                        type: json[i].type,
+                        ids: json[i].id,
+                        status: json[i].status,
+                        desk: json[i].desk,
+                    })*/
+                    var canvas = document.getElementById('canvas');
+                    if (canvas.getContext) {
+                        var ctx = canvas.getContext('2d');
+                        ctx.strokeRect(0, 50, json[i].width * 10, json[i].length * 10); ///tafla
+                        for (var j = 0; j < json[i].pieces.length; j++) {
+                            ctx.strokeRect(json[i].pieces[j].x, json[i].pieces[j].y + 50, json[i].pieces[j].widht, json[i].pieces[j].lenght);///itemy
+                        }
+                    }
+                    console.log('beka z MimeTypeArray')
+                    console.log(json[i].pieces[i])
+                };
+
+                
+                //return (json)
             })
 
 
@@ -48,7 +72,7 @@ export class Test extends Component {
 
 
 
-        var canvas = document.getElementById('canvas');
+        /*var canvas = document.getElementById('canvas');
         var x = 0;
         var y = 0;
         var w = 50;
@@ -77,7 +101,7 @@ export class Test extends Component {
             ctx.fillText("200x250", x2 + 5, y2+60);
             ctx.strokeRect(x3, y3+50, w3, h3);
             ctx.fillText("50x50", x3 + 5, y3+60);
-        }
+        }*/
     }
 
    
