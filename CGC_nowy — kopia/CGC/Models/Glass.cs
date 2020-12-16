@@ -7,9 +7,9 @@ namespace CGC.Models
 {
     public class Glass
     {
-        public double Hight { get; set; }
-        public double Width { get; set; }
-        public double Length { get; set; }
+        public double Hight { get; set; } //z
+        public double Width { get; set; } //y
+        public double Length { get; set; } //x
         public int Count { get; set; }
 
         public string Type { get; set; }

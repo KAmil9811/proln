@@ -264,7 +264,7 @@ namespace CGC.Controllers
             package.Item.Sort((item1, item2) => (item1.Fit_pos.CompareTo(item2.Fit_pos)) * (-1));
         }
 
-        public List<Piece> Package_Pieces(List<Position> positions ,double x, double y, Package package)
+        public List<Piece> Package_Pieces(double x, double y, Package package)
         {
             List<Piece> wynik = new List<Piece>();
             double glass_lenght = x; //Tl
@@ -293,7 +293,10 @@ namespace CGC.Controllers
             double L_2 = 0;
             double W_2 = 0;
             double A_2 = 0;
+            List<Position> positions = new List<Position>();
+            Position pos = new Position { X_pos = 0, Y_pos = 0, Lenght = glass_lenght, Widht = glass_widht };
 
+            positions.Add(pos);
 
             while (positions.Count > 0 && package.Item.Count > 0)
             {
@@ -441,7 +444,7 @@ namespace CGC.Controllers
 
                 if(package.Item.Count > 0)
                 {
-                    package.Item.RemoveAt(0);
+                    positions.RemoveAt(0);
                 }
             }          
 
@@ -452,21 +455,25 @@ namespace CGC.Controllers
         public async Task<List<Glass>> Magic([FromBody] Receiver receiver)
         { 
             List<Glass> wynik = new List<Glass>();
-            List<Position> positions = new List<Position>();
             User user = receiver.user;
             Order order = receiver.order;
             Item item1 = receiver.item;
             List<Glass> glasses = new List<Glass>();
+            int kontrol;
             
             Package packages = new Package();
+            Package backup = new Package();
 
             foreach (Item item in orderController.GetItems(order))
             {
                 if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness)
                 {
                     packages.Item.Add(item);
+                    backup.Item.Add(item);
                 }
             }
+
+            kontrol = packages.Item.Count;
 
             Return_Area(packages);
             Set_Package(packages);
@@ -474,13 +481,9 @@ namespace CGC.Controllers
 
             foreach (Glass glass in magazineController.Getglass())
             {
-                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness <= glass.Width)
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Width)
                 {
                     glasses.Add(glass);
-
-                    Position position = new Position { Lenght = glass.Length, Widht = glass.Width, X_pos = 0, Y_pos = 0 };
-
-                    positions.Add(position);
                 }
             }
 
@@ -494,11 +497,26 @@ namespace CGC.Controllers
                         {
                             Glass tmp = glass;
 
-                            tmp.Pieces = Package_Pieces(positions, glass.Length, glass.Width, packages);
+                            tmp.Pieces = Package_Pieces(glass.Length, glass.Width, packages);
 
                             wynik.Add(tmp);
                         }                       
                     }
+
+                    if(wynik.Count < backup.Item.Count)
+                    {
+                        Glass tmp = new Glass();
+                        tmp.Error_Messege = "zabraklo miejsca dla: ";
+
+                        for (int i = 0; i < packages.Item.Count; i++)
+                        {
+                            tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
+
+                            wynik.Add(tmp);
+                        }
+                        wynik.Add(tmp);
+                    }
+
                     return wynik;
                 }            
             }
