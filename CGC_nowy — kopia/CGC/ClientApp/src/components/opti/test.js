@@ -1,7 +1,7 @@
 ﻿import React, { Component } from "react";
 import './test.css';
 import { OptiTable } from './OptiTable'
-
+import { OptiTableItems } from './OptiTableItems'
 
 
 export class Test extends Component {
@@ -116,10 +116,12 @@ export class Test extends Component {
                     <canvas className="canvas" id="canvas" width="600" height="600" ></canvas>
                 </div>
                 <div className="table2">
+                    <h2>Glasiki</h2>
                     <OptiTable />
                 </div>
                 <div className="table3">
-                    <OptiTable />
+                    <h2>Itemki</h2>
+                    <OptiTableItems />
                 </div>
             </div>
         );
