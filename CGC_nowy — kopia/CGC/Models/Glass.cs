@@ -24,9 +24,6 @@ namespace CGC.Models
 
         public List<int> Glass_id = new List<int>();
 
-        //to cut
-        public List<Piece> Pieces = new List<Piece>();
-
-       
+         
     }
 }

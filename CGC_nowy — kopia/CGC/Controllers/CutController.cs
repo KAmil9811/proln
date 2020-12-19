@@ -81,20 +81,6 @@ namespace CGC.Controllers
             List<Order> orders = new List<Order>();
             List<Order> temp = new List<Order>();
 
-            DateTime datetime;
-
-
-            string help;
-            string help2;
-            int year = 0;
-            int month = 0;
-            int day = 0;
-            int counter;
-
-            int data_y = 0;
-            int data_m = 0;
-            int data_d = 0;
-
             foreach (Order order in orderController.GetOrders())
             {
                 if (order.Status == "awaiting" || order.Status == "stopped")
@@ -112,52 +98,6 @@ namespace CGC.Controllers
             }
 
             orders.Sort((order1,  order2) => order1.Deadline2.CompareTo(order2.Deadline2));
-
-                //foreach(Order order in orders)
-                //{
-                //    counter = 0;
-                //    help2 = "";
-                //    help = order.Deadline;
-
-                //    datetime = Convert.ToDateTime(help);
-
-                //    foreach(char i in help)
-                //    {
-                //        if(counter < 4)
-                //        {
-                //            help2 = help2 + i;
-                //            counter++;
-
-                //            if (counter == 4)
-                //            {
-                //                year = Convert.ToInt32(help2);
-                //                help2 = "";
-                //            }
-
-                //        }
-                //        else if(counter < 7)
-                //        {
-                //            help2 = help2 + i;
-                //            counter++;
-
-                //            if (counter == 7)
-                //            {
-                //                month = Convert.ToInt32(help2);
-                //                help2 = "";
-                //            }
-                //        }                
-                //        else if (counter < 10)
-                //        {
-                //            help2 = help2 + i;
-                //            counter++;
-
-                //            if (counter == 10)
-                //            {
-                //                day = Convert.ToInt32(help2);
-                //            }
-                //        }
-                //    }
-                //  }
 
             return orders;
         }
@@ -205,11 +145,16 @@ namespace CGC.Controllers
         {
             List<Glass> glasses = new List<Glass>();
 
+            Sort_Package(package);
+
             foreach (Glass glasse in magazineController.Set_Filter(magazineController.Getglass()))
             {
                 if (glasse.Type == package.Type && glasse.Color == package.Color && glasse.Hight == package.Thickness)
                 {
-                    glasses.Add(glasse);
+                    if (package.Item.First().Length <= glasse.Length && package.Item.First().Width <= glasse.Width)
+                    {
+                        glasses.Add(glasse);
+                    }
                 }
             }
             return glasses;
@@ -229,6 +174,16 @@ namespace CGC.Controllers
             }
             return machines;
         }
+
+        [HttpGet("Return_All_Project")]
+        public async Task<List<Cut_Project>> Return_Cut_Project()
+        {
+            List<Cut_Project> cut_Projects = new List<Cut_Project>();
+
+
+            return cut_Projects;
+        }
+
 
         public void Return_Area(Package package)
         {
@@ -483,9 +438,15 @@ namespace CGC.Controllers
             {
                 if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Width)
                 {
-                    glasses.Add(glass);
+                    if (packages.Item.First().Length <= glass.Length && packages.Item.First().Width <= glass.Width)
+                    {
+                        glasses.Add(glass);
+                    }
                 }
             }
+
+            glasses.Sort((glass1, glass2) => glass1.Width.CompareTo(glass2.Width));
+            glasses.Sort((glass1, glass2) => glass1.Length.CompareTo(glass2.Length));
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -493,14 +454,22 @@ namespace CGC.Controllers
                 {
                     foreach (Glass glass in glasses)
                     {
-                        if (packages.Item.Count > 0)
+                        foreach(Glass_Id glass_id in glass.Glass_info)
                         {
-                            Glass tmp = glass;
+                            if (packages.Item.Count > 0)
+                            {
+                                Glass tmp = new Glass();
 
-                            tmp.Pieces = Package_Pieces(glass.Length, glass.Width, packages);
+                                tmp.Width = glass.Width;
+                                tmp.Hight = glass.Hight;
+                                tmp.Length = glass.Length;
 
-                            wynik.Add(tmp);
-                        }                       
+                                glass_id.Pieces = Package_Pieces(glass.Length, glass.Width, packages);
+
+                                tmp.Glass_info.Add(glass_id);
+                                wynik.Add(tmp);
+                            }
+                        }                    
                     }
 
                     if(wynik.Count < backup.Item.Count)
@@ -508,11 +477,9 @@ namespace CGC.Controllers
                         Glass tmp = new Glass();
                         tmp.Error_Messege = "zabraklo miejsca dla: ";
 
-                        for (int i = 0; i < packages.Item.Count; i++)
+                        for (int i = wynik.Count-1; i < packages.Item.Count; i++)
                         {
                             tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
-
-                            wynik.Add(tmp);
                         }
                         wynik.Add(tmp);
                     }
@@ -522,8 +489,66 @@ namespace CGC.Controllers
             }
            
             //błąd nie ma takiego usera
-
             return wynik;
+        }
+
+        [HttpPost("Save_Project")]
+        public async Task<List<Glass>> Save_Project([FromBody] Receiver receiver)
+        {
+            List<Glass> glasses = receiver.glasses;
+            Order order = receiver.order;
+
+            Random rand = new Random();
+            var code = rand.Next(1, 9000);
+
+            Repeat(code);
+
+            string query = "INSERT INTO dbo.[Cut_Project](@Cut_id,@Order_id)";
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+            cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            cnn.Close();
+
+            foreach (Glass glass in glasses)
+            {
+                query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
+                command = new SqlCommand(query, cnn);
+
+                command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass.Glass_info.First().Id;
+
+                cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
+
+
+                foreach (Item item in orderController.GetItems(order))
+                {
+                    foreach (Piece piece in glass.Glass_info.First().Pieces)
+                    {
+                        if (piece.id == item.Id)
+                        {
+                            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
+                            command = new SqlCommand(query, cnn);
+
+                            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                            command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+                        }
+                    }
+                }
+            }
+            return glasses;
         }
 
         [HttpPost("Post_Production")]
@@ -594,8 +619,6 @@ namespace CGC.Controllers
                             command2.ExecuteNonQuery();
                             command2.Dispose();
                             cnn.Close();
-
-
 
                             return "Done";
                         }
