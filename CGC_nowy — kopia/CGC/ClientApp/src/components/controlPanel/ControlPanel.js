@@ -73,6 +73,9 @@ export class ControlPanel extends Component {
         this.props.history.push('/glassatibutes')
     }
 
+    userHistory = (event) => {
+        this.props.history.push('/user_history')
+    }
     
     typeMachineAdd() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
@@ -89,6 +92,11 @@ export class ControlPanel extends Component {
         }
     }
 
+    usersHistoryTable() {
+        return (
+            <button type="button" className="types98" onClick={this.userHistory}>Historia użytkowników</button>
+            )
+    }
     adminPermissionsRender() {
         if (sessionStorage.getItem('admin') === 'true') {
             return (<option>Admin</option>)
@@ -145,6 +153,7 @@ export class ControlPanel extends Component {
         let machineManagement = this.machineManagerPermissionsRender();
         let cutManagement = this.cutManagerPermissionsRender();
         let colorGlassEdit = this.colorAndTypeGlassEdit();
+        let userHistoryTable = this.usersHistoryTable();
 
         return ( 
             <div className="ControlPanel" >
@@ -187,7 +196,8 @@ export class ControlPanel extends Component {
                         </div>
                         <div>
                             {typeMachine}
-                            {colorGlassEdit}
+                        {colorGlassEdit}
+                        {userHistoryTable}
                     </div>
                     {buttonAdd}
                         <div className="tableuser">
