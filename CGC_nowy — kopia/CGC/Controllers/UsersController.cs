@@ -884,7 +884,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
 
-                    string userhistory = "You changed e-mail";
+                    string userhistory = "You changed your e-mail";
 
                     Insert_User_History(userhistory, user.Login);
 
@@ -929,12 +929,11 @@ namespace CGC.Controllers
                     command.Dispose();
                     cnn.Close();
 
-                    string userhistory = "You changed e-mail";
+                    string userhistory = "You changed your password";
 
                     Insert_User_History(userhistory, user.Login);
 
                     temp.Add(user);
-                    cnn.Close();
                     return temp;
                 }
             }
@@ -1014,6 +1013,10 @@ namespace CGC.Controllers
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
+
+                        string userhistory = "You reset your password";
+
+                        Insert_User_History(userhistory, user.Login);
 
                         temp.Add(user);
                         return temp;

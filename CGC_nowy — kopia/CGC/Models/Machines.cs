@@ -12,8 +12,6 @@ namespace CGC.Models
         public string Type { get; set; }
         public bool Stan { get; set; }
 
-        public List<Machines_History> machines_history = new List<Machines_History>();
-
         public string Error_Message;
 
     }

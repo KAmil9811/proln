@@ -146,7 +146,6 @@ namespace CGC.Controllers
             return Get_All_Products();
         }
 
-
         [HttpPost("Released_Order")]
         public async Task<List<Order>> Released_Order([FromBody] Receiver receiver)
         {

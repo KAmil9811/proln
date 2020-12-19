@@ -30,6 +30,7 @@ namespace CGC.Models
         //Ciecie
         public double Area { get; set; }
         public int Fit_pos { get; set; }
+        public int Cut_id { get; set; }
 
 
         public string Error_Messege { get; set; }

@@ -42,10 +42,7 @@ namespace CGC.Controllers
                 }
             }
         }
-        public List<Item> items = new List<Item>
-        {
 
-        };
         UsersController usersController = new UsersController();
         MagazineController magazineController = new MagazineController();
 
@@ -113,73 +110,51 @@ namespace CGC.Controllers
             return temp;
         }
 
-        public void Insert_Order_History(string Description, string Login)
+        public List<Item> GetAllItems()
+        {
+            List<Item> temp = new List<Item>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Item]", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Item item = new Item();
+                item.Id = Convert.ToInt32(sqlDataReader["Id"]);
+                item.Thickness = Convert.ToDouble(sqlDataReader["Height"]);
+                item.Width = Convert.ToDouble(sqlDataReader["Weight"]);
+                item.Length = Convert.ToDouble(sqlDataReader["Lenght"]);
+                item.Type = sqlDataReader["Glass_Type"].ToString();
+                item.Color = sqlDataReader["Color"].ToString();
+                item.Status = sqlDataReader["Status"].ToString();
+                item.Shape = sqlDataReader["Shape"].ToString();
+                item.Order_id = sqlDataReader["Order_id"].ToString();
+                item.Desk = sqlDataReader["Desk"].ToString();
+
+                temp.Add(item);              
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return temp;
+        }
+
+        public void Insert_Order_History(string Description, string Login, string Id_Order)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.[User_History](Date, Login, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.[User_History](Date, Login, Description, Id_Order) VALUES(@data, @Login, @Description, @Id_Order)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = Id_Order;
 
             cnn.Open();
             command.ExecuteNonQuery();
             command.Dispose();
             cnn.Close();
-        }
-        //kod do czasu bazy danych
-        public bool Check_Code(string code)
-        {
-            foreach (Order order in GetOrders())
-            {
-                if (code == order.Id_Order)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public void Repeat(string code)
-        {
-            Random rand = new Random();
-            var temp = rand.Next(1, 9000);
-            bool check;
-
-            check = Check_Code(code);
-            if (check == false)
-            {
-                temp = rand.Next(1, 9000);
-                code = temp.ToString();
-                Repeat(code);
-            }
-        }
-
-        public void Repeat_item(int code, Order order)
-        {
-            Random rand = new Random();
-            code = rand.Next(1, 9000);
-            bool check;
-
-            check = Check_Code_item(code, order);
-            if (check == false)
-            {
-                code = rand.Next(1, 9000);
-                Repeat_item(code, order);
-            }
-        }
-
-        public bool Check_Code_item(int code, Order order)
-        {
-            foreach (Item item in order.items)
-            {
-                if (code == item.Id)
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         public int Avaible_Cut(Order order)
@@ -277,15 +252,11 @@ namespace CGC.Controllers
             {
                 order.items.Add(item);
             }
-            
 
-            Random rand = new Random();
-            var temper = rand.Next(1, 9000);
-            string code = temper.ToString();
-            
-            Repeat(code);
+            int code = Int32.Parse(GetOrders().Last().Id_Order) + 1;
 
-            order.Id_Order = code;
+            order.Id_Order = code.ToString();
+
             List<Item> itemstemp = new List<Item>();
 
             foreach (Item item in order.items)
@@ -295,10 +266,7 @@ namespace CGC.Controllers
                     item.Status = "awaiting";
                     item.Can_Be_Createad = false;
 
-                    int code2 = rand.Next(1, 9000);
-
-                    Repeat_item(code2, order);
-                    item.Id = code2;
+                    item.Id = GetAllItems().Last().Id + 1;
                     item.Amount = 0;
                 }
                 else if(item.Amount > 1)
@@ -306,10 +274,7 @@ namespace CGC.Controllers
                     item.Status = "awaiting";
                     item.Can_Be_Createad = false;
 
-                    int code2 = rand.Next(1, 9000);
-
-                    Repeat_item(code2, order);
-                    item.Id = code2;
+                    item.Id = GetAllItems().Last().Id + 1;
 
                     while (item.Amount > 0)
                     {
@@ -324,10 +289,7 @@ namespace CGC.Controllers
                         new_item.Thickness = item.Thickness;
                         new_item.Type = item.Type;
 
-                        int code3 = rand.Next(1, 9000);
-
-                        Repeat_item(code3, order);
-                        new_item.Id = code3;
+                        new_item.Id = GetAllItems().Last().Id + 1;
                         new_item.Amount = 0;
                         itemstemp.Add(new_item);
                         item.Amount--;
@@ -392,9 +354,13 @@ namespace CGC.Controllers
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
+
                         string userhistory = "You added new order " + order.Id_Order;
+                        string orderhistory = "Order has been created";
 
                         usersController.Insert_User_History(userhistory, user.Login);
+                        Insert_Order_History(orderhistory,  user.Login,  order.Id_Order);
+
                     }
                     catch(Exception ex)
                     {
@@ -427,30 +393,28 @@ namespace CGC.Controllers
                     {
                         if (ord.Id_Order == order.Id_Order)
                         {
-                            try
-                            {
-                                string query = "UPDATE dbo.[Order] SET Deadline = @Deadline, Owner = @Owner, Priority = @Priority WHERE Id_Order = @Id_Order;";
-                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
-                                command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
-                                command.Parameters.Add("@Priority", SqlDbType.Decimal).Value = order.Priority;
+                            string query = "UPDATE dbo.[Order] SET Deadline = @Deadline, Owner = @Owner, Priority = @Priority WHERE Id_Order = @Id_Order;";
+                            SqlCommand command = new SqlCommand(query, cnn);
 
-                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                            command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
+                            command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
+                            command.Parameters.Add("@Priority", SqlDbType.Decimal).Value = order.Priority;
 
-                                cnn.Open();
-                                command.ExecuteNonQuery();
-                                command.Dispose();
-                                cnn.Close();
-                            }
-                            catch(SqlException e)
-                            {
-                                Console.WriteLine(e);
-                            }
+                            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
-                            //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
-                            //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
-                        }
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+
+                            string userhistory = "You edited order " + order.Id_Order;
+                            string orderhistory = "Order has been edited";
+
+                            usersController.Insert_User_History(userhistory, user.Login);
+                            Insert_Order_History(orderhistory, user.Login, order.Id_Order);
+
+                        }                 
                     }
                 }
             }
@@ -496,8 +460,11 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                //ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "order has been edited" });
-                                //usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "User edit " + ord.Id_Order });
+                                string userhistory = "You edited order items " + order.Id_Order;
+                                string orderhistory = "Order items has been edited";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
                             }
                             catch (SqlException e)
                             {
@@ -513,12 +480,13 @@ namespace CGC.Controllers
         }
 
         [HttpPost("Set_Stan")]
-        public async Task<List<Order>> Set_Stan([FromBody] Receiver receiver, string name)
+        public async Task<List<Order>> Set_Stan([FromBody] Receiver receiver)
         {
             List<Order> temp = new List<Order>();
 
             Order order = receiver.order;
             User user = receiver.user;
+            string name = receiver.new_name;
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -526,65 +494,142 @@ namespace CGC.Controllers
                 {
                     foreach (Order ord in GetOrders())
                     {
-                        if (ord.Id_Order == ord.Id_Order)
+                        if (ord.Id_Order == order.Id_Order)
                         {
                             if (name == "deletead" && ord.Deletead == false && ord.Released == false)
                             {
-                                ord.Deletead = true;
-                                ord.Frozen = false;
+                                string query = "UPDATE dbo.[Order] SET Deletead = @Deletead WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "Order has been removed" });
-                                usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "You deleted order " + ord.Id_Order });
+                                command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = true;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "You change order status " + order.Id_Order + "on deletead";
+                                string orderhistory = "Order has been deleted";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
 
                                 temp.Add(order);
                                 return temp;
                             }
                             else if (name == "deletead" && ord.Deletead == true && ord.Released == false && ord.Frozen == false)
                             {
-                                ord.Deletead = false;
+                                string query = "UPDATE dbo.[Order] SET Deletead = @Deletead WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "Order has been restored" });
-                                usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "You restored order " + ord.Id_Order });
+                                command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = false;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "You restored order " + order.Id_Order;
+                                string orderhistory = "Order has been restored";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
 
                                 temp.Add(order);
                                 return temp;
                             }
                             if (name == "frozen" && ord.Deletead == false && ord.Released == false && ord.Frozen == false)
                             {
-                                ord.Frozen = true;
+                                string query = "UPDATE dbo.[Order] SET Frozen = @Frozen WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "Order had been frozened" });
-                                usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "You frozened order " + ord.Id_Order });
+                                command.Parameters.Add("@Frozen", SqlDbType.Bit).Value = true;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "You change order status " + order.Id_Order + "on frozen";
+                                string orderhistory = "Order has been frozen";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
 
                                 temp.Add(order);
                                 return temp;
                             }
                             else if (name == "frozen" && ord.Deletead == false && ord.Released == false && ord.Frozen == true)
                             {
-                                ord.Frozen = false;
+                                string query = "UPDATE dbo.[Order] SET Frozen = @Frozen WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "Order has been unfreeze" });
-                                usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "You unfreeze order " + ord.Id_Order });
+                                command.Parameters.Add("@Frozen", SqlDbType.Bit).Value = false;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "You change order status " + order.Id_Order + "on unfrozen";
+                                string orderhistory = "Order has been unfrozen";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
 
                                 temp.Add(order);
                                 return temp;
                             }
-                            if (name == "released" && ord.Status == "done" && ord.Deletead == false && ord.Released == false)
+                            if (name == "released" && ord.Status == "Done" && ord.Deletead == false && ord.Released == false)
                             {
-                                ord.Released = true;
+                                string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "Order has been released" });
-                                usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "You released order " + ord.Id_Order });
+                                command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "You change order status " + order.Id_Order + "on released";
+                                string orderhistory = "Order has been released";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
 
                                 temp.Add(order);
                                 return temp;
                             }
                             else if (name == "released" && ord.Deletead == false && ord.Released == true)
                             {
-                                ord.Released = false;
+                                string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Id_Order = @Id_Order;";
+                                SqlCommand command = new SqlCommand(query, cnn);
 
-                                ord.order_Histories.Add(new Order_History { Data = DateTime.Today.ToString("d"), Login = usere.Login, Description = "Order has been unreleased" });
-                                usere.user_history.Add(new User_History { Data = DateTime.Today.ToString("d"), Description = "You unreleased order " + ord.Id_Order });
+                                command.Parameters.Add("@Released", SqlDbType.Bit).Value = false;
+
+                                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "You change order status " + order.Id_Order + "on unreleased";
+                                string orderhistory = "Order has been unreleased";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
 
                                 temp.Add(order);
                                 return temp;

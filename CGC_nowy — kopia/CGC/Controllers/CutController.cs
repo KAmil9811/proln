@@ -48,30 +48,27 @@ namespace CGC.Controllers
         UsersController usersController = new UsersController();
         ProductController productController = new ProductController();
 
-        public bool Check_Code(int code)
+        public List<Cut_Project> GetCut_Project()
         {
-            foreach (Product product in productController.Get_All_Products())
+            List<Cut_Project> temp = new List<Cut_Project>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
             {
-                if (code == product.Id)
-                {
-                    return false;
-                }
+                Cut_Project cut_Project = new Cut_Project();
+                cut_Project.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                cut_Project.Order_id = sqlDataReader["Order_id"].ToString();
+                cut_Project.Status = sqlDataReader["Status"].ToString();
+
+                temp.Add(cut_Project);
             }
-            return true;
-        }
-
-        public void Repeat(int code)
-        {
-            bool check;
-            check = Check_Code(code);
-
-            Random rand = new Random();
-
-            if (check == false)
-            {
-                code = rand.Next(1, 900);
-                Repeat(code);
-            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+            return temp;
         }
 
 
@@ -113,7 +110,7 @@ namespace CGC.Controllers
             {
                 kontrol = false;
 
-                if(item.Status == "awaiting")
+                if(item.Status == "awaiting" && item.Cut_id == null)
                 {
                     kontrol = false;
                     if (temp.Count != 0)
@@ -149,7 +146,7 @@ namespace CGC.Controllers
 
             foreach (Glass glasse in magazineController.Set_Filter(magazineController.Getglass()))
             {
-                if (glasse.Type == package.Type && glasse.Color == package.Color && glasse.Hight == package.Thickness)
+                if (glasse.Type == package.Type && glasse.Color == package.Color && glasse.Hight == package.Thickness && glasse.Cut_id == null)
                 {
                     if (package.Item.First().Length <= glasse.Length && package.Item.First().Width <= glasse.Width)
                     {
@@ -180,10 +177,15 @@ namespace CGC.Controllers
         {
             List<Cut_Project> cut_Projects = new List<Cut_Project>();
 
-
+            foreach(Cut_Project cut_p in GetCut_Project())
+            {
+                if(cut_p.Status == "ready")
+                {
+                    cut_Projects.Add(cut_p);
+                }
+            }
             return cut_Projects;
         }
-
 
         public void Return_Area(Package package)
         {
@@ -436,7 +438,7 @@ namespace CGC.Controllers
 
             foreach (Glass glass in magazineController.Getglass())
             {
-                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Width)
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Width && glass.Cut_id == null)
                 {
                     if (packages.Item.First().Length <= glass.Length && packages.Item.First().Width <= glass.Width)
                     {
@@ -498,10 +500,7 @@ namespace CGC.Controllers
             List<Glass> glasses = receiver.glasses;
             Order order = receiver.order;
 
-            Random rand = new Random();
-            var code = rand.Next(1, 9000);
-
-            Repeat(code);
+            var code = GetCut_Project().Last().Cut_id + 1;
 
             string query = "INSERT INTO dbo.[Cut_Project](@Cut_id,@Order_id)";
             SqlCommand command = new SqlCommand(query, cnn);
@@ -534,7 +533,7 @@ namespace CGC.Controllers
                     {
                         if (piece.id == item.Id)
                         {
-                            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
+                            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
                             command = new SqlCommand(query, cnn);
 
                             command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
@@ -551,6 +550,56 @@ namespace CGC.Controllers
             return glasses;
         }
 
+        [HttpPost("Remove_Project")]
+        public async Task<List<Cut_Project>> Remove_Project([FromBody] Receiver receiver)
+        {
+            List<Cut_Project> cut_Projects = new List<Cut_Project>();
+            Order order = new Order();
+
+            Cut_Project cut_Project = receiver.cut_Project;
+            order.Id_Order = cut_Project.Order_id;
+
+            string query = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id,)";
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Removed";
+
+            cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            cnn.Close();
+
+
+            query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id2 WHERE Cut_id = @Cut_id";
+            command = new SqlCommand(query, cnn);
+
+            command.Parameters.Add("@Cut_id2", SqlDbType.Int).Value = null;
+            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+
+            cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            cnn.Close();
+            
+
+
+            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id2 WHERE Cut_id = @Cut_id";
+            command = new SqlCommand(query, cnn);
+
+            command.Parameters.Add("@Cut_id2", SqlDbType.Int).Value = null;
+            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+
+            cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            cnn.Close();      
+            
+
+            cut_Projects.Add(cut_Project);
+            return cut_Projects;
+        }
+
         [HttpPost("Post_Production")]
         public async Task<string> Post_Production(Receiver receiver)
         {
@@ -558,6 +607,7 @@ namespace CGC.Controllers
             Package package = receiver.package;
             User user = receiver.user;
             Machines machines = receiver.machines;
+            Cut_Project cut_Project = receiver.cut_Project;
             bool kontrolka;
 
             foreach(User usere in usersController.GetUsers())
@@ -576,10 +626,7 @@ namespace CGC.Controllers
                                     {
                                         item.Status = "ready";
 
-                                        Random rand = new Random();
-                                        var code = rand.Next(1, 9000);
-
-                                        Repeat(code);
+                                        var code = productController.Get_All_Products().Last().Id + 1;
 
                                         string query = "INSERT INTO dbo.[Product](@Id,@Owner,@Desk,@Status,@Id_item)";
                                         SqlCommand command = new SqlCommand(query, cnn);
@@ -620,13 +667,22 @@ namespace CGC.Controllers
                             command2.Dispose();
                             cnn.Close();
 
+                            string query3 = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id,)";
+                            SqlCommand command3 = new SqlCommand(query3, cnn);
+
+                            command3.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+                            command3.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Done";
+
+                            cnn.Open();
+                            command3.ExecuteNonQuery();
+                            command3.Dispose();
+                            cnn.Close();
+
                             return "Done";
                         }
                     }
                 }
             }
-
-
             return "Not Done";
         }
     }

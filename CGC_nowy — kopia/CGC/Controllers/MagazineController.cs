@@ -24,7 +24,6 @@ namespace CGC.Controllers
             //SslMode = MySqlSslMode.Required,
         };
 
-
         SqlConnection cnn = new SqlConnection(builder.ConnectionString);
         private static MagazineController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -169,34 +168,6 @@ namespace CGC.Controllers
         //    }
         //}
 
-        public bool Check_Code(int code)
-        {
-            foreach (Glass glass in Getglass())
-            {
-                foreach (Glass_Id glass_Id in glass.Glass_info)
-                {
-                    if (code == glass_Id.Id)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public void Repeat(int code)
-        {
-            bool check;
-            check = Check_Code(code);
-
-            Random rand = new Random();
-            if (check == false)
-            {
-                code = rand.Next(1, 900);
-                Repeat(code);
-            }
-        }
-
         public void Insert_Magazine_History(string Description, string Login)
         {
             string data = DateTime.Today.ToString("d");
@@ -282,9 +253,7 @@ namespace CGC.Controllers
                 {
                     for (int i = glass.Count; i > 0; i--)
                     {
-                        Random rand = new Random();
-                        var code = rand.Next(1, 9000);
-                        Repeat(code);
+                        var code = Getglass().Last().Glass_info.Last().Id + 1;
 
                         string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Destroyed,Removed,Type,Color,Owner,Desk,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Destroyed, @Removed, @Type, @Color, @Owner, @Desk, @code)";
 
@@ -304,6 +273,7 @@ namespace CGC.Controllers
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
+
                         string userhistory = "You added glass " + code;
                         string magazinehistory = code + " has been added";
 
@@ -325,7 +295,7 @@ namespace CGC.Controllers
         [HttpPost("Edit_Glass")]
         public async Task<List<Glass>> Edit_Glass([FromBody] Receiver receiver)
         {
-            List<Glass> temp = new List<Glass>(); //breakpoint
+            List<Glass> temp = new List<Glass>();
             User user = receiver.user;
             Glass glass = receiver.glass;
             glass.Glass_id = receiver.glass.Glass_id;
@@ -353,8 +323,13 @@ namespace CGC.Controllers
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
-                    }
 
+                        string userhistory = "You edited glass " + glass_Id;
+                        string magazinehistory = glass_Id + " has been edited";
+
+                        usersController.Insert_User_History(userhistory, user.Login);
+                        Insert_Magazine_History(magazinehistory, user.Login);
+                    }
                     return temp;
                 }
             }
@@ -364,7 +339,6 @@ namespace CGC.Controllers
             return temp;
         }
 
-        //do dogadania z Frontem
         [HttpPost("Remove_Glass")]
         public async Task<List<Glass>> Remove_Glass([FromBody] Receiver receiver)
         {

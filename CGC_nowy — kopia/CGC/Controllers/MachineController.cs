@@ -48,9 +48,6 @@ namespace CGC.Controllers
         //do usuniecia po dodaniu bazydanych
         public UsersController usersController = new UsersController();
 
-        public List<Machines_History_All> machines_history = new List<Machines_History_All>();
-
-
         public List<Machines> GetMachines()
         {
             List<Machines> temp = new List<Machines>();
@@ -75,36 +72,10 @@ namespace CGC.Controllers
             return temp;
         }
 
-        public bool Check_Code(int code)
-        {
-            List<Machines> temp = GetMachines();
-            foreach (Machines machines in temp)
-            {
-               if(code == machines.No)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public void Repeat(int code)
-        {
-            bool check;
-            check = Check_Code(code);
-
-            Random rand = new Random();
-
-            if (check == false)
-            {
-                code = rand.Next(1, 900);
-                Repeat(code);
-            }
-        }
         public void Insert_Machine_History_All(int No, string Login, string Description)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All VALUES(@data, @No, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @No, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -121,12 +92,30 @@ namespace CGC.Controllers
         public void Insert_Machine_History_All(string Login, string Description)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Id_User, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+
+            cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            cnn.Close();
+        }
+
+        public void Insert_Machine_History(int Cut_id, string Login, string Description, int No)
+        {
+            string data = DateTime.Today.ToString("d");
+            string query = "INSERT INTO dbo.Machines_History_All(Date, Cut_Id, Login, Description, No) VALUES(@data, @Cut_Id, @Login, @Description, @No)";
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+            command.Parameters.Add("@Cut_Id", SqlDbType.Int).Value = Cut_id;
+            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+            command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+            command.Parameters.Add("@No", SqlDbType.Int).Value = No;
 
             cnn.Open();
             command.ExecuteNonQuery();
@@ -173,9 +162,7 @@ namespace CGC.Controllers
             Machines machines = receiver.machines;
             User user = receiver.user;
             
-            Random rand = new Random();
-            var temper = rand.Next(1, 9000);
-            Repeat(temper);
+            var temper = GetMachines().Last().No + 1;
 
             foreach (User usere in usersController.GetUsers())
             {
