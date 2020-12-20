@@ -247,13 +247,22 @@ namespace CGC.Controllers
 
             Order order = receiver.order;
             User user = receiver.user;
+            int code;
 
-            foreach(Item item in receiver.items)
+            foreach (Item item in receiver.items)
             {
                 order.items.Add(item);
             }
 
-            int code = Int32.Parse(GetOrders().Last().Id_Order) + 1;
+            if(GetOrders().Last() != null)
+            {
+                code = Int32.Parse(GetOrders().Last().Id_Order) + 1;
+            }
+            else
+            {
+                code = 1;
+            }
+
 
             order.Id_Order = code.ToString();
 
@@ -266,7 +275,14 @@ namespace CGC.Controllers
                     item.Status = "awaiting";
                     item.Can_Be_Createad = false;
 
-                    item.Id = GetAllItems().Last().Id + 1;
+                    if(GetAllItems().Last() != null)
+                    {
+                        item.Id = GetAllItems().Last().Id + 1;
+                    }
+                    else
+                    {
+                        item.Id = 1;
+                    }
                     item.Amount = 0;
                 }
                 else if(item.Amount > 1)
@@ -274,7 +290,14 @@ namespace CGC.Controllers
                     item.Status = "awaiting";
                     item.Can_Be_Createad = false;
 
-                    item.Id = GetAllItems().Last().Id + 1;
+                    if (GetAllItems().Last() != null)
+                    {
+                        item.Id = GetAllItems().Last().Id + 1;
+                    }
+                    else
+                    {
+                        item.Id = 1;
+                    }
 
                     while (item.Amount > 0)
                     {

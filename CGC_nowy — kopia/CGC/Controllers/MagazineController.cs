@@ -246,6 +246,7 @@ namespace CGC.Controllers
 
             Glass glass = receiver.glass;
             User user = receiver.user;
+            int code;
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -253,7 +254,14 @@ namespace CGC.Controllers
                 {
                     for (int i = glass.Count; i > 0; i--)
                     {
-                        var code = Getglass().Last().Glass_info.Last().Id + 1;
+                        if(Getglass().Last() != null)
+                        {
+                            code = Getglass().Last().Glass_info.Last().Id + 1;
+                        }
+                        else
+                        {
+                            code = 1;
+                        }
 
                         string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Destroyed,Removed,Type,Color,Owner,Desk,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Destroyed, @Removed, @Type, @Color, @Owner, @Desk, @code)";
 

@@ -499,8 +499,16 @@ namespace CGC.Controllers
         {
             List<Glass> glasses = receiver.glasses;
             Order order = receiver.order;
+            int code;
 
-            var code = GetCut_Project().Last().Cut_id + 1;
+            if (GetCut_Project().Last() != null)
+            {
+                code = GetCut_Project().Last().Cut_id + 1;
+            }
+            else
+            {
+                code = 1;
+            }
 
             string query = "INSERT INTO dbo.[Cut_Project](@Cut_id,@Order_id)";
             SqlCommand command = new SqlCommand(query, cnn);

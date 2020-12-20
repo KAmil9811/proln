@@ -161,8 +161,16 @@ namespace CGC.Controllers
 
             Machines machines = receiver.machines;
             User user = receiver.user;
-            
-            var temper = GetMachines().Last().No + 1;
+            int temper;
+
+            if (GetMachines().Last() != null)
+            {
+                temper = GetMachines().Last().No + 1;
+            }
+            else
+            {
+                temper = 1;
+            }
 
             foreach (User usere in usersController.GetUsers())
             {
