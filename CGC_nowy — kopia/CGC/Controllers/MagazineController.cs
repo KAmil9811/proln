@@ -171,7 +171,7 @@ namespace CGC.Controllers
         public void Insert_Magazine_History(string Description, string Login)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Magazine_History(Data, Id_User, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description) VALUES(@data, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -217,6 +217,30 @@ namespace CGC.Controllers
             return temp;
         }
 
+        public List<Magazine_History> GetMagazineHistories()
+        {
+            List<Magazine_History> magazine_Histories = new List<Magazine_History>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Magazine_History];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Magazine_History magazine_History = new Magazine_History();
+                magazine_History.Login = sqlDataReader["Login"].ToString();
+                magazine_History.Date = sqlDataReader["Date"].ToString();
+                magazine_History.Description = sqlDataReader["Description"].ToString();
+
+                magazine_Histories.Add(magazine_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return magazine_Histories;
+        }
+
         public UsersController usersController = new UsersController();
 
         [HttpGet("Return_All_Colors")]
@@ -237,6 +261,12 @@ namespace CGC.Controllers
         public async Task<List<string>> Return_All_Type()
         {
             return GetTypes();
+        }
+
+        [HttpGet("Return_All_Type")]
+        public async Task<List<Magazine_History>> Return_Magazine_History()
+        {
+            return GetMagazineHistories();
         }
 
         [HttpPost("Add_Glass")]

@@ -225,7 +225,29 @@ namespace CGC.Controllers
             command.Dispose();
             cnn.Close();
             return temp;
+        }
 
+        public List<UserHistory> GetAllUserHistory()
+        {
+            List<UserHistory> userHistories = new List<UserHistory>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User_History];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                UserHistory userHistory = new UserHistory();
+                userHistory.Login = sqlDataReader["Login"].ToString();
+                userHistory.Data = sqlDataReader["Data"].ToString();
+                userHistory.Description = sqlDataReader["Description"].ToString();
+                userHistories.Add(userHistory);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return userHistories;
         }
 
         public void Insert_User_History(string Description, string Login)
@@ -287,6 +309,12 @@ namespace CGC.Controllers
                 }
             }
             return temp;
+        }
+
+        [HttpGet("Return_Users_History")]
+        public async Task<List<UserHistory>> Return_Users_History()
+        {
+            return GetAllUserHistory();
         }
 
         //Admin
