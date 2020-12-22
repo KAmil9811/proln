@@ -126,10 +126,10 @@ namespace CGC.Controllers
         public void Insert_Machine_History_All(int No, string Login, string Description)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @No, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description) VALUES(@Date, @No, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
-            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+            command.Parameters.Add("@Date", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@No", SqlDbType.Int).Value = No;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
