@@ -50,13 +50,7 @@ export class MachineTable extends Component {
                         >Zmień status</button>,
                         delete: <button className="delete1" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń/Przywróć  </button>,
 
-                        action: <Link to="/single_machine_history"><button className="user_change" id={i}
-                            onClick={
-                                (e) => {
-                                    console.log(e.target.id);
-                                   
-                                }
-                            }>Historia</button></Link>
+                        action: <Link to="/single_machine_history"><button className="user_change" >Historia</button></Link>
                     })
                 };
                 this.setState({

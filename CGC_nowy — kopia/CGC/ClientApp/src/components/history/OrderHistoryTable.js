@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 
-export class UserHistoryTable extends Component {
+export class OrderHistoryTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,13 +17,18 @@ export class UserHistoryTable extends Component {
 
     componentDidMount() {
         var table2 = [];
-
-
-        fetch(`api/Users/Return_Users_History`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+        const receiver = {
+            order: {
+                id_order:  1,
             }
+        }
+        console.log(receiver)
+        fetch(`api/Order/Return_Order_History`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(receiver),
         })
             .then(res => res.json())
             .then(json => {
@@ -34,7 +39,7 @@ export class UserHistoryTable extends Component {
                     table2.push({
                         who: json[i].login,
                         what: json[i].description,
-                        when: json[i].data
+                        when: json[i].date
                     })
                 }
 

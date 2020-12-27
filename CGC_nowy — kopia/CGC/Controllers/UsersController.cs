@@ -310,7 +310,7 @@ namespace CGC.Controllers
             }
             return temp;
         }
-
+        
         [HttpGet("Return_Users_History")]
         public async Task<List<UserHistory>> Return_Users_History()
         {

@@ -97,11 +97,14 @@ namespace CGC.Controllers
             return machines_History_Alls;
         }
 
-        public List<Machines_History> GetMachinesHistory()
+        public List<Machines_History> GetMachinesHistory(int No)
         {
             List<Machines_History> machines_Historys = new List<Machines_History>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History];", cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History] WHERE No = @No;", cnn);
+
+            command.Parameters.Add("@No", SqlDbType.Int).Value = No;
+
             cnn.Open();
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
@@ -204,13 +207,15 @@ namespace CGC.Controllers
         {
             return GetMachines();
         }
-
-        [HttpGet("Return_Machines_History")]
-        public async Task<List<Machines_History>> Return_Machines_History()
+        
+        [HttpPost("Return_Machines_History")]
+        public async Task<List<Machines_History>> Return_Machines_History(Receiver receiver)
         {
-            return GetMachinesHistory();
-        }
+            Machines machines = receiver.machines;
 
+            return GetMachinesHistory(machines.No);
+        }
+        
         [HttpGet("Return_All_Machines_History")]
         public async Task<List<Machines_History_All>> Return_All_Machines_History()
         {

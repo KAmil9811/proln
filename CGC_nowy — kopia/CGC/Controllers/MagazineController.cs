@@ -172,6 +172,7 @@ namespace CGC.Controllers
         {
             string data = DateTime.Today.ToString("d");
             string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description) VALUES(@data, @Login, @Description)";
+
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -229,7 +230,7 @@ namespace CGC.Controllers
             {
                 Magazine_History magazine_History = new Magazine_History();
                 magazine_History.Login = sqlDataReader["Login"].ToString();
-                magazine_History.Date = sqlDataReader["Date"].ToString();
+                magazine_History.Date = sqlDataReader["Data"].ToString();
                 magazine_History.Description = sqlDataReader["Description"].ToString();
 
                 magazine_Histories.Add(magazine_History);
@@ -242,7 +243,7 @@ namespace CGC.Controllers
         }
 
         public UsersController usersController = new UsersController();
-
+        
         [HttpGet("Return_All_Colors")]
         public async Task<List<string>> Return_All_Colors()
         {
@@ -263,7 +264,7 @@ namespace CGC.Controllers
             return GetTypes();
         }
 
-        [HttpGet("Return_All_Type")]
+        [HttpGet("Return_Magazine_History")]
         public async Task<List<Magazine_History>> Return_Magazine_History()
         {
             return GetMagazineHistories();

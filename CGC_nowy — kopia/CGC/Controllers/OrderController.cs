@@ -143,7 +143,7 @@ namespace CGC.Controllers
         public void Insert_Order_History(string Description, string Login, string Id_Order)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.[User_History](Date, Login, Description, Id_Order) VALUES(@data, @Login, @Description, @Id_Order)";
+            string query = "INSERT INTO dbo.[Order_History](Date, Login, Description, Id_Order) VALUES(@data, @Login, @Description, @Id_Order)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -155,6 +155,34 @@ namespace CGC.Controllers
             command.ExecuteNonQuery();
             command.Dispose();
             cnn.Close();
+        }
+
+        public List<Order_History> Return_Order_History(string order_id)
+        {
+            List<Order_History> order_Histories = new List<Order_History>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order_History] WHERE Id_Order = @Id_Order;", cnn);
+
+            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order_id;
+
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Order_History order_History = new Order_History();
+                order_History.Id_Order = sqlDataReader["Id_Order"].ToString();
+                order_History.Login = sqlDataReader["Login"].ToString();
+                order_History.Date = sqlDataReader["Date"].ToString();
+                order_History.Description = sqlDataReader["Description"].ToString();
+
+                order_Histories.Add(order_History);               
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return order_Histories;
         }
 
         public int Avaible_Cut(Order order)
@@ -224,8 +252,10 @@ namespace CGC.Controllers
         }
 
         [HttpPost("Return_All_Items")]
-        public async Task<List<Item>> Return_All_Items([FromBody] Order order)
+        public async Task<List<Item>> Return_All_Items([FromBody] Receiver receiver)
         {
+            Order order = receiver.order;
+
             List<Item> temp = new List<Item>();
             foreach (Order orderer in GetOrders())
             {
@@ -238,6 +268,14 @@ namespace CGC.Controllers
                 }
             }
             return temp;
+        }
+        
+        [HttpPost("Return_Order_History")]
+        public async Task<List<Order_History>> Return_Order_History([FromBody] Receiver receiver)
+        {
+            Order order = receiver.order;
+
+            return Return_Order_History(order.Id_Order);
         }
 
         [HttpPost("Add_Order")]

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 
-export class UserHistoryTable extends Component {
+export class AllMachineHistoryTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +19,7 @@ export class UserHistoryTable extends Component {
         var table2 = [];
 
 
-        fetch(`api/Users/Return_Users_History`, {
+        fetch(`api/Machine/Return_All_Machines_History`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'

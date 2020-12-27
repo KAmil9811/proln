@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
-import { SingleMachineHistoryTable } from './SingleMachineHistoryTable';
+import { OrderHistoryTable } from './OrderHistoryTable';
 
 
-export class SingleMachineHistory extends Component {
+export class OrderHistory extends Component {
     constructor(props) {
         super(props);
     }
@@ -37,7 +37,7 @@ export class SingleMachineHistory extends Component {
                     <button type="button" className="home2" onClick={this.homePage}>Strona główna</button>
                 </div>
                 <div className="conteiner_mw">
-                    <SingleMachineHistoryTable />
+                    <OrderHistoryTable />
                 </div>
             </div>
         );
