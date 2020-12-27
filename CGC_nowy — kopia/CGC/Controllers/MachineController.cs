@@ -72,13 +72,64 @@ namespace CGC.Controllers
             return temp;
         }
 
+        public List<Machines_History_All> GetMachinesHistoryAll()
+        {
+            List<Machines_History_All> machines_History_Alls = new List<Machines_History_All>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History_All];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines_History_All machines_History_All = new Machines_History_All();
+                machines_History_All.No = Convert.ToInt32(sqlDataReader["No"]);
+                machines_History_All.Login = sqlDataReader["Login"].ToString();
+                machines_History_All.Date = sqlDataReader["Date"].ToString();
+                machines_History_All.Description = sqlDataReader["Description"].ToString();
+
+                machines_History_Alls.Add(machines_History_All);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return machines_History_Alls;
+        }
+
+        public List<Machines_History> GetMachinesHistory()
+        {
+            List<Machines_History> machines_Historys = new List<Machines_History>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines_History machines_History = new Machines_History();
+                machines_History.No = Convert.ToInt32(sqlDataReader["No"]);
+                machines_History.Cut_Id = Convert.ToInt32(sqlDataReader["Cut_Id"]);
+                machines_History.Login = sqlDataReader["Login"].ToString();
+                machines_History.Date = sqlDataReader["Date"].ToString();
+                machines_History.Description = sqlDataReader["Description"].ToString();
+
+                machines_Historys.Add(machines_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return machines_Historys;
+        }
+
         public void Insert_Machine_History_All(int No, string Login, string Description)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @No, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description) VALUES(@Date, @No, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
-            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+            command.Parameters.Add("@Date", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@No", SqlDbType.Int).Value = No;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
@@ -152,6 +203,18 @@ namespace CGC.Controllers
         public async Task<List<Machines>> Return_All_Machines()
         {
             return GetMachines();
+        }
+
+        [HttpGet("Return_Machines_History")]
+        public async Task<List<Machines_History>> Return_Machines_History()
+        {
+            return GetMachinesHistory();
+        }
+
+        [HttpGet("Return_All_Machines_History")]
+        public async Task<List<Machines_History_All>> Return_All_Machines_History()
+        {
+            return GetMachinesHistoryAll();
         }
 
         [HttpPost("Add_Machine")]
