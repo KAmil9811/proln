@@ -36,6 +36,10 @@ import { UserHistory } from './components/history/UserHistory';
 import { SelectionOfOrders } from './components/Production/SelectionOfOrders';
 import { ReadyPackages } from './components/Production/ReadyPackages';
 
+import { GlassHistory } from './components/history/GlassHistory';
+import { ReadyGlassHistory } from './components/history/ReadyGlassHistory';
+import { SingleMachineHistory } from './components/history/SingleMachineHistory';
+
 
 export default class App extends Component {
     displayName = App.name
@@ -78,9 +82,11 @@ export default class App extends Component {
 
                 <Route path='/selection_of_orders' component={SelectionOfOrders} />
                 <Route path='/ready_packages' component={ReadyPackages} />
+
+                <Route path='/glass_history' component={GlassHistory} />
+                <Route path='/ready_glass_history' component={ReadyGlassHistory} />
+                <Route path='/single_machine_history' component={SingleMachineHistory} />
                 
-
-
             </div>
         );
     }

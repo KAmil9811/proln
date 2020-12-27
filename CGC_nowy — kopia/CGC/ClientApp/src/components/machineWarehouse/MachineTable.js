@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 import './MachineTable.css'
+import { Link } from 'react-router-dom';
 
 
 export class MachineTable extends Component {
@@ -47,7 +48,15 @@ export class MachineTable extends Component {
                                 this.machineBroken(table2[e.target.id].number, table2[e.target.id].status)
                             }}
                         >Zmień status</button>,
-                        delete: <button className="delete1" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted )}}> Usuń/Przywróć  </button> 
+                        delete: <button className="delete1" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń/Przywróć  </button>,
+
+                        action: <Link to="/single_machine_history"><button className="user_change" id={i}
+                            onClick={
+                                (e) => {
+                                    console.log(e.target.id);
+                                   
+                                }
+                            }>Historia</button></Link>
                     })
                 };
                 this.setState({
@@ -85,7 +94,12 @@ export class MachineTable extends Component {
                                 label: 'Usuń',
                                 field: 'delete',
                                 width: 30
-                            }
+                            },
+                            {
+                                label: 'Akcja',
+                                field: 'action',
+                                width: 100
+                            },
                         ],
                         rows: table2
                     }

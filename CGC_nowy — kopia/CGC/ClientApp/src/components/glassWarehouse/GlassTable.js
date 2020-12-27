@@ -42,6 +42,7 @@ export class GlassTable extends Component {
                         owner: json[i].owner,
                         desk: json[i].desk,
                         id: '',
+                        
                         /*action: <button className="delete" id={i} onClick={
                             (e) => {
                                 e.preventDefault();
@@ -162,6 +163,7 @@ export class GlassTable extends Component {
                                 sort: 'asc',
                                 width: 150
                             },
+
                            /* {
                                 label: 'Usuń',
                                 field: 'action',
