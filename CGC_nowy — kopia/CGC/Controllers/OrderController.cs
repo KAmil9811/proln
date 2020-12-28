@@ -100,6 +100,15 @@ namespace CGC.Controllers
                     item.Order_id = sqlDataReader["Order_id"].ToString();
                     item.Desk = sqlDataReader["Desk"].ToString();
 
+                    if (sqlDataReader["Cut_id"].ToString() == "")
+                    {
+                        item.Cut_id = 0;
+                    }
+                    else
+                    {
+                        item.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                    }                  
+
                     temp.Add(item);
                 }
             }
@@ -190,7 +199,7 @@ namespace CGC.Controllers
             int count = 0;
             foreach (Item item in GetItems(order))
             {
-                if  (item.Status == "awaiting")
+                if  (item.Status == "awaiting" && item.Cut_id == 0)
                 {
                     foreach (Glass glass in magazineController.Getglass())
                     {
