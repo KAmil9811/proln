@@ -7,11 +7,12 @@ namespace CGC.Models
 {
     public class Product
     {
-        public int Id;
-        public string Desk;
-        public string Owner;
-        public string Status;
-        public int Id_item;
+        public int Id { get; set; }
+        public string Desk { get; set; }
+        public string Owner { get; set; }
+        public string Status { get; set; }
+        public int Id_item { get; set; }
+        public int Cut_id { get; set; }
         public string Error_Messege;
     }
 }

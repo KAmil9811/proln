@@ -633,7 +633,7 @@ namespace CGC.Controllers
                                     {
                                         item.Status = "ready";
 
-                                        var code = productController.Get_All_Products().Last().Id + 1;
+                                        var code = productController.GetProducts().Last().Id + 1;
 
                                         string query = "INSERT INTO dbo.[Product](@Id,@Owner,@Desk,@Status,@Id_item)";
                                         SqlCommand command = new SqlCommand(query, cnn);

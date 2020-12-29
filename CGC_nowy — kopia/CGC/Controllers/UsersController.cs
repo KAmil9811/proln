@@ -406,7 +406,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = admin.Login + " created this account";
-                    string Adminhistory = admin.Login + "created " + user.Login + " account";
+                    string Adminhistory = "You created " + user.Login + " account";
 
                     Insert_User_History(userhistory, user.Login);
                     Insert_User_History(Adminhistory, admin.Login);
@@ -561,7 +561,7 @@ namespace CGC.Controllers
                             cnn.Close();
 
                             string userhistory = admin.Login + " changed e-mail for this account";
-                            string Adminhistory = admin.Login + "changed " + user.Login + " e-mail";
+                            string Adminhistory = "You changed e-mail for " + user.Login + " account";
 
                             Insert_User_History(userhistory, user.Login);
                             Insert_User_History(Adminhistory, admin.Login);
@@ -612,8 +612,8 @@ namespace CGC.Controllers
                             cnn.Close();
 
 
-                            string userhistory = admin.Login + " remove " + user.Login;
-                            string Adminhistory = "You removed " + user.Login;
+                            string userhistory = admin.Login + " removed this account";
+                            string Adminhistory = "You removed account" + user.Login;
 
                             Insert_User_History(userhistory, user.Login);
                             Insert_User_History(Adminhistory, admin.Login);
@@ -662,8 +662,8 @@ namespace CGC.Controllers
                                 cnn.Close();
 
 
-                                string userhistory = admin.Login + " restore " + user.Login;
-                                string Adminhistory = "You restore " + user.Login;
+                                string userhistory = admin.Login + " restored this account";
+                                string Adminhistory = "You restored account " + user.Login;
 
                                 Insert_User_History(userhistory, user.Login);
                                 Insert_User_History(Adminhistory, admin.Login);
@@ -720,7 +720,7 @@ namespace CGC.Controllers
 
 
                             string userhistory = admin.Login + " changed password for this account";
-                            string Adminhistory = admin.Login + "changed " + user.Login + " password";
+                            string Adminhistory = "You changed password for " + user.Login + " account";
 
                             Insert_User_History(userhistory, user.Login);
                             Insert_User_History(Adminhistory, admin.Login);
@@ -753,8 +753,8 @@ namespace CGC.Controllers
                             Change_Permision(user);
 
                             
-                            string userhistory = admin.Login + "change permission for this account";
-                            string Adminhistory = admin.Login + "change" + user.Login + "permission";
+                            string userhistory = admin.Login + " change permission for this account";
+                            string Adminhistory = "You changed permission for " + user.Login + " account";
 
                             Insert_User_History(userhistory, user.Login);
                             Insert_User_History(Adminhistory, admin.Login);
@@ -795,7 +795,7 @@ namespace CGC.Controllers
 
 
                             string userhistory = admin.Login + " changed name for this account";
-                            string Adminhistory = admin.Login + "changed " + user.Login + " name";
+                            string Adminhistory = "You changed name for " + user.Login + " account";
 
                             Insert_User_History(userhistory, user.Login);
                             Insert_User_History(Adminhistory, admin.Login);
@@ -836,7 +836,7 @@ namespace CGC.Controllers
 
 
                             string userhistory = admin.Login + " changed Surname for this account";
-                            string Adminhistory = admin.Login + "changed " + user.Login + " Surname";
+                            string Adminhistory = "You changed surname for " + user.Login + " account";
 
                             Insert_User_History(userhistory, user.Login);
                             Insert_User_History(Adminhistory, admin.Login);
@@ -1042,7 +1042,7 @@ namespace CGC.Controllers
                         command.Dispose();
                         cnn.Close();
 
-                        string userhistory = "You reset your password";
+                        string userhistory = "You reseted your password";
 
                         Insert_User_History(userhistory, user.Login);
 
