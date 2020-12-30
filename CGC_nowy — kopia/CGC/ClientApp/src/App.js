@@ -39,7 +39,8 @@ import { ReadyPackages } from './components/Production/ReadyPackages';
 import { GlassHistory } from './components/history/GlassHistory';
 import { ReadyGlassHistory } from './components/history/ReadyGlassHistory';
 import { SingleMachineHistory } from './components/history/SingleMachineHistory';
-
+import { OrderHistory } from './components/history/OrderHistory';
+import { AllMachineHistory } from './components/history/AllMachineHistory';
 
 export default class App extends Component {
     displayName = App.name
@@ -86,7 +87,8 @@ export default class App extends Component {
                 <Route path='/glass_history' component={GlassHistory} />
                 <Route path='/ready_glass_history' component={ReadyGlassHistory} />
                 <Route path='/single_machine_history' component={SingleMachineHistory} />
-                
+                <Route path='/order_history' component={OrderHistory} />
+                <Route path='/all_machine_history' component={AllMachineHistory} />
             </div>
         );
     }

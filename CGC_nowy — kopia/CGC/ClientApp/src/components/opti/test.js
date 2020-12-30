@@ -54,13 +54,17 @@ export class Test extends Component {
                     var canvas = document.getElementById('canvas');
                     if (canvas.getContext) {
                         var ctx = canvas.getContext('2d');
-                        ctx.strokeRect(0, 50, json[i].width * 10, json[i].length * 10); ///tafla
-                        for (var j = 0; j < json[i].pieces.length; j++) {
-                            ctx.strokeRect(json[i].pieces[j].x, json[i].pieces[j].y + 50, json[i].pieces[j].widht, json[i].pieces[j].lenght);///itemy
+                        ctx.strokeRect(0, 50*(i*5), json[i].width * 10, json[i].length * 10); ///tafla
+                        if (json[i].width === 0) {
+                            console.log(json[i].error_Messege)
+                        }
+                        else {
+                            for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
+                                ctx.strokeRect(json[i].glass_info[0].pieces[j].x, json[i].glass_info[0].pieces[j].y + 50, json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
+                            }
                         }
                     }
                     console.log('beka z MimeTypeArray')
-                    console.log(json[i].pieces[i])
                 };
 
                 

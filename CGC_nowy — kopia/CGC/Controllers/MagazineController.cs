@@ -172,6 +172,7 @@ namespace CGC.Controllers
         {
             string data = DateTime.Today.ToString("d");
             string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description) VALUES(@data, @Login, @Description)";
+
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -229,7 +230,7 @@ namespace CGC.Controllers
             {
                 Magazine_History magazine_History = new Magazine_History();
                 magazine_History.Login = sqlDataReader["Login"].ToString();
-                magazine_History.Date = sqlDataReader["Date"].ToString();
+                magazine_History.Date = sqlDataReader["Data"].ToString();
                 magazine_History.Description = sqlDataReader["Description"].ToString();
 
                 magazine_Histories.Add(magazine_History);
@@ -242,7 +243,7 @@ namespace CGC.Controllers
         }
 
         public UsersController usersController = new UsersController();
-
+        
         [HttpGet("Return_All_Colors")]
         public async Task<List<string>> Return_All_Colors()
         {
@@ -263,7 +264,7 @@ namespace CGC.Controllers
             return GetTypes();
         }
 
-        [HttpGet("Return_All_Type")]
+        [HttpGet("Return_Magazine_History")]
         public async Task<List<Magazine_History>> Return_Magazine_History()
         {
             return GetMagazineHistories();
@@ -313,7 +314,7 @@ namespace CGC.Controllers
                         cnn.Close();
 
                         string userhistory = "You added glass " + code;
-                        string magazinehistory = code + " has been added";
+                        string magazinehistory = "Glass " + code + " has been added";
 
                         usersController.Insert_User_History(userhistory, user.Login);
                         Insert_Magazine_History(magazinehistory, user.Login);
@@ -363,7 +364,7 @@ namespace CGC.Controllers
                         cnn.Close();
 
                         string userhistory = "You edited glass " + glass_Id;
-                        string magazinehistory = glass_Id + " has been edited";
+                        string magazinehistory = "Glass " + glass_Id + " has been edited";
 
                         usersController.Insert_User_History(userhistory, user.Login);
                         Insert_Magazine_History(magazinehistory, user.Login);
@@ -407,7 +408,7 @@ namespace CGC.Controllers
 
                                 if (ids.Removed == true)
                                 {
-                                    glass.Error_Messege = "Glass_already_deleated";
+                                    glass.Error_Messege = "Glass_already_deleted";
                                     temp.Add(glass);
                                     return temp;
                                 }
@@ -423,8 +424,8 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You deleated glass " + ids.Id;
-                                string magazinehistory = ids.Id + " has been deleated";
+                                string userhistory = "You deleted glass " + ids.Id;
+                                string magazinehistory = "Glass " + ids.Id + " has been deleted";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
                                 Insert_Magazine_History(magazinehistory, user.Login);
@@ -492,7 +493,7 @@ namespace CGC.Controllers
                                 cnn.Close();
 
                                 string userhistory = "You restored glass " + ids.Id;
-                                string magazinehistory = ids.Id + " has been restored";
+                                string magazinehistory = "Glass " + ids.Id + " has been restored";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
                                 Insert_Magazine_History(magazinehistory, user.Login);
@@ -543,7 +544,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = "You added new type " + type;
-                    string magazinehistory = type + " has been added";
+                    string magazinehistory = "Type " + type + " has been added";
 
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Magazine_History(magazinehistory, user.Login);
@@ -587,7 +588,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = "You added new color " + color;
-                    string magazinehistory = color + " has been added";
+                    string magazinehistory = "Color " + color + " has been added";
 
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Magazine_History(magazinehistory, user.Login);
@@ -651,8 +652,8 @@ namespace CGC.Controllers
                                 }
                             }
 
-                            string userhistory = "You changed type " + old_type + " to " + new_type;
-                            string magazinehistory = old_type + " has been changed to " + new_type;
+                            string userhistory = "You changed type from " + old_type + " to " + new_type;
+                            string magazinehistory = "Type " + old_type + " has been changed to " + new_type;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Magazine_History(magazinehistory, user.Login);
@@ -719,8 +720,8 @@ namespace CGC.Controllers
                                     cnn.Close();
                                 }
                             }
-                            string userhistory = "You changed " + old_color + " to " + new_color;
-                            string magazinehistory = old_color + " has been change on " + new_color;
+                            string userhistory = "You changed color from " + old_color + " to " + new_color;
+                            string magazinehistory = "Color " + old_color + " has been change to " + new_color;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Magazine_History(magazinehistory, user.Login);

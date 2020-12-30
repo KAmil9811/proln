@@ -31,6 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\history\NewFile.txt" />
+    <None Remove="ClientApp\src\components\history\NewFile.txt" />
+    <None Remove="ClientApp\src\components\history\NewFile1.txt" />
+    <None Remove="ClientApp\src\components\history\NewFile1.txt" />
+    <None Remove="ClientApp\src\components\history\OrderHistoryTable,js" />
+    <None Remove="ClientApp\src\components\history\OrderHistoryTable,js" />
     <None Remove="ClientApp\src\components\orders\EdiitOrderItem.css" />
     <None Remove="ClientApp\src\components\orders\EdiitOrderItem.css" />
     <None Remove="ClientApp\src\components\orders\NewFile.txt" />

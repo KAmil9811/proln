@@ -71,7 +71,6 @@ namespace CGC.Controllers
             return temp;
         }
 
-
         [HttpGet("Return_Orders_To_Cut")]
         public async Task<List<Order>> Return_Orders_To_Cut()
         {
@@ -110,7 +109,7 @@ namespace CGC.Controllers
             {
                 kontrol = false;
 
-                if(item.Status == "awaiting" && item.Cut_id == null)
+                if(item.Status == "awaiting" && item.Cut_id == 0)
                 {
                     kontrol = false;
                     if (temp.Count != 0)
@@ -438,7 +437,7 @@ namespace CGC.Controllers
 
             foreach (Glass glass in magazineController.Getglass())
             {
-                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Width && glass.Cut_id == null)
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Width && glass.Cut_id == 0)
                 {
                     if (packages.Item.First().Length <= glass.Length && packages.Item.First().Width <= glass.Width)
                     {
@@ -634,7 +633,7 @@ namespace CGC.Controllers
                                     {
                                         item.Status = "ready";
 
-                                        var code = productController.Get_All_Products().Last().Id + 1;
+                                        var code = productController.GetProducts().Last().Id + 1;
 
                                         string query = "INSERT INTO dbo.[Product](@Id,@Owner,@Desk,@Status,@Id_item)";
                                         SqlCommand command = new SqlCommand(query, cnn);
