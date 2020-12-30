@@ -148,62 +148,12 @@ export class UsersTable extends Component {
             })
     };
 
-    delete(user, deleted) {
-        const receiver = {
-            user: {
-                login: user
-            },
-            admin: {
-                login: sessionStorage.getItem('login')
-            }
-        }
-        console.log(receiver)
-
-        if (deleted === 'Aktywny') {
-            fetch(`api/Users/Remove_User_Admin`, {
-                method: "post",
-                body: JSON.stringify(receiver),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    return (json);
-                })
-                .then(json => {
-                    alert("Usunięto użytkownika")
-                })
-                .then(json => {
-                    window.location.reload();
-                })
-        }
-        else {
-            fetch(`api/Users/Restore_User_Admin`, {
-                method: "post",
-                body: JSON.stringify(receiver),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-                .then(res => res.json())
-                .then(json => {
-                    console.log(json)
-                    return (json);
-                })
-                .then(json => {
-                    alert("Aktywowano użytkownika")
-                })
-                .then(json => {
-                    window.location.reload();
-                })
-        }
+    
+        
+        
 
 
-    }
+    
 
 
     table() {
