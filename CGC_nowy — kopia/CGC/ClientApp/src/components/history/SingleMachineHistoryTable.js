@@ -90,18 +90,11 @@ export class SingleMachineHistoryTable extends Component {
                     }
                 });
 
-<<<<<<< HEAD
-    
-        
-        
 
-
-    
-=======
             })
 
     };
->>>>>>> 67c0d6bb3ab88237ad54372e79b4f08fafa7b5bf
+
 
    
 
