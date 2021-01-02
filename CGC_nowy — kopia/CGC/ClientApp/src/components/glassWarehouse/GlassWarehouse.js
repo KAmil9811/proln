@@ -99,7 +99,7 @@ export class GlassWarehouse extends Component {
                 <div className="nav_gw">
                     <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
                       <button type="button" className=" redy_products" >Gotowe produkty</button>
-                      <button type="button" className="home21" onClick={this.homePage}>Strona główna</button>
+                      
                 </div>
 
                 <div className="conteiner_gw">

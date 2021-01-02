@@ -45,7 +45,7 @@ export class ReadyGlassWarehouse extends Component {
                 <div className="nav_rgw">
                         <button type="button" className="log_out3" onClick={this.logOut}>Wyloguj</button>
                         <button type="button" className="magazine3" onClick={this.glassWarehouse}>Magazyn</button>
-                        <button type="button" className="home3" onClick={this.homePage}>Strona główna</button>
+                       
                 </div >
                 <div className="conteiner_gw">
                         <button type="button" className="add_glass" onClick={this.historyReadyGlass}>Historia gotowego produktu</button>

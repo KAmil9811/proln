@@ -158,7 +158,7 @@ export class ControlPanel extends Component {
         return ( 
             <div className="ControlPanel" >
                 <div className="nav_cp">
-                     <button className="home" onClick={this.homePage}>Strona główna</button>
+                   
                     <button className="log_out" onClick={this.logOut}>Wyloguj</button>
                 </div>
 
