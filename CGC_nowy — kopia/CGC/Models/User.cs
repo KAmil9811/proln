@@ -27,8 +27,6 @@ namespace CGC.Models
         public bool Order_management = false;
         public bool Cut_management = false;
 
-        public List<User_History> user_history = new List<User_History>();
-
         public string Error_Messege { get; set; }
         public string Reset_pass { get; set; }
 

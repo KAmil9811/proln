@@ -7,8 +7,9 @@ namespace CGC.Models
 {
     public class Order_History
     {
-        public string Data;
-        public string Login;
-        public string Description;
+        public string Date { get; set; }
+        public string Login { get; set; }
+        public string Id_Order { get; set; }
+        public string Description { get; set; }
     }
 }

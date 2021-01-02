@@ -48,9 +48,6 @@ namespace CGC.Controllers
         //do usuniecia po dodaniu bazydanych
         public UsersController usersController = new UsersController();
 
-        public List<Machines_History_All> machines_history = new List<Machines_History_All>();
-
-
         public List<Machines> GetMachines()
         {
             List<Machines> temp = new List<Machines>();
@@ -75,39 +72,67 @@ namespace CGC.Controllers
             return temp;
         }
 
-        public bool Check_Code(int code)
+        public List<Machines_History_All> GetMachinesHistoryAll()
         {
-            List<Machines> temp = GetMachines();
-            foreach (Machines machines in temp)
+            List<Machines_History_All> machines_History_Alls = new List<Machines_History_All>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History_All];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
             {
-               if(code == machines.No)
-                {
-                    return false;
-                }
+                Machines_History_All machines_History_All = new Machines_History_All();
+                machines_History_All.No = Convert.ToInt32(sqlDataReader["No"]);
+                machines_History_All.Login = sqlDataReader["Login"].ToString();
+                machines_History_All.Date = sqlDataReader["Date"].ToString();
+                machines_History_All.Description = sqlDataReader["Description"].ToString();
+
+                machines_History_Alls.Add(machines_History_All);
             }
-            return true;
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return machines_History_Alls;
         }
 
-        public void Repeat(int code)
+        public List<Machines_History> GetMachinesHistory(int No)
         {
-            bool check;
-            check = Check_Code(code);
+            List<Machines_History> machines_Historys = new List<Machines_History>();
 
-            Random rand = new Random();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History] WHERE No = @No;", cnn);
 
-            if (check == false)
+            command.Parameters.Add("@No", SqlDbType.Int).Value = No;
+
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
             {
-                code = rand.Next(1, 900);
-                Repeat(code);
+                Machines_History machines_History = new Machines_History();
+                machines_History.No = Convert.ToInt32(sqlDataReader["No"]);
+                machines_History.Cut_Id = Convert.ToInt32(sqlDataReader["Cut_Id"]);
+                machines_History.Login = sqlDataReader["Login"].ToString();
+                machines_History.Date = sqlDataReader["Date"].ToString();
+                machines_History.Description = sqlDataReader["Description"].ToString();
+
+                machines_Historys.Add(machines_History);
             }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return machines_Historys;
         }
+
         public void Insert_Machine_History_All(int No, string Login, string Description)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All VALUES(@data, @No, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description) VALUES(@Date, @No, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
-            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+            command.Parameters.Add("@Date", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@No", SqlDbType.Int).Value = No;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
@@ -121,12 +146,30 @@ namespace CGC.Controllers
         public void Insert_Machine_History_All(string Login, string Description)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Id_User, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+
+            cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            cnn.Close();
+        }
+
+        public void Insert_Machine_History(int Cut_id, string Login, string Description, int No)
+        {
+            string data = DateTime.Today.ToString("d");
+            string query = "INSERT INTO dbo.Machines_History_All(Date, Cut_Id, Login, Description, No) VALUES(@data, @Cut_Id, @Login, @Description, @No)";
+            SqlCommand command = new SqlCommand(query, cnn);
+
+            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+            command.Parameters.Add("@Cut_Id", SqlDbType.Int).Value = Cut_id;
+            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+            command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+            command.Parameters.Add("@No", SqlDbType.Int).Value = No;
 
             cnn.Open();
             command.ExecuteNonQuery();
@@ -164,6 +207,20 @@ namespace CGC.Controllers
         {
             return GetMachines();
         }
+        
+        [HttpPost("Return_Machines_History")]
+        public async Task<List<Machines_History>> Return_Machines_History(Receiver receiver)
+        {
+            Machines machines = receiver.machines;
+
+            return GetMachinesHistory(machines.No);
+        }
+        
+        [HttpGet("Return_All_Machines_History")]
+        public async Task<List<Machines_History_All>> Return_All_Machines_History()
+        {
+            return GetMachinesHistoryAll();
+        }
 
         [HttpPost("Add_Machine")]
         public async Task<List<Machines>> Add_Machine([FromBody] Receiver receiver)
@@ -172,10 +229,16 @@ namespace CGC.Controllers
 
             Machines machines = receiver.machines;
             User user = receiver.user;
-            
-            Random rand = new Random();
-            var temper = rand.Next(1, 9000);
-            Repeat(temper);
+            int temper;
+
+            if (GetMachines().Last() != null)
+            {
+                temper = GetMachines().Last().No + 1;
+            }
+            else
+            {
+                temper = 1;
+            }
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -252,7 +315,7 @@ namespace CGC.Controllers
                             cnn.Close();
 
                             string userhistory = "You changed status " + machines.No + " to " + machines.Status;
-                            string machinehistoryall = "machine status changed to " + machines.Status;
+                            string machinehistoryall = "machine status has been changed to " + machines.Status;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -301,7 +364,7 @@ namespace CGC.Controllers
                             cnn.Close();
 
                             string userhistory = "You changed type " + machines.No + " to " + machines.Type;
-                            string machinehistoryall = "machine type changed to " + machines.Type;
+                            string machinehistoryall = "Machine type has been changed from " + edit_machines.Type + " to " + machines.Type;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -398,7 +461,7 @@ namespace CGC.Controllers
                             command.Dispose();
                             cnn.Close();
 
-                            string userhistory = "You resoted machine " + edit_machines.No;
+                            string userhistory = "You restored machine " + edit_machines.No;
                             string machinehistoryall = "Machine has been restored";
 
                             usersController.Insert_User_History(userhistory, user.Login);
@@ -451,7 +514,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = "You added new machine type " + type;
-                    string machinehistoryall = type + " has been added";
+                    string machinehistoryall = "Type " + type + " has been added";
 
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Machine_History_All(user.Login, machinehistoryall);

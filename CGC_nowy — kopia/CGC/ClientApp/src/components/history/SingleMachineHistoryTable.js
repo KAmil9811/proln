@@ -1,8 +1,11 @@
-﻿import { Link } from 'react-router-dom';
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
+import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-export class UserHistoryTable extends Component {
+
+
+export class SingleMachineHistoryTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,12 +17,11 @@ export class UserHistoryTable extends Component {
     }
 
 
-
     componentDidMount() {
+
         var table2 = [];
 
-
-        fetch(`api/Users/Return_Users_History`, {
+        fetch(`api/Machine/Return_Machines_History`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -34,7 +36,7 @@ export class UserHistoryTable extends Component {
                     table2.push({
                         who: json[i].login,
                         what: json[i].description,
-                        when: json[i].data
+                        when: json[i].date
                     })
                 }
 
@@ -88,11 +90,13 @@ export class UserHistoryTable extends Component {
                     }
                 });
 
+
             })
 
     };
 
 
+   
 
     table() {
         return (
@@ -108,6 +112,7 @@ export class UserHistoryTable extends Component {
     render() {
         let xd = this.table();
         return (
+
             <div>
                 {xd}
             </div>

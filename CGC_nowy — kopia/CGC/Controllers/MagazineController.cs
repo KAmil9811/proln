@@ -24,7 +24,6 @@ namespace CGC.Controllers
             //SslMode = MySqlSslMode.Required,
         };
 
-
         SqlConnection cnn = new SqlConnection(builder.ConnectionString);
         private static MagazineController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -169,38 +168,11 @@ namespace CGC.Controllers
         //    }
         //}
 
-        public bool Check_Code(int code)
-        {
-            foreach (Glass glass in Getglass())
-            {
-                foreach (Glass_Id glass_Id in glass.Glass_info)
-                {
-                    if (code == glass_Id.Id)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public void Repeat(int code)
-        {
-            bool check;
-            check = Check_Code(code);
-
-            Random rand = new Random();
-            if (check == false)
-            {
-                code = rand.Next(1, 900);
-                Repeat(code);
-            }
-        }
-
         public void Insert_Magazine_History(string Description, string Login)
         {
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Magazine_History(Data, Id_User, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description) VALUES(@data, @Login, @Description)";
+
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -246,8 +218,32 @@ namespace CGC.Controllers
             return temp;
         }
 
-        public UsersController usersController = new UsersController();
+        public List<Magazine_History> GetMagazineHistories()
+        {
+            List<Magazine_History> magazine_Histories = new List<Magazine_History>();
 
+            SqlCommand command = new SqlCommand("SELECT * FROM [Magazine_History];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Magazine_History magazine_History = new Magazine_History();
+                magazine_History.Login = sqlDataReader["Login"].ToString();
+                magazine_History.Date = sqlDataReader["Data"].ToString();
+                magazine_History.Description = sqlDataReader["Description"].ToString();
+
+                magazine_Histories.Add(magazine_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return magazine_Histories;
+        }
+
+        public UsersController usersController = new UsersController();
+        
         [HttpGet("Return_All_Colors")]
         public async Task<List<string>> Return_All_Colors()
         {
@@ -268,6 +264,12 @@ namespace CGC.Controllers
             return GetTypes();
         }
 
+        [HttpGet("Return_Magazine_History")]
+        public async Task<List<Magazine_History>> Return_Magazine_History()
+        {
+            return GetMagazineHistories();
+        }
+
         [HttpPost("Add_Glass")]
         public async Task<List<Glass>> Add_Glass([FromBody] Receiver receiver)
         {
@@ -275,6 +277,7 @@ namespace CGC.Controllers
 
             Glass glass = receiver.glass;
             User user = receiver.user;
+            int code;
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -282,9 +285,14 @@ namespace CGC.Controllers
                 {
                     for (int i = glass.Count; i > 0; i--)
                     {
-                        Random rand = new Random();
-                        var code = rand.Next(1, 9000);
-                        Repeat(code);
+                        if(Getglass().Last() != null)
+                        {
+                            code = Getglass().Last().Glass_info.Last().Id + 1;
+                        }
+                        else
+                        {
+                            code = 1;
+                        }
 
                         string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Destroyed,Removed,Type,Color,Owner,Desk,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Destroyed, @Removed, @Type, @Color, @Owner, @Desk, @code)";
 
@@ -304,8 +312,9 @@ namespace CGC.Controllers
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
+
                         string userhistory = "You added glass " + code;
-                        string magazinehistory = code + " has been added";
+                        string magazinehistory = "Glass " + code + " has been added";
 
                         usersController.Insert_User_History(userhistory, user.Login);
                         Insert_Magazine_History(magazinehistory, user.Login);
@@ -325,7 +334,7 @@ namespace CGC.Controllers
         [HttpPost("Edit_Glass")]
         public async Task<List<Glass>> Edit_Glass([FromBody] Receiver receiver)
         {
-            List<Glass> temp = new List<Glass>(); //breakpoint
+            List<Glass> temp = new List<Glass>();
             User user = receiver.user;
             Glass glass = receiver.glass;
             glass.Glass_id = receiver.glass.Glass_id;
@@ -353,8 +362,13 @@ namespace CGC.Controllers
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
-                    }
 
+                        string userhistory = "You edited glass " + glass_Id;
+                        string magazinehistory = "Glass " + glass_Id + " has been edited";
+
+                        usersController.Insert_User_History(userhistory, user.Login);
+                        Insert_Magazine_History(magazinehistory, user.Login);
+                    }
                     return temp;
                 }
             }
@@ -364,7 +378,6 @@ namespace CGC.Controllers
             return temp;
         }
 
-        //do dogadania z Frontem
         [HttpPost("Remove_Glass")]
         public async Task<List<Glass>> Remove_Glass([FromBody] Receiver receiver)
         {
@@ -395,7 +408,7 @@ namespace CGC.Controllers
 
                                 if (ids.Removed == true)
                                 {
-                                    glass.Error_Messege = "Glass_already_deleated";
+                                    glass.Error_Messege = "Glass_already_deleted";
                                     temp.Add(glass);
                                     return temp;
                                 }
@@ -411,8 +424,8 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You deleated glass " + ids.Id;
-                                string magazinehistory = ids.Id + " has been deleated";
+                                string userhistory = "You deleted glass " + ids.Id;
+                                string magazinehistory = "Glass " + ids.Id + " has been deleted";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
                                 Insert_Magazine_History(magazinehistory, user.Login);
@@ -480,7 +493,7 @@ namespace CGC.Controllers
                                 cnn.Close();
 
                                 string userhistory = "You restored glass " + ids.Id;
-                                string magazinehistory = ids.Id + " has been restored";
+                                string magazinehistory = "Glass " + ids.Id + " has been restored";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
                                 Insert_Magazine_History(magazinehistory, user.Login);
@@ -531,7 +544,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = "You added new type " + type;
-                    string magazinehistory = type + " has been added";
+                    string magazinehistory = "Type " + type + " has been added";
 
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Magazine_History(magazinehistory, user.Login);
@@ -575,7 +588,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = "You added new color " + color;
-                    string magazinehistory = color + " has been added";
+                    string magazinehistory = "Color " + color + " has been added";
 
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Magazine_History(magazinehistory, user.Login);
@@ -639,8 +652,8 @@ namespace CGC.Controllers
                                 }
                             }
 
-                            string userhistory = "You changed type " + old_type + " to " + new_type;
-                            string magazinehistory = old_type + " has been changed to " + new_type;
+                            string userhistory = "You changed type from " + old_type + " to " + new_type;
+                            string magazinehistory = "Type " + old_type + " has been changed to " + new_type;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Magazine_History(magazinehistory, user.Login);
@@ -707,8 +720,8 @@ namespace CGC.Controllers
                                     cnn.Close();
                                 }
                             }
-                            string userhistory = "You changed " + old_color + " to " + new_color;
-                            string magazinehistory = old_color + " has been change on " + new_color;
+                            string userhistory = "You changed color from " + old_color + " to " + new_color;
+                            string magazinehistory = "Color " + old_color + " has been change to " + new_color;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Magazine_History(magazinehistory, user.Login);

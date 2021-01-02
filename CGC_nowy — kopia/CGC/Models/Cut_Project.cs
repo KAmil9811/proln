@@ -7,7 +7,9 @@ namespace CGC.Models
 {
     public class Cut_Project
     {
-        public string Order_id;
+        public int Cut_id { get; set; }
+        public string Order_id {  get; set;  }
+        public string Status { get; set; }
         public List<Item> Items = new List<Item>();
         public List<Glass> Glasses = new List<Glass>();
     }

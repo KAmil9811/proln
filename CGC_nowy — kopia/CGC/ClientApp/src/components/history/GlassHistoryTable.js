@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 
-export class UserHistoryTable extends Component {
+export class GlassHistoryTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +19,7 @@ export class UserHistoryTable extends Component {
         var table2 = [];
 
 
-        fetch(`api/Users/Return_Users_History`, {
+        fetch(`api/Magazine/Return_Magazine_History`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -34,7 +34,7 @@ export class UserHistoryTable extends Component {
                     table2.push({
                         who: json[i].login,
                         what: json[i].description,
-                        when: json[i].data
+                        when: json[i].date
                     })
                 }
 
@@ -87,11 +87,10 @@ export class UserHistoryTable extends Component {
                         rows: table2
                     }
                 });
-
+            
             })
 
-    };
-
+            };
 
 
     table() {

@@ -46,12 +46,17 @@ export class OptiTableItems extends Component {
             .then(json => {
                 var table2 = [];
                 for (var i = 0; i < json.length; i++) {
-                    for (var j = 0; j < json[i].pieces.length; j++) {
-                        table2.push({
-                            length: json[i].pieces[j].lenght,
-                            width: json[i].pieces[j].widht,
-                            ids: json[i].pieces[j].id,
-                        })
+                    for (var j = 0; j < json[i].glass_info.length; j++) {
+                        for (var x = 0; x < json[i].glass_info[j].pieces.length; x++) {
+                            table2.push({
+                            length: json[i].glass_info[0].pieces[x].lenght,
+                            width: json[i].glass_info[0].pieces[x].widht,
+                                ids: json[i].glass_info[0].pieces[x].id,
+                            })
+                        
+                        }
+                        
+                        
                     }
                 };
                 this.setState({

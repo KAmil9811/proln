@@ -35,6 +35,10 @@ export class GlassWarehouse extends Component {
         this.props.history.push('/add_glass')
     }
 
+    historyGlass = (event) => {
+        this.props.history.push('/glass_history')
+    }
+
     delGlass = (event) => {
         var amount = prompt("Podaj Id szkła które chcesz usunąć:");
         var amount2 = parseInt(amount)
@@ -101,7 +105,8 @@ export class GlassWarehouse extends Component {
                 <div className="conteiner_gw">
                     <button type="button" className="del_glass_x" onClick={this.delGlass}>Usuń szkło</button>
                     <button type="button" className="add_glass" onClick={this.addGlass}>Dodaj szkło</button>
-                  
+                    <button type="button" className="add_glass" onClick={this.historyGlass}>Historia szkła</button>
+
                     <div className="tableglass">
                         <GlassTable />
                     </div>

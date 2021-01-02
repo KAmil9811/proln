@@ -21,6 +21,7 @@ namespace CGC.Models
         public bool Can_Be_Createad { get; set; }
         public string Color { get; set; }
         public int Id { get; set; }
+        public int Product_Id { get; set; }
         public string Status { get; set; }
         public string Shape { get; set; }
         public string Order_id { get; set; }
@@ -30,6 +31,7 @@ namespace CGC.Models
         //Ciecie
         public double Area { get; set; }
         public int Fit_pos { get; set; }
+        public int Cut_id { get; set; }
 
 
         public string Error_Messege { get; set; }

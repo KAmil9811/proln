@@ -17,9 +17,7 @@ namespace CGC.Models
         public bool Deletead { get; set; }
         public bool Frozen { get; set; }
         public bool Released { get; set; }
-        
-        public List<Order_History> order_Histories = new List<Order_History>();
-
+       
         public List<Item> items = new List<Item>();
 
         public string Error_Messege { get; set; }

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace CGC.Models
 {
-    public class Machines_History_All
-    {
-        public string Date { get; set; }
-        public int No { get; set; }
+    public class Product_History
+    { 
         public string Login { get; set; }
+        public string Date { get; set; }
         public string Description { get; set; }
+        public int Id { get; set; }
     }
 }

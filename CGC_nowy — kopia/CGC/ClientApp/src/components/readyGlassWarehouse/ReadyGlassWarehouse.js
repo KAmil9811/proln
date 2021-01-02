@@ -35,6 +35,10 @@ export class ReadyGlassWarehouse extends Component {
         this.props.history.push('/glasswarehouse')
     }
 
+    historyReadyGlass = (event) => {
+        this.props.history.push('/ready_glass_history')
+    }
+
     render() {
         return (
             <div>
@@ -43,6 +47,10 @@ export class ReadyGlassWarehouse extends Component {
                         <button type="button" className="magazine3" onClick={this.glassWarehouse}>Magazyn</button>
                         <button type="button" className="home3" onClick={this.homePage}>Strona główna</button>
                 </div >
+                <div className="conteiner_gw">
+                        <button type="button" className="add_glass" onClick={this.historyReadyGlass}>Historia gotowego produktu</button>
+                </div >
+                
                 <div className="conteiner_rgw">
 
                         <div className= "tablerdy">
