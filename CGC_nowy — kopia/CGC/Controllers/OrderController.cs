@@ -108,7 +108,15 @@ namespace CGC.Controllers
                     else
                     {
                         item.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
-                    }                  
+                    }
+                    if (sqlDataReader["Product_Id"].ToString() == "")
+                    {
+                        item.Product_Id = 0;
+                    }
+                    else
+                    {
+                        item.Product_Id = Convert.ToInt32(sqlDataReader["Product_Id"]);
+                    }
 
                     temp.Add(item);
                 }
@@ -140,6 +148,23 @@ namespace CGC.Controllers
                 item.Shape = sqlDataReader["Shape"].ToString();
                 item.Order_id = sqlDataReader["Order_id"].ToString();
                 item.Desk = sqlDataReader["Desk"].ToString();
+
+                if (sqlDataReader["Cut_id"].ToString() == "")
+                {
+                    item.Cut_id = 0;
+                }
+                else
+                {
+                    item.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                }
+                if (sqlDataReader["Product_Id"].ToString() == "")
+                {
+                    item.Product_Id = 0;
+                }
+                else
+                {
+                    item.Product_Id = Convert.ToInt32(sqlDataReader["Product_Id"]);
+                }
 
                 temp.Add(item);              
             }
@@ -274,27 +299,19 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                foreach(Product product in productController.GetProducts())
-                                {
-                                    if(product.Id_item == item.Id)
-                                    {
-                                        query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
-                                        command = new SqlCommand(query, cnn);
+                                query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Product_Id;";
+                                command = new SqlCommand(query, cnn);
 
-                                        command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
-                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id;
+                                command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                                command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = item.Product_Id;
 
-                                        cnn.Open();
-                                        command.ExecuteNonQuery();
-                                        command.Dispose();
-                                        cnn.Close();
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
 
-                                        string producthistory = "Product has been released";
-                                        productController.InsertProductHistory(product.Id, user.Login, producthistory);
-
-                                        break;
-                                    }
-                                }
+                                string producthistory = "Product has been released";
+                                productController.InsertProductHistory(item.Product_Id, user.Login, producthistory);
                             }
                         }
 
@@ -377,9 +394,7 @@ namespace CGC.Controllers
 
                         return temp;
                     }
-                    temp_item.Error_Messege = "No good id to change";
-                    temp.Add(temp_item);
-                    return temp;
+
                 }
             }
             temp_item.Error_Messege = "User not found";
@@ -617,7 +632,6 @@ namespace CGC.Controllers
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Order_History(orderhistory, user.Login, order.Id_Order);
-
                         }                 
                     }
                 }

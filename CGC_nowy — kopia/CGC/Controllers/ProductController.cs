@@ -46,73 +46,6 @@ namespace CGC.Controllers
         MagazineController magazineController = new MagazineController();
         OrderController orderController = new OrderController();
 
-        public List<Order> GetOrders()
-        {
-            List<Order> temp = new List<Order>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Order];", cnn);
-            cnn.Open();
-
-            SqlDataReader sqlDataReader = command.ExecuteReader();
-            while (sqlDataReader.Read())
-            {
-                if ((sqlDataReader["Status"].ToString() == "ready" || sqlDataReader["Status"].ToString() == "stopped") && Convert.ToBoolean(sqlDataReader["Released"]) == false && Convert.ToBoolean(sqlDataReader["Deletead"]) == false)
-                {
-                    Order order = new Order();
-                    order.Id_Order = sqlDataReader["Id_Order"].ToString();
-                    order.Owner = sqlDataReader["Owner"].ToString();
-                    order.Status = sqlDataReader["Status"].ToString();
-                    order.Priority = Convert.ToInt32(sqlDataReader["Priority"]);
-                    order.Deadline = sqlDataReader["Deadline"].ToString();
-                    order.Stan = sqlDataReader["Stan"].ToString();
-                    order.Deletead = Convert.ToBoolean(sqlDataReader["Deletead"]);
-                    order.Frozen = Convert.ToBoolean(sqlDataReader["Frozen"]);
-                    order.Released = Convert.ToBoolean(sqlDataReader["Released"]);
-
-                    temp.Add(order);
-                }
-            }
-            sqlDataReader.Close();
-            command.Dispose();
-            cnn.Close();
-
-            return temp;
-        }
-
-        public List<Item> GetItems(Order order)
-        {
-            string help;
-            List<Item> temp = new List<Item>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Item]", cnn);
-            cnn.Open();
-
-            SqlDataReader sqlDataReader = command.ExecuteReader();
-            while (sqlDataReader.Read())
-            {
-                help = sqlDataReader["Order_id"].ToString();
-                if (help == order.Id_Order)
-                {
-                    Item item = new Item();
-                    item.Id = Convert.ToInt32(sqlDataReader["Id"]);
-                    item.Thickness = Convert.ToDouble(sqlDataReader["Height"]);
-                    item.Width = Convert.ToDouble(sqlDataReader["Weight"]);
-                    item.Length = Convert.ToDouble(sqlDataReader["Lenght"]);
-                    item.Type = sqlDataReader["Glass_Type"].ToString();
-                    item.Color = sqlDataReader["Color"].ToString();
-                    item.Status = sqlDataReader["Status"].ToString();
-                    item.Shape = sqlDataReader["Shape"].ToString();
-                    item.Order_id = sqlDataReader["Order_id"].ToString();
-                    item.Desk = sqlDataReader["Desk"].ToString();
-
-                    temp.Add(item);
-                }
-            }
-            sqlDataReader.Close();
-            command.Dispose();
-            cnn.Close();
-
-            return temp;
-        }
-
         public List<Product_History> GetProductHistory (int Id)
         {
             List<Product_History> product_Histories = new List<Product_History>();
@@ -173,6 +106,7 @@ namespace CGC.Controllers
                     product.Status = sqlDataReader["Status"].ToString();
                     product.Desk = sqlDataReader["Desk"].ToString();
                     product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
+                    product.Id_order = sqlDataReader["Id_order"].ToString();
 
                     temp.Add(product);
                 }
@@ -189,19 +123,16 @@ namespace CGC.Controllers
             List<Product> temp = new List<Product>();
             List<Product> wynik = new List<Product>();
             Product product = new Product();
-            List<int> Id_items = new List<int>();
             List<string> Ordr_ids = new List<string>();
 
             foreach (Product pro in products)
             {
-                if (pro.Status != "ready")
+                if (pro.Status != "Ready")
                 {
                     product.Error_Messege = "Products not ready";
                     temp.Add(product);
                     return temp;
                 }
-
-                Id_items.Add(pro.Id_item);
             }
 
             foreach (User use in usersController.GetUsers())
@@ -210,7 +141,7 @@ namespace CGC.Controllers
                 {
                     foreach(Product pro in products)
                     {
-                        if(pro.Status == "ready")
+                        if(pro.Status == "Ready")
                         {
                             string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
                             SqlCommand command = new SqlCommand(query, cnn);
@@ -229,51 +160,30 @@ namespace CGC.Controllers
                             usersController.Insert_User_History(userhistory, user.Login);
                             InsertProductHistory(pro.Id, producthistory, user.Login);
 
+                            query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
+                            command = new SqlCommand(query, cnn);
+
+                            command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                            command.Parameters.Add("@Id", SqlDbType.Int).Value = pro.Id_item;
+
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+
+                            string orderhistory = "Order item has been released " + pro.Id_item;
+                            orderController.Insert_Order_History(orderhistory, user.Login, pro.Id_order);
+
                             wynik.Add(pro);
+                            Ordr_ids.Add(pro.Id_order);
                         }                        
-                    }
-
-                    foreach(int Id_item in Id_items.Distinct())
-                    {
-                        string ord_id = "";
-                        SqlCommand command = new SqlCommand("SELECT Order_id FROM [Item] WHERE Id = @Id_item", cnn);
-                        cnn.Open();
-
-                        command.Parameters.Add("@Id_item", SqlDbType.Int).Value = Id_item;
-
-                        SqlDataReader sqlDataReader = command.ExecuteReader();
-
-                        while (sqlDataReader.Read())
-                        {    
-                            Ordr_ids.Add(sqlDataReader["Order_id"].ToString());
-                            ord_id = sqlDataReader["Order_id"].ToString();
-                        }
-
-                        sqlDataReader.Close();
-                        command.Dispose();
-                        cnn.Close();
-
-                        string query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id_item;";
-                        command = new SqlCommand(query, cnn);
-
-                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
-                        
-                        command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = Id_item;
-
-                        cnn.Open();
-                        command.ExecuteNonQuery();
-                        command.Dispose();
-                        cnn.Close();
-
-                        string orderhistory = "Order item has been released " + Id_item;
-
-                        orderController.Insert_Order_History(orderhistory, user.Login, ord_id);
                     }
 
                     foreach (string Ord_Id in Ordr_ids.Distinct())
                     {
                         bool check = true;
                         Order order = new Order { Id_Order = Ord_Id  };
+
                         foreach(Item item in orderController.GetItems(order))
                         {
                             if(item.Status != "Released" && item.Status != "Deleted")
@@ -346,6 +256,18 @@ namespace CGC.Controllers
 
                     command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Deleted";
                     command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id;
+
+                    cnn.Open();
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    cnn.Close();
+
+                    query = "UPDATE dbo.[Item] SET Status = @Status Product_Id = @Product_Id WHERE Id = @Id;";
+                    command = new SqlCommand(query, cnn);
+
+                    command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Awaiting";
+                    command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id_item;
+                    command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = 0;
 
                     cnn.Open();
                     command.ExecuteNonQuery();

@@ -12,6 +12,7 @@ namespace CGC.Models
         public string Owner { get; set; }
         public string Status { get; set; }
         public int Id_item { get; set; }
+        public string Id_order { get; set; }
         public int Cut_id { get; set; }
         public string Error_Messege;
     }
