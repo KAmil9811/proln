@@ -50,7 +50,7 @@ export class MachineTable extends Component {
                         >Zmień status</button>,
                         delete: <button className="delete1" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń/Przywróć  </button>,
 
-                        action: <Link to="/single_machine_history"><button className="user_change" >Historia</button></Link>
+                        action: <Link to="/single_machine_history"><button className="user_change" id={json[i].no} onClick={(e) => { this.single(e.target.id) }}>Historia</button></Link>
                     })
                 };
                 this.setState({
@@ -100,7 +100,9 @@ export class MachineTable extends Component {
                 });
             })
     };
-
+    single(number) {
+        sessionStorage.setItem('no', number)
+    }
     machineBroken(id, status ) {
         const receiver = {
             user: {

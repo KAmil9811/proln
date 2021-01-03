@@ -54,13 +54,14 @@ export class Test extends Component {
                     var canvas = document.getElementById('canvas');
                     if (canvas.getContext) {
                         var ctx = canvas.getContext('2d');
-                        ctx.strokeRect(0, 50*(i*5), json[i].width * 10, json[i].length * 10); ///tafla
+                        ctx.strokeRect(0, 200*i, json[i].width, json[i].length); ///tafla
                         if (json[i].width === 0) {
-                            console.log(json[i].error_Messege)
+                            sessionStorage.setItem('uncat', json[i].error_Messege)
+
                         }
                         else {
                             for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                ctx.strokeRect(json[i].glass_info[0].pieces[j].x, json[i].glass_info[0].pieces[j].y + 50, json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
+                                ctx.strokeRect(json[i].glass_info[0].pieces[j].x, json[i].glass_info[0].pieces[j].y+(200*i), json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
                             }
                         }
                     }
@@ -119,6 +120,7 @@ export class Test extends Component {
                 <div className="canva">
                     <canvas className="canvas" id="canvas" width="600" height="600" ></canvas>
                 </div>
+                <h2>{sessionStorage.getItem('uncat')}</h2>
                 <div className="table2">
                     <h2>Glasiki</h2>
                     <OptiTable />

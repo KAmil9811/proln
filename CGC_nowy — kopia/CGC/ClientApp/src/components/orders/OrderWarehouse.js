@@ -37,7 +37,21 @@ export class OrderWarehouse extends Component {
         this.props.history.push('/addorderfirst')
     }
 
+
+
+    history() {
+        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
+            return (
+                <button className="add_order" onClick={this.historyOrder}>Historia zleceń</button>
+            )
+        }
+    }
+        historyOrder = (event) => {
+            this.props.history.push('/order_history')
+        }
+
     render() {
+        let history = this.history();
         return (
             <div className="OrderWarehouse">
                 <Sidebar />
@@ -49,6 +63,7 @@ export class OrderWarehouse extends Component {
                          <p>Z- ilość w trakcie</p>
                      </div>
                     <button className="add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
+                    {history}
                     <div className="tablewar">
                         <OrderTable />
                     </div>

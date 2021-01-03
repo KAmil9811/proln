@@ -95,9 +95,11 @@ export class ControlPanel extends Component {
     }
 
     usersHistoryTable() {
-        return (
-            <button type="button" className="types98" onClick={this.userHistory}>Historia użytkowników</button>
+        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
+            return (
+                <button type="button" className="types98" onClick={this.userHistory}>Historia użytkowników</button>
             )
+        }
     }
     adminPermissionsRender() {
         if (sessionStorage.getItem('admin') === 'true') {

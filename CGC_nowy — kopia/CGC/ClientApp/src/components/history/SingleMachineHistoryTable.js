@@ -17,14 +17,22 @@ export class SingleMachineHistoryTable extends Component {
     }
 
 
+
     componentDidMount() {
 
         var table2 = [];
+        const receiver = {
+            machines: {
+                no: sessionStorage.getItem('no')
+            }
+        }
+        console.log(receiver)
 
         fetch(`api/Machine/Return_Machines_History`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
