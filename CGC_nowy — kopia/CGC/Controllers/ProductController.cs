@@ -97,17 +97,7 @@ namespace CGC.Controllers
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
-            {
-<<<<<<< HEAD
-                Product product = new Product();
-                product.Id = Convert.ToInt32(sqlDataReader["Id"]);
-                product.Owner = sqlDataReader["Owner"].ToString();
-                product.Status = sqlDataReader["Status"].ToString();
-                product.Desk = sqlDataReader["Desk"].ToString();
-                product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
-
-                temp.Add(product);             
-=======
+            {          
                 if (sqlDataReader["Status"].ToString() == "Send" || sqlDataReader["Status"].ToString() == "In magazine" || sqlDataReader["Status"].ToString() == "Send to magazine")
                 {
                     Product product = new Product();
@@ -120,7 +110,7 @@ namespace CGC.Controllers
 
                     temp.Add(product);
                 }
->>>>>>> cd59fc5193ecdbbd9644fbe91aaf5fffd298eaa3
+
             }
             sqlDataReader.Close();
             command.Dispose();
