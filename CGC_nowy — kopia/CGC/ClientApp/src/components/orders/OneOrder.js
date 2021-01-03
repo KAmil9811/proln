@@ -35,7 +35,7 @@ export class OneOrder extends Component {
         return (
             <div>
                 <div className="nav_one_o">
-                    <button type="button" className="home_page5" onClick={this.homePage}>Strona główna</button>
+                    
                     <button type="button" className="orders3" onClick={this.orders}>Zlecenia</button>
                 </div>
                 <div className="conteiner_one_o">

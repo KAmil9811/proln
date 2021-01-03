@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient;
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    public class CutController : Controller
+    public sealed class CutController : Controller
     {
         static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
         {
@@ -23,7 +23,7 @@ namespace CGC.Controllers
         };
 
 
-        readonly SqlConnection cnn = new SqlConnection(builder.ConnectionString);
+        SqlConnection cnn = new SqlConnection(builder.ConnectionString);
         private static CutController m_oInstance = null;
         private static readonly object m_oPadLock = new object();
 
@@ -178,12 +178,85 @@ namespace CGC.Controllers
 
             foreach(Cut_Project cut_p in GetCut_Project())
             {
-                if(cut_p.Status == "ready")
+                if(cut_p.Status == "Ready")
                 {
                     cut_Projects.Add(cut_p);
                 }
             }
             return cut_Projects;
+        }
+
+        [HttpPost("Return_Porject")]
+        public async Task<List<Glass>> Return_Porject([FromBody] Receiver receiver)
+        {
+            List<Glass> wynik = new List<Glass>();
+            int Cut_id = receiver.id;
+            Order order = receiver.order;
+            int kontrol;
+            List<Glass> glasses = new List<Glass>();
+
+            Package packages = new Package();
+            Package backup = new Package();
+
+            foreach (Item item in orderController.GetItems(order))
+            {
+                if (item.Cut_id == Cut_id)
+                {
+                    packages.Item.Add(item);
+                    backup.Item.Add(item);
+                }
+            }
+
+            kontrol = packages.Item.Count;
+
+            Return_Area(packages);
+            Set_Package(packages);
+            Sort_Package(packages);
+
+            foreach (Glass glass in magazineController.Getglass())
+            {
+                if (glass.Cut_id == Cut_id)
+                {
+                    glasses.Add(glass);          
+                }
+            }
+
+            glasses.Sort((glass1, glass2) => glass1.Width.CompareTo(glass2.Width));
+            glasses.Sort((glass1, glass2) => glass1.Length.CompareTo(glass2.Length));
+
+            foreach (Glass glass in glasses)
+            {
+                foreach (Glass_Id glass_id in glass.Glass_info)
+                {
+                    if (packages.Item.Count > 0)
+                    {
+                        Glass tmp = new Glass();
+
+                        tmp.Width = glass.Width;
+                        tmp.Hight = glass.Hight;
+                        tmp.Length = glass.Length;
+
+                        glass_id.Pieces = Package_Pieces(glass.Length, glass.Width, packages);
+
+                        tmp.Glass_info.Add(glass_id);
+                        wynik.Add(tmp);
+                    }
+                }
+            }
+
+            if (wynik.Count < backup.Item.Count)
+            {
+                Glass tmp = new Glass();
+                tmp.Error_Messege = "zabraklo miejsca dla: ";
+
+                for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
+                {
+                    tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
+                }
+                wynik.Add(tmp);
+            }
+
+            return wynik;
         }
 
         public void Return_Area(Package package)
@@ -633,9 +706,9 @@ namespace CGC.Controllers
                                     {
                                         item.Status = "ready";
 
-                                        var code = productController.Get_All_Products().Last().Id + 1;
+                                        var code = productController.GetProducts().Last().Id + 1;
 
-                                        string query = "INSERT INTO dbo.[Product](@Id,@Owner,@Desk,@Status,@Id_item)";
+                                        string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
                                         SqlCommand command = new SqlCommand(query, cnn);
 
                                         command.Parameters.Add("@Id", SqlDbType.Int).Value = code;
@@ -643,11 +716,24 @@ namespace CGC.Controllers
                                         command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
                                         command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = item.Status;
                                         command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
+                                        command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
 
                                         cnn.Open();
                                         command.ExecuteNonQuery();
                                         command.Dispose();
                                         cnn.Close();
+
+                                        query = "UPDATE dbo.[Item] SET Product_id = @Product_id WHERE Id = @Id";
+                                        command = new SqlCommand(query, cnn);
+
+                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+                                        command.Parameters.Add("@Product_id", SqlDbType.Int).Value = code;
+
+                                        cnn.Open();
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+                                        cnn.Close();
+
                                     }
                                 }
                             }

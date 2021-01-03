@@ -34,7 +34,6 @@ export class UserHistory extends Component {
             <div>
                 <div className="nav_mw">
                     <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
-                    <button type="button" className="home2" onClick={this.homePage}>Strona główna</button>
                 </div>
                 <div className="conteiner_mw">
                     <UserHistoryTable />

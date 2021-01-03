@@ -41,7 +41,7 @@ export class ReadyPackages extends Component {
             <div className="OrderWarehouse">
                 <div className="nav_ow">
                     <button type="button" className="log_out" onClick={this.logOut}>Wyloguj</button>
-                    <button type="button" className="home" onClick={this.homePage}>Strona główna</button>
+                    
                 </div>
                 <div className="conteiner_ow">
 

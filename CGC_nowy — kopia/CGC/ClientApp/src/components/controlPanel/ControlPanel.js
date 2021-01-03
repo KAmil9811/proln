@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import './Acount.css';
 import { UsersTable } from './UsersTable';
+import * as FiIcons from 'react-icons/fi';
 
 
 
@@ -159,11 +160,9 @@ export class ControlPanel extends Component {
 
         return ( 
             <div className="ControlPanel" >
-                <div className="nav_cp">
-                     <button className="home" onClick={this.homePage}>Strona główna</button>
-                    <button className="log_out" onClick={this.logOut}>Wyloguj</button>
-                </div>
-
+                
+               
+                
                  <div className="conteiner_cp">
                         <div className="">
                             <form>

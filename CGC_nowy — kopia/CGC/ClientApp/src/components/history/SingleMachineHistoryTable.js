@@ -90,9 +90,11 @@ export class SingleMachineHistoryTable extends Component {
                     }
                 });
 
+
             })
 
     };
+
 
    
 

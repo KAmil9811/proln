@@ -107,7 +107,15 @@ namespace CGC.Controllers
                     else
                     {
                         item.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
-                    }                  
+                    }
+                    if (sqlDataReader["Product_Id"].ToString() == "")
+                    {
+                        item.Product_Id = 0;
+                    }
+                    else
+                    {
+                        item.Product_Id = Convert.ToInt32(sqlDataReader["Product_Id"]);
+                    }
 
                     temp.Add(item);
                 }
@@ -139,6 +147,24 @@ namespace CGC.Controllers
                 item.Shape = sqlDataReader["Shape"].ToString();
                 item.Order_id = sqlDataReader["Order_id"].ToString();
                 item.Desk = sqlDataReader["Desk"].ToString();
+
+                if (sqlDataReader["Cut_id"].ToString() == "")
+                {
+                    item.Cut_id = 0;
+                }
+                else
+                {
+                    item.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                }
+
+                if (sqlDataReader["Product_Id"].ToString() == "")
+                {
+                    item.Product_Id = 0;
+                }
+                else
+                {
+                    item.Product_Id = Convert.ToInt32(sqlDataReader["Product_Id"]);
+                }
 
                 temp.Add(item);              
             }
@@ -244,7 +270,138 @@ namespace CGC.Controllers
             }
             return count;
         }
+        
+        public List<Order> ReleasedOrder(Order order, User user)
+        {
+            List<Order> temp = new List<Order>();
 
+            foreach (User use in usersController.GetUsers())
+            {
+                if (use.Login == user.Login)
+                {
+                    if (order.Status == "Ready")
+                    {
+                        string query;
+                        SqlCommand command;
+
+                        foreach (Item item in GetItems(order))
+                        {
+                            if (item.Status == "Ready")
+                            {
+                                query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
+                                command = new SqlCommand(query, cnn);
+
+                                command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                                command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Product_Id;";
+                                command = new SqlCommand(query, cnn);
+
+                                command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                                command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = item.Product_Id;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string producthistory = "Product has been released";
+                                //productController.InsertProductHistory(item.Product_Id, user.Login, producthistory);
+                            }
+                        }
+
+                        query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id;";
+                        command = new SqlCommand(query, cnn);
+
+                        command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
+                        command.Parameters.Add("@Order_Id", SqlDbType.Int).Value = order.Id_Order;
+
+                        cnn.Open();
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        cnn.Close();
+
+                        temp.Add(order);
+
+                        string userhistory = "You released order " + order.Id_Order;
+                        string orderhistory = "Order has been released";
+
+                        usersController.Insert_User_History(userhistory, user.Login);
+                        Insert_Order_History(orderhistory, user.Login, order.Id_Order);
+
+                        return temp;
+                    }
+                    order.Error_Messege = "Order status is not ready";
+                    temp.Add(order);
+                    return temp;
+                }
+            }
+            order.Error_Messege = "User not found";
+            temp.Add(order);
+            return temp;
+
+        }
+
+        public List<Item> ReleasedItem(User user, List<Item> items)
+        {
+            List<Item> temp = new List<Item>();
+            Item temp_item = new Item();
+            Order order = new Order { Id_Order = items.First().Order_id  };
+            List<Item> temp2 = GetItems(order);
+
+            foreach (Item item in temp2)
+            {
+                if(item.Status != "ready" && item.Status != "Released")
+                {
+                    temp_item.Error_Messege = "Items are not ready";
+                    temp.Add(temp_item);
+                    return temp;
+                }
+            }                    
+
+            foreach (User use in usersController.GetUsers())
+            {
+                if (use.Login == user.Login)
+                {
+                    foreach (Item item in temp2)
+                    {
+                        if (item.Status != "Released")
+                        {
+                            string query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
+                            SqlCommand command = new SqlCommand(query, cnn);
+
+                            command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                            command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+                        }
+
+                        temp.Add(temp_item);
+
+                        string userhistory = "You released item " + item.Id;
+                        string orderhistory = "Item " + item.Id + " has been released";
+
+                        usersController.Insert_User_History(userhistory, user.Login);
+                        Insert_Order_History(orderhistory, user.Login, item.Order_id);
+
+                        return temp;
+                    }
+
+                }
+            }
+            temp_item.Error_Messege = "User not found";
+            temp.Add(temp_item);
+            return temp;
+        }
+        
         [HttpGet("Return_All_Orders")]
         public async Task<List<Order>> Return_All_Orders()
         {
@@ -382,65 +539,56 @@ namespace CGC.Controllers
             {
                 if (usere.Login == user.Login)
                 {
-                    try
+                    string query;
+                    SqlCommand command;
+                    foreach (Item item in order.items)
                     {
-                        string query;
-                        SqlCommand command;
-                        foreach (Item item in order.items)
-                        {
-                            query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id)";
-                            command = new SqlCommand(query, cnn);
-
-                            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
-                            command.Parameters.Add("@Weight", SqlDbType.Float).Value = item.Width;
-                            command.Parameters.Add("@Height", SqlDbType.Float).Value = item.Thickness;
-                            command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
-                            command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
-                            command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
-                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
-                            command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-                            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
-
-                            cnn.Open();
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-                            cnn.Close();
-                        }
-
-                        cnn.Open();
-                        query = "INSERT INTO dbo.[Order](Id_Order,Owner,Status,Priority,Deadline,Stan,Deletead,Frozen,Released ) VALUES(@Id_Order, @Owner, @Status, @Priority, @Deadline, @Stan, @Deletead, @Frozen, @Released)";
+                        query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id)";
                         command = new SqlCommand(query, cnn);
 
-                        command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
-                        command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
+                        command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
+                        command.Parameters.Add("@Weight", SqlDbType.Float).Value = item.Width;
+                        command.Parameters.Add("@Height", SqlDbType.Float).Value = item.Thickness;
+                        command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
+                        command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
+                        command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
                         command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
-                        command.Parameters.Add("@Priority", SqlDbType.Int).Value = order.Priority;
-                        command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
-                        command.Parameters.Add("@Stan", SqlDbType.VarChar, 40).Value = Avaible_Cut(order).ToString() + "/" + order.items.Count + "/" + "0";
-                        command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = false;
-                        command.Parameters.Add("@Frozen", SqlDbType.Bit).Value = false;
-                        command.Parameters.Add("@Released", SqlDbType.Bit).Value = false;
+                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                        command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
+                        cnn.Open();
                         command.ExecuteNonQuery();
                         command.Dispose();
                         cnn.Close();
-
-                        string userhistory = "You added new order " + order.Id_Order;
-                        string orderhistory = "Order has been created";
-
-                        usersController.Insert_User_History(userhistory, user.Login);
-                        Insert_Order_History(orderhistory,  user.Login,  order.Id_Order);
-
                     }
-                    catch(Exception ex)
-                    {
-                        user.Error_Messege = ex.ToString();
-                    }
+
+                    cnn.Open();
+                    query = "INSERT INTO dbo.[Order](Id_Order,Owner,Status,Priority,Deadline,Stan,Deletead,Frozen,Released ) VALUES(@Id_Order, @Owner, @Status, @Priority, @Deadline, @Stan, @Deletead, @Frozen, @Released)";
+                    command = new SqlCommand(query, cnn);
+
+                    command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                    command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
+                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
+                    command.Parameters.Add("@Priority", SqlDbType.Int).Value = order.Priority;
+                    command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
+                    command.Parameters.Add("@Stan", SqlDbType.VarChar, 40).Value = Avaible_Cut(order).ToString() + "/" + order.items.Count + "/" + "0";
+                    command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = false;
+                    command.Parameters.Add("@Frozen", SqlDbType.Bit).Value = false;
+                    command.Parameters.Add("@Released", SqlDbType.Bit).Value = false;
+
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    cnn.Close();
+
+                    string userhistory = "You added new order " + order.Id_Order;
+                    string orderhistory = "Order has been created";
+
+                    usersController.Insert_User_History(userhistory, user.Login);
+                    Insert_Order_History(orderhistory,  user.Login,  order.Id_Order);
                 }
             }
 
-            string Orderhistory = "Order has been created";
-            //Insert_Order_History(Orderhistory,user.Login);
+            order.Error_Messege = "Bad login";
 
             temp.Add(order);
    
@@ -483,7 +631,6 @@ namespace CGC.Controllers
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Order_History(orderhistory, user.Login, order.Id_Order);
-
                         }                 
                     }
                 }
@@ -510,36 +657,29 @@ namespace CGC.Controllers
                     {
                         if(item.Id == items.Id)
                         {
-                            try
-                            {
-                                string query = "UPDATE dbo.[Item] SET Height = @Height, Lenght = @Lenght, Weight = @Weight, Glass_Type = @Glass_Type, Color = @Color, Status = @Status, Desk = @Desk WHERE Id = @Id;";
-                                SqlCommand command = new SqlCommand(query, cnn);
+                            string query = "UPDATE dbo.[Item] SET Height = @Height, Lenght = @Lenght, Weight = @Weight, Glass_Type = @Glass_Type, Color = @Color, Status = @Status, Desk = @Desk WHERE Id = @Id;";
+                            SqlCommand command = new SqlCommand(query, cnn);
 
-                                command.Parameters.Add("@Height", SqlDbType.Decimal).Value = items.Thickness;
-                                command.Parameters.Add("@Lenght", SqlDbType.Decimal).Value = items.Length;
-                                command.Parameters.Add("@Weight", SqlDbType.Decimal).Value = items.Width;
-                                command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = items.Type;
-                                command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = items.Color;
-                                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = items.Status;
-                                command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = items.Desk;
+                            command.Parameters.Add("@Height", SqlDbType.Decimal).Value = items.Thickness;
+                            command.Parameters.Add("@Lenght", SqlDbType.Decimal).Value = items.Length;
+                            command.Parameters.Add("@Weight", SqlDbType.Decimal).Value = items.Width;
+                            command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = items.Type;
+                            command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = items.Color;
+                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = items.Status;
+                            command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = items.Desk;
 
-                                command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = items.Id;
+                            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = items.Id;
 
-                                cnn.Open();
-                                command.ExecuteNonQuery();
-                                command.Dispose();
-                                cnn.Close();
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
 
-                                string userhistory = "You edited order items " + order.Id_Order;
-                                string orderhistory = "Order items has been edited";
+                            string userhistory = "You edited order items " + order.Id_Order;
+                            string orderhistory = "Order items have been edited";
 
-                                usersController.Insert_User_History(userhistory, user.Login);
-                                Insert_Order_History(orderhistory, user.Login, order.Id_Order);
-                            }
-                            catch (SqlException e)
-                            {
-                                Console.WriteLine(e);
-                            }
+                            usersController.Insert_User_History(userhistory, user.Login);
+                            Insert_Order_History(orderhistory, user.Login, order.Id_Order);
                         }
                     }
                 }
@@ -580,7 +720,7 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You change order status " + order.Id_Order + "on deletead";
+                                string userhistory = "You change order status " + order.Id_Order + " on deletead";
                                 string orderhistory = "Order has been deleted";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
@@ -603,7 +743,7 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You restored order " + order.Id_Order;
+                                string userhistory = "You changed order ststus " + order.Id_Order + " on restored";
                                 string orderhistory = "Order has been restored";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
@@ -626,7 +766,7 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You change order status " + order.Id_Order + "on frozen";
+                                string userhistory = "You change order status " + order.Id_Order + " on frozen";
                                 string orderhistory = "Order has been frozen";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
@@ -649,7 +789,7 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You change order status " + order.Id_Order + "on unfrozen";
+                                string userhistory = "You changed order status " + order.Id_Order + " on unfrozen";
                                 string orderhistory = "Order has been unfrozen";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
@@ -695,8 +835,8 @@ namespace CGC.Controllers
                                 command.Dispose();
                                 cnn.Close();
 
-                                string userhistory = "You change order status " + order.Id_Order + "on unreleased";
-                                string orderhistory = "Order has been unreleased";
+                                string userhistory = "You change order status " + order.Id_Order + " to ready";
+                                string orderhistory = "Order ststus has been changed to ready";
 
                                 usersController.Insert_User_History(userhistory, user.Login);
                                 Insert_Order_History(orderhistory, user.Login, order.Id_Order);
@@ -713,5 +853,18 @@ namespace CGC.Controllers
             temp.Add(order);
             return temp;
         }
+        
+        [HttpPost("Released_Order")]
+        public async Task<List<Order>> Released_Order([FromBody] Receiver receiver)
+        {
+            return ReleasedOrder(receiver.order, receiver.user);
+        }
+
+        [HttpPost("Released_Item")]
+        public async Task<List<Item>> Released_Item([FromBody] Receiver receiver)
+        {
+            return ReleasedItem(receiver.user, receiver.items);
+        }
+        
     }
 }

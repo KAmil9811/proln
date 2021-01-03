@@ -315,7 +315,7 @@ namespace CGC.Controllers
                             cnn.Close();
 
                             string userhistory = "You changed status " + machines.No + " to " + machines.Status;
-                            string machinehistoryall = "machine status changed to " + machines.Status;
+                            string machinehistoryall = "machine status has been changed to " + machines.Status;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -364,7 +364,7 @@ namespace CGC.Controllers
                             cnn.Close();
 
                             string userhistory = "You changed type " + machines.No + " to " + machines.Type;
-                            string machinehistoryall = "machine type changed to " + machines.Type;
+                            string machinehistoryall = "Machine type has been changed from " + edit_machines.Type + " to " + machines.Type;
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -461,7 +461,7 @@ namespace CGC.Controllers
                             command.Dispose();
                             cnn.Close();
 
-                            string userhistory = "You resoted machine " + edit_machines.No;
+                            string userhistory = "You restored machine " + edit_machines.No;
                             string machinehistoryall = "Machine has been restored";
 
                             usersController.Insert_User_History(userhistory, user.Login);
@@ -514,7 +514,7 @@ namespace CGC.Controllers
                     cnn.Close();
 
                     string userhistory = "You added new machine type " + type;
-                    string machinehistoryall = type + " has been added";
+                    string machinehistoryall = "Type " + type + " has been added";
 
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Machine_History_All(user.Login, machinehistoryall);
