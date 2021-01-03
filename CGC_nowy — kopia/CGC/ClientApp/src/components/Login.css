@@ -12,8 +12,8 @@
 
 body {
    /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
-     background-image: url("../connectwork/connectwork.png");
-    /*background-color: darkgray;*/
+   /* background-image: url("../connectwork/connectwork.png");*/
+    background-color: darkslategrey;
 }
 label {
     color:white;

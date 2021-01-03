@@ -47,13 +47,21 @@ import { AllMachineHistory } from './components/history/AllMachineHistory';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
+
+
+
+
+
+
+
 export default class App extends Component {
     displayName = App.name
 
     render() {
         return (
 
-            <div>
+            <Router>
+                <div>
                     <Sidebar />
                     <div>
                         <Route exact path='/' component={Login} />
@@ -97,8 +105,9 @@ export default class App extends Component {
                         <Route path='/single_machine_history' component={SingleMachineHistory} />
                         <Route path='/order_history' component={OrderHistory} />
                         <Route path='/all_machine_history' component={AllMachineHistory} />
+                    </div>
                 </div>
-            </div>
+            </Router>
 
 
 

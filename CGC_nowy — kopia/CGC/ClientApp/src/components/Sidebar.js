@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
+import * as FiIcons from 'react-icons/fi';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
@@ -14,6 +15,11 @@ const Nav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+
+
+
+  
 `;
 
 const NavIcon = styled(Link)`
@@ -23,7 +29,22 @@ const NavIcon = styled(Link)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color: #fff;
+
 `;
+const OutIcon = styled.div`
+  margin-left: 18rem;
+  font-size: 2.5rem;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  
+`;
+
 
 const SidebarNav = styled.nav`
   background: #15171c;
@@ -47,14 +68,24 @@ const Sidebar = () => {
 
     const showSidebar = () => setSidebar(!sidebar);
 
+    
+   
+
     return (
         <div>
-            <IconContext.Provider value={{ color: '#fff' }}>
-                <Nav>
-                    <NavIcon to='#'>
+            
+            <Nav>
+               <NavIcon to='#'>
                         <FaIcons.FaBars onClick={showSidebar} />
-                    </NavIcon>
-                </Nav>
+                </NavIcon>
+                <NavIcon to='/'>
+                    <FiIcons.FiLogOut  />
+                </NavIcon>
+
+                   
+                    
+            </Nav>
+            <IconContext.Provider value={{ color: '#fff' }}>
                 <SidebarNav sidebar={sidebar}>
                     <SidebarWrap>
                         <NavIcon to='#'>
