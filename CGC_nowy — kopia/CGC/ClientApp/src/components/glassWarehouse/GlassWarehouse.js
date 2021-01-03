@@ -93,7 +93,15 @@ export class GlassWarehouse extends Component {
         this.props.history.push('/ready_glass_warehouse')
     }
 
+    history() {
+        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
+            return (
+                <button type="button" className="add_glass" onClick={this.historyGlass}>Historia szkła</button>
+            )
+        }
+    }
     render() {
+        let history = this.history();
         return (
             <div>
                 <div className="nav_gw">
@@ -105,7 +113,7 @@ export class GlassWarehouse extends Component {
                 <div className="conteiner_gw">
                     <button type="button" className="del_glass_x" onClick={this.delGlass}>Usuń szkło</button>
                     <button type="button" className="add_glass" onClick={this.addGlass}>Dodaj szkło</button>
-                    <button type="button" className="add_glass" onClick={this.historyGlass}>Historia szkła</button>
+                    {history}
 
                     <div className="tableglass">
                         <GlassTable />

@@ -35,12 +35,25 @@ export class MachineWarehouse extends Component {
         this.props.history.push('add_cutmachine')
     }
 
+    historyMachine = (event) => {
+        this.props.history.push('all_machine_history')
+    }
+
+    history() {
+        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
+            return (
+                <button type="button" className="history" onClick={this.historyMachine}> Historia</button>
+            )
+        }
+    }
+
     render() {
+        let history = this.history();
         return (
             <div>
                 <div className="nav_mw">
                     <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
-                    <button type="button" className="history" > Historia</button>
+                    {history}
                     <button type="button" className="home2" onClick={this.homePage}>Strona główna</button>
                 </div>
                 <div className="conteiner_mw">

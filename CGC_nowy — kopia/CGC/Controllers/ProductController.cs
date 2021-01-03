@@ -121,17 +121,14 @@ namespace CGC.Controllers
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {
-                if (sqlDataReader["Status"].ToString() == "Send" || sqlDataReader["Status"].ToString() == "In magazine" || sqlDataReader["Status"].ToString() == "Send to magazine")
-                {
-                    Product product = new Product();
-                    product.Id = Convert.ToInt32(sqlDataReader["Id"]);
-                    product.Owner = sqlDataReader["Owner"].ToString();
-                    product.Status = sqlDataReader["Status"].ToString();
-                    product.Desk = sqlDataReader["Desk"].ToString();
-                    product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
+                Product product = new Product();
+                product.Id = Convert.ToInt32(sqlDataReader["Id"]);
+                product.Owner = sqlDataReader["Owner"].ToString();
+                product.Status = sqlDataReader["Status"].ToString();
+                product.Desk = sqlDataReader["Desk"].ToString();
+                product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
 
-                    temp.Add(product);
-                }
+                temp.Add(product);             
             }
             sqlDataReader.Close();
             command.Dispose();
