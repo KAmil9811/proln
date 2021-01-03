@@ -172,6 +172,8 @@ namespace CGC.Controllers
             command.Dispose();
             cnn.Close();
 
+            temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
+
             return temp;
         }
 
@@ -229,7 +231,7 @@ namespace CGC.Controllers
                 {
                     foreach (Glass glass in magazineController.Getglass())
                     {
-                        if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type)
+                        if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type && glass.Cut_id == 0)
                         {
                             foreach  (Glass_Id glass_Id in glass.Glass_info)
                             {
@@ -448,10 +450,20 @@ namespace CGC.Controllers
         public async Task<List<Order>> Add_Order([FromBody] Receiver receiver)
         {
             List<Order> temp = new List<Order>();
+            List<Item> itemstemp = new List<Item>();
 
             Order order = receiver.order;
             User user = receiver.user;
-            int code;
+            int code, last_free_id;
+
+            if (GetAllItems().Last() != null)
+            {
+                last_free_id = GetAllItems().Last().Id + 1;
+            }
+            else
+            {
+                last_free_id = 1;
+            }
 
             foreach (Item item in receiver.items)
             {
@@ -470,23 +482,14 @@ namespace CGC.Controllers
 
             order.Id_Order = code.ToString();
 
-            List<Item> itemstemp = new List<Item>();
-
             foreach (Item item in order.items)
             {             
                 if (item.Amount == 1)
                 {
                     item.Status = "awaiting";
                     item.Can_Be_Createad = false;
-
-                    if(GetAllItems().Last() != null)
-                    {
-                        item.Id = GetAllItems().Last().Id + 1;
-                    }
-                    else
-                    {
-                        item.Id = 1;
-                    }
+                    item.Id = last_free_id;
+                    last_free_id++;
                     item.Amount = 0;
                 }
                 else if(item.Amount > 1)
@@ -494,16 +497,10 @@ namespace CGC.Controllers
                     item.Status = "awaiting";
                     item.Can_Be_Createad = false;
 
-                    if (GetAllItems().Last() != null)
-                    {
-                        item.Id = GetAllItems().Last().Id + 1;
-                    }
-                    else
-                    {
-                        item.Id = 1;
-                    }
+                    item.Id = last_free_id;
+                    last_free_id++;
 
-                    while (item.Amount > 0)
+                    while (item.Amount > 1)
                     {
                         Item new_item = new Item();
                         new_item.Shape = item.Shape;
@@ -516,7 +513,8 @@ namespace CGC.Controllers
                         new_item.Thickness = item.Thickness;
                         new_item.Type = item.Type;
 
-                        new_item.Id = GetAllItems().Last().Id + 1;
+                        new_item.Id = last_free_id;
+                        last_free_id++;
                         new_item.Amount = 0;
                         itemstemp.Add(new_item);
                         item.Amount--;
@@ -543,26 +541,33 @@ namespace CGC.Controllers
                     SqlCommand command;
                     foreach (Item item in order.items)
                     {
-                        query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id)";
-                        command = new SqlCommand(query, cnn);
+                        try
+                        {
+                            query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id, Product_Id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id, @Product_Id)";
+                            command = new SqlCommand(query, cnn);
 
-                        command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
-                        command.Parameters.Add("@Weight", SqlDbType.Float).Value = item.Width;
-                        command.Parameters.Add("@Height", SqlDbType.Float).Value = item.Thickness;
-                        command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
-                        command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
-                        command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
-                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
-                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-                        command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
+                            command.Parameters.Add("@Weight", SqlDbType.Float).Value = item.Width;
+                            command.Parameters.Add("@Height", SqlDbType.Float).Value = item.Thickness;
+                            command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
+                            command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
+                            command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
+                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
+                            command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                            command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = 0;
 
-                        cnn.Open();
-                        command.ExecuteNonQuery();
-                        command.Dispose();
-                        cnn.Close();
+                            cnn.Open();
+                            command.ExecuteNonQuery();
+                            command.Dispose();
+                            cnn.Close();
+                        }
+                        catch(SqlException e)
+                        {
+                            Console.WriteLine(e.ToString());
+                        }
                     }
 
-                    cnn.Open();
                     query = "INSERT INTO dbo.[Order](Id_Order,Owner,Status,Priority,Deadline,Stan,Deletead,Frozen,Released ) VALUES(@Id_Order, @Owner, @Status, @Priority, @Deadline, @Stan, @Deletead, @Frozen, @Released)";
                     command = new SqlCommand(query, cnn);
 
@@ -576,6 +581,7 @@ namespace CGC.Controllers
                     command.Parameters.Add("@Frozen", SqlDbType.Bit).Value = false;
                     command.Parameters.Add("@Released", SqlDbType.Bit).Value = false;
 
+                    cnn.Open();
                     command.ExecuteNonQuery();
                     command.Dispose();
                     cnn.Close();

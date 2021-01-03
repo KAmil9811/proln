@@ -54,7 +54,7 @@ export class Test extends Component {
                     var canvas = document.getElementById('canvas');
                     if (canvas.getContext) {
                         var ctx = canvas.getContext('2d');
-                        ctx.strokeRect(0, 200*i, json[i].width * 10, json[i].length * 10); ///tafla
+                        ctx.strokeRect(0, 200*i, json[i].width, json[i].length); ///tafla
                         if (json[i].width === 0) {
                             sessionStorage.setItem('uncat', json[i].error_Messege)
 

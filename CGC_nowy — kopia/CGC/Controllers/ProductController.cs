@@ -43,7 +43,6 @@ namespace CGC.Controllers
         }
 
         UsersController usersController = new UsersController();
-        MagazineController magazineController = new MagazineController();
         OrderController orderController = new OrderController();
         
         public List<Product_History> GetProductHistory (int Id)
@@ -98,7 +97,7 @@ namespace CGC.Controllers
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {          
-                if (sqlDataReader["Status"].ToString() == "Send" || sqlDataReader["Status"].ToString() == "In magazine" || sqlDataReader["Status"].ToString() == "Send to magazine")
+                if (sqlDataReader["Status"].ToString() == "Ready" || sqlDataReader["Status"].ToString() == "In magazine" || sqlDataReader["Status"].ToString() == "Send to magazine")
                 {
                     Product product = new Product();
                     product.Id = Convert.ToInt32(sqlDataReader["Id"]);
@@ -119,14 +118,26 @@ namespace CGC.Controllers
             return temp;
         }
         
-        public List<Product> ReleasedProduct(User user, List<Product> products)
+        public List<Product> ReleasedProduct(User user, List<int> product_id)
         {
             List<Product> temp = new List<Product>();
+            List<Product> products_to_change = new List<Product>();
             List<Product> wynik = new List<Product>();
             Product product = new Product();
             List<string> Ordr_ids = new List<string>();
 
-            foreach (Product pro in products)
+            foreach (Product pro in GetProducts())
+            {
+                foreach (int pro2 in product_id)
+                {
+                    if(pro2 == pro.Id)
+                    {
+                        products_to_change.Add(pro);
+                    }
+                }
+            }
+
+            foreach (Product pro in products_to_change)
             {
                 if (pro.Status != "Ready")
                 {
@@ -140,14 +151,14 @@ namespace CGC.Controllers
             {
                 if (use.Login == user.Login)
                 {
-                    foreach(Product pro in products)
+                    foreach(Product pro in products_to_change)
                     {
                         if(pro.Status == "Ready")
                         {
                             string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
                             SqlCommand command = new SqlCommand(query, cnn);
 
-                            command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
                             command.Parameters.Add("@Id", SqlDbType.Int).Value = pro.Id;
 
                             cnn.Open();
@@ -164,7 +175,7 @@ namespace CGC.Controllers
                             query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
                             command = new SqlCommand(query, cnn);
 
-                            command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
                             command.Parameters.Add("@Id", SqlDbType.Int).Value = pro.Id_item;
 
                             cnn.Open();
@@ -200,7 +211,7 @@ namespace CGC.Controllers
                             SqlCommand command = new SqlCommand(query, cnn);
 
                             command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
-                            command.Parameters.Add("@Order_Id", SqlDbType.Int).Value = order.Id_Order;
+                            command.Parameters.Add("@Order_Id", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
                             cnn.Open();
                             command.ExecuteNonQuery();
@@ -228,7 +239,7 @@ namespace CGC.Controllers
         {
             return GetProducts();
         }
-
+        
         [HttpPost("Get_Product_History")]
         public async Task<List<Product_History>> Get_Product_History([FromBody] Receiver receiver)
         {
@@ -238,7 +249,7 @@ namespace CGC.Controllers
         [HttpPost("Released_Product")]
         public async Task<List<Product>> Released_Product([FromBody] Receiver receiver)
         {
-            return ReleasedProduct(receiver.user, receiver.products);
+            return ReleasedProduct(receiver.user, receiver.product_Id);
         }
 
         [HttpPost("Delete_Product")]

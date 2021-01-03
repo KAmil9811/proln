@@ -20,16 +20,15 @@ export class ReadyGlassTable extends Component {
    
     sendId = (event) => {
         event.preventDefault();
-        /*const user = {
-            login: this.refs.login.value,
-            password: this.refs.password.value
+        const receiver = {
+            user: { login: sessionStorage.getItem('login') },
+            product_id: this.state.send,
+            
         }
-
-        //Przekazujesz tu całego user
-        fetch(`api/Users/Log_in`, {
+        fetch(`api/Product/Released_Product`, {
             method: "post",
             body: JSON.stringify(
-                user
+                receiver
             ),
             headers: {
                 'Content-Type': 'application/json'
@@ -39,8 +38,13 @@ export class ReadyGlassTable extends Component {
             .then(json => {
                 console.log(json)
                 return (json)
-            })*/
-        alert('Produkty:' + ' ' + this.state.send+' '+'wysłano do magazynu')
+            })
+            .then(json => {
+                alert('Produkty:' + ' ' + this.state.send + ' ' + 'wysłano do magazynu')
+            })
+            .then(json => {
+                window.location.reload();
+            })
     }
 
 
@@ -128,12 +132,12 @@ export class ReadyGlassTable extends Component {
                             },
 
 
-                            {
+                            /*{
                                 label: 'Edytuj',
                                 field: 'edit',
                                 sort: 'asc',
                                 width: 150
-                            },
+                            },*/
                             {
                                 label: 'Usuń',
                                 field: 'del',

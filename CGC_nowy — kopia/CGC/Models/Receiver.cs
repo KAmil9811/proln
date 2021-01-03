@@ -18,6 +18,7 @@ namespace CGC.Models
         public List<Item> items = new List<Item>();
         public List<Glass_Id> glass_Ids = new List<Glass_Id>();
         public List<int> glass_Id = new List<int>();
+        public List<int> product_Id = new List<int>();
         public List<Package> packages = new List<Package>();
         public List<Product> products = new List<Product>();
 

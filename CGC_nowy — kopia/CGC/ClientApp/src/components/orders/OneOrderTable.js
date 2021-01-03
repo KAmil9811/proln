@@ -17,12 +17,12 @@ export class OneOrderTable extends Component {
 
 
     componentDidMount() {
-        const order = {
-            id_Order: sessionStorage.getItem('orderId')
+        const receiver = {
+            order: { id_order: sessionStorage.getItem('orderId') }
         }
         fetch(`api/Order/Return_All_Items`, {
             method: "post",
-            body: JSON.stringify(order),
+            body: JSON.stringify(receiver),
             headers: {
                 'Content-Type': 'application/json'
             }
