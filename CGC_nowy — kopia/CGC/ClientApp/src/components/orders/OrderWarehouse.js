@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { OrderTable } from './OrderTable';
 import './OrderWarehouse.css'
+import Sidebar from '../Sidebar';
 
 
 export class OrderWarehouse extends Component {
@@ -39,10 +40,7 @@ export class OrderWarehouse extends Component {
     render() {
         return (
             <div className="OrderWarehouse">
-                <div className="nav_ow">
-                    <button type="button" className="log_out" onClick={this.logOut}>Wyloguj</button>
-                     
-                </div>
+                <Sidebar />
                 <div className="conteiner_ow">
                     <div className="key">
                          <h3>LEGENDA</h3>

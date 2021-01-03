@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { GlassTable } from './GlassTable';
 import './GlassWarehouse.css'
+import Sidebar from '../Sidebar';
 
 export class GlassWarehouse extends Component {
     displayName = GlassWarehouse.name;
@@ -96,12 +97,8 @@ export class GlassWarehouse extends Component {
     render() {
         return (
             <div>
-                <div className="nav_gw">
-                    <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
-                      <button type="button" className=" redy_products" >Gotowe produkty</button>
-                      
-                </div>
 
+                <Sidebar />
                 <div className="conteiner_gw">
                     <button type="button" className="del_glass_x" onClick={this.delGlass}>Usuń szkło</button>
                     <button type="button" className="add_glass" onClick={this.addGlass}>Dodaj szkło</button>

@@ -2,6 +2,7 @@
 import './Acount.css';
 import { UsersTable } from './UsersTable';
 import * as FiIcons from 'react-icons/fi';
+import  Sidebar from '../Sidebar';
 
 
 
@@ -160,7 +161,7 @@ export class ControlPanel extends Component {
             <div className="ControlPanel" >
                 
                
-                
+                 <Sidebar />                
                  <div className="conteiner_cp">
                         <div className="">
                             <form>

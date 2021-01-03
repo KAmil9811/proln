@@ -1,5 +1,6 @@
 ﻿
 import React, { Component } from 'react';
+import Sidebar from '../Sidebar';
 import './HomePage.css'
 
 
@@ -55,9 +56,7 @@ export class HomePage extends Component {
         return (
             <div className="HomePage">
                 <form>
-                    <div className="C">
-                         <button className="ele1" onClick={this.logOut}>Wyloguj</button>
-                    </div>
+                    <Sidebar />
                     <div className="conteiner">
                         <button className="ele2" onClick={this.Production}>Produkcja</button>
                         <button className="ele2" onClick={this.glassWarehouse}>Magazyn</button>

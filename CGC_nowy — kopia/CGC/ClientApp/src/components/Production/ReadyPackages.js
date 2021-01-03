@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { PackagesTable } from './PackagesTable';
+import Sidebar from '../Sidebar';
 
 
 
@@ -39,10 +40,7 @@ export class ReadyPackages extends Component {
     render() {
         return (
             <div className="OrderWarehouse">
-                <div className="nav_ow">
-                    <button type="button" className="log_out" onClick={this.logOut}>Wyloguj</button>
-                    
-                </div>
+                <Sidebar />
                 <div className="conteiner_ow">
 
                     <div className="tablewar">

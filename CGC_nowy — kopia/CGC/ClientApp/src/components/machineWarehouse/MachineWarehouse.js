@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { MachineTable } from './MachineTable';
 import './MachineWarehouse.css'
+import Sidebar from '../Sidebar';
 
 
 export class MachineWarehouse extends Component {
@@ -38,11 +39,8 @@ export class MachineWarehouse extends Component {
     render() {
         return (
             <div>
-                <div className="nav_mw">
-                    <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
-                    <button type="button" className="history" > Historia</button>
-              
-                </div>
+
+                <Sidebar />
                 <div className="conteiner_mw">
                     <button className="add_machine" onClick={this.addMachine}>Dodaj maszynę</button>
                     <MachineTable />

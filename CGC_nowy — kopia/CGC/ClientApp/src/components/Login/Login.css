@@ -1,16 +1,4 @@
-﻿
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Lato', sans-serif;
-}
-
-
-
-@media all and (min-width: 480px) {
+﻿@media all and (min-width: 480px) {
     .Login {
         padding: 60px 0;
     }
@@ -23,8 +11,8 @@
 
 
 body {
-    /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
-    /* background-image: url("../connectwork/connectwork.png");*/
+   /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
+   /* background-image: url("../connectwork/connectwork.png");*/
     background-color: darkslategrey;
 }
 
@@ -39,8 +27,8 @@ label {
 
 .reset_password {
     background-color: #b803ff;
-    width: 150px;
-    height: 30px;
+    width:150px;
+    height:30px;
     padding: 6px 12px;
     font-size: 14px;
     font-weight: 900;
@@ -56,7 +44,6 @@ label {
     margin-left: 2%;
     float: left;
 }
-
 .log_in:hover {
     background-color: #339933;
     transform: scale(1.05);

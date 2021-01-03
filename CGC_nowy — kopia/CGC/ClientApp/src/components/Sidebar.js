@@ -8,6 +8,7 @@ import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 
+
 const Nav = styled.div`
   background: #15171c;
   height: 80px;
@@ -32,19 +33,25 @@ const NavIcon = styled(Link)`
   color: #fff;
 
 `;
-const OutIcon = styled.div`
-  margin-left: 18rem;
+const OutIcon = styled(Link)`
+ 
   font-size: 2.5rem;
   height: 80px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  position: absolute;
-  top: 0;
   right: 2rem;
+  position: fixed;
+ 
   
+  color: red;
+   
+  right: 1 rem;
+  color: #fff;
+    &:hover{
+        color: red;
+}
 `;
-
 
 const SidebarNav = styled.nav`
   background: #15171c;
@@ -63,10 +70,17 @@ const SidebarWrap = styled.div`
   width: 100%;
 `;
 
+
+
+
+
 const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
+
+
+
 
     
    
@@ -77,13 +91,10 @@ const Sidebar = () => {
             <Nav>
                <NavIcon to='#'>
                         <FaIcons.FaBars onClick={showSidebar} />
-                </NavIcon>
-                <NavIcon to='/'>
-                    <FiIcons.FiLogOut  />
-                </NavIcon>
-
-                   
-                    
+               </NavIcon>
+                <OutIcon to='/' >
+                    <FiIcons.FiLogOut/>
+               </OutIcon>
             </Nav>
             <IconContext.Provider value={{ color: '#fff' }}>
                 <SidebarNav sidebar={sidebar}>
@@ -101,4 +112,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export  default Sidebar;
