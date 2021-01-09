@@ -118,7 +118,7 @@ export class Test extends Component {
         return (
             <div>
                 <div className="canva">
-                    <canvas className="canvas" id="canvas" width="600" height="600" ></canvas>
+                    <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
                 </div>
                 <h2>{sessionStorage.getItem('uncat')}</h2>
                 <div className="table2">

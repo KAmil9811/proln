@@ -231,11 +231,11 @@ namespace CGC.Controllers
             User user = receiver.user;
             int temper;
 
-            if (GetMachines().Last() != null)
+            try
             {
                 temper = GetMachines().Last().No + 1;
             }
-            else
+            catch (Exception e)
             {
                 temper = 1;
             }

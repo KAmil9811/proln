@@ -298,13 +298,15 @@ namespace CGC.Controllers
 
         public void Sort_Package(Package package)
         {
-            package.Item.Sort((item1, item2) => (item1.Width.CompareTo(item2.Width)) * (-1));
+            //package.Item.Sort((item1, item2) => (item1.Width.CompareTo(item2.Width)) * (-1));
 
-            package.Item.Sort((item1,  item2) => (item1.Length.CompareTo(item2.Length)) * (-1));
+            //package.Item.Sort((item1,  item2) => (item1.Length.CompareTo(item2.Length)) * (-1));
 
-            package.Item.Sort((item1, item2) => (item1.Area.CompareTo(item2.Area)) * (-1));
+            //package.Item.Sort((item1, item2) => (item1.Area.CompareTo(item2.Area)) * (-1));
 
-            package.Item.Sort((item1, item2) => (item1.Fit_pos.CompareTo(item2.Fit_pos)) * (-1));
+            //package.Item.Sort((item1, item2) => (item1.Fit_pos.CompareTo(item2.Fit_pos)) * (-1));
+
+            package.Item.OrderByDescending(item => item.Fit_pos).ThenBy(item => item.Area).ThenBy(item => item.Length).ThenBy(item => item.Width);
         }
 
         public void Set_Pieces(List<Piece> pieces)
@@ -321,6 +323,50 @@ namespace CGC.Controllers
                 //piece.Lenght = piece.Widht;
                 //piece.Widht = temp;
             }
+        }
+
+        public void Set_Fit(Package package, double Pw, double Pl)
+        {
+            int Fit;
+
+            foreach (Item item in package.Item)
+            {
+                Fit = 0;
+                if (Pl < item.Length || Pw < item.Width)
+                {
+                    Fit = 0;
+                }
+                else
+                {
+                    Fit++;
+                    if (Pl == item.Length)
+                    {
+                        Fit++;
+                    }
+                    if (Pw == item.Width)
+                    {
+                        Fit++;
+                    }
+                }
+                item.Fit_pos = Fit;
+            }
+        }
+
+        public Item Find_Area(Package package)
+        {
+            double wynik;
+            int temp = package.Item.Count;
+
+            while(temp > 0)
+            {
+                if(package.Item.ElementAt(temp -1).Fit_pos > 0)
+                {
+                    return package.Item.ElementAt(temp - 1);
+                }
+                temp--;
+            }
+
+            return package.Item.Last();
         }
 
         public List<Piece> Package_Pieces(double x, double y, Package package)
@@ -359,38 +405,18 @@ namespace CGC.Controllers
 
             try
             {
-
                 while (positions.Count > 0 && package.Item.Count > 0)
                 {
-                    positions.Sort((x1, x2) => (x1.X_pos.CompareTo(x2.X_pos)));
-                    positions.Sort((y1, y2) => (y1.Y_pos.CompareTo(y2.Y_pos)));
+                    positions = positions.OrderBy(x1 => x1.Y_pos).ThenBy(x1 => x1.X_pos).ToList();
 
                     Pl = positions.First().Lenght;
                     Pw = positions.First().Widht;
 
-                    foreach (Item item in package.Item)
-                    {
-                        Fit = 0;
-                        if (Pl < item.Length || Pw < item.Width)
-                        {
-                            Fit = 0;
-                        }
-                        else
-                        {
-                            Fit++;
-                            if (Pl == item.Length)
-                            {
-                                Fit++;
-                            }
-                            if (Pw == item.Width)
-                            {
-                                Fit++;
-                            }
-                        }
-                        item.Fit_pos = Fit;
-                    }
+                    Set_Fit(package, Pw, Pl);
 
-                    Sort_Package(package);
+                    //Sort_Package(package);
+
+                    package.Item = package.Item.OrderByDescending(item => item.Fit_pos).ThenByDescending(item => item.Area).ThenByDescending(item => item.Length).ThenByDescending(item => item.Width).ToList();
 
                     First_Fit = package.Item.First().Fit_pos;
 
@@ -411,8 +437,6 @@ namespace CGC.Controllers
 
                         if (package.Item.Count > 0)
                         {
-                            Sort_Package(package);
-
                             P_ok = true;
 
                             if (Pw > I_w)
@@ -434,15 +458,20 @@ namespace CGC.Controllers
                                 W_2 = Pw - I_w;
                                 A_2 = L_2 * W_2;
 
-                                temp_area = package.Item.Last().Area;
-                                i = package.Item.Count();
+                                Set_Fit(package, W_2, L_2);
+                                package.Item = package.Item.OrderByDescending(item1 => item1.Fit_pos).ThenByDescending(item1 => item1.Area).ThenByDescending(item1 => item1.Length).ThenByDescending(item1 => item1.Width).ToList();
 
-                                while (temp_area <= A_2 && i > 0)
+                                Item item = Find_Area(package);
+
+                                temp_area = item.Area;
+                                i = package.Item.IndexOf(item);
+
+                                while (temp_area <= A_2 && i > -1)
                                 {
-                                    temp_area = package.Item.ElementAt(i - 1).Amount;
+                                    temp_area = package.Item.ElementAt(i).Amount;
 
-                                    Lmin = package.Item.ElementAt(i - 1).Length;
-                                    Wmin = package.Item.ElementAt(i - 1).Width;
+                                    Lmin = package.Item.ElementAt(i).Length;
+                                    Wmin = package.Item.ElementAt(i).Width;
 
                                     if (L_2 >= Lmin && W_2 >= Wmin)
                                     {
@@ -480,15 +509,20 @@ namespace CGC.Controllers
                                     A_1 = L_1 * W_1;
                                 }
 
-                                temp_area = package.Item.Last().Area;
-                                i = package.Item.Count();
+                                Set_Fit(package, W_1, L_1);
+                                package.Item = package.Item.OrderByDescending(item1 => item1.Fit_pos).ThenByDescending(item1 => item1.Area).ThenByDescending(item1 => item1.Length).ThenByDescending(item1 => item1.Width).ToList();
 
-                                while (temp_area <= A_1 && i > 0)
+                                Item item = Find_Area(package);
+
+                                temp_area = item.Area;
+                                i = package.Item.IndexOf(item);
+
+                                while (temp_area <= A_1 && i > -1)
                                 {
-                                    temp_area = package.Item.ElementAt(i - 1).Amount;
+                                    temp_area = package.Item.ElementAt(i).Amount;
 
-                                    Lmin = package.Item.ElementAt(i - 1).Length;
-                                    Wmin = package.Item.ElementAt(i - 1).Width;
+                                    Lmin = package.Item.ElementAt(i).Length;
+                                    Wmin = package.Item.ElementAt(i).Width;
 
                                     if (L_1 >= Lmin && W_1 >= Wmin)
                                     {
@@ -552,10 +586,10 @@ namespace CGC.Controllers
             {
                 if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight && glass.Cut_id == 0)
                 {
-                    if (packages.Item.First().Length <= glass.Length && packages.Item.First().Width <= glass.Width)
-                    {
+                    //if (packages.Item.Last().Length <= glass.Length && packages.Item.Last().Width <= glass.Width)
+                    //{
                         glasses.Add(glass);
-                    }
+                    //}
                 }
             }
 
@@ -593,10 +627,15 @@ namespace CGC.Controllers
                         Glass tmp = new Glass();
                         tmp.Error_Messege = "zabraklo miejsca dla: ";
 
+                        Glass_Id glass_Id = new Glass_Id();
+
                         for (int i = wynik.Count-1; i < packages.Item.Count; i++)
                         {
+                            Piece piece = new Piece { id = packages.Item[i].Id , Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
+                            glass_Id.Pieces.Add(piece);
                             tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
                         }
+                        tmp.Glass_info.Add(glass_Id);
                         wynik.Add(tmp);
                     }
 
@@ -615,11 +654,11 @@ namespace CGC.Controllers
             Order order = receiver.order;
             int code;
 
-            if (GetCut_Project().Last() != null)
+            try
             {
                 code = GetCut_Project().Last().Cut_id + 1;
             }
-            else
+            catch (Exception e)
             {
                 code = 1;
             }
@@ -748,7 +787,16 @@ namespace CGC.Controllers
                                     {
                                         item.Status = "ready";
 
-                                        var code = productController.GetProducts().Last().Id + 1;
+                                        int code;
+
+                                        try
+                                        {
+                                            code = productController.GetProducts().Last().Id + 1;
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            code = 1;
+                                        }
 
                                         string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
                                         SqlCommand command = new SqlCommand(query, cnn);
