@@ -52,10 +52,9 @@ export class MachineWarehouse extends Component {
         let history = this.history();
         return (
             <div>
-<<<<<<< HEAD
 
                 <Sidebar />
-=======
+
                 <div className="nav_mw">
                     <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
                     {history}
@@ -63,7 +62,6 @@ export class MachineWarehouse extends Component {
               
 
                 </div>
->>>>>>> c6d0186b2c0a7675e26792e193a9f957855f8e9c
                 <div className="conteiner_mw">
                     <button className="add_machine" onClick={this.addMachine}>Dodaj maszynę</button>
                     <MachineTable />

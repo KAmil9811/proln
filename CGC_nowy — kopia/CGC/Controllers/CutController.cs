@@ -437,7 +437,7 @@ namespace CGC.Controllers
                                 temp_area = package.Item.Last().Area;
                                 i = package.Item.Count();
 
-                                while (temp_area <= A_2 && i > -1)
+                                while (temp_area <= A_2 && i > 0)
                                 {
                                     temp_area = package.Item.ElementAt(i - 1).Amount;
 
