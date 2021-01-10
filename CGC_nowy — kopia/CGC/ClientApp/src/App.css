@@ -25,13 +25,19 @@
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/
-    background-color: darkslategrey;
+    background-color: #c5c5d3;
 }
 
 label {
     color: white;
 }
 
+.table {
+    margin-top: 2%;
+    color: black;
+    background-color: #e8e8ed;
+    ;
+}
 .reset_password:hover {
     background-color: #9900cc;
     transform: scale(1.05);
@@ -81,5 +87,16 @@ label {
     border-right: none;
     margin-top: 2%;
     margin-left: 2%;
+}
+
+.table.table td {
+    font-size: 1.3rem;
+    color: black;
+    font-weight: 500;
+}
+
+.table.table th {
+    font-size: 1.3rem;
+    font-weight: 900;
 }
 

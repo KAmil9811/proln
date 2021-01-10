@@ -39,20 +39,20 @@ export class ReadyGlassWarehouse extends Component {
     historyReadyGlass = (event) => {
         this.props.history.push('/ready_glass_history')
     }
-    history() {
+  /*  history() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
                 <button type="button" className="add_glass" onClick={this.historyReadyGlass}>Historia gotowego produktu</button>
             )
         }
-    }
+    }*/
     render() {
-        let history = this.history();
+      //  let history = this.history();
         return (
             <div>
                 <Sidebar />
                 <div className="conteiner_gw">
-                    {history}
+                    
                 </div >
                 
                 <div className="conteiner_rgw">

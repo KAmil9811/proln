@@ -40,24 +40,22 @@ export class MachineWarehouse extends Component {
         this.props.history.push('all_machine_history')
     }
 
-    history() {
+  /*  history() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="history" onClick={this.historyMachine}> Historia</button>
+   //             <button type="button" className="history" onClick={this.historyMachine}> Historia</button>
             )
         }
-    }
+    }*/
 
     render() {
-        let history = this.history();
+     //   let history = this.history();
         return (
             <div>
 
                 <Sidebar />
                 <div className="nav_mw">
-                    <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
-                    {history}
-                    <button type="button" className="home2" onClick={this.homePage}>Strona główna</button>
+                    
 
                 </div>
                 <div className="conteiner_mw">
