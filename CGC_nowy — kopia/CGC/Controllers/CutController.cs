@@ -296,6 +296,7 @@ namespace CGC.Controllers
             }
         }
 
+        //do usunięcia
         public void Sort_Package(Package package)
         {
             //package.Item.Sort((item1, item2) => (item1.Width.CompareTo(item2.Width)) * (-1));
@@ -646,7 +647,7 @@ namespace CGC.Controllers
             //błąd nie ma takiego usera
             return wynik;
         }
-
+        
         [HttpPost("Save_Project")]
         public async Task<List<Glass>> Save_Project([FromBody] Receiver receiver)
         {
@@ -663,11 +664,12 @@ namespace CGC.Controllers
                 code = 1;
             }
 
-            string query = "INSERT INTO dbo.[Cut_Project](@Cut_id,@Order_id)";
+            string query = "INSERT INTO dbo.[Cut_Project](Cut_id, Order_id, Status) VALUES(@Cut_id,@Order_id, @Status)";
             SqlCommand command = new SqlCommand(query, cnn);
 
             command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
             command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Saved";
 
             cnn.Open();
             command.ExecuteNonQuery();
@@ -676,34 +678,37 @@ namespace CGC.Controllers
 
             foreach (Glass glass in glasses)
             {
-                query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
-                command = new SqlCommand(query, cnn);
-
-                command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
-                command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass.Glass_info.First().Id;
-
-                cnn.Open();
-                command.ExecuteNonQuery();
-                command.Dispose();
-                cnn.Close();
-
-
-                foreach (Item item in orderController.GetItems(order))
+                if (glass.Error_Messege == null)
                 {
-                    foreach (Piece piece in glass.Glass_info.First().Pieces)
+                    query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
+                    command = new SqlCommand(query, cnn);
+
+                    command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                    command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass.Glass_info.First().Id;
+
+                    cnn.Open();
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    cnn.Close();
+
+
+                    foreach (Item item in orderController.GetItems(order))
                     {
-                        if (piece.id == item.Id)
+                        foreach (Piece piece in glass.Glass_info.First().Pieces)
                         {
-                            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
-                            command = new SqlCommand(query, cnn);
+                            if (piece.id == item.Id)
+                            {
+                                query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
+                                command = new SqlCommand(query, cnn);
 
-                            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
-                            command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+                                command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                                command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
 
-                            cnn.Open();
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-                            cnn.Close();
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+                            }
                         }
                     }
                 }
@@ -762,111 +767,111 @@ namespace CGC.Controllers
         }
 
         [HttpPost("Post_Production")]
-        public async Task<string> Post_Production(Receiver receiver)
+        public async Task<string> Post_Production([FromBody] Receiver receiver)
         {
-            Order order = receiver.order;
-            Package package = receiver.package;
             User user = receiver.user;
             Machines machines = receiver.machines;
             Cut_Project cut_Project = receiver.cut_Project;
-            bool kontrolka;
 
-            foreach(User usere in usersController.GetUsers())
+            foreach (Cut_Project cut in GetCut_Project())
             {
-                if(usere.Login == user.Login)
+                if (cut.Cut_id == cut_Project.Cut_id)
                 {
-                    foreach(Order ord in orderController.GetOrders())
+                    foreach (Order ord in orderController.GetOrders())
                     {
-                        if(order.Id_Order == ord.Id_Order)
+                        if (ord.Id_Order == cut.Order_id)
                         {
-                            foreach(Item item in orderController.GetItems(ord))
+                            foreach (Item item in orderController.GetItems(ord))
                             {
-                                foreach(Item item_cutted in package.Item)
+                                if (item.Cut_id == cut.Cut_id)
                                 {
-                                    if(item.Id == item_cutted.Id)
+                                    int code;
+                                    try
                                     {
-                                        item.Status = "ready";
-
-                                        int code;
-
-                                        try
-                                        {
-                                            code = productController.GetProducts().Last().Id + 1;
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            code = 1;
-                                        }
-
-                                        string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
-                                        SqlCommand command = new SqlCommand(query, cnn);
-
-                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = code;
-                                        command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
-                                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-                                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = item.Status;
-                                        command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
-                                        command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
-
-                                        cnn.Open();
-                                        command.ExecuteNonQuery();
-                                        command.Dispose();
-                                        cnn.Close();
-
-                                        query = "UPDATE dbo.[Item] SET Product_id = @Product_id WHERE Id = @Id";
-                                        command = new SqlCommand(query, cnn);
-
-                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
-                                        command.Parameters.Add("@Product_id", SqlDbType.Int).Value = code;
-
-                                        cnn.Open();
-                                        command.ExecuteNonQuery();
-                                        command.Dispose();
-                                        cnn.Close();
-
+                                        code = productController.GetProducts().Last().Id + 1;
                                     }
+                                    catch (Exception e)
+                                    {
+                                        code = 1;
+                                    }
+
+                                    string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
+                                    SqlCommand command = new SqlCommand(query, cnn);
+
+                                    command.Parameters.Add("@Id", SqlDbType.Int).Value = code;
+                                    command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
+                                    command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+                                    command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
+                                    command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
+
+                                    cnn.Open();
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
+                                    cnn.Close();
+
+                                    query = "UPDATE dbo.[Item] SET Product_id = @Product_id, Status = @Status WHERE Id = @Id";
+                                    command = new SqlCommand(query, cnn);
+
+                                    command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+                                    command.Parameters.Add("@Product_id", SqlDbType.Int).Value = code;
+                                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+
+                                    cnn.Open();
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
+                                    cnn.Close();
                                 }
                             }
-
-                            kontrolka = true;
-
-                            foreach (Item itm in orderController.GetItems(ord))
-                            {
-                                if(itm.Status == "awaiting" || itm.Status == "cut")
-                                {
-                                    kontrolka = false;
-                                }
-                            }
-
-                            string query2 = "Update dbo.[Machines](SET Status = @Status WHERE No = @No)";
-                            SqlCommand command2 = new SqlCommand(query2, cnn);
-
-                            command2.Parameters.Add("@No", SqlDbType.Int, 40).Value = machines.No;
-                            command2.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "ready";
-
-
-                            cnn.Open();
-                            command2.ExecuteNonQuery();
-                            command2.Dispose();
-                            cnn.Close();
-
-                            string query3 = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id,)";
-                            SqlCommand command3 = new SqlCommand(query3, cnn);
-
-                            command3.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
-                            command3.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Done";
-
-                            cnn.Open();
-                            command3.ExecuteNonQuery();
-                            command3.Dispose();
-                            cnn.Close();
-
-                            return "Done";
                         }
                     }
                 }
             }
-            return "Not Done";
+            try
+            {
+                string query2 = "UPDATE dbo.[Glass] SET Used = @Used WHERE Cut_id = @Cut_id";
+                SqlCommand command2 = new SqlCommand(query2, cnn);
+
+                command2.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+                command2.Parameters.Add("@Used", SqlDbType.Bit).Value = 1;
+
+                cnn.Open();
+                command2.ExecuteNonQuery();
+                command2.Dispose();
+                cnn.Close();
+            }
+            catch(SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            string query3 = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id";
+            SqlCommand command3 = new SqlCommand(query3, cnn);
+
+            command3.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+            command3.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+
+            cnn.Open();
+            command3.ExecuteNonQuery();
+            command3.Dispose();
+            cnn.Close();
+
+            string query4 = "Update dbo.[Machines] SET Status = @Status WHERE No = @No";
+            SqlCommand command4 = new SqlCommand(query4, cnn);
+
+            command4.Parameters.Add("@No", SqlDbType.Int, 40).Value = machines.No;
+            command4.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+
+
+            cnn.Open();
+            command4.ExecuteNonQuery();
+            command4.Dispose();
+            cnn.Close();
+
+            string userhistory = "You cutted project " + cut_Project.Cut_id;
+            usersController.Insert_User_History(userhistory, user.Login);
+
+            return "Done";
         }
     }
 }

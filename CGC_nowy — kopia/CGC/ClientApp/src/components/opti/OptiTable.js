@@ -52,7 +52,7 @@ export class OptiTable extends Component {
                         thickness: json[i].hight,
                         color: json[i].color,
                         type: json[i].type,
-                        ids: json[i].id,
+                        ids: json[i].glass_info[0].id,
                         status: json[i].status,
                         desk: json[i].desk,
                    
