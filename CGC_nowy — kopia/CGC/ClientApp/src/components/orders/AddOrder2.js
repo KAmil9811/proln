@@ -55,9 +55,55 @@ export class AddOrderTwo extends Component {
                 ],
                 rows: []
             },
+            colors: [],
+            type: [],
         }
     }
 
+
+    componentDidMount() {
+        var table2 = [];
+        var table3 = [];
+        fetch(`api/Magazine/Return_All_Colors`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json);
+                for (var i = 0; i < json.length; i++) {
+                    table2.push({
+                        color: json[i],
+                    })
+                };
+                this.setState({
+                    colors: table2
+
+                });
+            })
+
+        fetch(`api/Magazine/Return_All_Type`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json);
+                for (var i = 0; i < json.length; i++) {
+                    table3.push({
+                        type: json[i],
+                    })
+                };
+                this.setState({
+                    type: table3
+
+                });
+            })
+    }
     handleAddOrder = (event) => {
         event.preventDefault();
         const receiver = {
@@ -172,6 +218,27 @@ export class AddOrderTwo extends Component {
         }
     }
 
+    colorsSelector = (event) => {
+        var tab = []
+        for (var i = 0; i < this.state.colors.length; i++) {
+
+            tab.push(< option value={this.state.colors[i].color} > {this.state.colors[i].color}</option >)
+
+
+        }
+        return (tab)
+    }
+    typeSelector = (event) => {
+        var tab = []
+        for (var i = 0; i < this.state.type.length; i++) {
+
+            tab.push(< option value={this.state.type[i].type} > {this.state.type[i].type}</option >)
+
+
+        }
+        return (tab)
+    }
+
     table() {
         return (
             <MDBDataTable
@@ -182,7 +249,8 @@ export class AddOrderTwo extends Component {
         )
     }
     render() {
-        
+        let x = this.colorsSelector()
+        let y = this.typeSelector()
         let table = this.table();
         return (
             
@@ -225,13 +293,9 @@ export class AddOrderTwo extends Component {
                     </div>
                     <div className="form-group">
                         <label>Kolor</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputColor"
-                            placeholder="Podaj kolor"
-                            ref="color"
-                        />
+                        <select ref="color" type="text" className="form-control">
+                            {x}
+                        </select>
                     </div>
                     <div className="form-group">
                         <label>Ilość</label>
@@ -246,13 +310,9 @@ export class AddOrderTwo extends Component {
                     </div>
                     <div className="form-group">
                         <label>Rodzaj</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputType"
-                            placeholder="Podaj typ"
-                            ref="type"
-                        />
+                        <select ref="type" type="text" className="form-control">
+                            {y}
+                        </select>
                     </div>
                     
                    

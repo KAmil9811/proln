@@ -54,14 +54,23 @@ export class Test extends Component {
                     var canvas = document.getElementById('canvas');
                     if (canvas.getContext) {
                         var ctx = canvas.getContext('2d');
-                        ctx.strokeRect(0, 200*i, json[i].width, json[i].length); ///tafla
+                        if (json[i].width > 999 || json[i].length > 999) {
+                            ctx.fillStyle = 'rgba(9, 157, 215, 0.7)';
+                            ctx.fillRect(0, 1700 * i, (json[i].width), (json[i].length)); ///tafla
+                          
+                        }
+                        else {
+                            ctx.strokeRect(0, 1700 * i, json[i].width, json[i].length); ///tafla
+                            //ctx.fillStyle = "rgba(9, 157, 215, 0.7)";
+                        }
+                        
                         if (json[i].width === 0) {
                             sessionStorage.setItem('uncat', json[i].error_Messege)
 
                         }
                         else {
                             for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                ctx.strokeRect(json[i].glass_info[0].pieces[j].x, json[i].glass_info[0].pieces[j].y+(200*i), json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
+                                ctx.strokeRect(json[i].glass_info[0].pieces[j].x, json[i].glass_info[0].pieces[j].y+(1700*i), json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
                             }
                         }
                     }
@@ -118,16 +127,18 @@ export class Test extends Component {
         return (
             <div>
                 <div className="canva">
-                    <canvas className="canvas" id="canvas" width="600" height="600" ></canvas>
+                    <canvas className="canvas" id="canvas" width="3000" height="3000" ></canvas>
                 </div>
                 <h2>{sessionStorage.getItem('uncat')}</h2>
                 <div className="table2">
-                    <h2>Glasiki</h2>
+                    <h2>Tafle</h2>
                     <OptiTable />
                 </div>
                 <div className="table3">
-                    <h2>Itemki</h2>
+                    <h2>Produkty</h2>
                     <OptiTableItems />
+                    <button className="add_machine" >Zapisz projekt</button>
+                    <button className="add_machine" >Wytnij</button>
                 </div>
             </div>
         );

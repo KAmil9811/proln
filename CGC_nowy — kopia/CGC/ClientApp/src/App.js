@@ -46,6 +46,7 @@ import { AllMachineHistory } from './components/history/AllMachineHistory';
 import './App.css';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { OptiWarehouse } from './components/opti/OptiWarehouse'
 
 
 
@@ -109,6 +110,8 @@ export default class App extends Component {
                     <Route path='/single_machine_history' component={SingleMachineHistory} />
                     <Route path='/order_history' component={OrderHistory} />
                     <Route path='/all_machine_history' component={AllMachineHistory} />
+                    <Route path='/opti_warehouse' component={OptiWarehouse} />
+                   
 
                 </Switch>
             </Router >

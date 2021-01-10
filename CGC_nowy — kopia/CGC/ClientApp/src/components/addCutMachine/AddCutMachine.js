@@ -9,7 +9,35 @@ export class AddCutMachine extends Component {
         super(props);
         this.state = {
             value: 'laser',
+            type: [],
         }
+    }
+
+
+    componentDidMount() {
+        
+        var table3 = [];
+        
+
+        fetch(`api/Machine/Return_All_Type`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json);
+                for (var i = 0; i < json.length; i++) {
+                    table3.push({
+                        type: json[i],
+                    })
+                };
+                this.setState({
+                    type: table3
+
+                });
+            })
     }
 
     handleAddCutMachine = (event) => {
@@ -56,7 +84,19 @@ export class AddCutMachine extends Component {
         this.props.history.push('/machinewarehouse')
     }
 
-    render() {        
+    typeSelector = (event) => {
+        var tab = []
+        for (var i = 0; i < this.state.type.length; i++) {
+
+            tab.push(< option value={this.state.type[i].type} > {this.state.type[i].type}</option >)
+
+
+        }
+        return (tab)
+    }
+
+    render() {   
+        let y = this.typeSelector()
         return (
             <div className="addCutMachine">
 
@@ -68,8 +108,7 @@ export class AddCutMachine extends Component {
                     this.setState({ value: e.target.value });
                     console.log(this.state)
                 }} >
-                        <option value="laser">Laser</option>
-                        <option value="shears">Nóż</option>
+                        {y}
                     </select>
                     <div className="form-group">
                         <button type="reset" className="cancel_machine13" onClick={this.cancel}>Anuluj</button>
