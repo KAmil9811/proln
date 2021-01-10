@@ -54,6 +54,10 @@ export class MachineWarehouse extends Component {
             <div>
 
                 <Sidebar />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3cd2ea586d30812a7b0831fbe25bf57f5bf8c640
                 <div className="nav_mw">
                     <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
                     {history}

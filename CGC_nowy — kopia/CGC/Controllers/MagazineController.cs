@@ -285,11 +285,11 @@ namespace CGC.Controllers
                 {
                     for (int i = glass.Count; i > 0; i--)
                     {
-                        if(Getglass().Last() != null)
+                        try
                         {
                             code = Getglass().Last().Glass_info.Last().Id + 1;
                         }
-                        else
+                        catch(Exception e)
                         {
                             code = 1;
                         }

@@ -456,11 +456,11 @@ namespace CGC.Controllers
             User user = receiver.user;
             int code, last_free_id;
 
-            if (GetAllItems().Last() != null)
+            try
             {
                 last_free_id = GetAllItems().Last().Id + 1;
             }
-            else
+            catch (Exception e)
             {
                 last_free_id = 1;
             }
@@ -470,11 +470,11 @@ namespace CGC.Controllers
                 order.items.Add(item);
             }
 
-            if(GetOrders().Last() != null)
+            try
             {
                 code = Int32.Parse(GetOrders().Last().Id_Order) + 1;
             }
-            else
+            catch (Exception e)
             {
                 code = 1;
             }
