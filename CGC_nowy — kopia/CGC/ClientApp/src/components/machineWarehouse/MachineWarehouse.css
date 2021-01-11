@@ -1,4 +1,5 @@
-﻿.add_machine:hover {
+﻿
+.add_machine:hover {
     background-color: #339933;
     transform: scale(1.05);
 }

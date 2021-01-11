@@ -106,6 +106,8 @@ export class AllMachineHistoryTable extends Component {
                 entries={15}
                 pagesAmount={10}
                 data={this.state.table333}
+                
+
                 searchTop
                 materialSearch
                 searchBottom={false}

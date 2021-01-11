@@ -117,14 +117,14 @@ export class OrderTable extends Component {
     };
     table() {
         return (
-            <MDBDataTable
+            <MDBDataTableV5
 
 
                 hover
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 
@@ -148,7 +148,7 @@ export class OrderTable extends Component {
 
                 //maxHeight="400px"
 
-                // paginationLabel={["<", ">"]}
+                 paginationLabel={["<", ">"]}
 
                 sortable
 

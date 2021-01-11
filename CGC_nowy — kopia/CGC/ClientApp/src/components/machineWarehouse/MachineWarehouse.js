@@ -51,7 +51,7 @@ export class MachineWarehouse extends Component {
     render() {
      //   let history = this.history();
         return (
-            <div>
+            <div className="MachineWarehouse">
 
                 <Sidebar />
                 <div className="nav_mw">

@@ -53,7 +53,7 @@ export class OrderWarehouse extends Component {
     render() {
       //  let history = this.history();
         return (
-            <div className="OrderWarehouse">
+            <div>
                 <Sidebar />
                 <div className="conteiner_ow">
                     <div className="key">
