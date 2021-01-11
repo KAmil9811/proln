@@ -587,10 +587,19 @@ namespace CGC.Controllers
             {
                 if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight && glass.Cut_id == 0)
                 {
-                    //if (packages.Item.Last().Length <= glass.Length && packages.Item.Last().Width <= glass.Width)
-                    //{
-                        glasses.Add(glass);
-                    //}
+                    Glass glass1 = glass;
+
+                    glass1.Glass_info.Clear();
+
+                    foreach (Glass_Id glass_Id  in glass.Glass_info)
+                    {
+                        if(glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false)
+                        {
+                            glass1.Glass_info.Add(glass_Id);
+                        }
+                    }
+
+                    glasses.Add(glass1);
                 }
             }
 
