@@ -1,6 +1,7 @@
 ﻿import React, { Component } from "react";
 import Select from 'react-select';
 import './AddAcount.css';
+import Sidebar from '../Sidebar';
 
 
 export class AddAcount extends Component{
@@ -158,69 +159,72 @@ export class AddAcount extends Component{
     render() {
         var perm = this.permRender()
         return (
-            <div className="Login">
-                <form>
-                    <div className="form-group">
-                        <h2>Dodawanie konta</h2>
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            name="Email"
-                            className="form-control"
-                            id="inputEmail"
-                            placeholder="Podaj email"
-                            ref="email"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Login</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputLogin"
-                            placeholder="Podaj login"
-                            ref="login"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Hasło</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="inputPassword"
-                            placeholder="Podaj hasło"
-                            ref="password"   
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Imie</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputFirstName"
-                            placeholder="Podaj imie"
-                            ref="name"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Nazwisko</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputSecondName"
-                            placeholder="Podaj nazwisko"
-                            ref="surname"
-                        />
-                    </div>
-                    {perm}
+            <div className="login">
+                <Sidebar />
+                <div className="Login">
+                    <form>
+                        <div className="form-group">
+                            <h2>Dodawanie konta</h2>
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="Email"
+                                className="form-control"
+                                id="inputEmail"
+                                placeholder="Podaj email"
+                                ref="email"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Login</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="inputLogin"
+                                placeholder="Podaj login"
+                                ref="login"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Hasło</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="inputPassword"
+                                placeholder="Podaj hasło"
+                                ref="password"   
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Imie</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="inputFirstName"
+                                placeholder="Podaj imie"
+                                ref="name"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Nazwisko</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="inputSecondName"
+                                placeholder="Podaj nazwisko"
+                                ref="surname"
+                            />
+                        </div>
+                        {perm}
                     
-                    <div className="form-group">
-                        <button type="button" className="cancel" onClick={this.cancelAdding}>Anuluj</button>
-                        <button type="button" className="add_user2" onClick={this.handleAddAcount}>Dadaj użytkownika</button>
+                        <div className="form-group">
+                            <button type="button" className="cancel" onClick={this.cancelAdding}>Anuluj</button>
+                            <button type="button" className="add_user2" onClick={this.handleAddAcount}>Dadaj użytkownika</button>
                        
-                    </div>
+                        </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
         );
     }

@@ -29,7 +29,7 @@ body {
 }
 
 label {
-    color: white;
+    color: black;
 }
 
 .table {
@@ -99,4 +99,6 @@ label {
     font-size: 1.3rem;
     font-weight: 900;
 }
+
+
 

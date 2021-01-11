@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './EditOrder.css';
+import Sidebar from '../Sidebar';
 
 export class EditOrder extends Component {
     displayName = EditOrder.name;
@@ -77,49 +78,55 @@ export class EditOrder extends Component {
     }
     render() {
         return (
-            <div className="userChange">
-                <form>
-                    <div className="form-group">
-                        <h2>Edycja danych</h2>
-                        <label>Zleceniodawca</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputKlient"
-                            placeholder={sessionStorage.getItem('klient')}
-                            defaultValue={sessionStorage.getItem('klient')}
-                            ref="klient"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Priorytet</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputPriority"
-                            placeholder={sessionStorage.getItem('priority')}
-                            defaultValue={sessionStorage.getItem('priority')}
-                            ref="priority"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Deadline</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            id="inputWidth"
-                            //placeholder={sessionStorage.getItem('deadline')}
-                            //defaultValue={sessionStorage.getItem('deadline')}
-                            ref="deadline"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="submit" className="cancel_order_e" onClick={this.cancelEditOrder}>Anuluj</button>
-                        <button type="submit" className="confirm_order_e" onClick={this.handleEditOrder}>Zastosuj zmiany</button>
-                    </div>
+            <div>
+                <Sidebar />
+                    <div className="userChange">
+                        <form>
+                            <div className="form-group">
+                                <h2>Edycja danych</h2>
+                                <label>Zleceniodawca</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputKlient"
+                                    placeholder={sessionStorage.getItem('klient')}
+                                    defaultValue={sessionStorage.getItem('klient')}
+                                    ref="klient"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Priorytet</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputPriority"
+                                    placeholder={sessionStorage.getItem('priority')}
+                                    defaultValue={sessionStorage.getItem('priority')}
+                                    ref="priority"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Deadline</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    id="inputWidth"
+                                    //placeholder={sessionStorage.getItem('deadline')}
+                                    //defaultValue={sessionStorage.getItem('deadline')}
+                                    ref="deadline"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="submit" className="cancel_order_e" onClick={this.cancelEditOrder}>Anuluj</button>
+                                <button type="submit" className="confirm_order_e" onClick={this.handleEditOrder}>Zastosuj zmiany</button>
+                            </div>
 
-                </form>
+                        </form>
+                </div>
+
+
             </div>
+
         );
     }
 }

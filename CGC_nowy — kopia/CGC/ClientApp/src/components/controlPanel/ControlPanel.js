@@ -164,7 +164,9 @@ export class ControlPanel extends Component {
                 
                
                  <Sidebar />                
-                 <div className="conteiner_cp">
+                <div className="conteiner_cp">
+
+
                         <div className="">
                             <form>
                                 <div className="form-group">

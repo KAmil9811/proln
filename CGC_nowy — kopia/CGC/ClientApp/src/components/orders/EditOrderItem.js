@@ -1,6 +1,7 @@
 ﻿import React, { Component } from "react";
 import './EditOrderItem.css';
 import { Link } from 'react-router-dom';
+import Sidebar from '../Sidebar';
 
 export class EditOrderItem extends Component {
     displayName = EditOrderItem.name;
@@ -140,92 +141,96 @@ export class EditOrderItem extends Component {
         let x = this.colorsSelector()
         let y = this.typeSelector()
         return (
-            <div className="userChange">
-                <form>
-                    <div className="form-group">
-                        <h2>Edycja elementu</h2>
-                        <label>Długość</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="inputLength"
-                            placeholder={sessionStorage.getItem('length')}
-                            defaultValue={sessionStorage.getItem('length')}
-                            ref="length"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Szerokość</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="inputWidth"
-                            placeholder={sessionStorage.getItem('width')}
-                            defaultValue={sessionStorage.getItem('width')}
-                            ref="width"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Typ</label>
-                        <select
-                            type="text"
-                            className="form-control"
-                            placeholder={sessionStorage.getItem('type')}
-                            defaultValue={sessionStorage.getItem('type')}
-                            ref="type"
-                        >
-                            <option selected={sessionStorage.getItem('type')}> {sessionStorage.getItem('type')} </option>
-                            {y}
-                        </select>
+            <div>
+                    <Sidebar/>
+                    <div className="userChange">
+                        <form>
+                            <div className="form-group">
+                                <h2>Edycja elementu</h2>
+                                <label>Długość</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="inputLength"
+                                    placeholder={sessionStorage.getItem('length')}
+                                    defaultValue={sessionStorage.getItem('length')}
+                                    ref="length"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Szerokość</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="inputWidth"
+                                    placeholder={sessionStorage.getItem('width')}
+                                    defaultValue={sessionStorage.getItem('width')}
+                                    ref="width"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Typ</label>
+                                <select
+                                    type="text"
+                                    className="form-control"
+                                    placeholder={sessionStorage.getItem('type')}
+                                    defaultValue={sessionStorage.getItem('type')}
+                                    ref="type"
+                                >
+                                    <option selected={sessionStorage.getItem('type')}> {sessionStorage.getItem('type')} </option>
+                                    {y}
+                                </select>
 
-                    </div>
-                    <div className="form-group">
-                        <label>Grubość</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="inputThickness"
-                            placeholder={sessionStorage.getItem('thickness')}
-                            defaultValue={sessionStorage.getItem('thickness')}
-                            ref="thickness"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Kolor</label>
-                        <select
-                            type="text"
-                            className="form-control"
-                            id="inputColor"
-                            placeholder={sessionStorage.getItem('color')}
-                            defaultValue={sessionStorage.getItem('color')}
-                            ref="color"
-                        >
-                            <option selected={sessionStorage.getItem('color')}> {sessionStorage.getItem('color')} </option>
-                            {x}
-                        </select>
-                    </div>
-                    <div className="form-group">
+                            </div>
+                            <div className="form-group">
+                                <label>Grubość</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="inputThickness"
+                                    placeholder={sessionStorage.getItem('thickness')}
+                                    defaultValue={sessionStorage.getItem('thickness')}
+                                    ref="thickness"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Kolor</label>
+                                <select
+                                    type="text"
+                                    className="form-control"
+                                    id="inputColor"
+                                    placeholder={sessionStorage.getItem('color')}
+                                    defaultValue={sessionStorage.getItem('color')}
+                                    ref="color"
+                                >
+                                    <option selected={sessionStorage.getItem('color')}> {sessionStorage.getItem('color')} </option>
+                                    {x}
+                                </select>
+                            </div>
+                            <div className="form-group">
 
 
-                        <label>Status:</label><br />
-                        <select onChange={(e) => {
-                            this.setState({ value: e.target.value });
-                            console.log(this.state)
-                        }} >
-                            <option value={sessionStorage.getItem('status')}>{sessionStorage.getItem('status')}</option>
-                            <option value="awaiting">Oczekujące</option>
-                            <option value="ready">Gotowe</option>
-                            <option value="cut">W trakcie</option>
-                            <option value="deleted">Usunięte</option>
-                        </select>
-                    </div>
+                                <label>Status:</label><br />
+                                <select onChange={(e) => {
+                                    this.setState({ value: e.target.value });
+                                    console.log(this.state)
+                                }} >
+                                    <option value={sessionStorage.getItem('status')}>{sessionStorage.getItem('status')}</option>
+                                    <option value="awaiting">Oczekujące</option>
+                                    <option value="ready">Gotowe</option>
+                                    <option value="cut">W trakcie</option>
+                                    <option value="deleted">Usunięte</option>
+                                </select>
+                            </div>
                   
 
-                    <div className="form-group">
-                        <button type="submit" className="cancel_glass_e" onClick={this.cancelItemEdit}>Anuluj</button>
-                        <Link to="/oneorder"><button type="submit" className="confirm_glass_e" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
-                    </div>
-                </form>
+                            <div className="form-group">
+                                <button type="submit" className="cancel_glass_e" onClick={this.cancelItemEdit}>Anuluj</button>
+                                <Link to="/oneorder"><button type="submit" className="confirm_glass_e" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
+                            </div>
+                        </form>
+                </div>
+
             </div>
         );
     }

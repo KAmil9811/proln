@@ -2,7 +2,7 @@
 import './test.css';
 import { OptiTable } from './OptiTable'
 import { OptiTableItems } from './OptiTableItems'
-
+import Sidebar from '../Sidebar';
 
 export class Test extends Component {
     constructor(props) {
@@ -150,6 +150,7 @@ export class Test extends Component {
     render() {
         return (
             <div>
+                <Sidebar />
                 <div className="canva">
                     <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
                 </div>

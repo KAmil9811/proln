@@ -2,6 +2,7 @@
 import { MDBDataTable } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import './cutMachineEdit.css';
+import Sidebar from '../Sidebar';
 
 export class CutMachineEdit extends Component {
     constructor(props) {
@@ -96,13 +97,15 @@ export class CutMachineEdit extends Component {
     render() {
         let typeTable = this.table();
         return (
-            <div className="CutMEdit">
-                <div className="nav_machine_e">
-                    <button type="button" className="back_type" onClick={this.backToHome}>Powrót</button>
-                </div>
-                <div className="conceiner_machine_e">
-                     <button type="button" className="add_type_m1" onClick={this.addTypeMachine}>Dodaj typ</button>
-                    {typeTable}
+            <div className="cutMEdit">
+                <Sidebar />
+                <div className="CutMEdit">
+                    <div className="nav_machine_e">
+                    </div>
+                    <div className="conceiner_machine_e">
+                         <button type="button" className="add_type_m1" onClick={this.addTypeMachine}>Dodaj typ</button>
+                        {typeTable}
+                    </div>
                 </div>
             </div>
         )

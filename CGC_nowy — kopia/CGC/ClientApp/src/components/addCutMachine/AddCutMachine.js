@@ -1,6 +1,7 @@
 ﻿
 import React, { Component } from "react";
 import './AddCutMachine.css'
+import Sidebar from '../Sidebar';
 
 
 export class AddCutMachine extends Component {
@@ -98,26 +99,31 @@ export class AddCutMachine extends Component {
     render() {   
         let y = this.typeSelector()
         return (
-            <div className="addCutMachine">
+            <div className="AddCutMachine">
 
-                <form>
+                    <Sidebar />  
+                    <div className="addCutMachine">
+                  
+                        <form>
 
-                    <h2>Dodaj maszyne</h2>
-                    <h3>Rodzaj maszyny</h3>
-                <select onChange={(e) => {
-                    this.setState({ value: e.target.value });
-                    console.log(this.state)
-                }} >
-                        {y}
-                    </select>
-                    <div className="form-group">
-                        <button type="reset" className="cancel_machine13" onClick={this.cancel}>Anuluj</button>
-                        <button type="submit" className="add_machine1" onClick={this.handleAddCutMachine}>Dodaj</button>
+                            <h2>Dodaj maszyne</h2>
+                            <h3>Rodzaj maszyny</h3>
+                        <select onChange={(e) => {
+                            this.setState({ value: e.target.value });
+                            console.log(this.state)
+                        }} >
+                                {y}
+                            </select>
+                            <div className="form-group">
+                                <button type="reset" className="cancel_machine13" onClick={this.cancel}>Anuluj</button>
+                                <button type="submit" className="add_machine1" onClick={this.handleAddCutMachine}>Dodaj</button>
                         
-                    </div>
+                            </div>
 
-                </form>
+                        </form>
+                    </div>
             </div>
-        );
+
+               );
     }
 }

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './AddColor.css';
+import Sidebar from '../Sidebar';
 
 
 export class AddColor extends Component {
@@ -42,27 +43,28 @@ export class AddColor extends Component {
 
     render() {
         return (
+            <div className="AddColor">
+                   <Sidebar/>
+                    <div className="addColor">
+                        <form>
+                            <div className="form-group">
+                                <h2>Dodaj kolor szkła:</h2>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputColor"
+                                    placeholder="Wprowadź kolor szkła"
+                                    ref="color"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="cancel_add_gla_c" onClick={this.cancelAddColor}>Anuluj</button>
+                                <button type="button" className="adding_glass_c" onClick={this.handleAddColor}>Dodaj</button>
 
+                            </div>
 
-            <div className="addColor">
-                <form>
-                    <div className="form-group">
-                        <h2>Dodaj kolor szkła:</h2>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputColor"
-                            placeholder="Wprowadź kolor szkła"
-                            ref="color"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="button" className="cancel_add_gla_c" onClick={this.cancelAddColor}>Anuluj</button>
-                        <button type="button" className="adding_glass_c" onClick={this.handleAddColor}>Dodaj</button>
-
-                    </div>
-
-                </form>
+                        </form>
+                </div>
             </div>
         );
     }

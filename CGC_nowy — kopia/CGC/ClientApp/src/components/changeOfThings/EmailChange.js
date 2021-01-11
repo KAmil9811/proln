@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './EmailChange.css';
+import Sidebar from '../Sidebar';
 
 export class EmailChange extends Component {
     displayName = EmailChange.name;
@@ -50,38 +51,41 @@ export class EmailChange extends Component {
 
     render() {
         return (
-            <div className="ChangeEmail">
-                <form>
-                    <div className="form-group">
-                        <h2>Zmiana e-maila</h2>
-                        <label>Podaj hasło:</label>
-                        <input
-                            type="password"
-                            name="Password"
-                            className="form-control"
-                            id="inputPassword"
-                            placeholder="*********"
-                            ref="password"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Podaj nowy email:</label>
-                        <input
-                            type="email"
-                            name="newEmail"
-                            className="form-control"
-                            id="inputNewEmail"
-                            placeholder="smapleemail@domain.com"
-                            ref="newEmail"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="button" className="cancel_ch_em" onClick={this.cancelChanging}>Anuluj</button>
-                        <button type="button" className="change_own_em" onClick={this.emailChange}>Zmiań email</button>
+            <div className="Changeemail">
+                <Sidebar />
+                <div className="ChangeEmail">
+                    <form>
+                        <div className="form-group">
+                            <h2>Zmiana e-maila</h2>
+                            <label>Podaj hasło:</label>
+                            <input
+                                type="password"
+                                name="Password"
+                                className="form-control"
+                                id="inputPassword"
+                                placeholder="*********"
+                                ref="password"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Podaj nowy email:</label>
+                            <input
+                                type="email"
+                                name="newEmail"
+                                className="form-control"
+                                id="inputNewEmail"
+                                placeholder="smapleemail@domain.com"
+                                ref="newEmail"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button type="button" className="cancel_ch_em" onClick={this.cancelChanging}>Anuluj</button>
+                            <button type="button" className="change_own_em" onClick={this.emailChange}>Zmiań email</button>
                         
-                    </div>
+                        </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
         );
     }

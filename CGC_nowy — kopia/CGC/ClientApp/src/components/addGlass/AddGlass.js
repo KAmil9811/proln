@@ -1,5 +1,6 @@
 ﻿import React, { Component, useState } from "react";
 import './AddGlass.css'
+import Sidebar from '../Sidebar';
 
 export class AddGlass extends Component {
     displayName = AddGlass.name;
@@ -145,95 +146,98 @@ export class AddGlass extends Component {
         let x = this.colorsSelector()
         let y = this.typeSelector()
         return (
-            <div className="addGlass">
-                <form>
-                    <div className="form-group">
-                        <h2>Dodawanie szkła</h2>
-                        <label>Długość</label>
-                        <input
-                            type="number"
-                            min="1"
-                            name="Height"
-                            className="form-control"
-                            id="inputHeight"
-                            placeholder="Podaj długość w milimetrach"
-                            ref="length"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Szerokość</label>
-                        <input
-                            type="number"
-                            min="1"
-                            className="form-control"
-                            id="inputWidth"
-                            placeholder="Podaj szerokość w milimetrach"
-                            ref="width"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Grubość</label>
-                        <input
-                            type="number"
-                            min="1"
-                            className="form-control"
-                            id="inputLength"
-                            placeholder="Podaj grubość w milimetrach"
-                            ref="height"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Właściciel</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputOwner"
-                            placeholder="Podaj właściciela"
-                            ref="owner"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Kolor</label>
-                        <select ref="color" type="text" className="form-control">
-                            {x}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Typ</label>
-                        <select ref="type" type="text" className="form-control">
-                            {y}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Miejsce</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputDesk"
-                            placeholder="Podaj miejsce przechowania szkła"
-                            ref="desk"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Ilosć</label>
-                        <input
-                            type="number"
-                            min='1'
-                            className="form-control"
-                            id="inputDesk"
-                            placeholder="Podaj liczbę"
-                            ref="amount"
-                        />
-                    </div>
+            <div className="Addglass">
+                    <Sidebar />
+                    <div className="addGlass">
+                        <form>
+                            <div className="form-group">
+                                <h2>Dodawanie szkła</h2>
+                                <label>Długość</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    name="Height"
+                                    className="form-control"
+                                    id="inputHeight"
+                                    placeholder="Podaj długość w milimetrach"
+                                    ref="length"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Szerokość</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    className="form-control"
+                                    id="inputWidth"
+                                    placeholder="Podaj szerokość w milimetrach"
+                                    ref="width"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Grubość</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    className="form-control"
+                                    id="inputLength"
+                                    placeholder="Podaj grubość w milimetrach"
+                                    ref="height"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Właściciel</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputOwner"
+                                    placeholder="Podaj właściciela"
+                                    ref="owner"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Kolor</label>
+                                <select ref="color" type="text" className="form-control">
+                                    {x}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Typ</label>
+                                <select ref="type" type="text" className="form-control">
+                                    {y}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Miejsce</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputDesk"
+                                    placeholder="Podaj miejsce przechowania szkła"
+                                    ref="desk"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Ilosć</label>
+                                <input
+                                    type="number"
+                                    min='1'
+                                    className="form-control"
+                                    id="inputDesk"
+                                    placeholder="Podaj liczbę"
+                                    ref="amount"
+                                />
+                            </div>
 
 
-                    <div className="form-group">
+                            <div className="form-group">
                         
-                        <button type="button" className="cancel_glass1" onClick={this.cancelAddGlass}>Anuluj</button>
-                        <button type="button" className="add_glass1" onClick={this.handleAddGlass}>Dodaj</button>
-                    </div>
+                                <button type="button" className="cancel_glass1" onClick={this.cancelAddGlass}>Anuluj</button>
+                                <button type="button" className="add_glass1" onClick={this.handleAddGlass}>Dodaj</button>
+                            </div>
 
-                </form>
+                        </form>
+                </div>
             </div>
         );
     }

@@ -1,6 +1,8 @@
 ﻿import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import { MDBDataTable } from 'mdbreact';
+
+import { MDBDataTableV5 } from 'mdbreact';
+import Sidebar from '../Sidebar';
 
 export class AllMachineHistoryTable extends Component {
     constructor(props) {
@@ -96,11 +98,22 @@ export class AllMachineHistoryTable extends Component {
 
     table() {
         return (
-            <MDBDataTable
+            <MDBDataTableV5
 
-                bordered
-                small
+
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={15}
+                pagesAmount={10}
                 data={this.state.table333}
+                searchTop
+                materialSearch
+                searchBottom={false}
+                responsive
+                bordered
+                sortable
+                theadTextWhite
+                theadTextWhite
             />
         )
     }

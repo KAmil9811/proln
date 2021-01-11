@@ -1,9 +1,10 @@
 ﻿import React, { Component} from 'react';
-import { MDBDataTableV5} from 'mdbreact';
+import { MDBDataTableV5  } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import './Acount.css';
 import './UserTable.css';
 import { Route } from 'react-router-dom';
+import Sidebar from '../Sidebar';
 
 
 
@@ -212,14 +213,14 @@ export class UsersTable extends Component {
                
 
                 hover
-                entriesOptions={[5, 10, 15, 20]}
-                entries={20}
+                entriesOptions={[10,20,50,100]}
+                entries={15}
                 pagesAmount={10}
                 data={this.state.table333}
                 searchTop
 
 
-                // materialSearch
+                 materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop
@@ -244,7 +245,7 @@ export class UsersTable extends Component {
                 sortable
 
 
-                small
+               // small
                 // tego w ciemnym trybie nie ruszać/ striped/
                 // theadColor="indigo"
                 theadTextWhite

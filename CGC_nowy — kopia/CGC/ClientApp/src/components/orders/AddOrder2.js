@@ -1,7 +1,7 @@
 ﻿import React, { Component } from "react";
 import { MDBDataTable } from 'mdbreact';
 import './AddOrder2.css'
-
+import Sidebar from '../Sidebar';
 
 export class AddOrderTwo extends Component {
     displayName = AddOrderTwo;
@@ -253,81 +253,84 @@ export class AddOrderTwo extends Component {
         let y = this.typeSelector()
         let table = this.table();
         return (
-            
-            <div className="AddOrder2">
-                <form>
+            <div>
+                    <Sidebar/>
+                    <div className="AddOrder2">
+                        <form>
                     
-                        <div className="form-group">
-                        <h2>Dodawanie obiektu</h2>
-                        <label>Długość</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            min="1"
-                            placeholder="Podaj wysokość"
-                            id="inputHeight"
-                            ref="length"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Szerokość</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            min="1"
-                            placeholder="Podaj szerokość"
-                            id="inputWidth"
-                            ref="width"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Grubość</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            min="1"
-                            placeholder="Podaj grubość"
-                            id="inputThickness"
-                            ref="thickness"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Kolor</label>
-                        <select ref="color" type="text" className="form-control">
-                            {x}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Ilość</label>
-                        <input
-                            type="number"
-                            min="1"
-                            className="form-control"
-                            id="inputLogin"
-                            placeholder="Podaj lilość"
-                            ref="amount"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Rodzaj</label>
-                        <select ref="type" type="text" className="form-control">
-                            {y}
-                        </select>
-                    </div>
+                                <div className="form-group">
+                                <h2>Dodawanie obiektu</h2>
+                                <label>Długość</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    min="1"
+                                    placeholder="Podaj wysokość"
+                                    id="inputHeight"
+                                    ref="length"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Szerokość</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    min="1"
+                                    placeholder="Podaj szerokość"
+                                    id="inputWidth"
+                                    ref="width"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Grubość</label>
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    min="1"
+                                    placeholder="Podaj grubość"
+                                    id="inputThickness"
+                                    ref="thickness"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Kolor</label>
+                                <select ref="color" type="text" className="form-control">
+                                    {x}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Ilość</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    className="form-control"
+                                    id="inputLogin"
+                                    placeholder="Podaj lilość"
+                                    ref="amount"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Rodzaj</label>
+                                <select ref="type" type="text" className="form-control">
+                                    {y}
+                                </select>
+                            </div>
                     
                    
-                </form>
-                <div className="form-group">
-                        <button type="submit" className="then2" onClick={this.addItem}>Dodaj element</button>
+                        </form>
+                        <div className="form-group">
+                                <button type="submit" className="then2" onClick={this.addItem}>Dodaj element</button>
                         
-                        <button type="submit" className="cancel_order3" onClick={this.cancelAdding}>Anuluj zlecenie</button>
-                        <button type="submit" className="cancel_order2" onClick={this.goBack} >Cofnij</button>
+                                <button type="submit" className="cancel_order3" onClick={this.cancelAdding}>Anuluj zlecenie</button>
+                                <button type="submit" className="cancel_order2" onClick={this.goBack} >Cofnij</button>
                         
-                    </div>
-                <div className="ordertable">
-                    {table}
+                            </div>
+                        <div className="ordertable">
+                            {table}
+                        </div>
+                        <button type="submit" className="then3" onClick={this.handleAddOrder}>Dodaj</button>
                 </div>
-                <button type="submit" className="then3" onClick={this.handleAddOrder}>Dodaj</button>
+
             </div>
         )
     }
