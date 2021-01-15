@@ -1,0 +1,61 @@
+﻿
+.table {
+    margin-top:1px;
+    color: white;
+    background-color: #2d2d2d;
+
+}
+
+.dataTables_info {
+    color: white;
+}
+
+.delete:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+.delete {
+    background-color: #fc0303;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 10px;
+    font-weight: 900;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 4px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.glass_edit:hover {
+    background-color: #08a89f;
+    transform: scale(1.05);
+}
+
+.glass_edit {
+    float: right;
+    font-weight: 900;
+    background-color: #00cccc;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 10px;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 4px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 25%;
+}
+
+
+
+
