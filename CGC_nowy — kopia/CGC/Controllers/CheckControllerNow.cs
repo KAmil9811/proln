@@ -17,7 +17,7 @@ using MySql.Data.MySqlClient;
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    public sealed class UsersController : Controller
+    public sealed class CheckControllerNow : Controller
     {
         static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder
         {
