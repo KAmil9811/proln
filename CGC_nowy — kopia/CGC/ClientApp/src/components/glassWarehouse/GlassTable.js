@@ -78,7 +78,7 @@ export class GlassTable extends Component {
                             }
                         }>Usuń</button>,*/
                         edit:
-                            <Link to="/glass_edit"><button className="glass_edit" id={i}
+                            <Link to="/glass_edit"><button className="info_t" id={i}
                                 onClick={
                                     (e) => {
                                         //console.log(e.target.id);

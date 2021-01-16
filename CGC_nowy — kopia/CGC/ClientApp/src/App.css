@@ -98,7 +98,243 @@ label {
 .table.table th {
     font-size: 1.3rem;
     font-weight: 900;
+    color: black;
+    text-align: center;
 }
 
 
 
+/*Tabele_przyciski*/
+/**/
+.info_t:hover {
+    background-color: #22a4d4;
+    transform: scale(1.05);
+}
+
+.info_t {
+    background-color: #33b5e5;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+
+/*Czerwony_przycisk_tabele*/
+.danger_t:hover {
+    background-color: #ee2436;
+    transform: scale(1.05);
+}
+
+.danger_t {
+    background-color: #ff3547;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
+/*Ciemmo_niebieski_tabele*/
+.prim_t:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+}
+
+.prim_t {
+    background-color: #4285f4;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+
+/*Przysiski duże*/
+
+/*Zatwierdzający zielony*/
+.success_n:hover {
+    background-color: #00913b;
+    transform: scale(1.05);
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.success_n {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    position: center;
+}
+
+/*Ciemmo_niebieski*/
+.prim_n:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+}
+
+.prim_n {
+    background-color: #4285f4;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+
+/*Czerwony_przycisk_duży*/
+.danger_n:hover {
+    background-color: #ee2436;
+    transform: scale(1.05);
+}
+
+.danger_n {
+    background-color: #ff3547;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
+
+
+/*Jasno_niebieski*/
+.info_n:hover {
+    background-color: #22a4d4;
+    transform: scale(1.05);
+}
+
+.info_n {
+    background-color: #33b5e5;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+    /*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
+
+
+    .add_CutMachine, .machine_Warehouse, .conteiner_cp {
+    z-index: 0;
+    padding-top: 10rem;
+    width: 94%;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+/*Widoki bez tabel*/
+
+.add_CutMachine {
+    z-index: 0;
+    padding-top: 10rem;
+    width: 94%;
+    margin-left:auto;
+    margin-right:auto;
+    position: center;
+    clear: both;
+}
+
+.AddCutMachine {
+    margin-left:auto;
+    margin-right:auto;
+}

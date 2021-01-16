@@ -4,6 +4,7 @@ import './MachineWarehouse.css'
 import Sidebar from '../Sidebar';
 
 
+
 export class MachineWarehouse extends Component {
     displayName = MachineWarehouse.name;
     constructor(props) {
@@ -54,12 +55,10 @@ export class MachineWarehouse extends Component {
             <div className="MachineWarehouse">
 
                 <Sidebar />
-                <div className="nav_mw">
+                
+                <div className="machine_Warehouse">
+                    <button className="success_n" onClick={this.addMachine}>Dodaj maszynę</button>
                     
-
-                </div>
-                <div className="conteiner_mw">
-                    <button className="add_machine" onClick={this.addMachine}>Dodaj maszynę</button>
                     <MachineTable />
                 </div>
 

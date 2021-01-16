@@ -4,11 +4,13 @@
         padding: 60px 0;
     }
 
-        .addCutMachine form {
+        .AddCutMachine form {
             margin: 0 auto;
             max-width: 320px;
         }
 }
+
+
 
 
 .cancel_machine13:hover {
@@ -64,9 +66,9 @@
 }
 
 h2 {
-    color: white;
+    color: black;
 }
 
 h3 {
-    color: white;
+    color: black;
 }

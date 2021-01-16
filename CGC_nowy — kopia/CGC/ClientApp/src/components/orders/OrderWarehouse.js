@@ -50,18 +50,20 @@ export class OrderWarehouse extends Component {
             this.props.history.push('/order_history')
         }
 
+/*       <div className="key">
+    <h3>LEGENDA</h3>
+    <p>X- ilość sztuk, na które brakuje materiału</p>
+    <p>Y- ilość oczekujących</p>
+    <p>Z- ilość w trakcie</p>
+</div>*/
+
     render() {
       //  let history = this.history();
         return (
             <div>
                 <Sidebar />
                 <div className="conteiner_ow">
-                    <div className="key">
-                         <h3>LEGENDA</h3>
-                         <p>X- ilość sztuk, na które brakuje materiału</p>
-                         <p>Y- ilość oczekujących</p>
-                         <p>Z- ilość w trakcie</p>
-                     </div>
+                 
                     <button className="add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
                   
                     <div className="tablewar">

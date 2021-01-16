@@ -89,7 +89,7 @@ export class ReadyGlassTable extends Component {
                                     }
                                 }>Edytuj</button>
                             </Link>,
-                        del: <button className="delete" id={i} onClick={(e) => { this.delete(table2[e.target.id].id, table2[e.target.id].status) }}> Usuń  </button>,
+                        del: <button className="danger_t" id={i} onClick={(e) => { this.delete(table2[e.target.id].id, table2[e.target.id].status) }}> Usuń  </button>,
                         choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
 
 
@@ -281,8 +281,9 @@ export class ReadyGlassTable extends Component {
         return (
 
             <div>
-                {xd}
                 <button onClick={this.sendId}>Wyślij zaznaczone do magazynu</button>
+                {xd}
+                
             </div>
         )
     }
