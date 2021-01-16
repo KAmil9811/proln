@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { SingleMachineHistoryTable } from './SingleMachineHistoryTable';
+import Sidebar from '../Sidebar';
 
 
 export class SingleMachineHistory extends Component {
@@ -32,12 +33,14 @@ export class SingleMachineHistory extends Component {
     render() {
         return (
             <div>
-                <div className="nav_mw">
-                    <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
+                <Sidebar />
+                <div>
+                    <div className="nav_mw">
                     
-                </div>
-                <div className="conteiner_mw">
-                    <SingleMachineHistoryTable />
+                    </div>
+                    <div className="conteiner_mw">
+                        <SingleMachineHistoryTable />
+                    </div>
                 </div>
             </div>
         );

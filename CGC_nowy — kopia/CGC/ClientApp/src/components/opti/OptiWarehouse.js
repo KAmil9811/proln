@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { OptiWarehouseTable } from './optiWarehouseTable';
 
+
 export class OptiWarehouse extends Component {
     displayName = OptiWarehouse.name;
     constructor(props) {

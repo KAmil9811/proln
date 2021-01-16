@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { GlassHistoryTable } from './GlassHistoryTable';
+import Sidebar from '../Sidebar';
 
 
 export class GlassHistory extends Component {
@@ -31,15 +32,19 @@ export class GlassHistory extends Component {
 
     render() {
         return (
-            <div>
-                <div className="nav_mw">
-                    <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
-                   
-                </div>
-                <div className="conteiner_mw">
+             <div className="GlasssHistory">
+                    <Sidebar />
+                    <div>
+                
+                        <div className="nav_mw">
                     
-                    <GlassHistoryTable />
-                </div>
+                   
+                        </div>
+                        <div className="conteiner_mw">
+                    
+                            <GlassHistoryTable />
+                        </div>
+                     </div>
             </div>
         );
     }

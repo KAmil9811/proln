@@ -2,6 +2,7 @@
 import { MDBDataTable } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import './glassAttributes.css';
+import Sidebar from '../Sidebar';
 
 export class GlassAtributes extends Component {
     constructor(props) {
@@ -180,19 +181,21 @@ export class GlassAtributes extends Component {
         let colorTable = this.table();
         let typeTable = this.table2();
         return (
-            <div>
-                <div className="nav_ga1">
-                    <button type="button" className="back_glass_at" onClick={this.backToHome}>Powrót</button>
-                </div>
-                <div className="conteiner_ga1">
-                    <button type="button" className="add_color_at" onClick={this.addColor}>Dodaj kolor</button>
-                    {colorTable}
-                    <button type="button" className="add_type_at" onClick={this.addType}>Dodaj typ</button>
-                    {typeTable}
-                </div>
+            <div className="glassattributes">
+                <Sidebar />
+                <div>
+                    <div className="nav_ga1">
+                    </div>
+                    <div className="conteiner_ga1">
+                        <button type="button" className="add_color_at" onClick={this.addColor}>Dodaj kolor</button>
+                        {colorTable}
+                        <button type="button" className="add_type_at" onClick={this.addType}>Dodaj typ</button>
+                        {typeTable}
+                    </div>
                     
 
                 
+                </div>
             </div>
         )
     }

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './PasswordChange.css';
+import Sidebar from '../Sidebar';
 
 export class PasswordChange extends Component {
     displayName = PasswordChange.name;
@@ -70,61 +71,64 @@ export class PasswordChange extends Component {
 
     render() {
         return (
-            <div className="ChangePassword">
-                <form>
-                    <div className="form-group">
-                        <h2>Zmiana hasła</h2>
-                        <label>Podaj stare hasło:</label>
-                        <input
-                            type="password"
-                            name="Password"
-                            className="form-control"
-                            id="inputOldPassword"
-                            placeholder="*********"
-                            ref="oldPassword"
-                        />
-                    </div>
-                    <div className="form-group">
+            <div className="changepassword">
+                <Sidebar />
+                <div className="ChangePassword">
+                    <form>
+                        <div className="form-group">
+                            <h2>Zmiana hasła</h2>
+                            <label>Podaj stare hasło:</label>
+                            <input
+                                type="password"
+                                name="Password"
+                                className="form-control"
+                                id="inputOldPassword"
+                                placeholder="*********"
+                                ref="oldPassword"
+                            />
+                        </div>
+                        <div className="form-group">
                        
-                        <label>Powtórz stare hasło:</label>
-                        <input
-                            type="password"
-                            name="Password"
-                            className="form-control"
-                            id="inputOldPassword2"
-                            placeholder="*********"
-                            ref="oldPassword2"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Podaj nowe hasło:</label>
-                        <input
-                            type="password"
-                            name="Password"
-                            className="form-control"
-                            id="inputNewPassword"
-                            placeholder="*********"
-                            ref="newPassword"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Podaj nowe hasło:</label>
-                        <input
-                            type="password"
-                            name="Password"
-                            className="form-control"
-                            id="inputNewPassword2"
-                            placeholder="*********"
-                            ref="newPassword2"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="button" className="cancel_ch_pass" onClick={this.cancelChanging}>Anuluj</button>
-                        <button type="button" className="change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
+                            <label>Powtórz stare hasło:</label>
+                            <input
+                                type="password"
+                                name="Password"
+                                className="form-control"
+                                id="inputOldPassword2"
+                                placeholder="*********"
+                                ref="oldPassword2"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Podaj nowe hasło:</label>
+                            <input
+                                type="password"
+                                name="Password"
+                                className="form-control"
+                                id="inputNewPassword"
+                                placeholder="*********"
+                                ref="newPassword"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Podaj nowe hasło:</label>
+                            <input
+                                type="password"
+                                name="Password"
+                                className="form-control"
+                                id="inputNewPassword2"
+                                placeholder="*********"
+                                ref="newPassword2"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <button type="button" className="cancel_ch_pass" onClick={this.cancelChanging}>Anuluj</button>
+                            <button type="button" className="change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
                         
-                    </div>
+                        </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
         );
     }

@@ -1,7 +1,6 @@
 ﻿import React, { Component } from "react";
 import './PasswordReset.css'
 
-
 export class PasswordReset1 extends Component {
     displayName = PasswordReset1.name;
     constructor(props) {

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './UserChanging.css';
+import Sidebar from '../Sidebar';
 
 export class UserChanging extends Component {
     displayName = UserChanging.name;
@@ -138,70 +139,73 @@ export class UserChanging extends Component {
     render() {
         var perm = this.permRender();
         return (
-            <div className="userChange">
-                <form>
-                    <div className="form-group">
-                        <h2>Edycja konta</h2>
-                        <label>Login: {sessionStorage.getItem('editLogin')}</label>
-                    </div>
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            name="text"
-                            className="form-control"
-                            id="inputEmail"
-                            defaultValue={sessionStorage.getItem('editMail')}
-                            ref="email"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Hasło</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputPassword"
-                            defaultValue={sessionStorage.getItem('editPassword')}
-                            ref="password"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Imie</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputFirstName"
-                            defaultValue={sessionStorage.getItem('editName')}
-                            ref="name"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Nazwisko</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputSecondName"
-                            defaultValue={sessionStorage.getItem('editSecondName')}
-                            ref="surname"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Aktualne uprawnienia: {sessionStorage.getItem('editPerm')}</label>
+            <div className="Userchange">
+                    <Sidebar />
+                    <div className="userChange">
+                        <form>
+                            <div className="form-group">
+                                <h2>Edycja konta</h2>
+                                <label>Login: {sessionStorage.getItem('editLogin')}</label>
+                            </div>
+                            <div className="form-group">
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    name="text"
+                                    className="form-control"
+                                    id="inputEmail"
+                                    defaultValue={sessionStorage.getItem('editMail')}
+                                    ref="email"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Hasło</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    defaultValue={sessionStorage.getItem('editPassword')}
+                                    ref="password"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Imie</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputFirstName"
+                                    defaultValue={sessionStorage.getItem('editName')}
+                                    ref="name"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Nazwisko</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputSecondName"
+                                    defaultValue={sessionStorage.getItem('editSecondName')}
+                                    ref="surname"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Aktualne uprawnienia: {sessionStorage.getItem('editPerm')}</label>
                         
-                    </div>
-                    <div className="form-group">
-                        <label>Jakie uprawnienia po edycji ma posiadać pracownik?</label>
-                        {perm}
+                            </div>
+                            <div className="form-group">
+                                <label>Jakie uprawnienia po edycji ma posiadać pracownik?</label>
+                                {perm}
 
-                    </div>
+                            </div>
                     
-                    <div className="form-group">
-                        <button type="submit" className="cancel_u" onClick={this.cancelUserChanging}>Anuluj</button>
-                        <button type="submit" className="apply_changes" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
+                            <div className="form-group">
+                                <button type="submit" className="cancel_u" onClick={this.cancelUserChanging}>Anuluj</button>
+                                <button type="submit" className="apply_changes" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
                         
-                    </div>
+                            </div>
 
-                </form>
+                        </form>
+                </div>
             </div>
         );
     }

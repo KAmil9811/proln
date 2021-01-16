@@ -25,13 +25,19 @@
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/
-    background-color: darkslategrey;
+    background-color: #c5c5d3;
 }
 
 label {
-    color: white;
+    color: black;
 }
 
+.table {
+    margin-top: 2%;
+    color: black;
+    background-color: #e8e8ed;
+    ;
+}
 .reset_password:hover {
     background-color: #9900cc;
     transform: scale(1.05);
@@ -82,4 +88,156 @@ label {
     margin-top: 2%;
     margin-left: 2%;
 }
+
+.table.table td {
+    font-size: 1.3rem;
+    color: black;
+    font-weight: 500;
+}
+
+.table.table th {
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+
+<<<<<<< HEAD
+.success_n {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    position: center;
+}
+
+/*Ciemmo_niebieski*/
+.prim_n:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+}
+
+.prim_n {
+    background-color: #4285f4;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+
+/*Czerwony_przycisk_duży*/
+.danger_n:hover {
+    background-color: #ee2436;
+    transform: scale(1.05);
+}
+
+.danger_n {
+    background-color: #ff3547;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
+
+
+/*Jasno_niebieski*/
+
+
+
+.info_n:hover {
+    background-color: #22a4d4;
+
+
+    transform: scale(1.05);
+}
+
+.info_n {
+    background-color: #33b5e5;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+    /*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
+
+
+    .add_CutMachine, .machine_Warehouse, .conteiner_cp {
+    z-index: 0;
+    padding-top: 10rem;
+    width: 94%;
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+/*Widoki bez tabel*/
+
+.add_CutMachine {
+    z-index: 0;
+    padding-top: 10rem;
+    width: 94%;
+    margin-left:auto;
+    margin-right:auto;
+    position: center;
+    clear: both;
+}
+=======
+>>>>>>> f3c9cade2b8462270ac4eff9fc1d9038ceb6a9c8
 

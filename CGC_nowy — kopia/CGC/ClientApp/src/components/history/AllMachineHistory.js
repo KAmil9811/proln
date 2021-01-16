@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { AllMachineHistoryTable } from './AllMachineHistoryTable';
+import Sidebar from '../Sidebar';
 
 
 export class AllMachineHistory extends Component {
@@ -31,14 +32,20 @@ export class AllMachineHistory extends Component {
 
     render() {
         return (
-            <div>
-                <div className="nav_mw">
-                    <button type="button" className="log_out2" onClick={this.logOut}>Wyloguj</button>
+            <div className="AllMachinehistory">
+                    <Sidebar />
+                    <div className="allMachineHistory">
+                
+                        <div>
+                            <div className="nav_mw">
+                        
                     
-                </div>
-                <div className="conteiner_mw">
-                    <AllMachineHistoryTable />
-                </div>
+                            </div>
+                            <div className="conteiner_mw">
+                            <AllMachineHistoryTable />
+                            </div>
+                        </div>
+                    </div>
             </div>
         );
     }

@@ -22,8 +22,6 @@ namespace CGC.Models
         public List<Glass_Id> Glass_info = new List<Glass_Id>();
         public string Error_Messege { get; set; }
 
-        public int Cut_id { get; set; }
-
         public List<int> Glass_id = new List<int>();
 
          

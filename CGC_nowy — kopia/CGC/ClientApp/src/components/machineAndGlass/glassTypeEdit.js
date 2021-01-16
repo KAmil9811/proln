@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import './glassTypeEdit.css'
+import Sidebar from '../Sidebar';
 
 export class GlassTypeEdit extends Component {
     displayName = GlassTypeEdit.name;
@@ -45,24 +46,27 @@ export class GlassTypeEdit extends Component {
 
     render() {
         return (
-            <div className="typeEdit">
-                <form>
-                    <div className="form-group">
-                        <h2>Edytuj typ:</h2>
-                        <input
-                            type="text"
-                            name="color"
-                            className="form-control"
-                            id="inputColor"
-                            placeholder="Podaj typ"
-                            ref="type"
-                            defaultValue={sessionStorage.getItem('type')}
-                        />
-                    </div>
+            <div className="typeedit">
+                <Sidebar />
+                <div className="typeEdit">
+                    <form>
+                        <div className="form-group">
+                            <h2>Edytuj typ:</h2>
+                            <input
+                                type="text"
+                                name="color"
+                                className="form-control"
+                                id="inputColor"
+                                placeholder="Podaj typ"
+                                ref="type"
+                                defaultValue={sessionStorage.getItem('type')}
+                            />
+                        </div>
                 
-                    <button type="button" className="cancel_edit_gla_t" onClick={this.return}>Cofnij</button>
-                    <button type="button" className="edit_glass_t" onClick={this.changeColor}>Edytuj</button>
-                </form>
+                        <button type="button" className="cancel_edit_gla_t" onClick={this.return}>Cofnij</button>
+                        <button type="button" className="edit_glass_t" onClick={this.changeColor}>Edytuj</button>
+                    </form>
+                </div>
             </div>
         )
     }

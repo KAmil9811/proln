@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './AddTypeMachine.css';
+import Sidebar from '../Sidebar';
 
 
 export class AddTypeMachine extends Component {
@@ -42,25 +43,30 @@ export class AddTypeMachine extends Component {
 
     render() {
         return (
-            <div className="addTypeMachine">
-                <form>
-                    <div className="form-group">
-                        <h2>Dodaj typ maszyny:</h2>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="inputType"
-                            placeholder='Podaj typ maszyny'
-                            ref="type"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <button type="button" className="cancel_add_t" onClick={this.cancelAddType}>Anuluj</button>
-                        <button type="button" className="add_type_mach5 " onClick={this.handleAddType}>Dodaj</button>
-                        
-                    </div>
 
-                </form>
+            <div className="AddTypeMachine">
+                    <Sidebar />  
+                    <div className="addTypeMachine">
+                  
+                        <form>
+                            <div className="form-group">
+                                <h2>Dodaj typ maszyny:</h2>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputType"
+                                    placeholder='Podaj typ maszyny'
+                                    ref="type"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="cancel_add_t" onClick={this.cancelAddType}>Anuluj</button>
+                                <button type="button" className="add_type_mach5 " onClick={this.handleAddType}>Dodaj</button>
+                        
+                            </div>
+
+                        </form>
+                </div>
             </div>
         );
     }

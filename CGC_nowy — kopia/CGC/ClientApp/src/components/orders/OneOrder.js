@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { OneOrderTable } from './OneOrderTable'
 import './OneOrder.css'
+import Sidebar from '../Sidebar';
 
 export class OneOrder extends Component {
     displayName = OneOrder.name;
@@ -34,9 +35,9 @@ export class OneOrder extends Component {
     render() {
         return (
             <div>
+                <Sidebar />
                 <div className="nav_one_o">
                     
-                    <button type="button" className="orders3" onClick={this.orders}>Zlecenia</button>
                 </div>
                 <div className="conteiner_one_o">
                     <div className="key">

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
+import { MDBDataTableV5 } from 'mdbreact';
 import './ReadyGlassTable.css'
 import { Link } from 'react-router-dom';
 
@@ -159,11 +160,58 @@ export class ReadyGlassTable extends Component {
 
     table() {
         return (
-            <MDBDataTable
-                /*striped*/
+            <MDBDataTableV5
+
+
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={15}
+                pagesAmount={10}
+                data={this.state.table333}
+                searchTop
+
+
+                materialSearch
+                searchBottom={false}
+                // barReverse
+                //  pagingTop
+                // scrollX
+                // scrollY
+                responsive
+                // maxHeight="35vh"
                 bordered
-                small
-                data={this.state.table}
+
+
+
+                //   maxHeight="20vh"
+                // borderless
+                // btn
+                // dark
+
+
+                //maxHeight="400px"
+
+                // paginationLabel={["<", ">"]}
+
+                sortable
+
+
+                // small
+                // tego w ciemnym trybie nie ruszać/ striped/
+                // theadColor="indigo"
+                theadTextWhite
+                // theadColor="indigo"
+                theadTextWhite
+                // barReverse
+                // className="User_table"
+                // noBottomColumns
+                sortable
+            //info={false}
+
+
+            //   autoWidth
+
+
             />
         )
     }

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import './editTypeMachine.css';
+import Sidebar from '../Sidebar';
 
 export class MachineTypeEdit extends Component {
     displayName = MachineTypeEdit.name;
@@ -45,25 +46,28 @@ export class MachineTypeEdit extends Component {
 
     render() {
         return (
-            <div className="EditTypeM">
-                <form>
-                    <div className="form-group">
-                        <h2>Edytuj typ:</h2>
-                        <input
-                            type="text"
-                            name="type"
-                            className="form-control"
-                            id="inputColor"
-                            placeholder="Podaj typ"
-                            ref="type"
-                            defaultValue={sessionStorage.getItem('machinetype')}
-                        />
-                    </div>
+            <div className="editTypeM">
+                <Sidebar />
+                <div className="EditTypeM">
+                    <form>
+                        <div className="form-group">
+                            <h2>Edytuj typ:</h2>
+                            <input
+                                type="text"
+                                name="type"
+                                className="form-control"
+                                id="inputColor"
+                                placeholder="Podaj typ"
+                                ref="type"
+                                defaultValue={sessionStorage.getItem('machinetype')}
+                            />
+                        </div>
                 
-                     <button type="button" className="cancel_edit_mach_t" onClick={this.return}>Cofnij</button>
-                     <button type="button" className="edit_mach_t" onClick={this.changeType}>Zatwierdź</button>
-                 </form>
+                         <button type="button" className="cancel_edit_mach_t" onClick={this.return}>Cofnij</button>
+                         <button type="button" className="edit_mach_t" onClick={this.changeType}>Zatwierdź</button>
+                     </form>
 
+                </div>
             </div>
         )
     }

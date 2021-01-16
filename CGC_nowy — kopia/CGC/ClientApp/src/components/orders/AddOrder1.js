@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import './AddOrder1.css'
+import Sidebar from '../Sidebar';
 
 export class AddOrderOne extends Component {
     displayName = AddOrderOne;
@@ -34,46 +35,51 @@ export class AddOrderOne extends Component {
 
     render() {
         return (
-            <div className="AddOrder1">
-                    <form> 
-                    <div className="form-group">
-                        <label>Klient</label>
-                        <input
-                            type="text"
-                            name="client"
-                            className="form-control"
-                            id="inputClient"
-                            placeholder="Wprowadź nazwę klienta"
-                            ref="client"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Priorytet</label>
-                        <input
-                            type="number"
-                            min="1"
-                            max="5"
-                            className="form-control"
-                            id="inputLogin"
-                            placeholder="Podaj liczbę od 1 do 5 ( 1 najwyższy priorytet)"
-                            ref="priority"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Deadline</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            id="inputDeadline"
-                            ref="deadline"
-                            />
-                    </div>
-                    <div className="form-group">
-                        <button type="button" className="cancel_order31" onClick={this.cancelAdding}>Anuluj</button>
-                        <button type="button" className="then2" onClick={this.nextPage}>Dalej</button>
+
+            <div>
+                    <Sidebar />
+                    <div className="AddOrder1">
+                            <form> 
+                            <div className="form-group">
+                                <label>Klient</label>
+                                <input
+                                    type="text"
+                                    name="client"
+                                    className="form-control"
+                                    id="inputClient"
+                                    placeholder="Wprowadź nazwę klienta"
+                                    ref="client"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Priorytet</label>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="5"
+                                    className="form-control"
+                                    id="inputLogin"
+                                    placeholder="Podaj liczbę od 1 do 5 ( 1 najwyższy priorytet)"
+                                    ref="priority"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Deadline</label>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    id="inputDeadline"
+                                    ref="deadline"
+                                    />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="cancel_order31" onClick={this.cancelAdding}>Anuluj</button>
+                                <button type="button" className="then2" onClick={this.nextPage}>Dalej</button>
                        
-                    </div>
-                </form>
+                            </div>
+                        </form>
+                </div>
+
             </div>
             )
     }
