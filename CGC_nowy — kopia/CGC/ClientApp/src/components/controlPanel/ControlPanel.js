@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import './Acount.css';
-import { UsersTable } from './UsersTable';
+import { OneHistory } from './OneHistory';
 import * as FiIcons from 'react-icons/fi';
 import  Sidebar from '../Sidebar';
 
@@ -37,9 +37,7 @@ export class ControlPanel extends Component {
         this.props.history.push('/home')
     }
 
-    addUser = (event) => {
-        this.props.history.push('/add_acount')
-    }
+    
 
     changePassword = (event) => {
         this.props.history.push('/change_password')
@@ -48,59 +46,6 @@ export class ControlPanel extends Component {
         this.props.history.push('/change_email')
     }
 
-    userChanging = (event) => {
-        this.props.history.push('/user_change')
-    }
-
-    tableRender() {
-        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (<UsersTable />);
-        } 
-    }
-
-    addAcouButton() {
-        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (<button className="add_user" onClick={this.addUser}>Dodaj Konto</button>);
-        } 
-    }
-
-    
-
-    
-    editMachine = (event) => {
-        this.props.history.push('/cutmachineedit')
-    }
-
-    editGlassColor = (event) => {
-        this.props.history.push('/glassatibutes')
-    }
-
-    userHistory = (event) => {
-        this.props.history.push('/user_history')
-    }
-    
-    typeMachineAdd() {
-        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (
-                <button type="button" className="types98" onClick={this.editMachine}>Typy maszyn</button>
-            )
-        }
-    }
-    colorAndTypeGlassEdit() {
-        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (
-                <button type="button" className="types98" onClick={this.editGlassColor}>Zarządzanie szkłem</button>
-            )
-        }
-    }
-
-   /* usersHistoryTable() {
-        if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (
-                <button type="button" className="types98" onClick={this.userHistory}>Historia użytkowników</button>
-            )
-        }
-    }*/
     adminPermissionsRender() {
         if (sessionStorage.getItem('admin') === 'true') {
             return (<option>Admin</option>)
@@ -145,9 +90,6 @@ export class ControlPanel extends Component {
 
 
     render() {
-        let buttonAdd = this.addAcouButton();
-        let xd = this.tableRender();
-        let typeMachine = this.typeMachineAdd();
         let admin = this.adminPermissionsRender();
         let user = this.userPermissionsRender();
         let superAdmin = this.superAdminPermissionsRender();
@@ -156,7 +98,6 @@ export class ControlPanel extends Component {
         let orderManagement = this.orderManagerPermissionsRender();
         let machineManagement = this.machineManagerPermissionsRender();
         let cutManagement = this.cutManagerPermissionsRender();
-        let colorGlassEdit = this.colorAndTypeGlassEdit();
         //let userHistoryTable = this.usersHistoryTable();
 
         return ( 
@@ -197,18 +138,10 @@ export class ControlPanel extends Component {
                                     </label> 
                                 </div>
                             </form>
-                        </div>
-                        <div>
-                            {typeMachine}
-                        {colorGlassEdit}
-               
                     </div>
-                    {buttonAdd}
-                        <div className="tableuser">
-                        {xd}
+                    <OneHistory/>
                     </div>
                 </div>
-            </div>
             
     )}
 

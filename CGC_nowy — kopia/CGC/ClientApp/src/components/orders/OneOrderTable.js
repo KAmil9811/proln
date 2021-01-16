@@ -12,6 +12,9 @@ export class OneOrderTable extends Component {
                 columns: [],
                 rows: []
             },
+
+            ids: '',
+            send: [],
         };
     }
 
@@ -58,7 +61,8 @@ export class OneOrderTable extends Component {
                                     sessionStorage.setItem('desk', table2[e.target.id].desk);
                                     sessionStorage.setItem('itemId', table2[e.target.id].ids);
                                 }
-                            }>Edytuj szkło</button></Link>
+                            }>Edytuj szkło</button></Link>,
+                        choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].ids, i) }} />,
                             
                     })
                 };
@@ -113,11 +117,68 @@ export class OneOrderTable extends Component {
                                 sort: 'asc',
                                 width: 30
                             },
+                            {
+                                label: 'Zaznacz',
+                                field: 'choice',
+                                sort: 'asc',
+                                width: 30
+                            },
                         ],
                         rows: table2
                     }
                 });
             })
+    }
+
+
+    check(number, id, miejsce) {
+        var checkBox = document.getElementById(number);
+        var arr = this.state.send
+        if (checkBox.checked == true) {
+            //alert('dodane' + '' + number)
+            arr.push(id)
+            this.setState.send = arr
+            console.log('tablica' + '---' + this.state.send)
+
+        } else {
+            //alert('usunięte' + '' + number)
+            const index = arr.indexOf(id);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+            this.setState.send = arr
+            console.log('tablica' + '---' + this.state.send)
+        }
+    };
+
+
+    sendId = (event) => {
+        event.preventDefault();
+       /* const receiver = {
+            user: { login: sessionStorage.getItem('login') },
+            product_id: this.state.send,
+
+        }
+        fetch(`api/Product/Released_Product`, {
+            method: "post",
+            body: JSON.stringify(
+                receiver
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return (json)
+            })
+            .then(json => {
+                alert('Produkty:' + ' ' + this.state.send + ' ' + 'wysłano do magazynu')
+            })
+            .then(json => {
+                window.location.reload();
+            })*/
     }
 
     table() {
@@ -129,7 +190,7 @@ export class OneOrderTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 
@@ -184,6 +245,7 @@ export class OneOrderTable extends Component {
 
             <div>
                 {table}
+                <button onClick={this.sendId}>Usuń zaznaczone</button>
             </div>
         )
     }

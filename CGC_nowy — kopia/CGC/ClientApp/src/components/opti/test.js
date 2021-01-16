@@ -108,7 +108,7 @@ export class Test extends Component {
                 console.log(json)
                 return (json)
             })
-        //this.props.history.push('/glasswarehouse');
+        this.props.history.push('/pick_machine');
 
         console.log(receiver)
     }

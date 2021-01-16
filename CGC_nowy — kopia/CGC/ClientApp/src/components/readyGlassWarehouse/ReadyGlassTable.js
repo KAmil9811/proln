@@ -89,7 +89,6 @@ export class ReadyGlassTable extends Component {
                                     }
                                 }>Edytuj</button>
                             </Link>,
-                        del: <button className="delete" id={i} onClick={(e) => { this.delete(table2[e.target.id].id, table2[e.target.id].status) }}> Usuń  </button>,
                         choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
 
 
@@ -140,12 +139,6 @@ export class ReadyGlassTable extends Component {
                                 width: 150
                             },*/
                             {
-                                label: 'Usuń',
-                                field: 'del',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
                                 label: '',
                                 field: 'choice',
                                 sort: 'asc',
@@ -167,7 +160,7 @@ export class ReadyGlassTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 
@@ -237,8 +230,38 @@ export class ReadyGlassTable extends Component {
         }
     };
 
-    delete(product, deleted) {
+    sendId = (event) => {
+        event.preventDefault();
         const receiver = {
+            user: { login: sessionStorage.getItem('login') },
+            product_id: this.state.send,
+
+        }
+        fetch(`api/Product/Released_Product`, {
+            method: "post",
+            body: JSON.stringify(
+                receiver
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return (json)
+            })
+            .then(json => {
+                alert('Produkty:' + ' ' + this.state.send + ' ' + 'wysłano do magazynu')
+            })
+            .then(json => {
+                window.location.reload();
+            })
+    }
+
+    delete = (event) => {
+        event.preventDefault();
+       /* const receiver = {
             product: {
                 id: product,
             },
@@ -271,7 +294,7 @@ export class ReadyGlassTable extends Component {
         }
         else {
             alert('Nie możesz usunąć tego przedmiotu!')
-        }
+        }*/
 
 
     }
@@ -283,6 +306,7 @@ export class ReadyGlassTable extends Component {
             <div>
                 {xd}
                 <button onClick={this.sendId}>Wyślij zaznaczone do magazynu</button>
+                <button onClick={this.delete}>Usuń zaznaczone </button>
             </div>
         )
     }
