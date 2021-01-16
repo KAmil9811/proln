@@ -252,7 +252,8 @@ namespace CGC.Controllers
 
         public void Insert_User_History(string Description, string Login)
         {
-            string data = DateTime.Today.ToString("d");
+            string data = DateTime.Today.ToString("g");
+
             string query = "INSERT INTO dbo.User_History(Data, Description, Login) VALUES(@data, @Description, @Login)";
             SqlCommand command = new SqlCommand(query, cnn);
 

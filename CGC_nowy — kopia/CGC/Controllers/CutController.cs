@@ -79,7 +79,7 @@ namespace CGC.Controllers
 
             foreach (Order order in orderController.GetOrders())
             {
-                if (order.Status == "awaiting" || order.Status == "stopped")
+                if (order.Status == "Awaiting" || order.Status == "Stopped")
                 {
                     if (orderController.Avaible_Cut(order) > 0)
                     {
@@ -93,7 +93,7 @@ namespace CGC.Controllers
                 order.Deadline2 = Convert.ToDateTime(order.Deadline);
             }
 
-            orders.Sort((order1,  order2) => order1.Deadline2.CompareTo(order2.Deadline2));
+            orders.OrderBy(orderer => orderer.Deadline2);
 
             return orders;
         }
@@ -113,17 +113,23 @@ namespace CGC.Controllers
 
                 foreach (Glass glass in magazineController.Getglass())
                 {
-                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == glass.Hight && glass.Cut_id == 0)
+                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == glass.Hight)
                     {
-                        if (item.Length <= glass.Length && item.Width <= glass.Width)
+                        foreach (Glass_Id glass_Id in glass.Glass_info)
                         {
-                            kontrol2 = true;
-                            break;
+                            if (glass_Id.Used == false && glass_Id.Destroyed == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                            {
+                                if (item.Length <= glass.Length && item.Width <= glass.Width)
+                                {
+                                    kontrol2 = true;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
 
-                if (item.Status == "awaiting" && item.Cut_id == 0 && kontrol2 == true)
+                if (item.Status == "Awaiting" && item.Cut_id == 0 && kontrol2 == true)
                 {
                     kontrol = false;
                     if (temp.Count != 0)
@@ -159,7 +165,7 @@ namespace CGC.Controllers
 
             foreach (Glass glasse in magazineController.Set_Filter(magazineController.Getglass()))
             {
-                if (glasse.Type == package.Type && glasse.Color == package.Color && glasse.Hight == package.Thickness && glasse.Cut_id == null)
+                if (glasse.Type == package.Type && glasse.Color == package.Color && glasse.Hight == package.Thickness)
                 {
                     if (package.Item.First().Length <= glasse.Length && package.Item.First().Width <= glasse.Width)
                     {
@@ -229,14 +235,24 @@ namespace CGC.Controllers
 
             foreach (Glass glass in magazineController.Getglass())
             {
-                if (glass.Cut_id == Cut_id)
+                List<Glass_Id> temp = new List<Glass_Id>();
+                bool kontrolka = false;
+
+                foreach(Glass_Id glass_Id in glass.Glass_info)
                 {
-                    glasses.Add(glass);          
+                    if (glass_Id.Used == false && glass_Id.Destroyed == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                    {
+                        kontrolka = true;
+                    }
+                }     
+                if(kontrolka == true)
+                {
+                    glasses.Add(glass);
                 }
+
             }
 
-            glasses.Sort((glass1, glass2) => glass1.Width.CompareTo(glass2.Width));
-            glasses.Sort((glass1, glass2) => glass1.Length.CompareTo(glass2.Length));
+            glasses.OrderBy(glasse => glasse.Width).ThenBy(glasses2 => glasses2.Length);
 
             foreach (Glass glass in glasses)
             {
@@ -568,7 +584,7 @@ namespace CGC.Controllers
 
             foreach (Item item in orderController.GetItems(order))
             {
-                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness)
+                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Awaiting")
                 {
                     packages.Item.Add(item);
                     backup.Item.Add(item);
@@ -585,15 +601,18 @@ namespace CGC.Controllers
 
             foreach (Glass glass in magazineController.Getglass())
             {
-                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight && glass.Cut_id == 0)
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight)
                 {
-                    Glass glass1 = glass;
+                    Glass glass1 = new Glass();
 
-                    glass1.Glass_info.Clear();
+                    glass1.Length = glass.Length;
+                    glass1.Width = glass.Width;
+                    glass1.Length = glass.Length;
+
 
                     foreach (Glass_Id glass_Id  in glass.Glass_info)
                     {
-                        if(glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false)
+                        if(glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                         {
                             glass1.Glass_info.Add(glass_Id);
                         }
@@ -666,7 +685,7 @@ namespace CGC.Controllers
 
             try
             {
-                code = GetCut_Project().Last().Cut_id + 1;
+                code = GetCut_Project().OrderBy(cutid => cutid.Cut_id).Last().Cut_id + 1;
             }
             catch (Exception e)
             {
@@ -797,7 +816,7 @@ namespace CGC.Controllers
                                     int code;
                                     try
                                     {
-                                        code = productController.GetProducts().Last().Id + 1;
+                                        code = productController.GetProducts().OrderBy(pro => pro.Id).Last().Id + 1;
                                     }
                                     catch (Exception e)
                                     {
