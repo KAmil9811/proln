@@ -568,7 +568,7 @@ namespace CGC.Controllers
 
             foreach (Item item in orderController.GetItems(order))
             {
-                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness)
+                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Awaiting")
                 {
                     packages.Item.Add(item);
                     backup.Item.Add(item);
@@ -587,9 +587,12 @@ namespace CGC.Controllers
             {
                 if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight && glass.Cut_id == 0)
                 {
-                    Glass glass1 = glass;
+                    Glass glass1 = new Glass();
 
-                    glass1.Glass_info.Clear();
+                    glass1.Length = glass.Length;
+                    glass1.Width = glass.Width;
+                    glass1.Length = glass.Length;
+
 
                     foreach (Glass_Id glass_Id  in glass.Glass_info)
                     {
@@ -666,7 +669,7 @@ namespace CGC.Controllers
 
             try
             {
-                code = GetCut_Project().Last().Cut_id + 1;
+                code = GetCut_Project().OrderBy(cutid => cutid.Cut_id).Last().Cut_id + 1;
             }
             catch (Exception e)
             {
@@ -797,7 +800,7 @@ namespace CGC.Controllers
                                     int code;
                                     try
                                     {
-                                        code = productController.GetProducts().Last().Id + 1;
+                                        code = productController.GetProducts().OrderBy(pro => pro.Id).Last().Id + 1;
                                     }
                                     catch (Exception e)
                                     {

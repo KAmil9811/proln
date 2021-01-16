@@ -41,7 +41,7 @@ export class OrdersTable extends Component {
                         priority: json[i].priority,
                         deadline: json[i].deadline,
                         items: json[i].items,
-                        choose: <Link to="/ready_packages"> <button className="choose_order" id={i}
+                        choose: <Link to="/ready_packages"> <button className="info_t" id={i}
                             onClick={(e) => {
                                 //this.chooseOrder( table2[e.target.id].number);
                                 sessionStorage.setItem('orderId2', table2[e.target.id].number)
@@ -143,7 +143,7 @@ export class OrdersTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 

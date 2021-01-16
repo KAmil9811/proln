@@ -80,15 +80,27 @@ namespace CGC.Controllers
             cnn.Open();
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
-            while (sqlDataReader.Read())
+            try
             {
-                Machines_History_All machines_History_All = new Machines_History_All();
-                machines_History_All.No = Convert.ToInt32(sqlDataReader["No"]);
-                machines_History_All.Login = sqlDataReader["Login"].ToString();
-                machines_History_All.Date = sqlDataReader["Date"].ToString();
-                machines_History_All.Description = sqlDataReader["Description"].ToString();
+                while (sqlDataReader.Read())
+                {
+                    Machines_History_All machines_History_All = new Machines_History_All();
+                    machines_History_All.Key = Convert.ToInt32(sqlDataReader["Key"]);
+                    machines_History_All.Login = sqlDataReader["Login"].ToString();
+                    machines_History_All.Date = sqlDataReader["Date"].ToString();
+                    machines_History_All.Description = sqlDataReader["Description"].ToString();
 
-                machines_History_Alls.Add(machines_History_All);
+                    if(sqlDataReader["No"] != null)
+                    {
+                        machines_History_All.No = Convert.ToInt32(sqlDataReader["No"]);
+                    }
+
+                    machines_History_Alls.Add(machines_History_All);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
             sqlDataReader.Close();
             command.Dispose();
@@ -128,27 +140,53 @@ namespace CGC.Controllers
 
         public void Insert_Machine_History_All(int No, string Login, string Description)
         {
+            int key;
+            try
+            {
+                key = GetMachinesHistoryAll().OrderBy(mach => mach.Key).Last().Key + 1;
+            }
+            catch (Exception e)
+            {
+                key = 1;
+            }
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description) VALUES(@Date, @No, @Login, @Description)";
+            string query = "INSERT INTO dbo.[Machines_History_All](Key, Date, No, Login, Description) VALUES(@Key, @Date, @No, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
+            try
+            {
+                command.Parameters.Add("@Key", SqlDbType.Int).Value = key;
+                command.Parameters.Add("@Date", SqlDbType.VarChar, 40).Value = data;
+                command.Parameters.Add("@No", SqlDbType.Int).Value = No;
+                command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+                command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
 
-            command.Parameters.Add("@Date", SqlDbType.VarChar, 40).Value = data;
-            command.Parameters.Add("@No", SqlDbType.Int).Value = No;
-            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
-            command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
-
-            cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            cnn.Close();
+                cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                cnn.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void Insert_Machine_History_All(string Login, string Description)
         {
+            int key;
+            try
+            {
+                key = GetMachinesHistoryAll().OrderBy(mach => mach.Key).Last().Key + 1;
+            }
+            catch (Exception e)
+            {
+                key = 1;
+            }
             string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Key,Date, Login, Description) VALUES(@Key,@data, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, cnn);
 
+            command.Parameters.Add("@Key", SqlDbType.Int).Value = key;
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
@@ -233,7 +271,7 @@ namespace CGC.Controllers
 
             try
             {
-                temper = GetMachines().Last().No + 1;
+                temper = GetMachines().OrderBy(mach => mach.No).Last().No + 1;
             }
             catch (Exception e)
             {
@@ -244,22 +282,28 @@ namespace CGC.Controllers
             {
                 if (usere.Login == user.Login)
                 {
+                    try
+                    {
+                        string query = "INSERT INTO dbo.[Machines](No, Status, Type, Stan) VALUES(@No, @Status, @Type, @Stan)";
+                        SqlCommand command = new SqlCommand(query, cnn);
 
-                    string query = "INSERT INTO dbo.Machines(No, Status, Type, Stan) VALUES(@No, @Status, @Type, @Stan)";
-                    SqlCommand command = new SqlCommand(query, cnn);
+                        command.Parameters.Add("@No", SqlDbType.Int).Value = temper;
+                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+                        command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = machines.Type;
+                        command.Parameters.Add("@Stan", SqlDbType.Bit).Value = false;
 
-                    command.Parameters.Add("@No", SqlDbType.Int).Value = temper;
-                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
-                    command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = machines.Type;
-                    command.Parameters.Add("@Stan", SqlDbType.Bit).Value = false;
+                        cnn.Open();
 
-                    cnn.Open();
+                        command.ExecuteNonQuery();
 
-                    command.ExecuteNonQuery();
+                        command.Dispose();
 
-                    command.Dispose();
-
-                    cnn.Close();
+                        cnn.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
 
                     string userhistory = "You added new machine " + machines.No;
                     string machinehistoryall = "Machine has been added";

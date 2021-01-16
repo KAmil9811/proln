@@ -60,7 +60,8 @@ export class ControlPanel extends Component {
 
     addAcouButton() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (<button className="add_user" onClick={this.addUser}>Dodaj Konto</button>);
+            return (<button className="add_user" onClick={this.addUser}>Dodaj Konto</button>)
+                   
         } 
     }
 
@@ -163,7 +164,7 @@ export class ControlPanel extends Component {
             <div className="ControlPanel" >
                 
                
-                 <Sidebar />                
+                <Sidebar />                
                 <div className="conteiner_cp">
 
 

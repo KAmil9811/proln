@@ -458,7 +458,7 @@ namespace CGC.Controllers
 
             try
             {
-                last_free_id = GetAllItems().Last().Id + 1;
+                last_free_id = GetAllItems().OrderBy(itm => itm.Id).Last().Id + 1;
             }
             catch (Exception e)
             {
@@ -472,7 +472,7 @@ namespace CGC.Controllers
 
             try
             {
-                code = Int32.Parse(GetOrders().Last().Id_Order) + 1;
+                code = Int32.Parse(GetOrders().OrderBy(ord => ord.Id_Order).Last().Id_Order) + 1;
             }
             catch (Exception e)
             {
@@ -486,7 +486,7 @@ namespace CGC.Controllers
             {             
                 if (item.Amount == 1)
                 {
-                    item.Status = "awaiting";
+                    item.Status = "Awaiting";
                     item.Can_Be_Createad = false;
                     item.Id = last_free_id;
                     last_free_id++;
@@ -494,7 +494,7 @@ namespace CGC.Controllers
                 }
                 else if(item.Amount > 1)
                 {
-                    item.Status = "awaiting";
+                    item.Status = "Awaiting";
                     item.Can_Be_Createad = false;
 
                     item.Id = last_free_id;
@@ -552,7 +552,7 @@ namespace CGC.Controllers
                             command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
                             command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
                             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
-                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
+                            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Awaiting";
                             command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
                             command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
                             command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = 0;
@@ -573,7 +573,7 @@ namespace CGC.Controllers
 
                     command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
                     command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
-                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "awaiting";
+                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Awaiting";
                     command.Parameters.Add("@Priority", SqlDbType.Int).Value = order.Priority;
                     command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
                     command.Parameters.Add("@Stan", SqlDbType.VarChar, 40).Value = Avaible_Cut(order).ToString() + "/" + order.items.Count + "/" + "0";
@@ -712,7 +712,7 @@ namespace CGC.Controllers
                     {
                         if (ord.Id_Order == order.Id_Order)
                         {
-                            if (name == "deletead" && ord.Deletead == false && ord.Released == false)
+                            if (name == "Deletead" && ord.Deletead == false && ord.Released == false)
                             {
                                 string query = "UPDATE dbo.[Order] SET Deletead = @Deletead WHERE Id_Order = @Id_Order;";
                                 SqlCommand command = new SqlCommand(query, cnn);
@@ -735,7 +735,7 @@ namespace CGC.Controllers
                                 temp.Add(order);
                                 return temp;
                             }
-                            else if (name == "deletead" && ord.Deletead == true && ord.Released == false && ord.Frozen == false)
+                            else if (name == "Deletead" && ord.Deletead == true && ord.Released == false && ord.Frozen == false)
                             {
                                 string query = "UPDATE dbo.[Order] SET Deletead = @Deletead WHERE Id_Order = @Id_Order;";
                                 SqlCommand command = new SqlCommand(query, cnn);
@@ -758,7 +758,7 @@ namespace CGC.Controllers
                                 temp.Add(order);
                                 return temp;
                             }
-                            if (name == "frozen" && ord.Deletead == false && ord.Released == false && ord.Frozen == false)
+                            if (name == "Frozen" && ord.Deletead == false && ord.Released == false && ord.Frozen == false)
                             {
                                 string query = "UPDATE dbo.[Order] SET Frozen = @Frozen WHERE Id_Order = @Id_Order;";
                                 SqlCommand command = new SqlCommand(query, cnn);
@@ -781,7 +781,7 @@ namespace CGC.Controllers
                                 temp.Add(order);
                                 return temp;
                             }
-                            else if (name == "frozen" && ord.Deletead == false && ord.Released == false && ord.Frozen == true)
+                            else if (name == "Frozen" && ord.Deletead == false && ord.Released == false && ord.Frozen == true)
                             {
                                 string query = "UPDATE dbo.[Order] SET Frozen = @Frozen WHERE Id_Order = @Id_Order;";
                                 SqlCommand command = new SqlCommand(query, cnn);
@@ -804,7 +804,7 @@ namespace CGC.Controllers
                                 temp.Add(order);
                                 return temp;
                             }
-                            if (name == "released" && ord.Status == "Done" && ord.Deletead == false && ord.Released == false)
+                            if (name == "Released" && ord.Status == "Done" && ord.Deletead == false && ord.Released == false)
                             {
                                 string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Id_Order = @Id_Order;";
                                 SqlCommand command = new SqlCommand(query, cnn);
@@ -827,7 +827,7 @@ namespace CGC.Controllers
                                 temp.Add(order);
                                 return temp;
                             }
-                            else if (name == "released" && ord.Deletead == false && ord.Released == true)
+                            else if (name == "Released" && ord.Deletead == false && ord.Released == true)
                             {
                                 string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Id_Order = @Id_Order;";
                                 SqlCommand command = new SqlCommand(query, cnn);

@@ -60,7 +60,7 @@ export class UsersTable extends Component {
                         email: json[i].email,
                         permissions: 'Pracownik',
                         deleted: deleted,
-                        action: <Link to="/user_change"><button className="user_change" id={i}
+                        action: <Link to="/user_change"><button className="info_t" id={i}
                             onClick={
                                 (e) => {
                                     console.log(e.target.id);
@@ -73,7 +73,7 @@ export class UsersTable extends Component {
                                     sessionStorage.setItem('editMail', table[e.target.id].email);
                                 }
                             }>Edytuj</button></Link>,
-                        del: <button className="user_delete" id={i} onClick={(e) => { this.delete(table[e.target.id].login, table[e.target.id].deleted) }}> Usuń/Przywróć  </button> 
+                        del: <button className="danger_t" id={i} onClick={(e) => { this.delete(table[e.target.id].login, table[e.target.id].deleted) }}> Usuń/Przywróć  </button> 
                     })
                 };
                
@@ -128,7 +128,7 @@ export class UsersTable extends Component {
                                 width: 100
                             },
                             {
-                                label: 'Akcja',
+                                label: 'Edytuj',
                                 field: 'action',
                                 width: 100
                             },

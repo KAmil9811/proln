@@ -1,9 +1,12 @@
-﻿.add_machine:hover {
+﻿
+.add_machine:hover {
     background-color: #339933;
     transform: scale(1.05);
 }
 
-
+.add_m {
+    font-weight: 900
+}
 .add_machine {
     float: right;
     background-color: #32cd32;
@@ -26,79 +29,71 @@
     margin-top: 20px;
 }
 
-
-
-
-
-.history:hover {
-    background-color: #339933;
+.success_n:hover {
+    background-color: #00913b;
     transform: scale(1.05);
-}
-
-.history {
-    font-weight: 900;
-    background-color: #32cd32;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 10px;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
+    border-radius: 12px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    float: right;
-    margin-top: 0;
 }
 
-.log_out2 {
-    background-color: #fc0303;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
+.success_n {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
     margin-bottom: 0;
-    font-size: 10px;
+    font-size: 1rem;
+    font-weight: 600;
     text-align: center;
     background-image: none;
     color: white;
-    font-weight: 900;
-    border-radius: 4px;
+    border-radius: 12px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-  
-    float: right;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    position: center;
 }
-
-.home2:hover {
-    background-color: #08a89f;
+/*
+info_t:hover {
+    background-color: #16b5ea;
     transform: scale(1.05);
-}
-
-.home2 {
-    background-color: #00cccc;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 10px;
-    text-align: center;
-    background-image: none;
-    color: white;
-    font-weight: 900;
-    border-radius: 4px;
+    border-radius: 12px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 0px;
-    float: right;
 }
+
+.info_t {
+    float: right;
+    background-color: #39c0ed;
+    height: 2.5rem;
+    width: 10rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+*/
 
 
 
@@ -109,13 +104,7 @@
     color: white;
 }
 
-.nav_mw {
-    float: right;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-}
+
 
 .conteiner_mw {
      width: 96%;

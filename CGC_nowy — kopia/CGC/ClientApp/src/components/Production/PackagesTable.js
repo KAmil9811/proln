@@ -43,7 +43,7 @@ export class PackagesTable extends Component {
                         type: json[i].type,
                         thickness: json[i].thickness,
                         amount: json[i].item.length,
-                        more: <Link to="/test"> <button className="choose_package" id={i}
+                        more: <Link to="/test"> <button className="info_t" id={i}
                             onClick={(e) => {
                                 sessionStorage.setItem('idOpti', table3[e.target.id].id)
                                 sessionStorage.setItem('colorOpti', table3[e.target.id].color)
@@ -116,7 +116,7 @@ export class PackagesTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 
