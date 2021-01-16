@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Login } from './components/Login/Login';
 import { ControlPanel } from './components/controlPanel/ControlPanel';
+import { ControlPanel2 } from './components/controlPanel/Control2';
 import { AddAcount } from './components/controlPanel/AddAcount';
 import { HomePage } from './components/homePage/HomePage';
 import { GlassWarehouse } from './components/glassWarehouse/GlassWarehouse';
@@ -71,6 +72,7 @@ export default class App extends Component {
 
                     <Route exact path='/' component={Login} />
                     <Route path='/controlpanel' component={ControlPanel} />
+                    <Route path='/controlpaneladmin' component={ControlPanel2} />
                     <Route path='/change_password' component={PasswordChange} />
                     <Route path='/change_email' component={EmailChange} />
                     <Route path='/user_change' component={UserChanging} />

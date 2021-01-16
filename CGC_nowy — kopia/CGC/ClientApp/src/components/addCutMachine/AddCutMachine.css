@@ -11,13 +11,11 @@
 }
 
 
-<<<<<<< HEAD
 .success_n_add_cm:hover {
     background-color: #00913b;
-=======
+}
 .cancel_machine13:hover {
     background-color: #9900cc;
->>>>>>> f3c9cade2b8462270ac4eff9fc1d9038ceb6a9c8
     transform: scale(1.05);
     border-radius: 12px;
     border-bottom: none;
@@ -87,12 +85,8 @@
 }
 
 h2 {
-<<<<<<< HEAD
-    color: black;
    position:center;
-=======
     color: white;
->>>>>>> f3c9cade2b8462270ac4eff9fc1d9038ceb6a9c8
 }
 
 h3 {

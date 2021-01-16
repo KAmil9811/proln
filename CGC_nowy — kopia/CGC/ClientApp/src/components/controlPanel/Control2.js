@@ -6,8 +6,8 @@ import Sidebar from '../Sidebar';
 
 
 
-export class ControlPanel extends Component {
-    displayName = ControlPanel.name;
+export class ControlPanel2 extends Component {
+    displayName = ControlPanel2.name;
     constructor(props) {
         super(props);
     }
@@ -165,37 +165,6 @@ export class ControlPanel extends Component {
 
                 <Sidebar />
                 <div className="conteiner_cp">
-                    <div className="">
-                        <form>
-                            <div className="form-group">
-                                <label>Login: {sessionStorage.getItem('login')}</label>
-                            </div>
-                            <div className="form-group">
-                                <label>
-                                    Hasło:
-                                        <button type="button" className="password_change" onClick={this.changePassword}>Zmień hasło</button>
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <label>
-                                    E-mail: {sessionStorage.getItem('email')}
-                                    <button type="button" className="email_change" onClick={this.changeEmail}>Zmień email</button>
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <label>Uprawnienia:
-                                    {admin}
-                                    {user}
-                                    {superAdmin}
-                                    {manager}
-                                    {magazineManagement}
-                                    {orderManagement}
-                                    {machineManagement}
-                                    {cutManagement}
-                                </label>
-                            </div>
-                        </form>
-                    </div>
                     <div>
                         {typeMachine}
                         {colorGlassEdit}
