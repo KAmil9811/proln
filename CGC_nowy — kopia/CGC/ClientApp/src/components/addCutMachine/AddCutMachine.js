@@ -114,10 +114,13 @@ export class AddCutMachine extends Component {
                         }} >
                                 {y}
                             </select>
-                            <div className="form-group">
-                                <button type="reset" className="cancel_machine13" onClick={this.cancel}>Anuluj</button>
-                                <button type="submit" className="add_machine1" onClick={this.handleAddCutMachine}>Dodaj</button>
-                        
+                           <div className="form-group">
+                          
+                                <button type="reset" className="danger_n_add_cm" onClick={this.cancel}>Anuluj</button>
+                                <div className="s"></div>
+                                <button type="submit" className="success_n_add_cm" onClick={this.handleAddCutMachine}>Dodaj</button>
+                               
+                            <div className="nextline"> </div>
                             </div>
 
                         </form>

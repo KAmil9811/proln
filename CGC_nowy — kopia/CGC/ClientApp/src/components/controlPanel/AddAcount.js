@@ -219,8 +219,8 @@ export class AddAcount extends Component{
                         {perm}
                     
                         <div className="form-group">
-                            <button type="button" className="cancel" onClick={this.cancelAdding}>Anuluj</button>
-                            <button type="button" className="add_user2" onClick={this.handleAddAcount}>Dadaj użytkownika</button>
+                            <button type="button" className="danger_n_add_a" onClick={this.cancelAdding}>Anuluj</button>
+                            <button type="button" className="success_n_add_a" onClick={this.handleAddAcount}>Dadaj użytkownika</button>
                        
                         </div>
 

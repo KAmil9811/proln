@@ -282,8 +282,13 @@ label {
 
 
 /*Jasno_niebieski*/
+
+
+
 .info_n:hover {
     background-color: #22a4d4;
+
+
     transform: scale(1.05);
 }
 
