@@ -108,8 +108,8 @@ export class GlassWarehouse extends Component {
 
                 <Sidebar />
                 <div className="conteiner_gw">
-                    <button type="button" className="del_glass_x" onClick={this.delGlass}>Usuń szkło</button>
-                    <button type="button" className="add_glass" onClick={this.addGlass}>Dodaj szkło</button>
+                    <button type="button" className="danger_glas_magazine" onClick={this.delGlass}>Usuń szkło</button>
+                    <button type="button" className="success_glas_magazine" onClick={this.addGlass}>Dodaj szkło</button>
             
 
                     <div className="tableglass">

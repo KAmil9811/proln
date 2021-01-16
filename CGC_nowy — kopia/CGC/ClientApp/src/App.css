@@ -98,10 +98,123 @@ label {
 .table.table th {
     font-size: 1.3rem;
     font-weight: 900;
+    color:black;
+}
+
+.success_t:hover {
+    background-color: #00a740;
+    transform: scale(1.05);
+}
+.success_t {
+    background-color: #00c851;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
+
+/*Ciemmo_niebieski*/
+.prim_t:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+}
+
+.prim_t {
+    background-color: #4285f4;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+
+/*Czerwony_przycisk_tabelka*/
+.danger_t:hover {
+    background-color: #ee2425;
+    transform: scale(1.05);
 }
 
 
+.danger_t {
+    background-color: #ff3547;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
 
+
+/*Jasno_niebieski*/
+
+
+
+.info_t:hover {
+    background-color: #22a4d4;
+    transform: scale(1.05);
+}
+
+.info_t {
+    background-color: #33b5e5;
+    height: 2.5rem;
+    width: 9rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: block;
+}
+
+/*     Duże    */
 .success_n {
     float: right;
     background-color: #00c851;
@@ -133,8 +246,8 @@ label {
 
 .prim_n {
     background-color: #4285f4;
-    height: 2.5rem;
-    width: 9rem;
+    height: 3rem;
+    width: 12rem;
     /* padding: 6px 6px;*/
     font-size: 1rem;
     font-weight: 600;
@@ -157,14 +270,14 @@ label {
 
 /*Czerwony_przycisk_duży*/
 .danger_n:hover {
-    background-color: #ee2436;
+    background-color: #ee2425;
     transform: scale(1.05);
 }
 
 .danger_n {
     background-color: #ff3547;
-    height: 2.5rem;
-    width: 9rem;
+    height: 3rem;
+    width: 13rem;
     /* padding: 6px 6px;*/
     font-size: 1rem;
     font-weight: 600;
@@ -194,8 +307,8 @@ label {
 
 .info_n {
     background-color: #33b5e5;
-    height: 2.5rem;
-    width: 9rem;
+    height: 3rem;
+    width: 12rem;
     /* padding: 6px 6px;*/
     font-size: 1rem;
     font-weight: 600;

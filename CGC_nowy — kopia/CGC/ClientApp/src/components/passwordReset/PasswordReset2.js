@@ -69,8 +69,8 @@ export class PasswordReset2 extends Component {
 
 
                     <div className="form-group">
-                        <button type="button" className="cancel_reset2" onClick={this.cancelResetPassword2}>Anuluj</button>
-                        <button type="button" className="reset2" onClick={this.handlePasswordReset2}>Dalej</button>
+                        <button type="button" className="danger_reset2" onClick={this.cancelResetPassword2}>Anuluj</button>
+                        <button type="button" className=" success_reset2" onClick={this.handlePasswordReset2}>Dalej</button>
                         
                     </div>
 

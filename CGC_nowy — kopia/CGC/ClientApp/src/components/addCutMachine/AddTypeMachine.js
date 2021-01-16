@@ -60,8 +60,8 @@ export class AddTypeMachine extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="button" className="cancel_add_t" onClick={this.cancelAddType}>Anuluj</button>
-                                <button type="button" className="add_type_mach5 " onClick={this.handleAddType}>Dodaj</button>
+                            <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Anuluj</button>
+                            <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Dodaj</button>
                         
                             </div>
 

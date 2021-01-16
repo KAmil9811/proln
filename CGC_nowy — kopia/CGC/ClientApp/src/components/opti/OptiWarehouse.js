@@ -36,13 +36,13 @@ export class OptiWarehouse extends Component {
         return (
             <div>
 
-        <Sidebar />
+                <Sidebar />
                 <div className="nav_mw">
                     <button className="add_machine" onClick={this.addMachine}>Oblicz nową partię</button>
                     <OptiWarehouseTable/>
 
                 </div>
-            <div className="conteiner_mw">
+                <div className="conteiner_mw">
                 
             </div>
 

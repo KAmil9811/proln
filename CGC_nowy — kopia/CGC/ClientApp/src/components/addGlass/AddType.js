@@ -58,8 +58,8 @@ export class AddType extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="button" className="cancel_add_gla_t" onClick={this.cancelAddType}>Anuluj</button>
-                                <button type="button" className="adding_glass_t" onClick={this.handleAddType}>Dodaj</button>
+                            <button type="button" className="danger_glass_type_add" onClick={this.cancelAddType}>Anuluj</button>
+                            <button type="button" className="success_glass_type_add" onClick={this.handleAddType}>Dodaj</button>
                         
                             </div>
 

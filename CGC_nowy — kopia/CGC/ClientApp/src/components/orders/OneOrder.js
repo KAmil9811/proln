@@ -45,7 +45,7 @@ export class OneOrder extends Component {
                         <p>Zleceniodawca: {sessionStorage.getItem('klient')}</p>
                         <p>Deadline: {sessionStorage.getItem('deadline')}</p>
                         <p>Priorytet: {sessionStorage.getItem('priority')}</p>
-                        <button type="button" className="orders3" onClick={this.dataEdit}>Edytuj dane</button>
+                        <button type="button" className="info_one_order" onClick={this.dataEdit}>Edytuj dane</button>
 
                     </div>
                     <div className="oneordertable">

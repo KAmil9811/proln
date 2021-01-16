@@ -48,7 +48,7 @@ export class OneOrderTable extends Component {
                         ids: json[i].id,
                         status: json[i].status,
                         desk: json[i].desk,
-                        more: <Link to="/edit_order_item"><button className="details3" id={i}
+                        more: <Link to="/edit_order_item"><button className="prim_t" id={i}
                             onClick={
                                 (e) => {
                                     /* console.log(table2[e.target.id].items);*/

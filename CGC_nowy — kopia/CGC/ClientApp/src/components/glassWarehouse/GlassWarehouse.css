@@ -161,3 +161,57 @@
     margin-left: 2%;
     clear: both;
 }
+
+.success_glas_magazine:hover {
+    background-color: #ee2436;
+    transform: scale(1.05);
+}
+
+.success_glas_magazine {
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 14px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    display: inline;
+    float: none;
+}
+
+.danger_glas_magazine:hover {
+    background-color: #ee2436;
+    transform: scale(1.05);
+}
+
+.danger_glas_magazine {
+    background-color: #ff3547;
+    height: 3rem;
+    width: 12rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-right: 1px;
+    margin: 0 auto;
+    display: inline;
+    float: none;
+}

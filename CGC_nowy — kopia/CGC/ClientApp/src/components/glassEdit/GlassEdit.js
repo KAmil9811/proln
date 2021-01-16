@@ -212,8 +212,8 @@ export class GlassEdit extends Component {
                         </div>
                     
                         <div className="form-group">
-                            <button type="submit" className="cancel_glass_e" onClick={this.cancelGlassEdit}>Anuluj</button>
-                            <button type="submit" className="confirm_glass_e" onClick={this.handleGlassEdit}>Zastosuj zmiany</button>
+                            <button type="submit" className="danger_glass_edit" onClick={this.cancelGlassEdit}>Anuluj</button>
+                            <button type="submit" className="success_glass_edit" onClick={this.handleGlassEdit}>Zastosuj zmiany</button>
                   
                         </div>
 

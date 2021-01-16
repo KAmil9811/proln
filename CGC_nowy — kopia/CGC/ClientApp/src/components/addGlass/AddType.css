@@ -61,3 +61,54 @@
     margin-left: 10%;
     float: none;
 }
+
+.danger_glass_type_add:hover {
+    background-color: #ee2425;
+    transform: scale(1.05);
+}
+
+.danger_glass_type_add {
+    background-color: #ff3547;
+    height: 3rem;
+    width: 13rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
+
+.success_glass_type_add {
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    position: center;
+}
+
+.success_glass_type_add:hover {
+        background-color: #339933;
+        transform: scale(1.05);
+    }

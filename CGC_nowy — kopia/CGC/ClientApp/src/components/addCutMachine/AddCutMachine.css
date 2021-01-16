@@ -23,9 +23,11 @@
     border-left: none;
     border-right: none;
 }
-
-.success_n_add_cm {
-    float: right;
+.succes_add_cm:hover {
+    background-color: #ee2436;
+    transform: scale(1.05);
+}
+.success_add_cm {
     background-color: #00c851;
     height: 3rem;
     width: 12rem;
@@ -48,12 +50,12 @@
     float: none;
 }
 
-.danger_n_add_cm:hover {
+.danger_add_cm:hover {
     background-color: #ee2436;
     transform: scale(1.05);
 }
 
-.danger_n_add_cm {
+.danger_add_cm {
     background-color: #ff3547;
     height: 3rem;
     width: 12rem;

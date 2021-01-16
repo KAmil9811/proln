@@ -122,8 +122,8 @@ export class PasswordChange extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <button type="button" className="cancel_ch_pass" onClick={this.cancelChanging}>Anuluj</button>
-                            <button type="button" className="change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
+                            <button type="button" className="danger_change_own_pass" onClick={this.cancelChanging}>Anuluj</button>
+                            <button type="button" className="success_change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
                         
                         </div>
 

@@ -58,8 +58,8 @@ export class AddColor extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="button" className="cancel_add_gla_c" onClick={this.cancelAddColor}>Anuluj</button>
-                                <button type="button" className="adding_glass_c" onClick={this.handleAddColor}>Dodaj</button>
+                            <button type="button" className="danger_glass_color_add" onClick={this.cancelAddColor}>Anuluj</button>
+                            <button type="button" className="success_glass_color_add" onClick={this.handleAddColor}>Dodaj</button>
 
                             </div>
 

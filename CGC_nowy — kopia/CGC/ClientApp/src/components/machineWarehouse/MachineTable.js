@@ -45,14 +45,14 @@ export class MachineTable extends Component {
                         status: json[i].status,
                         type: json[i].type,
                         deleted: deleted,
-                        chstatus: <button type="button" className="status" id={i} onClick={
+                        chstatus: <button type="button" className="info_t" id={i} onClick={
                             (e) => {
                                 this.machineBroken(table2[e.target.id].number, table2[e.target.id].status)
                             }}
                         >Zmień status</button>,
-                        delete: <button className="delete1" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń/Przywróć  </button>,
+                        delete: <button className="danger_t" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń/Przywróć  </button>,
 
-                        action: <Link to="/single_machine_history"><button className="user_change" id={json[i].no} onClick={(e) => { this.single(e.target.id) }}>Historia</button></Link>
+                        action: <Link to="/single_machine_history"><button className="prim_t" id={json[i].no} onClick={(e) => { this.single(e.target.id) }}>Historia</button></Link>
                     })
                 };
                 this.setState({
@@ -230,7 +230,7 @@ export class MachineTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 

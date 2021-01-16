@@ -103,7 +103,7 @@ export class CutMachineEdit extends Component {
                     <div className="nav_machine_e">
                     </div>
                     <div className="conceiner_machine_e">
-                         <button type="button" className="add_type_m1" onClick={this.addTypeMachine}>Dodaj typ</button>
+                        <button type="button" className="success_cm_edit" onClick={this.addTypeMachine}>Dodaj typ</button>
                         {typeTable}
                     </div>
                 </div>
