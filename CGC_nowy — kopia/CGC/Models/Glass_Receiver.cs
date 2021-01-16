@@ -21,6 +21,7 @@ namespace CGC.Models
         public bool Used { get; set; }
         public bool Destroyed { get; set; }
         public bool Removed { get; set; }
+        public int Cut_id { get; set; }
 
     }
 }

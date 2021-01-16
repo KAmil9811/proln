@@ -78,7 +78,7 @@ export class GlassTable extends Component {
                             }
                         }>Usuń</button>,*/
                         edit:
-                            <Link to="/glass_edit"><button className="info_t" id={i}
+                            <Link to="/glass_edit"><button className="glass_edit" id={i}
                                 onClick={
                                     (e) => {
                                         //console.log(e.target.id);
@@ -189,7 +189,7 @@ export class GlassTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table}
+                data={this.state.table333}
                 searchTop
 
 

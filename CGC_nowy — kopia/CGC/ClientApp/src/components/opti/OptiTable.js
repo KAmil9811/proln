@@ -116,7 +116,7 @@ export class OptiTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table}
+                data={this.state.table333}
                 searchTop
 
 

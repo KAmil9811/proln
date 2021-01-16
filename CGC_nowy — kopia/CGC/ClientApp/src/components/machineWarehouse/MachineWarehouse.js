@@ -4,7 +4,6 @@ import './MachineWarehouse.css'
 import Sidebar from '../Sidebar';
 
 
-
 export class MachineWarehouse extends Component {
     displayName = MachineWarehouse.name;
     constructor(props) {
@@ -52,13 +51,15 @@ export class MachineWarehouse extends Component {
     render() {
      //   let history = this.history();
         return (
-            <div className="MachineWarehouse">
+            <div>
 
                 <Sidebar />
-                
-                <div className="machine_Warehouse">
-                    <button className="success_n" onClick={this.addMachine}>Dodaj maszynę</button>
+                <div className="nav_mw">
                     
+
+                </div>
+                <div className="conteiner_mw">
+                    <button className="add_machine" onClick={this.addMachine}>Dodaj maszynę</button>
                     <MachineTable />
                 </div>
 

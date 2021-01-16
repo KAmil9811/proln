@@ -102,7 +102,7 @@ export class AddCutMachine extends Component {
             <div className="AddCutMachine">
 
                     <Sidebar />  
-                    <div className="add_CutMachine">
+                    <div className="addCutMachine">
                   
                         <form>
 

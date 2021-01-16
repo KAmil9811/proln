@@ -11,19 +11,11 @@ import { IconContext } from 'react-icons/lib';
 
 const Nav = styled.div`
   background: #15171c;
-  height: 7rem;
+  height: 80px;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position: fixed;
-  top: 0;
-  z-index:100;
-  float: right;
-   
-
-  
-
 
 
 
@@ -39,11 +31,6 @@ const NavIcon = styled(Link)`
   justify-content: flex-start;
   align-items: center;
   color: #fff;
-
-
-
-
-  
 
 `;
 const OutIcon = styled(Link)`
@@ -102,8 +89,7 @@ const Sidebar = () => {
         <div>
             
             <Nav>
-                <NavIcon to='#'>
-
+               <NavIcon to='#'>
                         <FaIcons.FaBars onClick={showSidebar} />
                </NavIcon>
                 <OutIcon to='/' >

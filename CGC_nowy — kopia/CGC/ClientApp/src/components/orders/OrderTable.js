@@ -40,7 +40,7 @@ export class OrderTable extends Component {
                         priority: json[i].priority,
                         deadline: json[i].deadline,
                         items: json[i].items,
-                        more: <Link to="/oneorder"><button className="info_t" id={i}
+                        more: <Link to="/oneorder"><button className="details3" id={i}
                             onClick={
                                 (e) => {
                                    /* console.log(table2[e.target.id].items);*/
@@ -117,14 +117,14 @@ export class OrderTable extends Component {
     };
     table() {
         return (
-            <MDBDataTableV5
+            <MDBDataTable
 
 
                 hover
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table}
+                data={this.state.table333}
                 searchTop
 
 
@@ -148,7 +148,7 @@ export class OrderTable extends Component {
 
                 //maxHeight="400px"
 
-                 paginationLabel={["<", ">"]}
+                // paginationLabel={["<", ">"]}
 
                 sortable
 
