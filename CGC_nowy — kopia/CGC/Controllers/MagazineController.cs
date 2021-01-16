@@ -67,6 +67,15 @@ namespace CGC.Controllers
                 glass_Receiver.Desk = sqlDataReader["Desk"].ToString();
                 glass_Receiver.Glass_Id = Convert.ToInt32(sqlDataReader["Glass_Id"]);
 
+                if (sqlDataReader["Cut_id"].ToString() == "")
+                {
+                    glass_Receiver.Cut_id = 0;
+                }
+                else
+                {
+                    glass_Receiver.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                }
+
                 temp2.Add(glass_Receiver);
             }
             sqlDataReader.Close();
@@ -81,7 +90,7 @@ namespace CGC.Controllers
                     if (glass.Width == glass_Receiver.Width && glass.Hight == glass_Receiver.Hight && glass.Length == glass_Receiver.Length && glass.Type == glass_Receiver.Type && glass.Color == glass_Receiver.Color && glass.Owner == glass_Receiver.Owner)
                     {
                         glass.Count = glass.Count + 1;
-                        glass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Destroyed = glass_Receiver.Destroyed, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used });
+                        glass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Destroyed = glass_Receiver.Destroyed, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
                         check = true;
                     }
                 }
@@ -97,7 +106,7 @@ namespace CGC.Controllers
                     newGlass.Color = glass_Receiver.Color;
                     newGlass.Owner = glass_Receiver.Owner;
                     newGlass.Desk = glass_Receiver.Desk;
-                    newGlass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Destroyed = glass_Receiver.Destroyed, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used });
+                    newGlass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Destroyed = glass_Receiver.Destroyed, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
                     newGlass.Count = 1;
                     temp.Add(newGlass);
                 }
@@ -194,7 +203,7 @@ namespace CGC.Controllers
                 List<Glass_Id> temp2 = new List<Glass_Id>();
                 foreach (Glass_Id glass_Id in glass.Glass_info)
                 {
-                    if (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false)
+                    if (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                     {
                         temp2.Add(glass_Id);
                     }
