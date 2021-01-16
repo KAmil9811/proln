@@ -153,10 +153,6 @@ export class Test extends Component {
                 <Sidebar />
                 <div className="canva">
                     <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
-<<<<<<< HEAD
-
-=======
->>>>>>> 76e15f8f4dabc37e4e6d176a9a1390d0c2505869
                 </div>
                 <h2>{sessionStorage.getItem('uncat')}</h2>
                 <div className="table2">

@@ -109,13 +109,6 @@ export class Login extends Component {
                             ref="password"  
                         />
                     </div>
-                    <button type="button" class="btn btn-primary">Primary</button>
-                    <button type="button" class="btn btn-danger">Danger</button>
-                    <button type="button" class="btn btn-warning">Warning</button>
-                    <button type="button" class="btn btn-info">Info</button>
-                    <button type="button" class="btn btn-light">Light</button>
-                    <button type="button" class="btn btn-dark">Dark</button>
-
                     <button type="submit" className="log_in" onClick={this.handleLoging} >Zaloguj</button>
                     <button className="reset_password" onClick={this.resetPassword1} >Zresetuj hasło</button>
                    </form>
