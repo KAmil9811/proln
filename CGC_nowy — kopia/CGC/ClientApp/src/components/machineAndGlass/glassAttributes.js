@@ -187,9 +187,9 @@ export class GlassAtributes extends Component {
                     <div className="nav_ga1">
                     </div>
                     <div className="conteiner_ga1">
-                        <button type="button" className="add_color_at" onClick={this.addColor}>Dodaj kolor</button>
+                        <button type="button" className="success_glass_att" onClick={this.addColor}>Dodaj kolor</button>
                         {colorTable}
-                        <button type="button" className="add_type_at" onClick={this.addType}>Dodaj typ</button>
+                        <button type="button" className="success_glass_att" onClick={this.addType}>Dodaj typ</button>
                         {typeTable}
                     </div>
                     

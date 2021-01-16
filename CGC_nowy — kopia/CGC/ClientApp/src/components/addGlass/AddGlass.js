@@ -232,8 +232,8 @@ export class AddGlass extends Component {
 
                             <div className="form-group">
                         
-                                <button type="button" className="cancel_glass1" onClick={this.cancelAddGlass}>Anuluj</button>
-                                <button type="button" className="add_glass1" onClick={this.handleAddGlass}>Dodaj</button>
+                            <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Anuluj</button>
+                            <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Dodaj</button>
                             </div>
 
                         </form>

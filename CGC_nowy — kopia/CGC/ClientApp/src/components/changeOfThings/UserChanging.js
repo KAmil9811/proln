@@ -199,8 +199,8 @@ export class UserChanging extends Component {
                             </div>
                     
                             <div className="form-group">
-                                <button type="submit" className="cancel_u" onClick={this.cancelUserChanging}>Anuluj</button>
-                                <button type="submit" className="apply_changes" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
+                            <button type="submit" className="danger_user_change" onClick={this.cancelUserChanging}>Anuluj</button>
+                            <button type="submit" className="success_user_change" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
                         
                             </div>
 

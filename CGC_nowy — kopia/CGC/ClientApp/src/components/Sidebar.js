@@ -16,9 +16,10 @@ const Nav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
-
-
+  top:0;
+  position: fixed;
+  z-index: 100;
+ 
 
   
 `;

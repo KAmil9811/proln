@@ -45,7 +45,7 @@ export class OneOrderTable extends Component {
                         ids: json[i].id,
                         status: json[i].status,
                         desk: json[i].desk,
-                        more: <Link to="/edit_order_item"><button className="details3" id={i}
+                        more: <Link to="/edit_order_item"><button className="prim_t" id={i}
                             onClick={
                                 (e) => {
                                     /* console.log(table2[e.target.id].items);*/
@@ -129,7 +129,7 @@ export class OneOrderTable extends Component {
                 entriesOptions={[10, 20, 50, 100]}
                 entries={15}
                 pagesAmount={10}
-                data={this.state.table333}
+                data={this.state.table}
                 searchTop
 
 

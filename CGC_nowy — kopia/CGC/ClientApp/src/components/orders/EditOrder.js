@@ -117,8 +117,8 @@ export class EditOrder extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="submit" className="cancel_order_e" onClick={this.cancelEditOrder}>Anuluj</button>
-                                <button type="submit" className="confirm_order_e" onClick={this.handleEditOrder}>Zastosuj zmiany</button>
+                                <button type="submit" className="danger_edit_order" onClick={this.cancelEditOrder}>Anuluj</button>
+                                <button type="submit" className="succes_edit_order" onClick={this.handleEditOrder}>Zastosuj zmiany</button>
                             </div>
 
                         </form>

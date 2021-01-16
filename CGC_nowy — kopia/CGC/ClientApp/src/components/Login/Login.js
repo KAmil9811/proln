@@ -109,8 +109,8 @@ export class Login extends Component {
                             ref="password"  
                         />
                     </div>
-                    <button type="submit" className="log_in" onClick={this.handleLoging} >Zaloguj</button>
-                    <button className="reset_password" onClick={this.resetPassword1} >Zresetuj hasło</button>
+                    <button type="submit" className="success_login" onClick={this.handleLoging} >Zaloguj</button>
+                    <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
                    </form>
             </div>
         );

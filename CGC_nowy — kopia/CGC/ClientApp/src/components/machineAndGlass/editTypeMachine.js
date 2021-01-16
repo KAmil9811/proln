@@ -63,8 +63,8 @@ export class MachineTypeEdit extends Component {
                             />
                         </div>
                 
-                         <button type="button" className="cancel_edit_mach_t" onClick={this.return}>Cofnij</button>
-                         <button type="button" className="edit_mach_t" onClick={this.changeType}>Zatwierdź</button>
+                        <button type="button" className="danger_cm_edit_type" onClick={this.return}>Anuluj</button>
+                        <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Zatwierdź</button>
                      </form>
 
                 </div>

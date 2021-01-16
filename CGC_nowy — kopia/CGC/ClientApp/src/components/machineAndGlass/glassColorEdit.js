@@ -63,8 +63,8 @@ export class GlassColorEdit extends Component {
                             />
                         </div>
                 
-                        <button type="button" className="cancel_edit_gla_c" onClick={this.return}>Cofnij</button>
-                        <button type="button" className="edit_glass_c" onClick={this.changeColor}>Edytuj</button>
+                        <button type="button" className="danger_color_edit" onClick={this.return}>Anuluj</button>
+                        <button type="button" className="success_color_edit" onClick={this.changeColor}>Edytuj</button>
                     </form>
                 </div>
             </div>

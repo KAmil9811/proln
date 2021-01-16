@@ -59,12 +59,9 @@ export class MachineWarehouse extends Component {
 
                 </div>
                 <div className="conteiner_mw">
-                    <button className="add_machine" onClick={this.addMachine}>Dodaj maszynę</button>
+                    <button className="success_cm_add_wr" onClick={this.addMachine}>Dodaj maszynę</button>
                     <MachineTable />
                 </div>
-
-
-                
             </div>
         );
     }

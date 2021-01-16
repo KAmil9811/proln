@@ -62,7 +62,7 @@ export class OrderWarehouse extends Component {
                          <p>Y- ilość oczekujących</p>
                          <p>Z- ilość w trakcie</p>
                      </div>
-                    <button className="add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
+                    <button className="succes_add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
                   
                     <div className="tablewar">
                         <OrderTable />
