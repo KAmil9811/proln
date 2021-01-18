@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar';
 
 
-export class OptiTableItems extends Component {
+export class GlassTableProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,19 +21,11 @@ export class OptiTableItems extends Component {
     componentDidMount() {
         const receiver = {
             order: {
-                id_order: sessionStorage.getItem('idOpti'),
+                id_order: sessionStorage.getItem('orderId2'),
             },
-            user: {
-                login: sessionStorage.getItem('login'),
-            },
-            item:  {
-                color: sessionStorage.getItem('colorOpti'),
-                type: sessionStorage.getItem('typeOpti'),
-                thickness: sessionStorage.getItem('thicknessOpti'),
-
-            }
+            id: sessionStorage.getItem('cutId2'),
         }
-        fetch(`api/Cut/Magic`, {
+        fetch(`api/Cut/Return_Porject`, {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
@@ -48,18 +40,18 @@ export class OptiTableItems extends Component {
             .then(json => {
                 var table2 = [];
                 for (var i = 0; i < json.length; i++) {
-                    for (var j = 0; j < json[i].glass_info.length; j++) {
-                        for (var x = 0; x < json[i].glass_info[j].pieces.length; x++) {
-                            table2.push({
-                            length: json[i].glass_info[0].pieces[x].lenght,
-                            width: json[i].glass_info[0].pieces[x].widht,
-                                ids: json[i].glass_info[0].pieces[x].id,
-                            })
-                        
-                        }
-                        
-                        
-                    }
+                    table2.push({
+                        length: json[i].length,
+                        width: json[i].width,
+                        thickness: json[i].hight,
+                        color: json[i].color,
+                        type: json[i].type,
+                        ids: json[i].glass_info[0].id,
+                        status: json[i].status,
+                        desk: json[i].desk,
+
+
+                    })
                 };
                 this.setState({
                     table: {
@@ -73,6 +65,24 @@ export class OptiTableItems extends Component {
                             {
                                 label: 'Szerokość',
                                 field: 'width',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Grubość',
+                                field: 'thickness',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Kolor',
+                                field: 'color',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Rodzaj',
+                                field: 'type',
                                 sort: 'asc',
                                 width: 30
                             },
@@ -102,7 +112,7 @@ export class OptiTableItems extends Component {
                 searchTop
 
 
-                materialSearch
+                // materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop
