@@ -97,20 +97,17 @@ namespace CGC.Controllers
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {          
-                if (sqlDataReader["Status"].ToString() == "Ready" || sqlDataReader["Status"].ToString() == "In magazine" || sqlDataReader["Status"].ToString() == "Send to magazine")
-                {
-                    Product product = new Product();
-                    product.Id = Convert.ToInt32(sqlDataReader["Id"]);
-                    product.Owner = sqlDataReader["Owner"].ToString();
-                    product.Status = sqlDataReader["Status"].ToString();
-                    product.Desk = sqlDataReader["Desk"].ToString();
-                    product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
-                    product.Id_order = sqlDataReader["Id_order"].ToString();
+                Product product = new Product();
+                product.Id = Convert.ToInt32(sqlDataReader["Id"]);
+                product.Owner = sqlDataReader["Owner"].ToString();
+                product.Status = sqlDataReader["Status"].ToString();
+                product.Desk = sqlDataReader["Desk"].ToString();
+                product.Id_item = Convert.ToInt32(sqlDataReader["Id_item"]);
+                product.Id_order = sqlDataReader["Id_order"].ToString();
 
-                    temp.Add(product);
-                }
-
+                temp.Add(product);
             }
+
             sqlDataReader.Close();
             command.Dispose();
             cnn.Close();
@@ -256,47 +253,74 @@ namespace CGC.Controllers
         public async Task<List<Product>> Delete_Product([FromBody] Receiver receiver)
         {
             List<Product> temp = new List<Product>();
-            Product product = receiver.product;
+            List<int> product_id = receiver.product_Id;
             User user = receiver.user;
+
+            Product producted = new Product();
 
             foreach (User use in usersController.GetUsers())
             {
                 if (use.Login == user.Login)
                 {           
-                    string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
-                    SqlCommand command = new SqlCommand(query, cnn);
+                    foreach(Product product in GetProducts())
+                    {
+                        foreach(int id in product_id)
+                        {
+                            if(id == product.Id)
+                            {
+                                if (product.Status != "Usuniety")
+                                {
+                                    string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
+                                    SqlCommand command = new SqlCommand(query, cnn);
 
-                    command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Deleted";
-                    command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id;
+                                    command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Usunięty";
+                                    command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id;
 
-                    cnn.Open();
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                    cnn.Close();
+                                    cnn.Open();
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
+                                    cnn.Close();
 
-                    query = "UPDATE dbo.[Item] SET Status = @Status Product_Id = @Product_Id WHERE Id = @Id;";
-                    command = new SqlCommand(query, cnn);
+                                    try
+                                    {
+                                        query = "UPDATE dbo.[Item] SET Status = @Status, Product_Id = @Product_Id WHERE Id = @Id;";
+                                        command = new SqlCommand(query, cnn);
 
-                    command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Awaiting";
-                    command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id_item;
-                    command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = 0;
+                                        command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Awaiting";
+                                        command.Parameters.Add("@Id", SqlDbType.Int).Value = product.Id_item;
+                                        command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = 0;
 
-                    cnn.Open();
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                    cnn.Close();
+                                        cnn.Open();
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+                                        cnn.Close();
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Console.WriteLine(e.ToString());
+                                    }
 
-                    string userhistory = "You deleted product " + product.Id.ToString();
-                    string Producthistory = "Product has been deleted";
+                                    string userhistory = "You deleted product " + product.Id.ToString();
+                                    string Producthistory = "Product has been deleted";
 
-                    InsertProductHistory(product.Id, user.Login, Producthistory);
-                    usersController.Insert_User_History(userhistory, user.Login);
+                                    InsertProductHistory(product.Id, user.Login, Producthistory);
+                                    usersController.Insert_User_History(userhistory, user.Login);
+                                }
+                                else
+                                {
+                                    producted.Error_Messege += product.Id + ", ";
+                                }
+                            }                          
+                        }
+                    }
+
+
 
                     return temp;
                 }
             }
-            product.Error_Messege = "User not found";
-            temp.Add(product);
+            producted.Error_Messege = "User not found";
+            temp.Add(producted);
             return temp;
         }
         

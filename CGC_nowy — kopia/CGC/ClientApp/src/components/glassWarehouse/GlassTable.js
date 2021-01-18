@@ -154,7 +154,7 @@ export class GlassTable extends Component {
                                 width: 150
                             },
                             {
-                                label: 'ID',
+                                label: 'Numer referencyjny',
                                 field: 'id',
                                 sort: 'asc',
                                 width: 150

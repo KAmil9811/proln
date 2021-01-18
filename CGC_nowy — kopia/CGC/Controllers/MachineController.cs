@@ -64,6 +64,15 @@ namespace CGC.Controllers
                 machines.Type = sqlDataReader["Type"].ToString();
                 machines.Stan = Convert.ToBoolean(sqlDataReader["Stan"]);
 
+                try
+                {
+                    machines.Last_Cut_id = Convert.ToInt32(sqlDataReader["Last_Cut_id"]);
+                }
+                catch(Exception e)
+                {
+                    machines.Last_Cut_id = 0;
+                }
+
                 temp.Add(machines);
             }
             sqlDataReader.Close();

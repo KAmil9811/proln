@@ -36,9 +36,7 @@ export class OneOrder extends Component {
         return (
             <div>
                 <Sidebar />
-                <div className="nav_one_o">
-                    
-                </div>
+               
                 <div className="conteiner_one_o">
                     <div className="key">
                         <p>Id zlecenia: {sessionStorage.getItem('orderId')}</p>

@@ -1,5 +1,6 @@
 ﻿import React, { Component } from "react";
 import Sidebar from '../Sidebar';
+import './PickMachine.css'
 
 export class PickMachine extends Component {
     displayName = PickMachine;
@@ -14,7 +15,7 @@ export class PickMachine extends Component {
     
     componentDidMount() {
         var table2 = [];
-        fetch(`api/Magazine/Return_All_Colors`, {
+        fetch(`api/Cut/Return_Machine_To_Cut`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -25,7 +26,8 @@ export class PickMachine extends Component {
                 console.log(json);
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
-                        color: json[i],
+                        color: json[i].no,
+                        type: json[i].type,
                     })
                 };
                 this.setState({
@@ -35,16 +37,55 @@ export class PickMachine extends Component {
             })
     }
 
+    machineSelector = (event) => {
+        var tab = []
+        for (var i = 0; i < this.state.machine.length; i++) {
+
+            tab.push(< option value={this.state.machine[i].color}> {this.state.machine[i].color + ', ' + this.state.machine[i].type} </option >)
+
+
+        }
+        return (tab)
+    }
 
     cancelAdding = (event) => {
         this.props.history.push('/test')
     }
 
-        pickMachine = (event) => {
-            this.props.history.push('/selection_of_orders')
+    saveProject = (event) => {
+        event.preventDefault();
+        const receiver = {
+            machines: {
+                no: this.refs.type.value
+            },
+            cut_Project: {
+                Cut_id: sessionStorage.getItem('id_order')
+            }
+
         }
 
+
+        fetch(`api/Cut/Start_Production`, {
+            method: "post",
+            body: JSON.stringify(receiver),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            /*.then(json => {
+                console.log(receiver)
+                console.log(json)
+                return (json)
+            })*/
+        this.props.history.push('/glasswarehouse');
+
+        console.log(receiver)
+
+    }
+
     render() {
+        let x = this.machineSelector()
         return (
 
             <div>
@@ -53,18 +94,13 @@ export class PickMachine extends Component {
                     <form>
                         <div className="form-group">
                             <label>Wybierz maszynę:</label>
-                            <input
-                                type="text"
-                                name="client"
-                                className="form-control"
-                                id="inputClient"
-                                
-                                ref="client"
-                            />
+                            <select ref="type" type="text" className="form-control">
+                                {x}
+                            </select>
                         </div>
                         <div className="form-group">
-                            <button type="button" className="cancel_order31" onClick={this.cancelAdding}>Anuluj</button>
-                            <button type="button" className="then2" onClick={this.nextPage}>Wytnij</button>
+                            <button type="button" className="danger_pick_machine" onClick={this.cancelAdding}>Anuluj</button>
+                            <button type="button" className="success_pick_machine" onClick={this.saveProject}>Wytnij</button>
 
                         </div>
                     </form>

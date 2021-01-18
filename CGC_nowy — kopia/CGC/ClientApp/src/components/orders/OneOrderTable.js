@@ -154,12 +154,13 @@ export class OneOrderTable extends Component {
 
     sendId = (event) => {
         event.preventDefault();
-       /* const receiver = {
+        const receiver = {
             user: { login: sessionStorage.getItem('login') },
-            product_id: this.state.send,
-
+            item_Id: this.state.send,
+            order: { id_order :sessionStorage.getItem('orderId') },
         }
-        fetch(`api/Product/Released_Product`, {
+
+        fetch(`api/Order/Remove_Item`, {
             method: "post",
             body: JSON.stringify(
                 receiver
@@ -174,11 +175,18 @@ export class OneOrderTable extends Component {
                 return (json)
             })
             .then(json => {
-                alert('Produkty:' + ' ' + this.state.send + ' ' + 'wysłano do magazynu')
+                alert('Przedmioty o id:' + ' ' + this.state.send + ' ' + 'zostały usunięte')
             })
             .then(json => {
                 window.location.reload();
-            })*/
+            })
+
+        console.log(receiver)
+    }
+
+    kurwaaaaa = (event) => {
+        event.preventDefault();
+        console.log(this.state.send)
     }
 
     table() {
@@ -246,6 +254,7 @@ export class OneOrderTable extends Component {
             <div>
                 {table}
                 <button onClick={this.sendId}>Usuń zaznaczone</button>
+                <button onClick={this.kurwaaaaa}>kurwaaaaa</button>
             </div>
         )
     }

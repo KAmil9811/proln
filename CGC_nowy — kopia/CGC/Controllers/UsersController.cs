@@ -250,6 +250,31 @@ namespace CGC.Controllers
             return userHistories;
         }
 
+        public List<UserHistory> GetAllUserHistory(string Login)
+        {
+            List<UserHistory> userHistories = new List<UserHistory>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User_History] Where Login = @Login;", cnn);
+            cnn.Open();
+
+            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                UserHistory userHistory = new UserHistory();
+                userHistory.Login = sqlDataReader["Login"].ToString();
+                userHistory.Data = sqlDataReader["Data"].ToString();
+                userHistory.Description = sqlDataReader["Description"].ToString();
+                userHistories.Add(userHistory);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return userHistories;
+        }
+
         public void Insert_User_History(string Description, string Login)
         {
             string data = DateTime.Today.ToString("g");
@@ -316,6 +341,12 @@ namespace CGC.Controllers
         public async Task<List<UserHistory>> Return_Users_History()
         {
             return GetAllUserHistory();
+        }
+
+        [HttpPost("Return_User_History")]
+        public async Task<List<UserHistory>> Return_User_History([FromBody] Receiver receiver)
+        {
+            return GetAllUserHistory(receiver.user.Login);
         }
 
         //Admin

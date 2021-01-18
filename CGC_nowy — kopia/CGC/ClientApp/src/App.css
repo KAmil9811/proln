@@ -8,7 +8,13 @@
     font-family: 'Lato', sans-serif;
 }
 
-
+@media (max-width: 767px) {
+    #root {
+        /* width: -webkit-max-content; */
+        width: -moz-max-content;
+        width: 100%;
+    }
+}
 
 @media all and (min-width: 480px) {
     .Login {
@@ -36,11 +42,17 @@ label {
     margin-top: 2%;
     color: black;
     background-color: #e8e8ed;
-    ;
+    
 }
 .reset_password:hover {
     background-color: #9900cc;
     transform: scale(1.05);
+
+
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .reset_password {
@@ -104,6 +116,11 @@ label {
 .success_t:hover {
     background-color: #00a740;
     transform: scale(1.05);
+
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 .success_t {
     background-color: #00c851;
@@ -128,6 +145,11 @@ label {
 .prim_t:hover {
     background-color: #3174e3;
     transform: scale(1.05);
+
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .prim_t {
@@ -158,6 +180,12 @@ label {
 .danger_t:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+
+
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 
@@ -188,6 +216,11 @@ label {
 .info_t:hover {
     background-color: #22a4d4;
     transform: scale(1.05);
+
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .info_t {
@@ -331,7 +364,7 @@ label {
     /*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
 
 
-    .add_CutMachine, .machine_Warehouse, .conteiner_cp {
+.add_CutMachine, .machine_Warehouse, .conteiner_cp, .selection_of_orders_conteiner, .ready_packages_conteiner {
     z-index: 0;
     padding-top: 10rem;
     width: 94%;
@@ -352,3 +385,6 @@ label {
     clear: both;
 }
 
+.nextlin{
+    clear:both;
+}

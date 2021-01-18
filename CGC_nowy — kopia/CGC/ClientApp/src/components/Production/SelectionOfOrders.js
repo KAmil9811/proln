@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { OrdersTable } from './OrdersTable';
 import Sidebar from '../Sidebar';
+import './SelectionOfOrders.css'
 
 
 
@@ -37,19 +38,13 @@ export class SelectionOfOrders extends Component {
 
     render() {
         return (
-            <div className="OrderWarehouse">
+            <div className="SelectionOfOrders">
                 <Sidebar />
-                <div className="conteiner_ow">
-                    <div className="key">
-                        <h3>LEGENDA</h3>
-                        <p>X- ilość sztuk, na które brakuje materiału</p>
-                        <p>Y- ilość oczekujących</p>
-                        <p>Z- ilość w trakcie</p>
-                    </div>
+                <div className="selection_of_orders_conteiner">
+                  
                     
-                    <div className="tablewar">
-                        <OrdersTable />
-                    </div>
+                 <OrdersTable />
+                   
                 </div>
 
 

@@ -19,12 +19,19 @@ export class OneHistory extends Component {
 
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                login: sessionStorage.getItem('login'),
+            }
+        }
 
-
-        fetch(`api/Users/Return_Users_History`, {
+        fetch(`api/Users/Return_User_History`, {
+            method: "post",
+            body: JSON.stringify(
+                receiver
+            ),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())

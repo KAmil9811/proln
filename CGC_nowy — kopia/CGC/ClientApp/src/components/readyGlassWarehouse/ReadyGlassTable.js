@@ -19,34 +19,7 @@ export class ReadyGlassTable extends Component {
     }
 
    
-    sendId = (event) => {
-        event.preventDefault();
-        const receiver = {
-            user: { login: sessionStorage.getItem('login') },
-            product_id: this.state.send,
-            
-        }
-        fetch(`api/Product/Released_Product`, {
-            method: "post",
-            body: JSON.stringify(
-                receiver
-            ),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(json => {
-                console.log(json)
-                return (json)
-            })
-            .then(json => {
-                alert('Produkty:' + ' ' + this.state.send + ' ' + 'wysłano do magazynu')
-            })
-            .then(json => {
-                window.location.reload();
-            })
-    }
+   
 
 
     componentDidMount() {
@@ -261,17 +234,15 @@ export class ReadyGlassTable extends Component {
 
     delete = (event) => {
         event.preventDefault();
-       /* const receiver = {
-            product: {
-                id: product,
-            },
+        const receiver = {
+            product_id: this.state.send,
             user: {
                 login: sessionStorage.getItem('login'),
             }
         }
-        //console.log(receiver)
+        console.log(receiver)
 
-        if (deleted === 'Send' || 'In magazine' || 'Send to magazine') {
+        
             fetch(`api/Product/Delete_Product`, {
                 method: "post",
                 body: JSON.stringify(receiver),
@@ -288,13 +259,10 @@ export class ReadyGlassTable extends Component {
                 .then(json => {
                     alert("Usunięto produkt")
                 })
-                .then(json => {
+                /*.then(json => {
                     window.location.reload();
-                })
-        }
-        else {
-            alert('Nie możesz usunąć tego przedmiotu!')
-        }*/
+                })*/
+      
 
 
     }
@@ -304,9 +272,15 @@ export class ReadyGlassTable extends Component {
         return (
 
             <div>
-                {xd}
-                <button onClick={this.sendId}>Wyślij zaznaczone do magazynu</button>
-                <button onClick={this.delete}>Usuń zaznaczone </button>
+                <div className="ready_glass_table_conteiner">
+                        <button className="danger_ready_glass_warehouse" onClick={this.delete}>Usuń zaznaczone </button>
+                        <button className="success_ready_glass_warehouse" onClick={this.sendId}>Wyślij zaznaczone do magazynu</button>
+                       
+                </div>
+                <div className="ready_glass_table_t_cointeiner">
+                    {xd}
+                </div>
+               
             </div>
         )
     }

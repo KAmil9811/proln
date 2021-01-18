@@ -11,6 +11,7 @@ namespace CGC.Models
         public string Status { get; set; }
         public string Type { get; set; }
         public bool Stan { get; set; }
+        public int Last_Cut_id { get; set; }
 
         public string Error_Message;
 

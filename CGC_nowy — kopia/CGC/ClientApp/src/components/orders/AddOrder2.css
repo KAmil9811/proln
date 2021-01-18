@@ -9,109 +9,6 @@
         }
 }
 
-.then2:hover {
-    background-color: #339933;
-    transform: scale(1.05);
-}
-.then3:hover {
-    background-color: #339933;
-    transform: scale(1.05);
-}
-
-.then2 {
-    background-color: #32cd32;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 10px;
-    font-weight: 900;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin-top: 0px;
-    margin-left: 0%;
-}
-
-
-.then3 {
-    background-color: #32cd32;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 10px;
-    font-weight: 900;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin-top: 30px;
-    margin-right: 50px;
-    float: right;
-}
-
-.cancel_order3:hover {
-    background-color: #9900cc;
-    transform: scale(1.05);
-}
-
-.cancel_order2:hover {
-    background-color: #08a89f;
-    transform: scale(1.05);
-}
-
-.cancel_order2 {
-    background-color: #00cccc;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 10px;
-    font-weight: 900;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin-top: 0px;
-    margin-left: 0%;
-    float: left;
-}
-
-
-.cancel_order3 {
-    background-color: #b803ff;
-    height: 25px;
-    width: 125px;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 10px;
-    font-weight: 900;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin-top: 0px;
-    margin-left: 0%;
-    float: left;
-}
 
 
 .danger_order2:hover {
@@ -198,4 +95,10 @@
 .ordertable{
     width: 96%;
     margin-left: 2%;
+}
+
+.AddOrder2 {
+    margin-top: 14rem;
+    width: 96%;
+    clear: both;
 }

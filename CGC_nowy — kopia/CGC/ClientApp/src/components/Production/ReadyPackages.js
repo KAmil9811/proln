@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { PackagesTable } from './PackagesTable';
 import Sidebar from '../Sidebar';
+import './ReadyPackages.css'
 
 
 
@@ -39,13 +40,13 @@ export class ReadyPackages extends Component {
 
     render() {
         return (
-            <div className="OrderWarehouse">
+            <div className="ReadyPackages">
                 <Sidebar />
-                <div className="conteiner_ow">
+                <div className="ready_packages_conteiner">
 
-                    <div className="tablewar">
+                
                         <PackagesTable />
-                    </div>
+                    
                 </div>
 
 

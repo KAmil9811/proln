@@ -86,31 +86,37 @@ export class Login extends Component {
    
     render() {
         return (
+
             <div className="Login">
                 <form>
-                    <div className="form-group">
-                        <label>Login</label>
-                        <input
-                            type="text"
-                            name="Login"
-                            className="form-control"
-                            id="inputLogin"
-                            placeholder="Login"
-                            ref="login"                         
-                        />
+                    <div className="Login_c">
+                            <div className="form-group">
+                                <label>Login</label>
+                                <input
+                                    type="text"
+                                    name="Login"
+                                    className="form-control"
+                                    id="inputLogin"
+                                    placeholder="Login"
+                                    ref="login"                         
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Hasło</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    placeholder="Hasło"
+                                    ref="password"  
+                                />
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label>Hasło</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            id="inputPassword"
-                            placeholder="Hasło"
-                            ref="password"  
-                        />
+                    <div className="Login_b_c">
+                        <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
+                        <button type="submit" className="success_login" onClick={this.handleLoging} >Zaloguj</button>
+                        
                     </div>
-                    <button type="submit" className="success_login" onClick={this.handleLoging} >Zaloguj</button>
-                    <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
                    </form>
             </div>
         );

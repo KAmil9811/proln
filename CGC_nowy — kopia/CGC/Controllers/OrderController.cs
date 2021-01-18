@@ -166,7 +166,7 @@ namespace CGC.Controllers
                     item.Product_Id = Convert.ToInt32(sqlDataReader["Product_Id"]);
                 }
 
-                temp.Add(item);              
+                temp.Add(item);
             }
             sqlDataReader.Close();
             command.Dispose();
@@ -213,7 +213,7 @@ namespace CGC.Controllers
                 order_History.Date = sqlDataReader["Date"].ToString();
                 order_History.Description = sqlDataReader["Description"].ToString();
 
-                order_Histories.Add(order_History);               
+                order_Histories.Add(order_History);
             }
             sqlDataReader.Close();
             command.Dispose();
@@ -227,15 +227,15 @@ namespace CGC.Controllers
             int count = 0;
             foreach (Item item in GetItems(order))
             {
-                if  (item.Status == "Awaiting" && item.Cut_id == 0)
+                if (item.Status == "Awaiting" && item.Cut_id == 0)
                 {
                     foreach (Glass glass in magazineController.Getglass())
                     {
-                        if  (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type)
+                        if (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type)
                         {
-                            foreach  (Glass_Id glass_Id in glass.Glass_info)
+                            foreach (Glass_Id glass_Id in glass.Glass_info)
                             {
-                                if  (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false && glass_Id.Cut_id == 0)
+                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false && glass_Id.Cut_id == 0)
                                 {
                                     count++;
                                 }
@@ -252,7 +252,7 @@ namespace CGC.Controllers
             int count = 0;
             foreach (Item item in order.items)
             {
-                if(item.Status == "awaiting")
+                if (item.Status == "awaiting")
                 {
                     count++;
                 }
@@ -272,7 +272,7 @@ namespace CGC.Controllers
             }
             return count;
         }
-        
+
         public List<Order> ReleasedOrder(Order order, User user)
         {
             List<Order> temp = new List<Order>();
@@ -353,18 +353,18 @@ namespace CGC.Controllers
         {
             List<Item> temp = new List<Item>();
             Item temp_item = new Item();
-            Order order = new Order { Id_Order = items.First().Order_id  };
+            Order order = new Order { Id_Order = items.First().Order_id };
             List<Item> temp2 = GetItems(order);
 
             foreach (Item item in temp2)
             {
-                if(item.Status != "ready" && item.Status != "Released")
+                if (item.Status != "ready" && item.Status != "Released")
                 {
                     temp_item.Error_Messege = "Items are not ready";
                     temp.Add(temp_item);
                     return temp;
                 }
-            }                    
+            }
 
             foreach (User use in usersController.GetUsers())
             {
@@ -403,7 +403,7 @@ namespace CGC.Controllers
             temp.Add(temp_item);
             return temp;
         }
-        
+
         [HttpGet("Return_All_Orders")]
         public async Task<List<Order>> Return_All_Orders()
         {
@@ -437,7 +437,7 @@ namespace CGC.Controllers
             }
             return temp;
         }
-        
+
         [HttpPost("Return_Order_History")]
         public async Task<List<Order_History>> Return_Order_History([FromBody] Receiver receiver)
         {
@@ -483,7 +483,7 @@ namespace CGC.Controllers
             order.Id_Order = code.ToString();
 
             foreach (Item item in order.items)
-            {             
+            {
                 if (item.Amount == 1)
                 {
                     item.Status = "Awaiting";
@@ -492,7 +492,7 @@ namespace CGC.Controllers
                     last_free_id++;
                     item.Amount = 0;
                 }
-                else if(item.Amount > 1)
+                else if (item.Amount > 1)
                 {
                     item.Status = "Awaiting";
                     item.Can_Be_Createad = false;
@@ -522,7 +522,7 @@ namespace CGC.Controllers
                 }
             }
 
-            foreach(Item item1 in itemstemp)
+            foreach (Item item1 in itemstemp)
             {
                 order.items.Add(item1);
             }
@@ -532,7 +532,7 @@ namespace CGC.Controllers
                 order.Priority = 5;
             }
 
-            
+
             foreach (User usere in usersController.GetUsers())
             {
                 if (usere.Login == user.Login)
@@ -562,7 +562,7 @@ namespace CGC.Controllers
                             command.Dispose();
                             cnn.Close();
                         }
-                        catch(SqlException e)
+                        catch (SqlException e)
                         {
                             Console.WriteLine(e.ToString());
                         }
@@ -590,14 +590,14 @@ namespace CGC.Controllers
                     string orderhistory = "Order has been created";
 
                     usersController.Insert_User_History(userhistory, user.Login);
-                    Insert_Order_History(orderhistory,  user.Login,  order.Id_Order);
+                    Insert_Order_History(orderhistory, user.Login, order.Id_Order);
                 }
             }
 
             order.Error_Messege = "Bad login";
 
             temp.Add(order);
-   
+
             return temp;
         }
 
@@ -637,7 +637,7 @@ namespace CGC.Controllers
 
                             usersController.Insert_User_History(userhistory, user.Login);
                             Insert_Order_History(orderhistory, user.Login, order.Id_Order);
-                        }                 
+                        }
                     }
                 }
             }
@@ -649,8 +649,8 @@ namespace CGC.Controllers
         [HttpPost("Edit_Order_Items")]
         public async Task<List<Order>> Edit_Order_Items([FromBody] Receiver receiver)
         {
-            List<Order> temp = new List<Order>(); //breakpoint
-     
+            List<Order> temp = new List<Order>();
+
             Order order = receiver.order;
             User user = receiver.user;
             Item items = receiver.item;
@@ -661,7 +661,7 @@ namespace CGC.Controllers
                 {
                     foreach (Item item in GetItems(order))
                     {
-                        if(item.Id == items.Id)
+                        if (item.Id == items.Id)
                         {
                             string query = "UPDATE dbo.[Item] SET Height = @Height, Lenght = @Lenght, Weight = @Weight, Glass_Type = @Glass_Type, Color = @Color, Status = @Status, Desk = @Desk WHERE Id = @Id;";
                             SqlCommand command = new SqlCommand(query, cnn);
@@ -859,7 +859,7 @@ namespace CGC.Controllers
             temp.Add(order);
             return temp;
         }
-        
+
         [HttpPost("Released_Order")]
         public async Task<List<Order>> Released_Order([FromBody] Receiver receiver)
         {
@@ -871,6 +871,77 @@ namespace CGC.Controllers
         {
             return ReleasedItem(receiver.user, receiver.items);
         }
-        
+
+        [HttpPost("Remove_Item")]
+        public async Task<List<Item>> Remove_Item([FromBody] Receiver receiver)
+        {
+            List<int> items = receiver.item_Id;
+            List<Item> temp = new List<Item>();
+            User user = receiver.user;
+
+            foreach (User usere in usersController.GetUsers())
+            {
+                if (usere.Login == user.Login)
+                {
+                    foreach (Item itm in GetItems(receiver.order))
+                    {
+                        foreach (int it in items)
+                        {
+                            if (it == itm.Id)
+                            {
+                                string query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
+                                SqlCommand command = new SqlCommand(query, cnn);
+
+                                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usunięty";
+                                command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = itm.Id;
+
+                                cnn.Open();
+                                command.ExecuteNonQuery();
+                                command.Dispose();
+                                cnn.Close();
+
+                                string userhistory = "Usunołęś pozycje " + itm.Id + " z zamówienia " + receiver.order.Id_Order;
+                                string orderhistory = "Pozycja " + itm.Id + " została usunięta";
+
+                                usersController.Insert_User_History(userhistory, user.Login);
+                                Insert_Order_History(orderhistory, user.Login, receiver.order.Id_Order);
+
+                                if(itm.Status == "Ready")
+                                {
+                                    try
+                                    {
+                                        query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id_item = @Id_item and Status = @Status_old;";
+                                        command = new SqlCommand(query, cnn);
+
+                                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usunięty";
+                                        command.Parameters.Add("@Status_old", SqlDbType.VarChar, 40).Value = "Ready";
+                                        command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = itm.Id;
+
+                                        cnn.Open();
+                                        command.ExecuteNonQuery();
+                                        command.Dispose();
+                                        cnn.Close();
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        Console.WriteLine(e.ToString());
+                                    }
+
+                                    orderhistory = "Pozycja " + itm.Id + " została usunięta";
+
+                                    usersController.Insert_User_History(userhistory, user.Login);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Item item = new Item();
+            item.Error_Messege = "Nie znaleziono użytkownika";
+            temp.Add(item);
+
+            return temp;
+        }
     }
 }

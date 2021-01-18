@@ -1,7 +1,12 @@
-﻿.body{
-    background-color:white;
+﻿.body {
+    background-color: white;
     background-image: unset;
 }
+
+.test_c {
+    margin-top: 14rem;
+}
+
 .canvas {
     margin-top: 50px;
     margin-left: 10px;
@@ -9,22 +14,32 @@
     margin-bottom: 10px;
     background-color: white;
 }
+
 .canva {
     float: right;
     width: 50%;
     height: 100%;
     background-color: white;
 }
+
 .table2 {
     margin: 30px;
     width: 40%;
     float: left;
 }
+
 .table3 {
     margin: 30px;
     width: 40%;
     float: left;
 }
-.h2{
-    text-align:center
+
+.h2 {
+    text-align: center;
+    color: black;
+}
+
+.h3 {
+    color: red;
+    text-align: center;
 }

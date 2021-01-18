@@ -8,78 +8,38 @@
             max-width: 320px;
         }
 }
+@media (max-width: 767px) {
+    #root {
+        /* width: -webkit-max-content; */
+        width: -moz-max-content;
+        width: 100%;
+    }
+}
+.Login_c{
 
-
-body {
-   /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
-   /* background-image: url("../connectwork/connectwork.png");*/
-    background-color: darkslategrey;
 }
 
-label {
-    color: white;
-}
+.Login_b_c{
 
-.reset_password:hover {
-    background-color: #9900cc;
-    transform: scale(1.05);
-}
-
-.reset_password {
-    background-color: #b803ff;
-    width:150px;
-    height:30px;
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: 900;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin-top: 2%;
-    margin-left: 2%;
-    float: left;
-}
-.log_in:hover {
-    background-color: #339933;
-    transform: scale(1.05);
 }
 
 
 
-.log_in {
-    width: 150px;
-    height: 30px;
-    background-color: #32cd32;
-    padding: 6px 12px;
-    font-size: 14px;
-    font-weight: 900;
-    text-align: center;
-    background-image: none;
-    color: white;
-    border-radius: 4px;
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    margin-top: 2%;
-    margin-left: 2%;
-}
 
-.danger_resset_pass:hover {
+.danger_resset_pass:hover, .danger_resset_pass:active {
     background-color: #ee2425;
     transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
 }
 
 .danger_resset_pass {
     background-color: #ff3547;
     height: 3rem;
     width: 13rem;
-    /* padding: 6px 6px;*/
+    padding: 6px 6px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
@@ -89,9 +49,11 @@ label {
     border-top: none;
     border-left: none;
     border-right: none;
-    /*  position:center;*/
+    position:center;
     margin: 0 auto;
-    display: block;
+ 
+   /* float: left;*/
+    display: inline-block;
 }
 
 .success_login {
@@ -105,7 +67,7 @@ label {
     text-align: center;
     background-image: none;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
@@ -114,9 +76,23 @@ label {
     margin-bottom: 0px;
     margin-top: 5px;
     position: center;
+   /* float: right;*/
+    display: inline-block;
 }
 
     .success_login:hover {
         background-color: #339933;
         transform: scale(1.05);
+
+        border-bottom: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
     }
+
+
+
+.Login_b_c {
+    position: center;
+    margin: 0 auto;
+}

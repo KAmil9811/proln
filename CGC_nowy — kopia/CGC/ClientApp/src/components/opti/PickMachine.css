@@ -1,23 +1,9 @@
-﻿@media all and (min-width: 480px) {
-    .ChangePassword {
-        padding: 60px 0;
-    }
-
-        .ChangePassword form {
-            margin: 0 auto;
-            max-width: 320px;
-        }
-}
-
-
-
-
-.danger_change_own_pass:hover {
+﻿.danger_pick_machine:hover {
     background-color: #ee2425;
     transform: scale(1.05);
 }
 
-.danger_change_own_pass {
+.danger_pick_machine {
     background-color: #ff3547;
     height: 3rem;
     width: 13rem;
@@ -34,9 +20,10 @@
     /*  position:center;*/
     margin: 0 auto;
     display: block;
+    float: left;
 }
 
-.success_change_own_pass {
+.success_pick_machine {
     background-color: #00c851;
     height: 3rem;
     width: 12rem;
@@ -56,9 +43,10 @@
     margin-bottom: 0px;
     margin-top: 5px;
     position: center;
+    float: right;
 }
 
-    .success_change_own_pass:hover {
+    .success_pick_machine:hover {
         background-color: #339933;
         transform: scale(1.05);
     }

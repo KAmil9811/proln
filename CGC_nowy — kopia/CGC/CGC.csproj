@@ -38,10 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\opti\NewFile.txt" />
+    <None Remove="ClientApp\src\components\opti\NewFile.txt" />
     <None Remove="ClientApp\src\components\orders\EdiitOrderItem.css" />
     <None Remove="ClientApp\src\components\orders\EdiitOrderItem.css" />
     <None Remove="ClientApp\src\components\orders\NewFile.txt" />
     <None Remove="ClientApp\src\components\orders\NewFile.txt" />
+    <None Remove="ClientApp\src\components\Production\NewFile.txt" />
+    <None Remove="ClientApp\src\components\Production\NewFile.txt" />
     <None Remove="Models\NewFile.txt" />
   </ItemGroup>
 
