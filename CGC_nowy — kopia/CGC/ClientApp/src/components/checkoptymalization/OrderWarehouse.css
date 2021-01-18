@@ -1,0 +1,73 @@
+﻿@media all and (min-width: 480px) {
+    .OrderWarehouse {
+        padding: 0 0;
+    }
+
+        .OrderWarehouse form {
+            margin: 0 auto;
+            max-width: 320px;
+        }
+}
+
+
+
+.addOrder {
+    background-color: white;
+    margin-right: 0.5%;
+    float: left;
+}
+
+
+
+
+.succes_add_order:hover {
+    background-color: #00b740;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.succes_add_order {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    position: center;
+}
+
+.key {
+    margin-top: 2px;
+    color: white;
+}
+
+.nav_ow {
+    float: right;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.conteiner_ow {
+    clear: both;
+}
+
+.tablewar{
+    width:96%;
+    margin-left:2%;
+}
+

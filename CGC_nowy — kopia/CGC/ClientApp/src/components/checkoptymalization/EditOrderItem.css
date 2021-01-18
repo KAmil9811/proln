@@ -1,0 +1,54 @@
+﻿.danger__edit_order_item:hover {
+    background-color: #ee2425;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.danger__edit_order_item {
+    background-color: #ff3547;
+    height: 3rem;
+    width: 12rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin: 0 auto;
+    display: block;
+}
+
+
+.success__edit_order_item:hover {
+    background-color: #00b740;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.success__edit_order_item {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    position: center;
+}

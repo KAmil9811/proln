@@ -1,0 +1,25 @@
+﻿
+.nextline {
+    clear: both;
+}
+
+.tablerdy {
+    margin-top:100px;
+    width: 96%;
+    margin-left: 2%;
+}
+
+.nav_rgw {
+    float: right;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-bottom:2%;
+}
+
+.conteiner_rgw {
+    width: 96%;
+    margin-top: 2%;
+    margin-left: 2%;
+    clear: both;
+}
