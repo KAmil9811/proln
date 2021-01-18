@@ -13,6 +13,7 @@
 .danger_edit_order:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_edit_order {
@@ -38,6 +39,7 @@
 .success_edit_order:hover {
     background-color: #00b740;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .success__edit_order {

@@ -91,7 +91,7 @@ export class AddAcount extends Component{
     }
 
     cancelAdding = (event) => {
-        this.props.history.push('/controlpanel')
+        this.props.history.push('/controlpaneladmin')
     }
 
     permRender() {
@@ -159,9 +159,9 @@ export class AddAcount extends Component{
     render() {
         var perm = this.permRender()
         return (
-            <div className="login">
+            <div className="AddAcount">
                 <Sidebar />
-                <div className="Login">
+                <div className="add_acount_conteiner">
                     <form>
                         <div className="form-group">
                             <h2>Dodawanie konta</h2>

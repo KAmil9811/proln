@@ -46,7 +46,7 @@ export class AddTypeMachine extends Component {
 
             <div className="AddTypeMachine">
                     <Sidebar />  
-                    <div className="addTypeMachine">
+                    <div className="add_TypeMachine">
                   
                         <form>
                             <div className="form-group">
@@ -59,10 +59,10 @@ export class AddTypeMachine extends Component {
                                     ref="type"
                                 />
                             </div>
-                            <div className="form-group">
-                            <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Anuluj</button>
-                            <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Dodaj</button>
-                        
+                            <div className="add_type_machine_b_c">
+                                <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Anuluj</button>
+                                <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Dodaj</button>
+                               
                             </div>
 
                         </form>

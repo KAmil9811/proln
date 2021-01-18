@@ -36,6 +36,12 @@ body {
 
 label {
     color: black;
+
+
+}
+
+.p {
+    color: black;
 }
 
 .table {
@@ -101,6 +107,7 @@ label {
     margin-left: 2%;
 }
 
+
 .table.table td {
     font-size: 1.3rem;
     color: black;
@@ -121,6 +128,8 @@ label {
     border-top: none;
     border-left: none;
     border-right: none;
+
+    outline: 0;
 }
 .success_t {
     background-color: #00c851;
@@ -150,6 +159,8 @@ label {
     border-top: none;
     border-left: none;
     border-right: none;
+
+    outline: 0;
 }
 
 .prim_t {
@@ -181,11 +192,12 @@ label {
     background-color: #ee2425;
     transform: scale(1.05);
 
-
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
+
+    outline: 0;
 }
 
 
@@ -221,6 +233,8 @@ label {
     border-top: none;
     border-left: none;
     border-right: none;
+
+    outline: 0;
 }
 
 .info_t {
@@ -248,6 +262,11 @@ label {
 }
 
 /*     Duże    */
+.success_n:hover {
+    background-color: #00b740;
+    transform: scale(1.05);
+    outline: 0;
+}
 .success_n {
     float: right;
     background-color: #00c851;
@@ -271,10 +290,12 @@ label {
     position: center;
 }
 
+
 /*Ciemmo_niebieski*/
 .prim_n:hover {
     background-color: #3174e3;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .prim_n {
@@ -305,6 +326,7 @@ label {
 .danger_n:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_n {
@@ -333,9 +355,10 @@ label {
 
 .info_n:hover {
     background-color: #22a4d4;
-
-
     transform: scale(1.05);
+    
+    outline: 0;
+    
 }
 
 .info_n {
@@ -364,7 +387,26 @@ label {
     /*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
 
 
-.add_CutMachine, .machine_Warehouse, .conteiner_cp, .selection_of_orders_conteiner, .ready_packages_conteiner {
+.machine_warhouse_conteiner,
+.glass_attributes_conteiner,
+.add_Color,
+.EditColor,
+.addType,
+.user_history_conteiner,
+.order_warehouse_conteiner,
+.one_order_conteiner,
+.add_acount_conteiner,
+.user_change_conteiner,
+.add_glass_conteiner,
+.addCutMachine,
+.add_TypeMachine,
+.cut_machine_edit,
+.Glass_Edit,
+.add_TypeMachine,
+.machine_Warehouse,
+.conteiner_cp,
+.selection_of_orders_conteiner,
+.ready_packages_conteiner {
     z-index: 0;
     padding-top: 10rem;
     width: 94%;

@@ -1,9 +1,9 @@
 ﻿@media all and (min-width: 480px) {
-    .addTypeMachine {
+    .add_TypeMachine {
         padding: 60px 0;
     }
 
-        .addTypeMachine form {
+        .add_TypeMachine form {
             margin: 0 auto;
             max-width: 320px;
         }
@@ -15,6 +15,7 @@
 .success_add_type_cm:hover {
     background-color: #ee2436;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .success_add_type_cm {
@@ -33,16 +34,17 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    display: inline;
-    float: none;
+    margin-right: 1.5rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
 }
 
 .danger_add_type_cm:hover {
     background-color: #ee2436;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_add_type_cm {
@@ -54,14 +56,21 @@
     font-weight: 600;
     text-align: center;
     color: white;
-    border-radius: 12px;
+    border-radius: 14px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
     /*  position:center;*/
-    margin-right: 1px;
+    margin-right: 1.5rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
+
+}
+
+.add_type_machine_b_c {
+    position: center;
     margin: 0 auto;
-    display: inline;
-    float: none;
 }

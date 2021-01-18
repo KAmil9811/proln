@@ -120,8 +120,8 @@ export class AddCutMachine extends Component {
                               
                                 <button type="submit" className="success_add_cm" onClick={this.handleAddCutMachine}>Dodaj</button>
                                
-                            <div className="nextline"> </div>
-                            </div>
+                           
+                           </div>
 
                         </form>
                     </div>

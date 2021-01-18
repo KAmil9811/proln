@@ -16,6 +16,7 @@
 .danger_type_edit:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_type_edit {
@@ -62,4 +63,5 @@
     .success_type_edit:hover {
         background-color: #339933;
         transform: scale(1.05);
+        outline: 0;
     }

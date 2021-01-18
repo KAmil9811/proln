@@ -166,8 +166,11 @@ export class Test extends Component {
                     <div className="table3">
                         <h2>Produkty</h2>
                         <OptiTableItems />
-                        <button className="add_machine" onClick={this.saveProject}>Zapisz projekt</button>
-                        <button className="add_machine" onClick={this.cutOrder}>Zapisz i wytnij</button>
+                        <div>
+                                <button className="prim_test" onClick={this.saveProject}>Zapisz projekt</button>
+                                <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
+
+                        </div>
                     </div>
 
                 </div>

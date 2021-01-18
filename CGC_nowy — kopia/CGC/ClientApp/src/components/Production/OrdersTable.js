@@ -94,7 +94,7 @@ export class OrdersTable extends Component {
                                 width: 30
                             },*/
                             {
-                                label: 'Więcej',
+                                label: 'Wybierz',
                                 field: 'choose',
                                 width: 30
                             }
@@ -147,7 +147,7 @@ export class OrdersTable extends Component {
                 searchTop
 
 
-                materialSearch
+               // materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop
@@ -179,7 +179,7 @@ export class OrdersTable extends Component {
                 // theadColor="indigo"
                 theadTextWhite
                 // barReverse
-                // className="User_table"
+                // className="Orders_table"
                 // noBottomColumns
                 sortable
             //info={false}

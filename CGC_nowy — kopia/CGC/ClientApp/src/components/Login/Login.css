@@ -24,15 +24,24 @@
 }
 
 
-
-
-.danger_resset_pass:hover, .danger_resset_pass:active {
+/*.danger_resset_pass:active {
     background-color: #ee2425;
     transform: scale(1.05);
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
+    outline: 0;
+}*/
+
+.danger_resset_pass:hover {
+    background-color: #ee2425;
+    transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: 0;
 }
 
 .danger_resset_pass {
@@ -44,16 +53,17 @@
     font-weight: 600;
     text-align: center;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
     position:center;
-    margin: 0 auto;
+    margin-left: 1.5rem;
  
    /* float: left;*/
     display: inline-block;
+    float: left;
 }
 
 .success_login {
@@ -72,12 +82,13 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    position: center;
+   
+   margin-right: 1.5rem;
+   /* position: center;*/
    /* float: right;*/
     display: inline-block;
+    float: right;
+   
 }
 
     .success_login:hover {
@@ -88,6 +99,7 @@
         border-top: none;
         border-left: none;
         border-right: none;
+        outline: 0;
     }
 
 
@@ -95,4 +107,8 @@
 .Login_b_c {
     position: center;
     margin: 0 auto;
+}
+
+.empty{
+    clear:both;
 }

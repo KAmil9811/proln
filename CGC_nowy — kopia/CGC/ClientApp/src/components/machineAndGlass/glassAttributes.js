@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { MDBDataTable } from 'mdbreact';
+import { MDBDataTableV5 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import './glassAttributes.css';
 import Sidebar from '../Sidebar';
@@ -36,7 +36,7 @@ export class GlassAtributes extends Component {
                         number: i+1,
                         color:json[i],
                         edit:
-                            <Link to="/glasscoloredit"><button className="glass_edit_but" id={i}
+                            <Link to="/glasscoloredit"><button className="info_t" id={i}
                                 onClick={
                                     (e) => {
                                         console.log(e.target.id);
@@ -157,22 +157,116 @@ export class GlassAtributes extends Component {
 
     table() {
         return (
-            <MDBDataTable
-                /*striped*/
-                bordered
-                small
+            <MDBDataTableV5
+
+
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={15}
+                pagesAmount={10}
                 data={this.state.table}
+                searchTop
+
+
+                materialSearch
+                searchBottom={false}
+                // barReverse
+                //  pagingTop
+                // scrollX
+                // scrollY
+                responsive
+                // maxHeight="35vh"
+                bordered
+
+
+
+                //   maxHeight="20vh"
+                // borderless
+                // btn
+                // dark
+
+
+                //maxHeight="400px"
+
+                // paginationLabel={["<", ">"]}
+
+                sortable
+
+
+                // small
+                // tego w ciemnym trybie nie ruszać/ striped/
+                // theadColor="indigo"
+                theadTextWhite
+                // theadColor="indigo"
+                theadTextWhite
+                // barReverse
+                className="User_table"
+                // noBottomColumns
+                sortable
+            //info={false}
+
+
+            //   autoWidth
+
+
             />
         )
     }
 
     table2() {
         return (
-            <MDBDataTable
-                /*striped*/
-                bordered
-                small
+            <MDBDataTableV5
+
+
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={15}
+                pagesAmount={10}
                 data={this.state.table2}
+                searchTop
+
+
+                materialSearch
+                searchBottom={false}
+                // barReverse
+                //  pagingTop
+                // scrollX
+                // scrollY
+                responsive
+                // maxHeight="35vh"
+                bordered
+
+
+
+                //   maxHeight="20vh"
+                // borderless
+                // btn
+                // dark
+
+
+                //maxHeight="400px"
+
+                // paginationLabel={["<", ">"]}
+
+                sortable
+
+
+                // small
+                // tego w ciemnym trybie nie ruszać/ striped/
+                // theadColor="indigo"
+                theadTextWhite
+                // theadColor="indigo"
+                theadTextWhite
+                // barReverse
+                className="User_table"
+                // noBottomColumns
+                sortable
+            //info={false}
+
+
+            //   autoWidth
+
+
             />
         )
     }
@@ -183,7 +277,7 @@ export class GlassAtributes extends Component {
         return (
             <div className="glassattributes">
                 <Sidebar />
-                <div>
+                <div className="glass_attributes_conteiner">
                     <div className="nav_ga1">
                     </div>
                     <div className="conteiner_ga1">

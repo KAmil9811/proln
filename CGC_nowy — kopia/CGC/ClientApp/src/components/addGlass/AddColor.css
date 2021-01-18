@@ -1,20 +1,21 @@
 ﻿
 
 @media all and (min-width: 480px) {
-    .addColor {
+    .add_Color {
         padding: 60px 0;
     }
 
-        .addColor form {
-            margin: 0 auto;
-            max-width: 320px;
-        }
+    .add_Color form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
 }
 
 
 .danger_glass_color_add:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_glass_color_add {
@@ -32,8 +33,11 @@
     border-left: none;
     border-right: none;
     /*  position:center;*/
-    margin: 0 auto;
-    display: block;
+    margin-left: 1.5rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: left;
 }
 
 .success_glass_color_add {
@@ -52,12 +56,15 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
     margin-bottom: 0px;
-    margin-top: 5px;
-    position: center;
+    margin-right: 1.5rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
 }
-.success_glass_color_add:hover {
+    .success_glass_color_add:hover {
         background-color: #339933;
         transform: scale(1.05);
-}
+        outline: 0;
+    }

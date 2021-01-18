@@ -45,7 +45,7 @@ export class AddColor extends Component {
         return (
             <div className="AddColor">
                    <Sidebar/>
-                    <div className="addColor">
+                    <div className="add_Color">
                         <form>
                             <div className="form-group">
                                 <h2>Dodaj kolor szkła:</h2>

@@ -55,13 +55,8 @@ export class OrderWarehouse extends Component {
         return (
             <div className="OrderWarehouse">
                 <Sidebar />
-                <div className="conteiner_ow">
-                    <div className="key">
-                         <h3>LEGENDA</h3>
-                         <p>X- ilość sztuk, na które brakuje materiału</p>
-                         <p>Y- ilość oczekujących</p>
-                         <p>Z- ilość w trakcie</p>
-                     </div>
+                <div className="order_warehouse_conteiner">
+                  
                     <button className="succes_add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
                   
                     <div className="tablewar">

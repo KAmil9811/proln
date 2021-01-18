@@ -13,6 +13,7 @@
 
 .success_n_add_cm:hover {
     background-color: #00913b;
+    outline: 0;
 }
 .cancel_machine13:hover {
     background-color: #9900cc;
@@ -26,6 +27,7 @@
 .succes_add_cm:hover {
     background-color: #ee2436;
     transform: scale(1.05);
+    outline: 0;
 }
 .success_add_cm {
     background-color: #00c851;
@@ -53,6 +55,7 @@
 .danger_add_cm:hover {
     background-color: #ee2436;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_add_cm {
@@ -86,11 +89,4 @@
     clear: both;
 }
 
-h2 {
-   position:center;
-    color: white;
-}
 
-h3 {
-    color: white;
-}

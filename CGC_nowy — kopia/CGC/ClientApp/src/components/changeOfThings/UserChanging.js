@@ -62,7 +62,7 @@ export class UserChanging extends Component {
     }
 
     cancelUserChanging = (event) => {
-        this.props.history.push('/controlpanel');
+        this.props.history.push('/controlpaneladmin');
         sessionStorage.removeItem('editPerm');
         sessionStorage.removeItem('editLogin');
         sessionStorage.removeItem('editPassword');
@@ -70,7 +70,7 @@ export class UserChanging extends Component {
         sessionStorage.removeItem('editSecondName');
     }
     changeUser = (event) => {
-        this.props.history.push('/controlpanel');
+        this.props.history.push('/controlpaneladmin');
         sessionStorage.removeItem('editPerm');
         sessionStorage.removeItem('editLogin');
         sessionStorage.removeItem('editPassword');
@@ -139,9 +139,9 @@ export class UserChanging extends Component {
     render() {
         var perm = this.permRender();
         return (
-            <div className="Userchange">
+            <div className="UserChange">
                     <Sidebar />
-                    <div className="userChange">
+                    <div className="user_change_conteiner">
                         <form>
                             <div className="form-group">
                                 <h2>Edycja konta</h2>

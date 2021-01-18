@@ -94,7 +94,7 @@ export class PackagesTable extends Component {
                                 width: 30
                             },
                              {
-                                label: 'Więcej',
+                                label: 'Wybierz',
                                 field: 'more',
                                 width: 30
                             }
@@ -120,7 +120,7 @@ export class PackagesTable extends Component {
                 searchTop
 
 
-                materialSearch
+               // materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop

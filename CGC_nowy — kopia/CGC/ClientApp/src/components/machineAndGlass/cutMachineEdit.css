@@ -40,7 +40,8 @@
     position: center;
 }
 
-.success_cm_edit:hover {
+    .success_cm_edit:hover {
         background-color: #339933;
         transform: scale(1.05);
+        outline: 0;
     }

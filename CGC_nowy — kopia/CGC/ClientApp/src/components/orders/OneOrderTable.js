@@ -3,6 +3,7 @@ import { MDBDataTable } from 'mdbreact';
 import { MDBDataTableV5 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar';
+import './OneOrderTable.css';
 
 export class OneOrderTable extends Component {
     constructor(props) {
@@ -252,9 +253,9 @@ export class OneOrderTable extends Component {
         return (
 
             <div>
+
+                <button className="danger_one_order_table" onClick={this.sendId}>Usuń zaznaczone</button>
                 {table}
-                <button onClick={this.sendId}>Usuń zaznaczone</button>
-                <button onClick={this.kurwaaaaa}>kurwaaaaa</button>
             </div>
         )
     }

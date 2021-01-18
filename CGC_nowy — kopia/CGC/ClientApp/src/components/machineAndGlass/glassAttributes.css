@@ -40,4 +40,5 @@
     .success_glass_att:hover {
         background-color: #339933;
         transform: scale(1.05);
+        outline: 0;
     }

@@ -14,6 +14,7 @@
 .danger_order2:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_order2 {
@@ -39,6 +40,7 @@
 .success_order2_1:hover {
     background-color: #00b740;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .success_order2_1 {
@@ -68,6 +70,7 @@
 .success_order2_2:hover {
     background-color: #00b740;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .success_order2_2 {

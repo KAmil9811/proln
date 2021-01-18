@@ -14,6 +14,7 @@
 .danger_change_own_em:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_change_own_em {
@@ -57,7 +58,8 @@
     position: center;
 }
 
-.success_change_own_em:hover {
+    .success_change_own_em:hover {
         background-color: #339933;
         transform: scale(1.05);
+        outline: 0;
     }

@@ -1,9 +1,9 @@
 ﻿@media all and (min-width: 480px) {
-    .addGlass {
+    .AddGlass {
         padding: 60px 0;
     }
 
-        .addGlass form {
+        .AddGlass form {
             margin: 0 auto;
             max-width: 320px;
         }
@@ -27,6 +27,7 @@ margin-top:5px;
 .danger_glass_add:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_glass_add {
@@ -70,10 +71,11 @@ margin-top:5px;
     position: center;
 }
 
-.success_glass_add:hover {
+    .success_glass_add:hover {
         background-color: #339933;
         transform: scale(1.05);
-}
+        outline: 0;
+    }
 
 .confirm_glass_e {
     background-color: #32cd32;

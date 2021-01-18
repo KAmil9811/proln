@@ -7,6 +7,7 @@
 .danger_ready_glass_warehouse:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_ready_glass_warehouse {
@@ -55,6 +56,7 @@
     .success_ready_glass_warehouse:hover {
         background-color: #339933;
         transform: scale(1.05);
+        outline: 0;
     }
 
 .ready_glass_table_t_cointeiner{

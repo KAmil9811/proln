@@ -38,7 +38,7 @@ export class AddType extends Component {
     }
 
     cancelAddType = (event) => {
-        this.props.history.push('/controlpanel')
+        this.props.history.push('/controlpaneladmin')
     }
 
     render() {

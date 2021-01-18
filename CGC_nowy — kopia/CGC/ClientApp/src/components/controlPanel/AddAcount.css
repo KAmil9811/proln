@@ -1,9 +1,9 @@
 ﻿@media all and (min-width: 480px) {
-    .Login {
+    .AddAcount {
         padding: 60px 0;
     }
 
-    .Login form {
+    .AddAcount form {
         margin: 0 auto;
         max-width: 320px;
     }
@@ -22,6 +22,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
+    outline: 0;
 }
 
 .success_n_add_a {
@@ -51,6 +52,7 @@
 .danger_n_add_a:hover {
     background-color: #ee2436;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_n_add_a {
@@ -95,7 +97,7 @@
     color:white;
 }
 .text{
-    color:white;
+    color:black;
 }
 .cancel{
     color:white;

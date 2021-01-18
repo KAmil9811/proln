@@ -32,12 +32,11 @@ export class UserHistory extends Component {
 
     render() {
         return (
-            <div className="OrderHistory">
+            <div className="User_History">
                 <Sidebar />
-                <div>
-                    <div className="nav_mw">
-                    </div>
-                    <div className="conteiner_mw">
+                <div className="user_history_conteiner">
+              
+                    <div>
                         <UserHistoryTable />
                     </div>
                 </div>

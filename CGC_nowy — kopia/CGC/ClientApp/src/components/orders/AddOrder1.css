@@ -14,6 +14,7 @@
 .danger_add_order:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .danger_add_order {
@@ -39,6 +40,7 @@
 .success_add_order:hover {
     background-color: #00b740;
     transform: scale(1.05);
+    outline: 0;
 }
 
 .success_add_order {

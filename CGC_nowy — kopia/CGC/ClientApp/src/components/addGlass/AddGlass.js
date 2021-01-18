@@ -146,9 +146,9 @@ export class AddGlass extends Component {
         let x = this.colorsSelector()
         let y = this.typeSelector()
         return (
-            <div className="Addglass">
+            <div className="AddGlass">
                     <Sidebar />
-                    <div className="addGlass">
+                    <div className="add_glass_conteiner">
                         <form>
                             <div className="form-group">
                                 <h2>Dodawanie szkła</h2>

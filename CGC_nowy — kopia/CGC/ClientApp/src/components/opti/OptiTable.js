@@ -120,7 +120,7 @@ export class OptiTable extends Component {
                 searchTop
 
 
-                materialSearch
+               // materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop

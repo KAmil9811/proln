@@ -115,7 +115,7 @@ export class Login extends Component {
                     <div className="Login_b_c">
                         <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
                         <button type="submit" className="success_login" onClick={this.handleLoging} >Zaloguj</button>
-                        
+                        <div className="empty"/>
                     </div>
                    </form>
             </div>
