@@ -90,12 +90,16 @@ const Sidebar = () => {
         <div>
             
             <Nav>
-               <NavIcon to='#'>
-                        <FaIcons.FaBars onClick={showSidebar} />
-               </NavIcon>
+              
+                    <NavIcon to='#'>
+                         <FaIcons.FaBars onClick={showSidebar} />
+                    </NavIcon>
+                  
+
+              
                 <OutIcon to='/' >
                     <FiIcons.FiLogOut/>
-               </OutIcon>
+                </OutIcon>
             </Nav>
             <IconContext.Provider value={{ color: '#fff' }}>
                 <SidebarNav sidebar={sidebar}>

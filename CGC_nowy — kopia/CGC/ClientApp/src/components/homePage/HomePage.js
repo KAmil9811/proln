@@ -31,7 +31,7 @@ export class HomePage extends Component {
     }
 
     controlPanel = (event) => {
-        this.props.history.push('/controlpanel')
+        this.props.history.push('/controlpaneladmin')
     }
 
     glassWarehouse = (event) => {
@@ -51,6 +51,13 @@ export class HomePage extends Component {
     Production = (event) => {
         this.props.history.push('/selection_of_orders')
     }
+        saveProject= (event) => {
+            this.props.history.push('/saved_projects')
+        }
+
+    userPanel = (event) => {
+        this.props.history.push('/userpanel')
+    }
 
     render() {
         return (
@@ -64,6 +71,8 @@ export class HomePage extends Component {
                         
                         <button className="ele2" onClick={this.orderWarehouse}>Zlecenia</button>
                         <button className="ele2" onClick={this.machineWarehouse}>Maszyny</button>
+                        <button className="ele2" onClick={this.userPanel}>Twoje konto</button>
+                        <button className="ele2" onClick={this.saveProject}>Zapisane projekty</button>
                         <button className="ele2" onClick={this.controlPanel}>Panel sterowania</button>
                     </div>
                 </form>

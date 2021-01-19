@@ -50,7 +50,8 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { OptiWarehouse } from './components/opti/OptiWarehouse'
 import { PickMachine } from './components/opti/PickMachine'
 
-
+import { SavedPrint } from './components/opti/SavedPrint';
+import { SavedProjects } from './components/Production/SavedProjects';
 
 
 
@@ -71,7 +72,7 @@ export default class App extends Component {
                 <Switch>
 
                     <Route exact path='/' component={Login} />
-                    <Route path='/controlpanel' component={ControlPanel} />
+                    <Route path='/userpanel' component={ControlPanel} />
                     <Route path='/controlpaneladmin' component={ControlPanel2} />
                     <Route path='/change_password' component={PasswordChange} />
                     <Route path='/change_email' component={EmailChange} />
@@ -114,6 +115,9 @@ export default class App extends Component {
                     <Route path='/all_machine_history' component={AllMachineHistory} />
                     <Route path='/opti_warehouse' component={OptiWarehouse} />
                     <Route path='/pick_machine' component={PickMachine} />
+
+                    <Route path='/saved_projects' component={SavedProjects} />
+                    <Route path='/show_save' component={SavedPrint} />
 
                 </Switch>
             </Router >

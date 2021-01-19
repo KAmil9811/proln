@@ -199,9 +199,19 @@ namespace CGC.Controllers
 
             foreach (Cut_Project cut_p in GetCut_Project())
             {
-                if (cut_p.Status == "Ready")
+                if (cut_p.Status != "Ready")
                 {
-                    cut_Projects.Add(cut_p);
+                    foreach(Order ord in orderController.GetOrders())
+                    {
+                        if(ord.Id_Order == cut_p.Order_id)
+                        {
+                            cut_p.Deadline = ord.Deadline;
+                            cut_p.Owner = ord.Owner;
+                            cut_p.Priority = ord.Priority;
+                            cut_Projects.Add(cut_p);
+                            break;
+                        }
+                    }
                 }
             }
             return cut_Projects;
