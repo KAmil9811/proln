@@ -181,19 +181,6 @@ namespace CGC.Controllers
             return Regex.IsMatch(email, pattent, RegexOptions.IgnoreCase);
         }
 
-        //nie uzyta
-        public bool Is_Password_Correct(string password, string login)
-        {
-            foreach (User user in GetUsers())
-            {
-                if (user.Password == password && user.Login == login)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public List<User> GetUsers()
         {
             List<User> temp = new List<User>();
@@ -1014,7 +1001,7 @@ namespace CGC.Controllers
             {
                 if (usere.Email == user.Email)
                 {
-                    Send_Mail send_Mail = new Send_Mail();
+                    Send_Mail_old send_Mail = new Send_Mail_old();
 
                     helper = send_Mail.Reset_Pass_Code(usere.Email);
 
@@ -1057,7 +1044,7 @@ namespace CGC.Controllers
             {
                 if (usere.Reset_pass == user.Reset_pass)
                 {
-                    Send_Mail send_Mail = new Send_Mail();
+                    Send_Mail_old send_Mail = new Send_Mail_old();
 
                     helper = send_Mail.Reset_Pass_Pass(usere.Email);
 

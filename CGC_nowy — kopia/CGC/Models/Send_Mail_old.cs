@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CGC.Models
 {
-    public class Send_Mail
+    public class Send_Mail_old
     {
         public static string RandomString(int range)
         {
