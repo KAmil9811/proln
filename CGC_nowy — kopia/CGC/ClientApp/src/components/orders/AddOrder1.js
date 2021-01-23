@@ -74,7 +74,7 @@ export class AddOrderOne extends Component {
                             </div>
                             <div className="form-group">
                                 <button type="button" className="danger_add_order" onClick={this.cancelAdding}>Anuluj</button>
-                                <button type="button" className="succes_add_order" onClick={this.nextPage}>Dalej</button>
+                                <button type="button" className="success_add_order" onClick={this.nextPage}>Dalej</button>
                        
                             </div>
                         </form>

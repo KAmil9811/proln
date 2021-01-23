@@ -11,11 +11,13 @@
 
 
 
-.danger_add_order:hover {
-    background-color: #ee2425;
-    transform: scale(1.05);
-    outline: 0;
+.AddOrder1 {
+    margin-top: 14rem;
+    width: 96%;
+    clear: both;
 }
+
+
 
 .danger_add_order {
     background-color: #ff3547;
@@ -31,20 +33,24 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /*  position:center;*/
-    margin: 0 auto;
-    display: block;
+    /* position:center;*/
+    /*  margin: 0 auto;*/
+    /*  margin-right: 1.5rem;*/
+    margin-right: auto;
+    margin-left: 2rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: left;
 }
 
-
-.success_add_order:hover {
-    background-color: #00b740;
-    transform: scale(1.05);
-    outline: 0;
-}
+    .danger_add_order:hover {
+        background-color: #ee2425;
+        transform: scale(1.05);
+        outline: 0;
+    }
 
 .success_add_order {
-    float: right;
     background-color: #00c851;
     height: 3rem;
     width: 12rem;
@@ -55,19 +61,22 @@
     text-align: center;
     background-image: none;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    position: center;
+    /* margin-right: 1.5rem;*/
+    margin-left: auto;
+    margin-right: 2rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
 }
 
-.AddOrder1 {
-    margin-top: 14rem;
-    width: 96%;
-    clear: both;
-}
+    .success_add_order:hover {
+        background-color: #339933;
+        transform: scale(1.05);
+        outline: 0;
+    }

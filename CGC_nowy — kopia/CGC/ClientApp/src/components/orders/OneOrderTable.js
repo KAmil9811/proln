@@ -113,7 +113,7 @@ export class OneOrderTable extends Component {
                                 width: 30
                             },
                             {
-                                label: 'Edytuj',
+                                label: 'Edycja',
                                 field: 'more',
                                 sort: 'asc',
                                 width: 30

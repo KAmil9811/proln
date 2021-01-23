@@ -160,7 +160,7 @@ export class GlassTable extends Component {
                                 width: 150
                             },
                             {
-                                label: 'Edytuj',
+                                label: 'Edycja',
                                 field: 'edit',
                                 sort: 'asc',
                                 width: 150
