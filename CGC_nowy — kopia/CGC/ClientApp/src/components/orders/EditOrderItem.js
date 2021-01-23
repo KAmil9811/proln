@@ -226,7 +226,7 @@ export class EditOrderItem extends Component {
 
                             <div className="form-group">
                                 <button type="submit" className="danger_edit_order_item" onClick={this.cancelItemEdit}>Anuluj</button>
-                            <Link to="/oneorder"><button type="submit" className="succes_edit_order_item" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
+                            <Link to="/oneorder"><button type="submit" className="success_edit_order_item" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
                             </div>
                         </form>
                 </div>

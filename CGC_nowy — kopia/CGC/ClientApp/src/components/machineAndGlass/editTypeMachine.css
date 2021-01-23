@@ -11,7 +11,7 @@
 
 
 
-.danger_cm_edit_type {
+.danger_cm_edit_type:hover {
     background-color: #ee2425;
     transform: scale(1.05);
     outline: 0;
@@ -26,14 +26,20 @@
     font-weight: 600;
     text-align: center;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    /*  position:center;*/
-    margin: 0 auto;
-    display: block;
+    /* position:center;*/
+    /*  margin: 0 auto;*/
+    /*  margin-right: 1.5rem;*/
+    margin-right: auto;
+    margin-left: 2rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: left;
 }
 
 .success_cm_edit_type {
@@ -47,19 +53,27 @@
     text-align: center;
     background-image: none;
     color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /* margin-right: 1.5rem;*/
+    margin-left: auto;
+    margin-right: 2rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
+}
+
+.success_cm_edit_type:hover{
+    background-color: #00913b;
+    transform: scale(1.05);
     border-radius: 12px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    position: center;
-}
-
-.success_cm_edit_type {
-    background-color: #339933;
-    transform: scale(1.05);
     outline: 0;
 }

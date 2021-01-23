@@ -128,7 +128,7 @@ export class UsersTable extends Component {
                                 width: 100
                             },
                             {
-                                label: 'Akcja',
+                                label: 'Edycja',
                                 field: 'action',
                                 width: 100
                             },

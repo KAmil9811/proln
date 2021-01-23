@@ -89,7 +89,7 @@ export class GlassAtributes extends Component {
                         number: i + 1,
                         type: json[i],
                          edit:
-                             <Link to="/glasstypeedit"><button className="glass_edit_but" id={i}
+                             <Link to="/glasstypeedit"><button className="info_t" id={i}
                                 onClick={
                                     (e) => {
                                         console.log(e.target.id);

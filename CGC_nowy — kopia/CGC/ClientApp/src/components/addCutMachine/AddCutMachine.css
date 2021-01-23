@@ -40,16 +40,18 @@
     text-align: center;
     background-image: none;
     color: white;
-    border-radius: 14px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    display: inline;
-    float: none;
+    /* margin-right: 1.5rem;*/
+    margin-left: auto;
+    margin-right: 2rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
 }
 
 .danger_add_cm:hover {
@@ -61,7 +63,7 @@
 .danger_add_cm {
     background-color: #ff3547;
     height: 3rem;
-    width: 12rem;
+    width: 13rem;
     /* padding: 6px 6px;*/
     font-size: 1rem;
     font-weight: 600;
@@ -72,11 +74,15 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /*  position:center;*/
-    margin-right: 1px;
-    margin: 0 auto;
-    display: inline;
-    float: none;
+    /* position:center;*/
+    /*  margin: 0 auto;*/
+    /*  margin-right: 1.5rem;*/
+    margin-right: auto;
+    margin-left: 2rem;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: left;
 }
 .s {
     width: 1rem;
