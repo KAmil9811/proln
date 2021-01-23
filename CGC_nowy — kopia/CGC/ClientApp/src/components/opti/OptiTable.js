@@ -47,7 +47,7 @@ export class OptiTable extends Component {
             })
             .then(json => {
                 var table2 = [];
-                for (var i = 0; i < json.length; i++) {
+                for (var i = 0; i < json.length-1; i++) {
                     table2.push({
                         length: json[i].length,
                         width: json[i].width,

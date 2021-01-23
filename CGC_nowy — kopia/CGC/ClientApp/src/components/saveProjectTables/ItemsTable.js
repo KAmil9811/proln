@@ -39,7 +39,7 @@ export class ItemsTable extends Component {
             })
             .then(json => {
                 var table2 = [];
-                for (var i = 0; i < json.length; i++) {
+                for (var i = 0; i < json.length-1; i++) {
                     for (var j = 0; j < json[i].glass_info.length; j++) {
                         for (var x = 0; x < json[i].glass_info[j].pieces.length; x++) {
                             table2.push({
