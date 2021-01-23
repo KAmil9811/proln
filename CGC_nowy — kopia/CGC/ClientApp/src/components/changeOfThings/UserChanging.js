@@ -53,7 +53,7 @@ export class UserChanging extends Component {
                 sessionStorage.removeItem('editPassword');
                 sessionStorage.removeItem('editName');
                 sessionStorage.removeItem('editSecondName');
-                this.props.history.push('/controlpaneladmin');
+                this.props.history.push('/userpanel');
             })   
                 
             
@@ -62,7 +62,7 @@ export class UserChanging extends Component {
     }
 
     cancelUserChanging = (event) => {
-        this.props.history.push('/controlpaneladmin');
+        this.props.history.push('/userpanel');
         sessionStorage.removeItem('editPerm');
         sessionStorage.removeItem('editLogin');
         sessionStorage.removeItem('editPassword');
@@ -70,7 +70,7 @@ export class UserChanging extends Component {
         sessionStorage.removeItem('editSecondName');
     }
     changeUser = (event) => {
-        this.props.history.push('/controlpaneladmin');
+        this.props.history.push('/userpanel');
         sessionStorage.removeItem('editPerm');
         sessionStorage.removeItem('editLogin');
         sessionStorage.removeItem('editPassword');

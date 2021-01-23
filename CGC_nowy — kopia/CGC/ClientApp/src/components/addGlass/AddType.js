@@ -32,8 +32,13 @@ export class AddType extends Component {
                 return (json);
             })
             .then(json => {
-                alert("Dodano typ szkła do bazy danych")
-                this.props.history.push('/glassatibutes')
+                if (json[0] === 'Type_alredy_exist') {
+                    alert("Ten typ już istnieje")
+                }
+                else {
+                    alert("Dodano typ szkła do bazy danych")
+                    this.props.history.push('/glassatibutes')
+                }
             })
     }
 

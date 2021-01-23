@@ -153,10 +153,13 @@ export class AddOrderTwo extends Component {
 
     addItem = (event, table) => {
         event.preventDefault();
+        var table2 = [];
         if (this.refs.width.value === "" || this.refs.length.value === "" || this.refs.thickness.value === "" || this.refs.color.value === "" || this.refs.amount.value === "" || this.refs.type.value === "" ) {
             alert("Wprowadź dane")
         }
         else {
+
+
         this.setState({
             table: {
                 columns: [
@@ -209,7 +212,8 @@ export class AddOrderTwo extends Component {
                     thickness: this.refs.thickness.value,
                     color: this.refs.color.value,
                     amount: this.refs.amount.value,
-                    type:this.refs.type.value,
+                    type: this.refs.type.value,
+                   // delete: <button className="danger_t" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń  </button>,
                     shape: 'rectangle',
                 }]),
             }

@@ -30,10 +30,16 @@ export class AddColor extends Component {
             .then(json => {
                 console.log(json)
                 return (json);
+                
             })
             .then(json => {
-                alert("Dodano kolor do bazy danych")
-                this.props.history.push('/glassatibutes')
+                if (json[0] === 'Color_alredy_exist') {
+                    alert("Kolor już istnieje")
+                }
+                else {
+               alert("Dodano kolor do bazy danych")
+                    this.props.history.push('/glassatibutes')
+                }
             })
     }
 

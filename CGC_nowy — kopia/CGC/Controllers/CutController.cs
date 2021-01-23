@@ -1309,6 +1309,26 @@ namespace CGC.Controllers
                                             }
                                             kon = false;
                                         }
+                                        else if (itm.Width == Convert.ToDouble(cub.Height) && itm.Length == Convert.ToDouble(cub.Width))
+                                        {
+                                            foreach (Item i in Used)
+                                            {
+                                                if (i.Id == itm.Id)
+                                                {
+                                                    kon = true;
+                                                }
+                                            }
+                                            if (kon == false)
+                                            {
+                                                glass_Id2.Pieces.Add(new Piece { id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
+                                                Item iteme = new Item { Id = itm.Id };
+
+                                                Used.Add(iteme);
+                                                kon = false;
+                                                break;
+                                            }
+                                            kon = false;
+                                        }
                                     }                                                                       
                                 }
 

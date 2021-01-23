@@ -114,7 +114,47 @@ namespace CGC.Controllers
 
             return temp;
         }
-        
+
+        public List<Glass_Receiver> GetglassForUser()
+        {
+            List<Glass_Receiver> temp = new List<Glass_Receiver>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass];", cnn);
+            cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Glass_Receiver glass_Receiver = new Glass_Receiver();
+                glass_Receiver.Hight = Convert.ToDouble(sqlDataReader["Hight"]);
+                glass_Receiver.Width = Convert.ToDouble(sqlDataReader["Width"]);
+                glass_Receiver.Length = Convert.ToDouble(sqlDataReader["Length"]);
+                glass_Receiver.Used = Convert.ToBoolean(sqlDataReader["Used"]);
+                glass_Receiver.Destroyed = Convert.ToBoolean(sqlDataReader["Destroyed"]);
+                glass_Receiver.Removed = Convert.ToBoolean(sqlDataReader["Removed"]);
+                glass_Receiver.Type = sqlDataReader["Type"].ToString();
+                glass_Receiver.Color = sqlDataReader["Color"].ToString();
+                glass_Receiver.Owner = sqlDataReader["Owner"].ToString();
+                glass_Receiver.Desk = sqlDataReader["Desk"].ToString();
+                glass_Receiver.Glass_Id = Convert.ToInt32(sqlDataReader["Glass_Id"]);
+
+                if (sqlDataReader["Cut_id"].ToString() == "")
+                {
+                    glass_Receiver.Cut_id = 0;
+                }
+                else
+                {
+                    glass_Receiver.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                }
+
+                temp.Add(glass_Receiver);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            return temp;
+        }
+
         public List<string> GetColor()
         {
             List<string> temp = new List<string>();
@@ -260,11 +300,11 @@ namespace CGC.Controllers
         }
 
         [HttpGet("Return_All_Glass")]
-        public async Task<List<Glass>> Return_All_Glass()
+        public async Task<List<Glass_Receiver>> Return_All_Glass()
         {
-            List<Glass> temp = Set_Filter(Getglass());
+            //List<Glass> temp = Set_Filter(Getglass());
 
-            return temp;
+            return GetglassForUser();
         }
 
         [HttpGet("Return_All_Type")]
@@ -606,7 +646,7 @@ namespace CGC.Controllers
                     usersController.Insert_User_History(userhistory, user.Login);
                     Insert_Magazine_History(magazinehistory, user.Login);
 
-                    temp.Add("color");
+                    temp.Add(color);
                     return temp;
                 }
             }

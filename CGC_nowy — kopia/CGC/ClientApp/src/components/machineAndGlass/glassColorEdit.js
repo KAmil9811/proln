@@ -31,10 +31,15 @@ export class GlassColorEdit extends Component {
                     console.log(json)
                     return (json);
                 })
-                .then(json => {
+            .then(json => {
+                if (json[0] === 'New_Color_already_exist') {
+                    alert("Taki kolor ju¿ istnieje")
+                }
+                else {
                     alert("Kolor zosta³ zedytowany")
                     this.props.history.push('/glassatibutes')
                     sessionStorage.removeItem('color')
+                }
                 })
     }
 

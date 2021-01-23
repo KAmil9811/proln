@@ -32,9 +32,14 @@ export class GlassTypeEdit extends Component {
                 return (json);
             })
             .then(json => {
-                alert("Typ został zedytowany")
-                this.props.history.push('/glassatibutes')
-                sessionStorage.removeItem('type')
+                if (json[0] === 'New_Type_already_exist') {
+                    alert("Taki typ już istnieje")
+                }
+                else {
+                    alert("Typ został zedytowany")
+                    this.props.history.push('/glassatibutes')
+                    sessionStorage.removeItem('typ')
+                }
             })
     }
 

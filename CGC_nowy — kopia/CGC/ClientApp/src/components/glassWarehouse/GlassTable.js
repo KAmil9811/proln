@@ -40,7 +40,7 @@ export class GlassTable extends Component {
                         thickness: json[i].hight,
                         color: json[i].color,
                         type: json[i].type,
-                        amount: json[i].glass_info.length,
+                        amount: json[i].length,
                         owner: json[i].owner,
                         desk: json[i].desk,
                         id: '',
@@ -87,10 +87,10 @@ export class GlassTable extends Component {
                                         sessionStorage.setItem('thickness', json[e.target.id].hight);
                                         sessionStorage.setItem('color', json[e.target.id].color);
                                         sessionStorage.setItem('type', json[e.target.id].type);
-                                        sessionStorage.setItem('amount', json[e.target.id].glass_info.length);
+                                        //sessionStorage.setItem('amount', json[e.target.id].length);
                                         sessionStorage.setItem('owner', json[e.target.id].owner);
                                         sessionStorage.setItem('desk', json[e.target.id].desk);
-                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_id));
+                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_Id));
                                     }
                                 }>Edytuj</button>
                             </Link>
@@ -100,10 +100,10 @@ export class GlassTable extends Component {
                 ///kod zamienia id w stringa do wyświetlenia
 
                 for (var k = 0; k < table2.length; k++) {
-                    var amount = json[k].glass_info.length;
+                    var amount = json[k].length;
                     //console.log(amount)
                     for (var j = 0; j < amount; j++) {
-                        table2[k].id = table2[k].id + json[k].glass_info[j].id + ', '
+                        table2[k].id = json[k].glass_Id
                     };
                 }
 

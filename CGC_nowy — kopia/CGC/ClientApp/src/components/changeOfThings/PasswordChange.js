@@ -48,7 +48,7 @@ export class PasswordChange extends Component {
                             }
                            else {
                                sessionStorage.setItem('password', json[0].password)
-                               this.props.history.push('/controlpanel')
+                               this.props.history.push('/userpanel')
                             }
                        })      
                 }
@@ -66,7 +66,7 @@ export class PasswordChange extends Component {
     }
 
     cancelChanging = (event) => {
-        this.props.history.push('/controlpanel')
+        this.props.history.push('/userpanel')
     }
 
     render() {

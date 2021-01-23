@@ -35,7 +35,7 @@ export class EmailChange extends Component {
                         }
                         else {
                             sessionStorage.setItem('email', json[0].email)
-                            this.props.history.push('/controlpanel')
+                            this.props.history.push('/userpanel')
                         }
                     })
             }
@@ -46,7 +46,7 @@ export class EmailChange extends Component {
     
 
     cancelChanging = (event) => {
-        this.props.history.push('/controlpanel')
+        this.props.history.push('/userpanel')
     }
 
     render() {
