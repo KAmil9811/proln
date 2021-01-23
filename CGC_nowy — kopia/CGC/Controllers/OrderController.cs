@@ -450,11 +450,13 @@ namespace CGC.Controllers
         public async Task<List<Order>> Add_Order([FromBody] Receiver receiver)
         {
             List<Order> temp = new List<Order>();
+            List<Order> temp2 = new List<Order>();
             List<Item> itemstemp = new List<Item>();
 
             Order order = receiver.order;
             User user = receiver.user;
             int code, last_free_id;
+            string code2;
 
             try
             {
@@ -472,7 +474,14 @@ namespace CGC.Controllers
 
             try
             {
-                code = Int32.Parse(GetOrders().Last().Id_Order) + 1;
+                temp2 = GetOrders();
+
+                foreach (Order orderer in temp2)
+                {
+                    orderer.Priority = Convert.ToInt32(orderer.Id_Order);
+                }
+                code2 = temp2.OrderBy(ord => ord.Priority).Last().Id_Order;
+                code = Int32.Parse(code2) + 1;
             }
             catch (Exception e)
             {

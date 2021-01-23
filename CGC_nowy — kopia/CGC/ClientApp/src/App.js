@@ -104,10 +104,8 @@ export default class App extends Component {
                     <Route path='/product_edit' component={EditProduct} />
                     <Route path='/user_history' component={UserHistory} />
                     <Route path='/test' component={Test} />
-
                     <Route path='/selection_of_orders' component={SelectionOfOrders} />
                     <Route path='/ready_packages' component={ReadyPackages} />
-
                     <Route path='/glass_history' component={GlassHistory} />
                     <Route path='/ready_glass_history' component={ReadyGlassHistory} />
                     <Route path='/single_machine_history' component={SingleMachineHistory} />
@@ -115,7 +113,6 @@ export default class App extends Component {
                     <Route path='/all_machine_history' component={AllMachineHistory} />
                     <Route path='/opti_warehouse' component={OptiWarehouse} />
                     <Route path='/pick_machine' component={PickMachine} />
-
                     <Route path='/saved_projects' component={SavedProjects} />
                     <Route path='/show_save' component={SavedPrint} />
 

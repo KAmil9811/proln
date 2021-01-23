@@ -67,7 +67,7 @@ export class AddAcount extends Component{
                 console.log(access2)
                 if (access2 == null) {
                     console.log("Dodano użytkownika")
-                    this.props.history.push('/controlpanel')
+                    this.props.history.push('/controlpaneladmin')
                 }
                 else if (access2 == "Wrong_passowrd") {
                     alert("Hasło musi zawierać dużą i małą literę oraz cyfrę i zawierać min 8 znaków!")

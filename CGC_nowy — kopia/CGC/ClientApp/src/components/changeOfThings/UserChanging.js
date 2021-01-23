@@ -53,7 +53,7 @@ export class UserChanging extends Component {
                 sessionStorage.removeItem('editPassword');
                 sessionStorage.removeItem('editName');
                 sessionStorage.removeItem('editSecondName');
-                this.props.history.push('/controlpanel');
+                this.props.history.push('/controlpaneladmin');
             })   
                 
             

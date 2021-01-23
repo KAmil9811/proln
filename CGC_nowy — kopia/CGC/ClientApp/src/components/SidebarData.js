@@ -54,7 +54,7 @@ export const SidebarData = [
 
     {
         title: 'Control panel',
-        path: '/controlpanel',
+        path: '/controlpaneladmin',
         icon: <AiIcons.AiFillHome />,
     },
     {
