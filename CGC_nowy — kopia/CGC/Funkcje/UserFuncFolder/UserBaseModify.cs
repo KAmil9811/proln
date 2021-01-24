@@ -28,8 +28,9 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 }
             }
         }
-        Connect connect = new Connect();
-        InsertHistory insertHistory = new InsertHistory();
+
+        private Connect connect = new Connect();
+        private InsertHistory insertHistory = new InsertHistory();
 
         public List<User> Add_User(User user, User admin)
         {

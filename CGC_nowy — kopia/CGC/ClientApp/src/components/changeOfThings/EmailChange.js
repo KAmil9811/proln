@@ -10,16 +10,19 @@ export class EmailChange extends Component {
 
     emailChange = (event) => {
         event.preventDefault();
-        const user = {
-            password: this.refs.password.value,
-            email: this.refs.newEmail.value,
-            login: sessionStorage.getItem('login')
+        const receiver = {
+            user: {
+                password: this.refs.password.value,
+                email: this.refs.newEmail.value,
+                login: sessionStorage.getItem('login')
+            }
+            
         }
-            if (user.password === sessionStorage.getItem('password')) {
+        if (receiver.user.password === sessionStorage.getItem('password')) {
                 //Przekazujesz User już i nowy email
                 fetch(`api/Users/Change_Email`, {
                     method: "post",
-                    body: JSON.stringify(user),
+                    body: JSON.stringify(receiver),
                     headers: {
                         'Content-Type': 'application/json'
                     }

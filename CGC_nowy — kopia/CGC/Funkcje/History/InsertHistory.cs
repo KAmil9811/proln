@@ -68,18 +68,25 @@ namespace CGC.Funkcje.History
 
         public void Insert_Machine_History_All(string Login, string Description)
         {
-            string data = DateTime.Today.ToString("d");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
-            SqlCommand command = new SqlCommand(query, connect.cnn);
+            try
+            {
+                string data = DateTime.Today.ToString("d");
+                string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
+                SqlCommand command = new SqlCommand(query, connect.cnn);
 
-            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
-            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
-            command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+                command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+                command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+                command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
 
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void Insert_Machine_History(int Cut_id, string Login, string Description, int No)
@@ -133,5 +140,23 @@ namespace CGC.Funkcje.History
             command.Dispose();
             connect.cnn.Close();
         }
+
+        public void InsertProductHistory(int Id, string Login, string Description)
+        {
+            string data = DateTime.Today.ToString("d");
+            string query = "INSERT INTO dbo.[Product_History](Data, Login, Description, Id) VALUES(@data, @Login, @Description, @Id)";
+            SqlCommand command = new SqlCommand(query, connect.cnn);
+
+            command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
+            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+            command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = Id;
+
+            connect.cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connect.cnn.Close();
+        }
+
     }
 }

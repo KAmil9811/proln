@@ -10,7 +10,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
 {
     public class UserBaseReturn
     {
-        public Connect connect = new Connect();
+        private Connect connect = new Connect();
 
         private static UserBaseReturn m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -70,7 +70,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager;", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Manager", SqlDbType.VarBinary).Value = false;
+            command.Parameters.Add("@Manager", SqlDbType.Bit).Value = 0;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

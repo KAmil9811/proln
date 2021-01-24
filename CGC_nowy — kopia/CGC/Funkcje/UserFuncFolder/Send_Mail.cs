@@ -1,4 +1,5 @@
 ﻿using CGC.Controllers;
+using CGC.Funkcje.UserFuncFolder.UserReturn;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace CGC.Models
 {
     public class Send_Mail
     {
+        private UserBaseReturn userBaseReturn = new UserBaseReturn();
         private static Send_Mail m_oInstance = null;
         private static readonly object m_oPadLock = new object();
 
@@ -45,9 +47,8 @@ namespace CGC.Models
 
         public bool Check_Code(string code)
         {
-            UsersController usersController = new UsersController();
 
-            foreach (User user in usersController.GetUsers())
+            foreach (User user in userBaseReturn.GetUsers())
             {
                 if (code == user.Reset_pass)
                 {
