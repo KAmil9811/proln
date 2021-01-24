@@ -138,8 +138,17 @@ export class UserChanging extends Component {
 
     render() {
         var perm = this.permRender();
-        return (
-            <div className="UserChange">
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="UserChange">
                     <Sidebar />
                     <div className="user_change_conteiner">
                         <form>
@@ -190,23 +199,24 @@ export class UserChanging extends Component {
                             </div>
                             <div className="form-group">
                                 <label>Aktualne uprawnienia: {sessionStorage.getItem('editPerm')}</label>
-                        
+
                             </div>
                             <div className="form-group">
                                 <label>Jakie uprawnienia po edycji ma posiadać pracownik?</label>
                                 {perm}
 
                             </div>
-                    
+
                             <div className="form-group">
-                            <button type="submit" className="danger_user_change" onClick={this.cancelUserChanging}>Anuluj</button>
-                            <button type="submit" className="success_user_change" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
-                        
+                                <button type="submit" className="danger_user_change" onClick={this.cancelUserChanging}>Anuluj</button>
+                                <button type="submit" className="success_user_change" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
+
                             </div>
 
                         </form>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

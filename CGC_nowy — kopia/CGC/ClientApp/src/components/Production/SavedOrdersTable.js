@@ -142,7 +142,7 @@ export class SavedOrdersTable extends Component {
                 searchTop
 
 
-                 materialSearch
+                materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop

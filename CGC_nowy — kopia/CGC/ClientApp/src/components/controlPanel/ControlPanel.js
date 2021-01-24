@@ -51,22 +51,22 @@ export class ControlPanel extends Component {
             return (<option>Admin</option>)
         }
     }
-    userPermissionsRender() {
+   /* userPermissionsRender() {
         if (sessionStorage.getItem('user') === 'true') {
             return (<option>Pracownik</option>)
         }
-    }
-    superAdminPermissionsRender() {
+    }*/
+    /*superAdminPermissionsRender() {
         if (sessionStorage.getItem('superAdmin') === 'true') {
             return (<option>Super admin</option>)
         }
-    }
-    managerPermissionsRender() {
+    }*/
+    /*managerPermissionsRender() {
         if (sessionStorage.getItem('manager') === 'true') {
             return (<option>Menedżer</option>)
         }
-    }
-    magazineManagerPermissionsRender() {
+    }*/
+    /*magazineManagerPermissionsRender() {
         if (sessionStorage.getItem('magazineManagement') === 'true') {
             return (<option>Magazynier</option>)
         }
@@ -85,27 +85,63 @@ export class ControlPanel extends Component {
         if (sessionStorage.getItem('cutManagement') === 'true') {
             return (<option>Menedżer cięcia</option>)
         }
+    }*/
+
+    permRender() {
+        if (sessionStorage.getItem('manager') === 'true') {
+            return (<option>Menedżer</option>)
+        }
+        else if (sessionStorage.getItem('superAdmin') === 'true') {
+            return (<option>Super admin</option>)
+        }
+        else if (sessionStorage.getItem('user') === 'true' && sessionStorage.getItem('magazineManagement') === 'true' ) {
+            return (<option>Pracownik</option>
+            )
+            /*else if (sessionStorage.getItem('magazineManagement') === 'true') {
+                return (<option>Magazynier</option>)
+            }
+            else if (sessionStorage.getItem('machineManagement') === 'true') {
+                return (<option>Menedżer maszyn</option>)
+            }
+            else if (sessionStorage.getItem('orderManagement') === 'true') {
+                return (<option>Menedżer zleceń</option>)
+            }
+            else if (sessionStorage.getItem('cutManagement') === 'true') {
+                return (<option>Menedżer cięcia</option>)
+            }*/
+        }
+        else {
+            return (<option>Admin</option>)
+        }
     }
 
 
-
     render() {
-        let admin = this.adminPermissionsRender();
+        /*let admin = this.adminPermissionsRender();
         let user = this.userPermissionsRender();
         let superAdmin = this.superAdminPermissionsRender();
         let manager = this.managerPermissionsRender();
         let magazineManagement = this.magazineManagerPermissionsRender();
         let orderManagement = this.orderManagerPermissionsRender();
         let machineManagement = this.machineManagerPermissionsRender();
-        let cutManagement = this.cutManagerPermissionsRender();
+        let cutManagement = this.cutManagerPermissionsRender();*/
         //let userHistoryTable = this.usersHistoryTable();
+        let perm = this.permRender();
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="ControlPanel" >
 
-        return ( 
-            <div className="ControlPanel" >
-                
-               
-                 <Sidebar />                
-                <div className="conteiner_cp">
+
+                    <Sidebar />
+                    <div className="conteiner_cp">
 
 
                         <div className="">
@@ -116,34 +152,28 @@ export class ControlPanel extends Component {
                                 <div className="form-group">
                                     <label>
                                         Hasło:
-                                        <button type="button" className="password_change" onClick={this.changePassword}>Zmień hasło</button>
+                                        <button type="button" className="prim_password_change" onClick={this.changePassword}>Zmień hasło</button>
                                     </label>
                                 </div>
                                 <div className="form-group">
                                     <label>
                                         E-mail: {sessionStorage.getItem('email')}
-                                        <button type="button" className="email_change" onClick={this.changeEmail}>Zmień email</button>
+                                        <button type="button" className="prim_email_change" onClick={this.changeEmail}>Zmień email</button>
                                     </label>
                                 </div>
                                 <div className="form-group">
                                     <label>Uprawnienia:
-                                    {admin}
-                                    {user}
-                                    {superAdmin}
-                                    {manager}
-                                    {magazineManagement}
-                                    {orderManagement}
-                                    {machineManagement}
-                                    {cutManagement}
-                                    </label> 
+                                    {perm}
+                                    </label>
                                 </div>
                             </form>
-                    </div>
-                    <OneHistory/>
+                        </div>
+                        <OneHistory />
                     </div>
                 </div>
-            
-    )}
+
+            )
+        }}
 
 
 }

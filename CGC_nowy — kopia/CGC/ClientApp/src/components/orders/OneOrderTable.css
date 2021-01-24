@@ -7,7 +7,7 @@
 .danger_one_order_table {
     background-color: #ff3547;
     height: 3rem;
-    width: 13rem;
+    width: 12rem;
     /* padding: 6px 6px;*/
     font-size: 1rem;
     font-weight: 600;
@@ -20,5 +20,7 @@
     border-right: none;
     /*  position:center;*/
     margin: 0 auto;
-    display: block;
+    margin-right: 1rem;
+    float: right;
+    display: inline-block;
 }

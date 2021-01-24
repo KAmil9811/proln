@@ -50,29 +50,39 @@ export class GlassColorEdit extends Component {
     }
     
     render() {
-        return (
-            <div className="editColor">
-                <Sidebar />
-                <div className="EditColor">
-                    <form>
-                        <div className="form-group">
-                            <h2>Edytuj kolor:</h2>
-                            <input
-                                type="text"
-                                name="color"
-                                className="form-control"
-                                id="inputColor"
-                                placeholder="Podaj kolor"
-                                ref="color"
-                                defaultValue={sessionStorage.getItem('color')}
-                            />
-                        </div>
-                
-                        <button type="button" className="danger_color_edit" onClick={this.return}>Anuluj</button>
-                        <button type="button" className="success_color_edit" onClick={this.changeColor}>Edytuj</button>
-                    </form>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj siê, aby usyskaæ dostêp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
+            );
+        }
+        else {
+            return (
+                <div className="editColor">
+                    <Sidebar />
+                    <div className="EditColor">
+                        <form>
+                            <div className="form-group">
+                                <h2>Edytuj kolor:</h2>
+                                <input
+                                    type="text"
+                                    name="color"
+                                    className="form-control"
+                                    id="inputColor"
+                                    placeholder="Podaj kolor"
+                                    ref="color"
+                                    defaultValue={sessionStorage.getItem('color')}
+                                />
+                            </div>
+
+                            <button type="button" className="danger_color_edit" onClick={this.return}>Anuluj</button>
+                            <button type="button" className="success_color_edit" onClick={this.changeColor}>Edytuj</button>
+                        </form>
+                    </div>
+                </div>
             )
+        }
     }
 }

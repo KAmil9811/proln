@@ -1,0 +1,124 @@
+﻿.success_add_user:hover {
+    background-color: #00b740;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.success_add_user {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+  
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-top: 5px;
+    position: center;
+}
+.prim_type_machine:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.prim_type_machine {
+    background-color: #4285f4;
+    height: 3rem;
+    width: 12rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+
+    background-image: none;
+    margin: 0 auto;
+    margin-right: 1.5rem;
+    float: left;
+    display: inline-block;
+}
+.prim_color_glass_edit:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.prim_color_glass_edit {
+    background-color: #4285f4;
+    height: 3rem;
+    width: 12rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+   
+    background-image: none;
+    margin: 0 auto;
+    margin-right: 1.5rem;
+    float: left;
+    display: inline-block;
+}
+.prim_all_user_history:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.prim_all_user_history {
+    background-color: #4285f4;
+    height: 3rem;
+    width: 12rem;
+    /* padding: 6px 6px;*/
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    margin-right: 1.5rem;
+    float: left;
+    display: inline-block;
+}
+
+.control_b{
+    margin-bottom: 3rem;
+}

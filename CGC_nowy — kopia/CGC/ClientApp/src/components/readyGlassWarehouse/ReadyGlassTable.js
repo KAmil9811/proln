@@ -273,8 +273,9 @@ export class ReadyGlassTable extends Component {
 
             <div>
                 <div className="ready_glass_table_conteiner">
-                        <button className="danger_ready_glass_warehouse" onClick={this.delete}>Usuń zaznaczone </button>
                         <button className="success_ready_glass_warehouse" onClick={this.sendId}>Wyślij zaznaczone do magazynu</button>
+
+                        <button className="danger_ready_glass_warehouse" onClick={this.delete}>Usuń zaznaczone </button>
                        
                 </div>
                 <div className="ready_glass_table_t_cointeiner">

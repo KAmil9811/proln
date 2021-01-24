@@ -37,18 +37,28 @@ export class SelectionOfOrders extends Component {
     
 
     render() {
-        return (
-            <div className="SelectionOfOrders">
-                <Sidebar />
-                <div className="selection_of_orders_conteiner">
-                  
-                    
-                 <OrdersTable />
-                   
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
+            );
+        }
+        else {
+            return (
+                <div className="SelectionOfOrders">
+                    <Sidebar />
+                    <div className="selection_of_orders_conteiner">
 
 
-            </div>
-        );
+                        <OrdersTable />
+
+                    </div>
+
+
+                </div>
+            );
+        }
     }
 }

@@ -122,7 +122,7 @@ export class OrderHistoryTable extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-                bordered
+                //bordered
 
 
 

@@ -116,7 +116,7 @@ export class GlassHistoryTable extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-                bordered
+                //bordered
 
 
 

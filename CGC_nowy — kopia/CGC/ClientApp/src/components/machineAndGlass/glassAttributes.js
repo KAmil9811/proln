@@ -176,7 +176,7 @@ export class GlassAtributes extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-                bordered
+               // bordered
 
 
 
@@ -274,24 +274,34 @@ export class GlassAtributes extends Component {
     render() {
         let colorTable = this.table();
         let typeTable = this.table2();
-        return (
-            <div className="glassattributes">
-                <Sidebar />
-                <div className="glass_attributes_conteiner">
-                    <div className="nav_ga1">
-                    </div>
-                    <div className="conteiner_ga1">
-                        <button type="button" className="success_glass_att" onClick={this.addColor}>Dodaj kolor</button>
-                        {colorTable}
-                        <button type="button" className="success_glass_att" onClick={this.addType}>Dodaj typ</button>
-                        {typeTable}
-                    </div>
-                    
-
-                
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
-        )
+            );
+        }
+        else {
+            return (
+                <div className="glassattributes">
+                    <Sidebar />
+                    <div className="glass_attributes_conteiner">
+                        <div className="nav_ga1">
+                        </div>
+                        <div className="conteiner_ga1">
+                            <button type="button" className="success_glass_att" onClick={this.addColor}>Dodaj kolor</button>
+                            {colorTable}
+                            <button type="button" className="success_glass_att" onClick={this.addType}>Dodaj typ</button>
+                            {typeTable}
+                        </div>
+
+
+
+                    </div>
+                </div>
+            )
+        }
     }
 
 

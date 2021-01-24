@@ -33,25 +33,36 @@ export class OneOrder extends Component {
 
 
     render() {
-        return (
-            <div>
-                <Sidebar />
-               
-                <div className="one_order_conteiner">
-                    <div className="key">
-                        <p>Id zlecenia: {sessionStorage.getItem('orderId')}</p>
-                        <p>Zleceniodawca: {sessionStorage.getItem('klient')}</p>
-                        <p>Deadline: {sessionStorage.getItem('deadline')}</p>
-                        <p>Priorytet: {sessionStorage.getItem('priority')}</p>
-                        <button type="button" className="info_one_order" onClick={this.dataEdit}>Edytuj dane</button>
-
-                    </div>
-                    <div className="oneordertable">
-                        <OneOrderTable />
-                    </div>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
 
-            </div>
-        );
+                    <div className="one_order_conteiner">
+                        <div className="key">
+                            <p>Id zlecenia: {sessionStorage.getItem('orderId')}</p>
+                            <p>Zleceniodawca: {sessionStorage.getItem('klient')}</p>
+                            <p>Deadline: {sessionStorage.getItem('deadline')}</p>
+                            <p>Priorytet: {sessionStorage.getItem('priority')}</p>
+
+                        </div>
+                        <button type="button" className="prim_one_order" onClick={this.dataEdit}>Edytuj dane</button>
+
+                        <div className="oneordertable">
+                            <OneOrderTable />
+                        </div>
+                    </div>
+
+                </div>
+            );
+        }
     }
 }

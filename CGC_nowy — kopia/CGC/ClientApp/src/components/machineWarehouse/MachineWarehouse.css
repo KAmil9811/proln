@@ -3,29 +3,11 @@
 
 
 
-.table {
-    margin-top: 20px;
-    color: white;
-}
 
-.nav_mw {
-    float: right;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-}
 
-.conteiner_mw {
-     width: 96%;
-     margin-top:2%;
-    margin-left: 2%;
-    clear: both;
-}
 
-.datatable-pagination {
-    color: white
-}
+
+
 
 .success_cm_add_wr {
     background-color: #00c851;
@@ -43,10 +25,10 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
-    position: center;
+    margin: 0 auto;
+    margin-right: 1.5rem;
+    float: right;
+    display: inline-block;
 }
 
     .success_cm_add_wr:hover {

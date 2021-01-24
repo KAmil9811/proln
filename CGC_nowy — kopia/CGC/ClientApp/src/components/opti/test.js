@@ -3,6 +3,7 @@ import './test.css';
 import { OptiTable } from './OptiTable'
 import { OptiTableItems } from './OptiTableItems'
 import Sidebar from '../Sidebar';
+import jsPDF from 'jspdf';
 
 export class Test extends Component {
     constructor(props) {
@@ -52,35 +53,35 @@ export class Test extends Component {
                         if ((table2[i].width >= 100000 && table2[i].width <= 999999) || (table2[i].length >= 100000 && table2[i].length <= 999999)) {
                             if (i == 0) {
                                 ctx.fillStyle = 'rgba(9, 157, 215, 0.7)';
-                                ctx.fillRect(0, 100, (table2[i].width / 10), (table2[i].length / 10));
+                                ctx.fillRect(0, 100, (table2[i].width / 100), (table2[i].length / 100));
 
                                 if (json[i].width === 0) {
                                     sessionStorage.setItem('uncat', json[i].error_Messege)
                                 }
                                 else {
                                     for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 10, (json[i].glass_info[0].pieces[j].y / 10) + 100, json[i].glass_info[0].pieces[j].widht / 10, json[i].glass_info[0].pieces[j].lenght / 10);///itemy
+                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 100, (json[i].glass_info[0].pieces[j].y / 100) + 100, json[i].glass_info[0].pieces[j].widht / 100, json[i].glass_info[0].pieces[j].lenght / 100);///itemy
                                     }
                                 }
                                 this.setState({
-                                    position: 100 + (table2[i].length / 10)
+                                    position: 100 + (table2[i].length / 100)
                                 })
 
                             }
                             else {
                                 ctx.fillStyle = 'rgba(9, 157, 215, 0.7)';
-                                ctx.fillRect(0, this.state.position + 200, (table2[i].width / 10), (table2[i].length / 10));
+                                ctx.fillRect(0, this.state.position + 200, (table2[i].width / 100), (table2[i].length / 100));
 
                                 if (json[i].width === 0) {
                                     sessionStorage.setItem('uncat', json[i].error_Messege)
                                 }
                                 else {
                                     for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 10, (((json[i].glass_info[0].pieces[j].y / 10) + this.state.position)) + 200, json[i].glass_info[0].pieces[j].widht / 10, json[i].glass_info[0].pieces[j].lenght / 10);///itemy
+                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 100, (((json[i].glass_info[0].pieces[j].y / 100) + this.state.position)) + 200, json[i].glass_info[0].pieces[j].widht / 100, json[i].glass_info[0].pieces[j].lenght / 100);///itemy
                                     }
                                 }
                                 this.setState({
-                                    position: this.state.position + 200 + (table2[i].length / 10)
+                                    position: this.state.position + 200 + (table2[i].length / 100)
                                 })
 
                             }
@@ -89,35 +90,35 @@ export class Test extends Component {
                         else if ((table2[i].width >= 10000 && table2[i].width <= 99999) || (table2[i].length >= 10000 && table2[i].length <= 99999)) {
                             if (i == 0) {
                                 ctx.fillStyle = 'rgba(9, 157, 215, 0.7)';
-                                ctx.fillRect(0, 100, (table2[i].width / 10), (table2[i].length / 10));
+                                ctx.fillRect(0, 30, (table2[i].width / 100), (table2[i].length / 100));
 
                                 if (json[i].width === 0) {
                                     sessionStorage.setItem('uncat', json[i].error_Messege)
                                 }
                                 else {
                                     for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 10, (json[i].glass_info[0].pieces[j].y / 10) + 100, json[i].glass_info[0].pieces[j].widht / 10, json[i].glass_info[0].pieces[j].lenght / 10);///itemy
+                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 100, (json[i].glass_info[0].pieces[j].y / 100) + 30, json[i].glass_info[0].pieces[j].widht / 100, json[i].glass_info[0].pieces[j].lenght / 100);///itemy
                                     }
                                 }
                                 this.setState({
-                                    position: 100 + (table2[i].length / 10)
+                                    position: 30 + (table2[i].length / 100)
                                 })
 
                             }
                             else {
                                 ctx.fillStyle = 'rgba(9, 157, 215, 0.7)';
-                                ctx.fillRect(0, this.state.position + 200, (table2[i].width / 10), (table2[i].length / 10));
+                                ctx.fillRect(0, this.state.position + 30, (table2[i].width / 100), (table2[i].length / 100));
 
                                 if (json[i].width === 0) {
                                     sessionStorage.setItem('uncat', json[i].error_Messege)
                                 }
                                 else {
                                     for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 10, (((json[i].glass_info[0].pieces[j].y / 10) + this.state.position)) + 200, json[i].glass_info[0].pieces[j].widht / 10, json[i].glass_info[0].pieces[j].lenght / 10);///itemy
+                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x / 100, (((json[i].glass_info[0].pieces[j].y / 100) + this.state.position)) + 30, json[i].glass_info[0].pieces[j].widht / 100, json[i].glass_info[0].pieces[j].lenght / 100);///itemy
                                     }
                                 }
                                 this.setState({
-                                    position: this.state.position + 200 + (table2[i].length / 10)
+                                    position: this.state.position + 30 + (table2[i].length / 100)
                                 })
                             }
                         }
@@ -292,32 +293,54 @@ export class Test extends Component {
     }
 
 
+/*<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>*/
+
     render() {
-        return (
-            <div>
-                <Sidebar />
-                <div className="test_c">
-                    <div className="canva">
-                        <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
-                    </div>
-                    <h3>{sessionStorage.getItem('uncat')}</h3>
-                    <div className="table2">
-                        <h2>Tafle</h2>
-                        <OptiTable />
-                    </div>
-                    <div className="table3">
-                        <h2>Produkty</h2>
-                        <OptiTableItems />
-                        <div>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
+                    <div className="test_c">
+                        <div className="canva">
+                            <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
+                        </div>
+                        <h3>{sessionStorage.getItem('uncat')}</h3>
+                        <div className="table2">
+                            <h2>Tafle</h2>
+                            <OptiTable />
+                        </div>
+                        <div className="table3">
+                            <h2>Produkty</h2>
+                            <OptiTableItems />
+                            <div>
                                 <button className="prim_test" onClick={this.saveProject}>Zapisz projekt</button>
                                 <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
-
+                                <button className="success_test" onClick={this.function}>PDFFFF mordo</button>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+    }
+
+    function() {
+        // only jpeg is supported by jsPDF
+        var canvas = document.getElementById("canvas");
+        var imgData = canvas.toDataURL("image/jpeg", 0.5);
+        var pdf = new jsPDF();
+
+        pdf.addImage(imgData, 'JPEG', 0, 0);// te zmienne odpowiadają za przesuniecie względem lewego górnego rogu 
+        pdf.save("download.pdf");
     }
 }
 

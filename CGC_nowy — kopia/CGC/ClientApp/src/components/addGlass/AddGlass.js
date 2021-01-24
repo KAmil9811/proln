@@ -145,8 +145,17 @@ export class AddGlass extends Component {
     render() {
         let x = this.colorsSelector()
         let y = this.typeSelector()
-        return (
-            <div className="AddGlass">
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="AddGlass">
                     <Sidebar />
                     <div className="add_glass_conteiner">
                         <form>
@@ -231,14 +240,15 @@ export class AddGlass extends Component {
 
 
                             <div className="form-group">
-                        
-                            <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Anuluj</button>
-                            <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Dodaj</button>
+
+                                <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Anuluj</button>
+                                <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Dodaj</button>
                             </div>
 
                         </form>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

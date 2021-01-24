@@ -57,27 +57,42 @@ export class HomePage extends Component {
 
     userPanel = (event) => {
         this.props.history.push('/userpanel')
-    }
 
-    render() {
-        return (
-            <div className="HomePage">
-                <form>
-                    <Sidebar />
-                    <div className="conteiner">
-                        <button className="ele2" onClick={this.Production}>Produkcja</button>
-                        <button className="ele2" onClick={this.glassWarehouse}>Magazyn</button>
-                        <button className="ele2" onClick={this.readyGlassWarehouse}>Gotowe produkty</button>
-                        
-                        <button className="ele2" onClick={this.orderWarehouse}>Zlecenia</button>
-                        <button className="ele2" onClick={this.machineWarehouse}>Maszyny</button>
-                        <button className="ele2" onClick={this.userPanel}>Twoje konto</button>
-                        <button className="ele2" onClick={this.saveProject}>Zapisane projekty</button>
-                        <button className="ele2" onClick={this.controlPanel}>Panel sterowania</button>
-                    </div>
-                </form>
-            </div>
-        );
+    }
+        goback = (event) => {
+            this.props.history.push('/')
+        }
+
+        render() {
+
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <form>
+                        <Sidebar />
+                        <div className="conteiner">
+                            <button className="ele2" onClick={this.Production}>Produkcja</button>
+                            <button className="ele2" onClick={this.glassWarehouse}>Magazyn</button>
+                            <button className="ele2" onClick={this.readyGlassWarehouse}>Gotowe produkty</button>
+
+                            <button className="ele2" onClick={this.orderWarehouse}>Zlecenia</button>
+                            <button className="ele2" onClick={this.machineWarehouse}>Maszyny</button>
+                            <button className="ele2" onClick={this.userPanel}>Twoje konto</button>
+                            <button className="ele2" onClick={this.saveProject}>Zapisane projekty</button>
+                            <button className="ele2" onClick={this.controlPanel}>Panel sterowania</button>
+                        </div>
+                    </form>
+                </div>
+            );
+        }
     }
 
 

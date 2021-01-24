@@ -31,21 +31,31 @@ export class GlassHistory extends Component {
     }
 
     render() {
-        return (
-             <div className="GlasssHistory">
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="GlasssHistory">
                     <Sidebar />
                     <div>
-                
+
                         <div className="nav_mw">
-                    
-                   
+
+
                         </div>
                         <div className="conteiner_mw">
-                    
+
                             <GlassHistoryTable />
                         </div>
-                     </div>
-            </div>
-        );
+                    </div>
+                </div>
+            );
+        }
     }
 }

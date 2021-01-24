@@ -132,13 +132,22 @@ export class GlassEdit extends Component {
     render() {
         let x = this.colorsSelector()
         let y = this.typeSelector()
-        return (
-            <div className="GlassEdit">
-                <Sidebar />
-                <div className="Glass_Edit">
-                    <form>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="GlassEdit">
+                    <Sidebar />
+                    <div className="Glass_Edit">
+                        <form>
 
-                        <div className="glass_edit_conteiner">
+                            <div className="glass_edit_conteiner">
                                 <div className="form-group">
                                     <h2>Edycja szkła</h2>
                                     <label>Długość</label>
@@ -197,7 +206,7 @@ export class GlassEdit extends Component {
                                         defaultValue={sessionStorage.getItem('color')}
                                         ref="color"
                                     >
-                                        <option selected={sessionStorage.getItem('color')}> { sessionStorage.getItem('color') } </option>
+                                        <option selected={sessionStorage.getItem('color')}> {sessionStorage.getItem('color')} </option>
                                         {x}
                                     </select>
                                 </div>
@@ -212,18 +221,19 @@ export class GlassEdit extends Component {
                                         ref="owner"
                                     />
                                 </div>
-                    
+
                                 <div className="glass_edit_b_c">
                                     <button type="submit" className="danger_glass_edit" onClick={this.cancelGlassEdit}>Anuluj</button>
-                                    <div className="empty"/>
+                                    <div className="empty" />
                                     <button type="submit" className="success_glass_edit" onClick={this.handleGlassEdit}>Zastosuj zmiany</button>
-                  
-                            </div>
-                        </div>
 
-                    </form>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

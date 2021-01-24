@@ -1,14 +1,29 @@
 ﻿import React, { Component } from "react";
 import './AddOrder1.css'
 import Sidebar from '../Sidebar';
+import datepicker from 'js-datepicker'
 
 export class AddOrderOne extends Component {
     displayName = AddOrderOne;
     constructor(props) {
         super(props);
         this.state = {
-            value:'',
+            value: '',
+            data:'',
         }
+    }
+
+    componentDidMount() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = today.getFullYear();
+
+        today = mm + '.' + dd + '.' + yyyy;
+
+        this.setState({
+           data: today
+        })
     }
 
     nextPage = (event) => {
@@ -34,12 +49,21 @@ export class AddOrderOne extends Component {
     }
 
     render() {
-        return (
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
 
-            <div>
+                <div>
                     <Sidebar />
                     <div className="AddOrder1">
-                            <form> 
+                        <form>
                             <div className="form-group">
                                 <label>Klient</label>
                                 <input
@@ -64,24 +88,27 @@ export class AddOrderOne extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Deadline</label>
-                                <input
+                                <label for="start">Deadline</label>
+                                <input id="start"
                                     type="date"
                                     className="form-control"
                                     id="inputDeadline"
                                     ref="deadline"
-                                    />
+                                    min="23-01-2020"
+                                    max="23-01-2020"
+                                />
                             </div>
                             <div className="form-group">
                                 <button type="button" className="danger_add_order" onClick={this.cancelAdding}>Anuluj</button>
                                 <button type="button" className="success_add_order" onClick={this.nextPage}>Dalej</button>
-                       
+
                             </div>
                         </form>
-                </div>
+                    </div>
 
-            </div>
+                </div>
             )
+        }
     }
 
 }

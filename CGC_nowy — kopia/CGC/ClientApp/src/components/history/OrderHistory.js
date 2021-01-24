@@ -31,18 +31,28 @@ export class OrderHistory extends Component {
     }
 
     render() {
-        return (
-            <div className="OrderHistory">
-                <Sidebar />
-                <div>
-                    <div className="nav_mw">
-                    
-                    </div>
-                    <div className="conteiner_mw">
-                        <OrderHistoryTable />
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="OrderHistory">
+                    <Sidebar />
+                    <div>
+                        <div className="nav_mw">
+
+                        </div>
+                        <div className="conteiner_mw">
+                            <OrderHistoryTable />
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

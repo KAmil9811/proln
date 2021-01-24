@@ -53,43 +53,53 @@ export class EmailChange extends Component {
     }
 
     render() {
-        return (
-            <div className="Changeemail">
-                <Sidebar />
-                <div className="ChangeEmail">
-                    <form>
-                        <div className="form-group">
-                            <h2>Zmiana e-maila</h2>
-                            <label>Podaj hasło:</label>
-                            <input
-                                type="password"
-                                name="Password"
-                                className="form-control"
-                                id="inputPassword"
-                                placeholder="*********"
-                                ref="password"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Podaj nowy email:</label>
-                            <input
-                                type="email"
-                                name="newEmail"
-                                className="form-control"
-                                id="inputNewEmail"
-                                placeholder="smapleemail@domain.com"
-                                ref="newEmail"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <button type="button" className="danger_change_own_em" onClick={this.cancelChanging}>Anuluj</button>
-                            <button type="button" className="success_change_own_em" onClick={this.emailChange}>Zmiań email</button>
-                        
-                        </div>
-
-                    </form>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
-        );
+            );
+        }
+        else {
+            return (
+                <div className="Changeemail">
+                    <Sidebar />
+                    <div className="ChangeEmail">
+                        <form>
+                            <div className="form-group">
+                                <h2>Zmiana e-maila</h2>
+                                <label>Podaj hasło:</label>
+                                <input
+                                    type="password"
+                                    name="Password"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    placeholder="*********"
+                                    ref="password"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Podaj nowy email:</label>
+                                <input
+                                    type="email"
+                                    name="newEmail"
+                                    className="form-control"
+                                    id="inputNewEmail"
+                                    placeholder="smapleemail@domain.com"
+                                    ref="newEmail"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="danger_change_own_em" onClick={this.cancelChanging}>Anuluj</button>
+                                <button type="button" className="success_change_own_em" onClick={this.emailChange}>Zmiań email</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            );
+        }
     }
 }

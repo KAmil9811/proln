@@ -147,7 +147,7 @@ export class OrdersTable extends Component {
                 searchTop
 
 
-               // materialSearch
+                materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop

@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import './Acount.css';
+import './Control2.css';
 import { UsersTable } from './UsersTable';
 import * as FiIcons from 'react-icons/fi';
 import Sidebar from '../Sidebar';
@@ -60,7 +60,7 @@ export class ControlPanel2 extends Component {
 
     addAcouButton() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (<button className="add_user" onClick={this.addUser}>Dodaj Konto</button>);
+            return (<button className="success_add_user" onClick={this.addUser}>Dodaj Konto</button>);
         }
     }
 
@@ -82,14 +82,14 @@ export class ControlPanel2 extends Component {
     typeMachineAdd() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="types98" onClick={this.editMachine}>Typy maszyn</button>
+                <button type="button" className="prim_type_machine" onClick={this.editMachine}>Typy maszyn</button>
             )
         }
     }
     colorAndTypeGlassEdit() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="types98" onClick={this.editGlassColor}>Zarządzanie szkłem</button>
+                <button type="button" className="prim_color_glass_edit" onClick={this.editGlassColor}>Zarządzanie szkłem</button>
             )
         }
     }
@@ -97,7 +97,7 @@ export class ControlPanel2 extends Component {
     usersHistoryTable() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="types98" onClick={this.userHistory}>Historia użytkowników</button>
+                <button type="button" className="prim_all_user_history" onClick={this.userHistory}>Historia użytkowników</button>
             )
         }
     }
@@ -158,26 +158,34 @@ export class ControlPanel2 extends Component {
         let cutManagement = this.cutManagerPermissionsRender();
         let colorGlassEdit = this.colorAndTypeGlassEdit();
         let userHistoryTable = this.usersHistoryTable();
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="ControlPanel" >
 
-        return (
-            <div className="ControlPanel" >
 
-
-                <Sidebar />
-                <div className="conteiner_cp">
-                    <div>
-                        {typeMachine}
-                        {colorGlassEdit}
-                        {userHistoryTable}
-                    </div>
-                    {buttonAdd}
-                    <div className="tableuser">
+                    <Sidebar />
+                    <div className="conteiner_cp">
+                        <div className="control_b">
+                            {typeMachine}
+                            {colorGlassEdit}
+                            {userHistoryTable}
+                            {buttonAdd}
+                        </div>
                         {xd}
+                       
                     </div>
                 </div>
-            </div>
 
-        )
+            )
+        }
     }
 
 

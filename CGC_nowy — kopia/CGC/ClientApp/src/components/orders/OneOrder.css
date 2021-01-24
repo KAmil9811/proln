@@ -4,16 +4,9 @@
 }
 .key{
     color:black;
+    font-weight:700;
 }
 
-
-.nav_one_o {
-    float: right;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-}
 
 .conteiner_one_o {
     width: 96%;
@@ -26,14 +19,14 @@
     color:black;
 }
 
-.info_one_order:hover {
-    background-color: #22a4d4;
+.prim_one_order:hover {
+    background-color: #3174e3;
     transform: scale(1.05);
     outline: 0;
 }
 
-.info_one_order {
-    background-color: #33b5e5;
+.prim_one_order {
+    background-color: #4285f4;
     height: 3rem;
     width: 12rem;
     /* padding: 6px 6px;*/
@@ -41,7 +34,7 @@
     font-weight: 600;
     text-align: center;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
@@ -53,5 +46,7 @@
     margin-bottom: 0;
     background-image: none;
     margin: 0 auto;
-    display: block;
+    margin-right: 1.5rem;
+    float: right;
+    display: inline-block;
 }

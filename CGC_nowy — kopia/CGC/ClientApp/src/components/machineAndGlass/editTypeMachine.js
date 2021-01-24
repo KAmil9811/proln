@@ -32,9 +32,14 @@ export class MachineTypeEdit extends Component {
                 return (json);
             })
             .then(json => {
-                alert("Typ został zedytowany")
-                this.props.history.push('/cutmachineedit')
-                sessionStorage.removeItem('machinetype')
+                if (json[0] === 'New_Type_already_exist') {
+                    alert("Taki typ już istnieje")
+                }
+                else {
+                    alert("Typ został zedytowany")
+                    this.props.history.push('/cutmachineedit')
+                    sessionStorage.removeItem('machinetype')
+                }
             })
     }
 
@@ -45,30 +50,40 @@ export class MachineTypeEdit extends Component {
     }
 
     render() {
-        return (
-            <div className="editTypeM">
-                <Sidebar />
-                <div className="EditTypeM">
-                    <form>
-                        <div className="form-group">
-                            <h2>Edytuj typ:</h2>
-                            <input
-                                type="text"
-                                name="type"
-                                className="form-control"
-                                id="inputColor"
-                                placeholder="Podaj typ"
-                                ref="type"
-                                defaultValue={sessionStorage.getItem('machinetype')}
-                            />
-                        </div>
-                
-                        <button type="button" className="danger_cm_edit_type" onClick={this.return}>Anuluj</button>
-                        <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Zatwierdź</button>
-                     </form>
-
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
-        )
+            );
+        }
+        else {
+            return (
+                <div className="editTypeM">
+                    <Sidebar />
+                    <div className="EditTypeM">
+                        <form>
+                            <div className="form-group">
+                                <h2>Edytuj typ:</h2>
+                                <input
+                                    type="text"
+                                    name="type"
+                                    className="form-control"
+                                    id="inputColor"
+                                    placeholder="Podaj typ"
+                                    ref="type"
+                                    defaultValue={sessionStorage.getItem('machinetype')}
+                                />
+                            </div>
+
+                            <button type="button" className="danger_cm_edit_type" onClick={this.return}>Anuluj</button>
+                            <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Zatwierdź</button>
+                        </form>
+
+                    </div>
+                </div>
+            )
+        }
     }
 }

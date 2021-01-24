@@ -70,66 +70,76 @@ export class PasswordChange extends Component {
     }
 
     render() {
-        return (
-            <div className="changepassword">
-                <Sidebar />
-                <div className="ChangePassword">
-                    <form>
-                        <div className="form-group">
-                            <h2>Zmiana hasła</h2>
-                            <label>Podaj stare hasło:</label>
-                            <input
-                                type="password"
-                                name="Password"
-                                className="form-control"
-                                id="inputOldPassword"
-                                placeholder="*********"
-                                ref="oldPassword"
-                            />
-                        </div>
-                        <div className="form-group">
-                       
-                            <label>Powtórz stare hasło:</label>
-                            <input
-                                type="password"
-                                name="Password"
-                                className="form-control"
-                                id="inputOldPassword2"
-                                placeholder="*********"
-                                ref="oldPassword2"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Podaj nowe hasło:</label>
-                            <input
-                                type="password"
-                                name="Password"
-                                className="form-control"
-                                id="inputNewPassword"
-                                placeholder="*********"
-                                ref="newPassword"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Podaj nowe hasło:</label>
-                            <input
-                                type="password"
-                                name="Password"
-                                className="form-control"
-                                id="inputNewPassword2"
-                                placeholder="*********"
-                                ref="newPassword2"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <button type="button" className="danger_change_own_pass" onClick={this.cancelChanging}>Anuluj</button>
-                            <button type="button" className="success_change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
-                        
-                        </div>
-
-                    </form>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
-        );
+            );
+        }
+        else {
+            return (
+                <div className="changepassword">
+                    <Sidebar />
+                    <div className="ChangePassword">
+                        <form>
+                            <div className="form-group">
+                                <h2>Zmiana hasła</h2>
+                                <label>Podaj stare hasło:</label>
+                                <input
+                                    type="password"
+                                    name="Password"
+                                    className="form-control"
+                                    id="inputOldPassword"
+                                    placeholder="*********"
+                                    ref="oldPassword"
+                                />
+                            </div>
+                            <div className="form-group">
+
+                                <label>Powtórz stare hasło:</label>
+                                <input
+                                    type="password"
+                                    name="Password"
+                                    className="form-control"
+                                    id="inputOldPassword2"
+                                    placeholder="*********"
+                                    ref="oldPassword2"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Podaj nowe hasło:</label>
+                                <input
+                                    type="password"
+                                    name="Password"
+                                    className="form-control"
+                                    id="inputNewPassword"
+                                    placeholder="*********"
+                                    ref="newPassword"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Podaj nowe hasło:</label>
+                                <input
+                                    type="password"
+                                    name="Password"
+                                    className="form-control"
+                                    id="inputNewPassword2"
+                                    placeholder="*********"
+                                    ref="newPassword2"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="danger_change_own_pass" onClick={this.cancelChanging}>Anuluj</button>
+                                <button type="button" className="success_change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            );
+        }
     }
 }

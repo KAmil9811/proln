@@ -50,29 +50,39 @@ export class GlassTypeEdit extends Component {
     }
 
     render() {
-        return (
-            <div className="typeedit">
-                <Sidebar />
-                <div className="typeEdit">
-                    <form>
-                        <div className="form-group">
-                            <h2>Edytuj typ:</h2>
-                            <input
-                                type="text"
-                                name="color"
-                                className="form-control"
-                                id="inputColor"
-                                placeholder="Podaj typ"
-                                ref="type"
-                                defaultValue={sessionStorage.getItem('type')}
-                            />
-                        </div>
-                
-                        <button type="button" className="danger_type_edit" onClick={this.return}>Anuluj</button>
-                        <button type="button" className="success_type_edit" onClick={this.changeColor}>Edytuj</button>
-                    </form>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
-        )
+            );
+        }
+        else {
+            return (
+                <div className="typeedit">
+                    <Sidebar />
+                    <div className="typeEdit">
+                        <form>
+                            <div className="form-group">
+                                <h2>Edytuj typ:</h2>
+                                <input
+                                    type="text"
+                                    name="color"
+                                    className="form-control"
+                                    id="inputColor"
+                                    placeholder="Podaj typ"
+                                    ref="type"
+                                    defaultValue={sessionStorage.getItem('type')}
+                                />
+                            </div>
+
+                            <button type="button" className="danger_type_edit" onClick={this.return}>Anuluj</button>
+                            <button type="button" className="success_type_edit" onClick={this.changeColor}>Edytuj</button>
+                        </form>
+                    </div>
+                </div>
+            )
+        }
     }
 }

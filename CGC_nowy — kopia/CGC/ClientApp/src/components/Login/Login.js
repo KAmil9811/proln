@@ -22,6 +22,7 @@ export class Login extends Component {
         sessionStorage.removeItem('machineManagement')
         sessionStorage.removeItem('orderManagement')
         sessionStorage.removeItem('cutManagement')
+        sessionStorage.setItem('valid', '')
     }
 
     resetPassword1 = (event) => {
@@ -72,6 +73,7 @@ export class Login extends Component {
                     sessionStorage.setItem('machineManagement', json[0].machine_management);
                     sessionStorage.setItem('orderManagement', json[0].order_management);
                     sessionStorage.setItem('cutManagement', json[0].cut_management);
+                    sessionStorage.setItem('valid', '1')
                     this.props.history.push('/home');
                 }
                 else {
@@ -114,9 +116,10 @@ export class Login extends Component {
                         </div>
                     </div>
                     <div className="Login_b_c">
-                        <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
                         <button type="submit" className="success_login" onClick={this.handleLoging} >Zaloguj</button>
-                        <div className="empty"/>
+                        <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
+                        
+                        
                     </div>
                    </form>
             </div>
