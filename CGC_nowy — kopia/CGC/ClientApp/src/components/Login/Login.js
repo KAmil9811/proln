@@ -23,6 +23,8 @@ export class Login extends Component {
         sessionStorage.removeItem('orderManagement')
         sessionStorage.removeItem('cutManagement')
         sessionStorage.setItem('valid', '')
+        var title = 'Home'
+        sessionStorage.setItem('title', title)
     }
 
     resetPassword1 = (event) => {
