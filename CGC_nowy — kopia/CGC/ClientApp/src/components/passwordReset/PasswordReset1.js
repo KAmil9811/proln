@@ -13,12 +13,13 @@ export class PasswordReset1 extends Component {
             alert("Podaj adres email")
         }
         else {
-            const user = {
-                email: this.refs.email.value
+            const receiver = {
+                user: { email: this.refs.email.value }
+               
             }
             fetch(`api/Users/Reset_Password_Code`, {
                 method: "post",
-                body: JSON.stringify(user),
+                body: JSON.stringify(receiver),
                 headers: {
                     'Content-Type': 'application/json'
                 }

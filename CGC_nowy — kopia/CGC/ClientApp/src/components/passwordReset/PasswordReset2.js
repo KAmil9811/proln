@@ -9,13 +9,13 @@ export class PasswordReset2 extends Component {
 
     handlePasswordReset2 = (event) => {
         event.preventDefault();
-        const user = {
-            Reset_pass: this.refs.code.value
-
+        const receiver = {
+            user: {Reset_pass: this.refs.code.value}
+            
         }
         fetch(`api/Users/Reset_Password_Pass`, {
             method: "post",
-            body: JSON.stringify(user),
+            body: JSON.stringify(receiver),
             headers: {
                 'Content-Type': 'application/json'
             }

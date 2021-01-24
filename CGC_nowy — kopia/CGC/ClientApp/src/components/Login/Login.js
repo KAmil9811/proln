@@ -30,16 +30,17 @@ export class Login extends Component {
 
     handleLoging = (event) => {
         event.preventDefault();
-        const user = {
-            login: this.refs.login.value,
-            password: this.refs.password.value
+        const receiver = {
+            user:{login: this.refs.login.value,
+            password: this.refs.password.value}
+            
         }
 
         //Przekazujesz tu całego user
         fetch(`api/Users/Log_in`, {
             method: "post",
             body: JSON.stringify(
-                user
+                receiver
             ),
             headers: {
                 'Content-Type': 'application/json'
@@ -48,7 +49,7 @@ export class Login extends Component {
             /*.then(console.log(user))
             .then(console.log(JSON.stringify(user)))*/
             .then(console.log(HTMLBodyElement))
-            .then(console.log(user))
+            .then(console.log(receiver))
             .then(res => res.json())
             .then(json => {
                 console.log(json)
