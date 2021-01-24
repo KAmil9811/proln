@@ -76,7 +76,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 }
             }
 
-            product.Error_Messege = "Nie znaleziono użytkownika";
+            product.Error_Messege = "Nie znaleziono uzytkownika";
             temp.Add(product);
             return temp;
         }
@@ -122,7 +122,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                     return temp;
                 }
             }
-            producted.Error_Messege = "Nie znaleziono użytkownika";
+            producted.Error_Messege = "Nie znaleziono uzytkownika";
             temp.Add(producted);
             return temp;
         }

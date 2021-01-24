@@ -21,12 +21,6 @@ export class Test extends Component {
 
     componentDidMount() {
 
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        ctx.fillStyle = 'blue';
-        ctx.fillRect(10, 10, 99000, 99000);
-
         const receiver = {
 
             order: {
@@ -188,24 +182,24 @@ export class Test extends Component {
                                     }
                                 }
                                 this.setState({
-                                    position: 100 + (table2[i].length / 10)
+                                    position: 100 + (table2[i].length )
                                 })
 
                             }
                             else {
                                 ctx.fillStyle = 'rgba(9, 157, 215, 0.7)';
-                                ctx.fillRect(0, this.state.position + 200, (table2[i].width / 10), (table2[i].length / 10));
+                                ctx.fillRect(0, this.state.position + 100, (table2[i].width ), (table2[i].length ));
                                 
                                 if (json[i].width === 0) {
                                     sessionStorage.setItem('uncat', json[i].error_Messege)
                                 }
                                 else {
                                     for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x, (((json[i].glass_info[0].pieces[j].y / 10) + this.state.position)) + 200, json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
+                                        ctx.strokeRect(json[i].glass_info[0].pieces[j].x, (((json[i].glass_info[0].pieces[j].y) + this.state.position)) + 100 , json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
                                     }
                                 }
                                 this.setState({
-                                    position: this.state.position + 200 + (table2[i].length / 10)
+                                    position: this.state.position + 100 + (table2[i].length)
                                 })
 
 
@@ -310,7 +304,7 @@ export class Test extends Component {
            /* unit: 'in',
             format: [4, 2]*/
         };
-        /*if (sessionStorage.getItem('valid') === '') {
+        if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
                     <h1>Zaloguj się, aby usyskać dostęp!</h1>
@@ -318,7 +312,7 @@ export class Test extends Component {
                 </div>
             );
         }
-        else {*/
+        else {
             return (
                 <div>
                     <Sidebar />
@@ -349,7 +343,7 @@ export class Test extends Component {
                     </div>
                 </div>
             );
-        /*}*/
+       }
     }
 
     function() {

@@ -86,7 +86,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Dodaleś zamowienie " + order.Id_Order;
+            string userhistory = "Dodales zamowienie " + order.Id_Order;
             string orderhistory = "Zamowienie zostalo dodane";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
@@ -115,7 +115,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zedytowaleś zamowienie " + order.Id_Order;
+            string userhistory = "Zedytowales zamowienie " + order.Id_Order;
             string orderhistory = "Zamowienie zostalo zedytowane";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
@@ -147,7 +147,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zedytowaleś pozycje zamowienia " + item.Id + " z zamowienia " + order.Id_Order;
+            string userhistory = "Zedytowales pozycje zamowienia " + item.Id + " z zamowienia " + order.Id_Order;
             string orderhistory = "Pozycja zamowienia zostala zedytowana " + item.Id;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
@@ -176,7 +176,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Usunaleś zamowienie " + ord.Id_Order;
+                string userhistory = "Usunales zamowienie " + ord.Id_Order;
                 string orderhistory = "Zamowienie zostalo usuniete";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -222,7 +222,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Zamrozileś zamowienie " + ord.Id_Order;
+                string userhistory = "Zamroziles zamowienie " + ord.Id_Order;
                 string orderhistory = "Zamoienie zostalo zamrozone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -245,7 +245,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Odmrozileś zamowienie " + ord.Id_Order;
+                string userhistory = "Odmroziles zamowienie " + ord.Id_Order;
                 string orderhistory = "Zamowienie zostalo odmrozone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -268,7 +268,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Zmienileś status zamowienia " + ord.Id_Order + " na dostarczony";
+                string userhistory = "Zmieniles status zamowienia " + ord.Id_Order + " na dostarczony";
                 string orderhistory = "Zamowienie zostalo dostarczone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -291,7 +291,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Zmienileś status zmowienia " + ord.Id_Order + " na gotowe";
+                string userhistory = "Zmieniles status zmowienia " + ord.Id_Order + " na gotowe";
                 string orderhistory = "Status zamowienia zostal zmieniony na gotowe";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -360,7 +360,7 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             temp.Add(order);
 
-            string userhistory = "Wydaleś zamowienie " + order.Id_Order;
+            string userhistory = "Wydales zamowienie " + order.Id_Order;
             string orderhistory = "Zamowienie zostalo wydane";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
@@ -389,7 +389,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 
                 temp.Add(temp_item);
 
-                string userhistory = "Wydaleś pozycje zamowienia " + item.Id + " z zamowienia " + item.Order_id;
+                string userhistory = "Wydales pozycje zamowienia " + item.Id + " z zamowienia " + item.Order_id;
                 string orderhistory = "Pozycja zamowienia " + item.Id + " zostala wydana";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -419,7 +419,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                         command.Dispose();
                         connect.cnn.Close();
 
-                        string userhistory = "Usunoleś pozycje " + itm.Id + " z zamowienia " + order.Id_Order;
+                        string userhistory = "Usunoles pozycje " + itm.Id + " z zamowienia " + order.Id_Order;
                         string orderhistory = "Pozycja " + itm.Id + " zostala usunieta";
 
                         insertHistory.Insert_User_History(userhistory, user.Login);
@@ -446,7 +446,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                                 Console.WriteLine(e.ToString());
                             }
 
-                            userhistory = "Usunoleś produkt " + itm.Product_Id;
+                            userhistory = "Usunoles produkt " + itm.Product_Id;
                             string producthistory = "Produkt zostal usuniety";
 
                             insertHistory.Insert_User_History(userhistory, user.Login);

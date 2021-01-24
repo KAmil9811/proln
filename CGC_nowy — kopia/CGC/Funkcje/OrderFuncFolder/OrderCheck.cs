@@ -43,7 +43,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                         {
                             foreach (Glass_Id glass_Id in glass.Glass_info)
                             {
-                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0 && (glass.Owner == order.Owner || glass.Owner == ""))
                                 {
                                     count++;
                                 }

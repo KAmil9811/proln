@@ -69,7 +69,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                     {
                         foreach (Piece piece in glass.Glass_info.First().Pieces)
                         {
-                            if (piece.id == item.Id)
+                            if (piece.Id == item.Id)
                             {
                                 query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
                                 command = new SqlCommand(query, connect.cnn);
@@ -230,7 +230,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
 
             string userhistory = "Wycioles projekt " + cut_Project.Cut_id;
-            string machinehistory = "Projekt " + cut_Project.Cut_id + " został wyciety";
+            string machinehistory = "Projekt " + cut_Project.Cut_id + " zostal wyciety";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History(cut_Project.Cut_id, user.Login, machinehistory, machines.No);

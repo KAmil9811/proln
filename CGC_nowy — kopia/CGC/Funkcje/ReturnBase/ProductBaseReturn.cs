@@ -118,7 +118,7 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             List<Product> temp = new List<Product>();
             SqlCommand command = new SqlCommand("SELECT * FROM [Product] Where Status = @Status;", connect.cnn);
 
-            command.Parameters.Add("@Status", SqlDbType.Decimal).Value = "Usunięty";
+            command.Parameters.Add("@Status", SqlDbType.Decimal).Value = "Usuniety";
 
             connect.cnn.Open();
 

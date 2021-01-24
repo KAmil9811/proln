@@ -13,6 +13,8 @@ namespace CGC.Models
         public double Lenght { get; set; }
         public double Widht { get; set; }
 
-        public double id { get; set; }
+        public double Id { get; set; }
+
+        public List<int> Rgb { get; set; }
     }
 }

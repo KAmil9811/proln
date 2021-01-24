@@ -53,7 +53,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Wydaleś produkt " + pro.Id;
+                string userhistory = "Wydales produkt " + pro.Id;
                 string producthistory = "Produkt zostal wydany";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
@@ -104,7 +104,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                     command.Dispose();
                     connect.cnn.Close();
 
-                    string userhistory = "Wydaleś zamowienie " + order.Id_Order;
+                    string userhistory = "Wydales zamowienie " + order.Id_Order;
                     string orderhistory = "Zamowienie zostalo wydane";
 
                     insertHistory.Insert_User_History(userhistory, user.Login);
@@ -133,7 +133,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                userhistory = "Usunaleś produkt " + product.Id.ToString();
+                userhistory = "Usunales produkt " + product.Id.ToString();
                 Producthistory = "Produkt zostal usuniety";
 
                 insertHistory.InsertProductHistory(product.Id, user.Login, Producthistory);

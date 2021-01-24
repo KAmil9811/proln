@@ -53,7 +53,7 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
 
             connect.cnn.Close();
 
-            string userhistory = "Dodales maszynę " + machines.No;
+            string userhistory = "Dodales maszyne " + machines.No;
             string machinehistoryall = "Maszyna zostala dodana";
 
             insertHistory.Insert_User_History(userhistory, user.Login);

@@ -111,7 +111,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status;", connect.cnn);
 
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usunięty";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usuniety";
 
             connect.cnn.Open();
 
@@ -137,7 +137,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status;", connect.cnn);
 
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "W trakcie cięcia";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "W trakcie ciecia";
 
             connect.cnn.Open();
 

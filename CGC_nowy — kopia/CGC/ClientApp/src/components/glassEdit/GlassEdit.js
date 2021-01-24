@@ -70,9 +70,8 @@ export class GlassEdit extends Component {
                 desk: sessionStorage.getItem('desk'),
                 glass_Id: JSON.parse(sessionStorage.getItem('id')),
             },
-            
-                  
-            
+            //glass_Id:{}
+                       
             user: {
                 login: sessionStorage.getItem('login')
             }

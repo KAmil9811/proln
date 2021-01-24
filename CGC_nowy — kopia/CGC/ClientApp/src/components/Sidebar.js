@@ -95,7 +95,7 @@ const Sidebar = () => {
 
     const showSidebar = () => {
         setSidebar(!sidebar);
-        sessionStorage.setItem('title', title)
+     
     };
 
 
@@ -113,7 +113,7 @@ const Sidebar = () => {
                     <FaIcons.FaBars onClick={showSidebar} />
                 </NavIcon>
 
-                <h1>{sessionStorage.getItem('title')}</h1>
+               
               
                 <OutIcon to='/' >
                     <FiIcons.FiLogOut/>

@@ -300,7 +300,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 {
                     if (it == item.Id && item.Status == "Usuniety")
                     {         
-                        item.Error_Messege = "Pozycje zamowienia zostały juz usuniete";
+                        item.Error_Messege = "Pozycje zamowienia zostaly juz usuniete";
                         temp.Add(item);
                         return temp;                   
                     }

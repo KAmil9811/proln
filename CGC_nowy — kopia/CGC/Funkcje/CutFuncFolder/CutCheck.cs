@@ -155,6 +155,15 @@ namespace CGC.Funkcje.CutFuncFolder
             bool kontrol;
             bool kontrol2;
 
+            foreach(Order ord in orderBaseReturn.GetOrders())
+            {
+                if(ord.Id_Order == order.Id_Order)
+                {
+                    order.Owner = ord.Owner;
+                    break;
+                }
+            }
+
             foreach (Item item in orderBaseReturn.GetItems(order))
             {
                 kontrol = false;
@@ -307,6 +316,18 @@ namespace CGC.Funkcje.CutFuncFolder
                 cutBinErr.Parameter = new BinPackParameter(cutBin.Parameter.BinWidth, cutBin.Parameter.BinHeight, cutBin.Parameter.BinDepth, temporary);
 
                 return Packing(cutBinErr);
+            }
+        }
+    
+        public void Los_Rgb(List<Piece> pieces)
+        {
+            Random random = new Random();
+
+            foreach (Piece piece in pieces)
+            {
+                piece.Rgb.Add(random.Next(0, 255));
+                piece.Rgb.Add(random.Next(0, 255));
+                piece.Rgb.Add(random.Next(0, 255));
             }
         }
     }

@@ -153,7 +153,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                     }
                                     if (kon == false)
                                     {
-                                        glass_Id2.Pieces.Add(new Piece { id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
+                                        glass_Id2.Pieces.Add(new Piece { Id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
                                         Item iteme = new Item { Id = itm.Id };
 
                                         Used.Add(iteme);
@@ -209,7 +209,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         {
                             foreach (Piece piece in glass_Ids.Pieces)
                             {
-                                if (itm.Id == piece.id)
+                                if (itm.Id == piece.Id)
                                 {
                                     Done.Add(itm.Id);
                                 }
@@ -220,12 +220,21 @@ namespace CGC.Funkcje.CutFuncFolder
 
                 for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
                 {
-                    Piece piece = new Piece { id = packages.Item[i].Id, Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
+                    Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
                     glass_Id.Pieces.Add(piece);
                     tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
                 }
                 tmp.Glass_info.Add(glass_Id);
                 wynik.Add(tmp);
+            }
+
+
+            foreach (Glass gl in wynik)
+            {
+                foreach (Glass_Id glass_Id in gl.Glass_info)
+                {
+                    cutCheck.Los_Rgb(glass_Id.Pieces);
+                }
             }
 
             return wynik;
@@ -291,7 +300,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         I_l = package.Item.First().Length;
                         I_w = package.Item.First().Width;
 
-                        Piece piece = new Piece { id = I_x, Lenght = I_l, Widht = I_w, X = P_x, Y = P_y };
+                        Piece piece = new Piece { Id = I_x, Lenght = I_l, Widht = I_w, X = P_x, Y = P_y };
 
                         wynik.Add(piece);
 
@@ -503,7 +512,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                         for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
                         {
-                            Piece piece = new Piece { id = packages.Item[i].Id, Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
+                            Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
                             glass_Id.Pieces.Add(piece);
                             tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
                         }
@@ -549,7 +558,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         {
                             foreach (Piece piece in gla.Glass_info.First().Pieces)
                             {
-                                if (piece.id == item.Id && item.Cut_id != 0)
+                                if (piece.Id == item.Id && item.Cut_id != 0)
                                 {
                                     return 0;
                                 }
@@ -716,7 +725,6 @@ namespace CGC.Funkcje.CutFuncFolder
         }
         */
         
-
         public List<Glass> Magic(Receiver receiver)
         {
             List<Glass> wynik = new List<Glass>();
@@ -724,26 +732,12 @@ namespace CGC.Funkcje.CutFuncFolder
             Order order = receiver.order;
             Item item1 = receiver.item;
             List<Glass> glasses = new List<Glass>();
+            List<Item> To_big = new List<Item>();
             bool kon = false;
             int kontrol;
 
             Package packages = new Package();
             Package backup = new Package();
-
-            foreach (Item item in orderBaseReturn.GetItems(order))
-            {
-                if (item.Cut_id == 0 && item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Oczekujacy")
-                {
-                    packages.Item.Add(item);
-                    backup.Item.Add(item);
-                }
-            }
-
-            kontrol = packages.Item.Count;
-
-            cutCheck.Return_Area(packages);
-            cutCheck.Set_Package(packages);
-            cutCheck.Sort_Package(packages);
 
             List<Glass> tempo = magazineBaseReturn.Getglass();
 
@@ -773,6 +767,22 @@ namespace CGC.Funkcje.CutFuncFolder
 
             glasses.OrderBy(gla => gla.Length).ThenBy(gla2 => gla2.Width);
 
+            foreach (Item item in orderBaseReturn.GetItems(order))
+            {
+                if (item.Cut_id == 0 && item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Oczekujacy" && item.Width <= glasses.First().Width && item.Length <= glasses.First().Length)
+                {
+                    packages.Item.Add(item);
+                    backup.Item.Add(item);
+                }
+            }
+
+            kontrol = packages.Item.Count;
+
+            cutCheck.Return_Area(packages);
+            cutCheck.Set_Package(packages);
+            cutCheck.Sort_Package(packages);
+
+
             foreach (User usere in userBaseReturn.GetUsers())
             {
                 if (usere.Login == user.Login)
@@ -796,73 +806,84 @@ namespace CGC.Funkcje.CutFuncFolder
                                 Glass tmp = new Glass();
 
                                 var binPacker = BinPacker.GetDefault(BinPackerVerifyOption.BestOnly);
-
-                                var result = binPacker.Pack(parameter);
-
-                                tmp.Width = Convert.ToDouble(parameter.BinWidth);
-                                tmp.Hight = Convert.ToDouble(parameter.BinDepth);
-                                tmp.Length = Convert.ToDouble(parameter.BinHeight);
-
-                                foreach (var cub in result.BestResult[0])
-                                {
-                                    foreach (Item itm in packages.Item)
-                                    {
-                                        if (itm.Width == Convert.ToDouble(cub.Width) && itm.Length == Convert.ToDouble(cub.Height))
-                                        {
-                                            foreach (Item i in Used)
-                                            {
-                                                if (i.Id == itm.Id)
-                                                {
-                                                    kon = true;
-                                                }
-                                            }
-                                            if (kon == false)
-                                            {
-                                                glass_Id2.Pieces.Add(new Piece { id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
-                                                Item iteme = new Item { Id = itm.Id };
-
-                                                Used.Add(iteme);
-                                                kon = false;
-                                                break;
-                                            }
-                                            kon = false;
-                                        }
-                                        else if (itm.Width == Convert.ToDouble(cub.Height) && itm.Length == Convert.ToDouble(cub.Width))
-                                        {
-                                            foreach (Item i in Used)
-                                            {
-                                                if (i.Id == itm.Id)
-                                                {
-                                                    kon = true;
-                                                }
-                                            }
-                                            if (kon == false)
-                                            {
-                                                glass_Id2.Pieces.Add(new Piece { id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
-                                                Item iteme = new Item { Id = itm.Id };
-
-                                                Used.Add(iteme);
-                                                kon = false;
-                                                break;
-                                            }
-                                            kon = false;
-                                        }
-                                    }
-                                }
-
-                                tmp.Glass_info.Add(glass_Id2);
-                                wynik.Add(tmp);
+                                BinPackResult result;
 
                                 try
                                 {
-                                    foreach (Item itm in Used)
+                                    result = binPacker.Pack(parameter);
+                                
+
+
+                                    tmp.Width = Convert.ToDouble(parameter.BinWidth);
+                                    tmp.Hight = Convert.ToDouble(parameter.BinDepth);
+                                    tmp.Length = Convert.ToDouble(parameter.BinHeight);
+
+                                    foreach (var cub in result.BestResult[0])
                                     {
-                                        packages.Item.Remove(packages.Item.First(i => i.Id == itm.Id));
+                                        foreach (Item itm in packages.Item)
+                                        {
+                                            if (itm.Width == Convert.ToDouble(cub.Width) && itm.Length == Convert.ToDouble(cub.Height))
+                                            {
+                                                foreach (Item i in Used)
+                                                {
+                                                    if (i.Id == itm.Id)
+                                                    {
+                                                        kon = true;
+                                                    }
+                                                }
+                                                if (kon == false)
+                                                {
+                                                    glass_Id2.Pieces.Add(new Piece { Rgb = new List<int>(), Id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) }); ;
+                                                    Item iteme = new Item { Id = itm.Id };
+
+                                                    Used.Add(iteme);
+                                                    kon = false;
+                                                    break;
+                                                }
+                                                kon = false;
+                                            }
+                                            else if (itm.Width == Convert.ToDouble(cub.Height) && itm.Length == Convert.ToDouble(cub.Width))
+                                            {
+                                                foreach (Item i in Used)
+                                                {
+                                                    if (i.Id == itm.Id)
+                                                    {
+                                                        kon = true;
+                                                    }
+                                                }
+                                                if (kon == false)
+                                                {
+                                                    glass_Id2.Pieces.Add(new Piece { Rgb = new List<int>(), Id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
+                                                    Item iteme = new Item { Id = itm.Id };
+
+                                                    Used.Add(iteme);
+                                                    kon = false;
+                                                    break;
+                                                }
+                                                kon = false;
+                                            }
+                                        }
+                                    }
+
+                                    tmp.Glass_info.Add(glass_Id2);
+                                    wynik.Add(tmp);
+
+                                    try
+                                    {
+                                        foreach (Item itm in Used)
+                                        {
+                                            packages.Item.Remove(packages.Item.First(i => i.Id == itm.Id));
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e.ToString());
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e.ToString());
+                                    To_big.Add(new Item { Id = packages.Item.First().Id });
+                                    packages.Item.RemoveAt(0);
                                 }
                             }
                         }
@@ -894,7 +915,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                 {
                                     foreach (Piece piece in glass_Ids.Pieces)
                                     {
-                                        if (itm.Id == piece.id)
+                                        if (itm.Id == piece.Id)
                                         {
                                             Done.Add(itm.Id);
                                         }
@@ -905,13 +926,31 @@ namespace CGC.Funkcje.CutFuncFolder
 
                         for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
                         {
-                            Piece piece = new Piece { id = packages.Item[i].Id, Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
+                            Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = packages.Item[i].Length, Widht = packages.Item[i].Width };
                             glass_Id.Pieces.Add(piece);
                             tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
                         }
+
+                        foreach(Item BigItem in To_big)
+                        {
+                            tmp.Error_Messege = tmp.Error_Messege + ", " + BigItem.Id;
+                        }
+
                         tmp.Glass_info.Add(glass_Id);
                         wynik.Add(tmp);
                     }
+
+                    foreach(Glass gl in wynik)
+                    {
+                        if (gl.Error_Messege != "")
+                        {
+                            foreach (Glass_Id glass_Id in gl.Glass_info)
+                            {
+                                cutCheck.Los_Rgb(glass_Id.Pieces);
+                            }
+                        }
+                    }
+
                     return wynik;
                 }
             }
