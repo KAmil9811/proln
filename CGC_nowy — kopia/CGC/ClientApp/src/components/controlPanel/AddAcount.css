@@ -81,11 +81,6 @@
     float: left;
 }
 
-.s {
-    width: 1rem;
-    display: inline;
-    float: none;
-}
 
 
 
@@ -98,16 +93,7 @@
     color: gray;
 }
 
-.check{
-    color:white;
-}
+.
 .text{
     color:black;
-}
-.cancel{
-    color:white;
-}
-
-.uprwanienia{
-    color:white;
 }

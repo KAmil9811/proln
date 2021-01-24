@@ -1,20 +1,5 @@
 ﻿
 
-.nav_ga1 {
-    float: right;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-}
-
-.conteiner_ga1 {
-    width: 96%;
-    margin-top: 2%;
-    margin-left: 2%;
-    clear: both;
-}
-
 .success_glass_att {
     background-color: #00c851;
     height: 3rem;
@@ -26,15 +11,17 @@
     text-align: center;
     background-image: none;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-bottom: 0px;
-    margin-top: 5px;
+   
+    margin: 0 auto;
+    margin-right: 1.5rem;
     position: center;
+    float:right
+
 }
 
     .success_glass_att:hover {

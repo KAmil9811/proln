@@ -10,7 +10,7 @@
     height: 3rem;
     width: 12rem;
     padding: 6px 6px;
-    margin-bottom: 0;
+  
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
@@ -22,7 +22,6 @@
     border-left: none;
     border-right: none;
     margin-right: 50px;
-    margin-bottom: 0px;
     margin-top: 5px;
     position: center;
 }
@@ -50,10 +49,12 @@
     margin-left: auto;
     margin-right: auto;
     padding: 6px 12px;
-    margin-bottom: 0;
+
     background-image: none;
     margin: 0 auto;
-    display: block;
+    margin-right: 1.5rem;
+    float: left;
+    display: inline-block;
 }
 .prim_color_glass_edit:hover {
     background-color: #3174e3;
@@ -79,10 +80,12 @@
     margin-left: auto;
     margin-right: auto;
     padding: 6px 12px;
-    margin-bottom: 0;
+   
     background-image: none;
     margin: 0 auto;
-    display: block;
+    margin-right: 1.5rem;
+    float: left;
+    display: inline-block;
 }
 .prim_all_user_history:hover {
     background-color: #3174e3;
@@ -95,7 +98,7 @@
     height: 3rem;
     width: 12rem;
     /* padding: 6px 6px;*/
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     text-align: center;
     color: white;
@@ -111,5 +114,11 @@
     margin-bottom: 0;
     background-image: none;
     margin: 0 auto;
-    display: block;
+    margin-right: 1.5rem;
+    float: left;
+    display: inline-block;
+}
+
+.control_b{
+    margin-bottom: 3rem;
 }

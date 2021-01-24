@@ -110,7 +110,7 @@ export class AllMachineHistoryTable extends Component {
                 materialSearch
                 searchBottom={false}
                 responsive
-                bordered
+               // bordered
                 sortable
                 theadTextWhite
                 theadTextWhite

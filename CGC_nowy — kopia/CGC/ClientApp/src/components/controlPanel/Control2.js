@@ -173,15 +173,14 @@ export class ControlPanel2 extends Component {
 
                     <Sidebar />
                     <div className="conteiner_cp">
-                        <div>
+                        <div className="control_b">
                             {typeMachine}
                             {colorGlassEdit}
                             {userHistoryTable}
+                            {buttonAdd}
                         </div>
-                        {buttonAdd}
-                        <div className="tableuser">
-                            {xd}
-                        </div>
+                        {xd}
+                       
                     </div>
                 </div>
 
