@@ -85,7 +85,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             connect.cnn.Close();
 
             string userhistory = admin.Login + " zmienił email na: " + user.Email;
-            string Adminhistory = "Zmieniłęś email dla " + user.Login + " na " + user.Email;
+            string Adminhistory = "Zmieniłeś email dla " + user.Login + " na " + user.Email;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_User_History(Adminhistory, admin.Login);
@@ -131,7 +131,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
 
 
             string userhistory = admin.Login + " usunął to konto";
-            string Adminhistory = "Usunąłęś konto " + user.Login;
+            string Adminhistory = "Usunąłeś konto " + user.Login;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_User_History(Adminhistory, admin.Login);
@@ -155,7 +155,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
 
 
             string userhistory = admin.Login + " przywrócił to konto";
-            string Adminhistory = "Przywróciłęś konto " + user.Login;
+            string Adminhistory = "Przywróciłeś konto " + user.Login;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_User_History(Adminhistory, admin.Login);
@@ -182,8 +182,8 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = admin.Login + " change permission for this account";
-            string Adminhistory = "You changed permission for " + user.Login + " account";
+            string userhistory = admin.Login + " zmienił uprawnienia dla tego konta";
+            string Adminhistory = "Zmieniłeś uprawnienia dla " + user.Login;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_User_History(Adminhistory, admin.Login);

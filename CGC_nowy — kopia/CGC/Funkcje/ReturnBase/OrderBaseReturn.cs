@@ -130,7 +130,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             List<Order> temp = new List<Order>();
             SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE Released = @Released;", connect.cnn);
 
-            command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
+            command.Parameters.Add("@Released", SqlDbType.VarChar ,40).Value = true;
 
             connect.cnn.Open();
 
@@ -162,7 +162,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             List<Item> temp = new List<Item>();
             SqlCommand command = new SqlCommand("SELECT * FROM [Item] Where Order_id = @Order_id", connect.cnn);
 
-            command.Parameters.Add("@Order_id", SqlDbType.Bit).Value = order.Id_Order;
+            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
 
             connect.cnn.Open();
 
@@ -177,7 +177,6 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
                 item.Type = sqlDataReader["Glass_Type"].ToString();
                 item.Color = sqlDataReader["Color"].ToString();
                 item.Status = sqlDataReader["Status"].ToString();
-                item.Shape = sqlDataReader["Shape"].ToString();
                 item.Order_id = sqlDataReader["Order_id"].ToString();
                 item.Desk = sqlDataReader["Desk"].ToString();
 
@@ -224,7 +223,6 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
                 item.Type = sqlDataReader["Glass_Type"].ToString();
                 item.Color = sqlDataReader["Color"].ToString();
                 item.Status = sqlDataReader["Status"].ToString();
-                item.Shape = sqlDataReader["Shape"].ToString();
                 item.Order_id = sqlDataReader["Order_id"].ToString();
                 item.Desk = sqlDataReader["Desk"].ToString();
 

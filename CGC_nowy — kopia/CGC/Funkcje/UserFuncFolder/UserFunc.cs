@@ -34,7 +34,7 @@ namespace CGC.Funkcje.UserFuncFolder
         private UserCheck userCheck = new UserCheck();
         private UserBaseModify userBaseModify = new UserBaseModify();
         
-        //Zwrawcanie rekordów z bazy -->
+        //Zwrawcanie rekordow z bazy -->
         public List<User> Return_All_Users()
         {
             return userBaseReturn.GetUsers_Manager();
@@ -60,7 +60,7 @@ namespace CGC.Funkcje.UserFuncFolder
             return userBaseReturn.GetAllUserHistory(receiver.user.Login);
         }
 
-        //<-- Zwrawcanie rekordów z bazy
+        //<-- Zwrawcanie rekordow z bazy
 
         //Akcje admina -->
         public List<User> Add_User_Admin(Receiver receiver)
@@ -82,7 +82,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Email_Exist(user.Email);
             if (check == true)
             {
-                admin.Error_Messege = "Email jest już zajęty";
+                admin.Error_Messege = "Email jest juz zajety";
                 temp.Add(admin);
                 return temp;
             }
@@ -98,7 +98,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Login_Exist(user.Login);
             if (check == true)
             {
-                admin.Error_Messege = "Login jest już zajęty";
+                admin.Error_Messege = "Login jest juz zajety";
                 temp.Add(admin);
                 return temp;
             }
@@ -106,7 +106,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Password_Correct(user.Password);
             if (check == false)
             {
-                admin.Error_Messege = "Niepoprawne hasło";
+                admin.Error_Messege = "Niepoprawne haslo";
                 temp.Add(admin);
                 return temp;
             }
@@ -238,7 +238,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Email_Exist(user.Email);
             if (check == true)
             {
-                admin.Error_Messege = "Email jest już zajęty";
+                admin.Error_Messege = "Email jest juz zajety";
                 return admin;
             }
 
@@ -253,7 +253,7 @@ namespace CGC.Funkcje.UserFuncFolder
                             return userBaseModify.Change_Email_Admin(user, admin);
                         }
                     }
-                    admin.Error_Messege = "Nie odnaleziono użytkownika";
+                    admin.Error_Messege = "Nie odnaleziono uzytkownika";
                     return admin;
                 }
             }
@@ -278,14 +278,14 @@ namespace CGC.Funkcje.UserFuncFolder
                         {
                             if (usere.Deleted == true)
                             {
-                                user.Error_Messege = "Użytkownik jest już usunięty";
+                                user.Error_Messege = "Uzytkownik zostal juz usuniety";
                                 temp.Add(user);
                                 return temp;
                             }
                             return userBaseModify.Delete_User(user,admin);
                         }
                     }
-                    user.Error_Messege = "Nie odnaleziono użytkownika";
+                    user.Error_Messege = "Nie odnaleziono uzytkownika";
                     temp.Add(user);
                     return temp;
                 }
@@ -315,12 +315,12 @@ namespace CGC.Funkcje.UserFuncFolder
                             {
                                 return userBaseModify.Restore_User(user, admin);
                             }
-                            user.Error_Messege = "Użytkownik jest aktywny";
+                            user.Error_Messege = "Uzytkownik jest aktywny";
                             temp.Add(user);
                             return temp;
                         }
                     }
-                    user.Error_Messege = "Nie odnaleziono użytkownika";
+                    user.Error_Messege = "Nie odnaleziono uzytkownika";
                     temp.Add(user);
                     return temp;
                 }
@@ -340,7 +340,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Password_Correct(user.Password);
             if (check == false)
             {
-                admin.Error_Messege = "Niepoprawne hasło";
+                admin.Error_Messege = "Niepoprawne haslo";
                 return admin;
             }
 
@@ -355,7 +355,7 @@ namespace CGC.Funkcje.UserFuncFolder
                             return userBaseModify.Change_Password_Admin(user, admin);
                         }
                     }
-                    admin.Error_Messege = "Nie odnaleziono użytkownika";
+                    admin.Error_Messege = "Nie odnaleziono uzytkownika";
                     return admin;
                 }
             }
@@ -379,7 +379,7 @@ namespace CGC.Funkcje.UserFuncFolder
                             return userBaseModify.Change_Permision(user, admin);
                         }
                     }
-                    admin.Error_Messege = "Nie odnaleziono użytkownika";
+                    admin.Error_Messege = "Nie odnaleziono uzytkownika";
                     return admin;
                 }
             }
@@ -403,7 +403,7 @@ namespace CGC.Funkcje.UserFuncFolder
                             return userBaseModify.Change_Name_Admin(user, admin);
                         }
                     }
-                    admin.Error_Messege = "Nie odnaleziono użytkownika";
+                    admin.Error_Messege = "Nie odnaleziono uzytkownika";
                     return admin;
                 }
             }
@@ -427,7 +427,7 @@ namespace CGC.Funkcje.UserFuncFolder
                             return userBaseModify.Change_Surname_Admin(user, admin);
                         }
                     }
-                    admin.Error_Messege = "Nie odnaleziono użytkownika";
+                    admin.Error_Messege = "Nie odnaleziono uzytkownika";
                     return admin;
                 }
             }
@@ -437,7 +437,7 @@ namespace CGC.Funkcje.UserFuncFolder
         
         //<-- Akcje admina
                 
-        //Zarządzanie kontem -->
+        //Zarzadzanie kontem -->
         public List<User> Log_in(Receiver receiver)
         {
             User user = receiver.user;
@@ -454,13 +454,13 @@ namespace CGC.Funkcje.UserFuncFolder
                     }
                     else
                     {
-                        user.Error_Messege = "Użytkownik został usunięty";
+                        user.Error_Messege = "Uzytkownik zostal usuniety";
                         temp.Add(user);
                         return temp;
                     }
                 }
             }
-            user.Error_Messege = "Zły login lub hasło";
+            user.Error_Messege = "Zly login lub haslo";
             temp.Add(user);
             return temp;
         }
@@ -475,7 +475,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Email_Exist(user.Email);
             if (check == true)
             {
-                user.Error_Messege = "Email jest już zajęty";
+                user.Error_Messege = "Email jest juz zajety";
                 temp.Add(user);
                 return temp;
             }
@@ -496,7 +496,7 @@ namespace CGC.Funkcje.UserFuncFolder
                     return userBaseModify.Change_Email(user);
                 }
             }
-            user.Error_Messege = "Nie odnaleziono użytkownika";
+            user.Error_Messege = "Nie odnaleziono uzytkownika";
             temp.Add(user);
             return temp;
         }
@@ -512,7 +512,7 @@ namespace CGC.Funkcje.UserFuncFolder
             check = userCheck.Is_Password_Correct(password);
             if (check == false)
             {
-                user.Error_Messege = "Niepoprawne hasło";
+                user.Error_Messege = "Niepoprawne haslo";
                 temp.Add(user);
                 return temp;
             }
@@ -524,7 +524,7 @@ namespace CGC.Funkcje.UserFuncFolder
                     return userBaseModify.Change_Password(user, password);
                 }
             }
-            user.Error_Messege = "Login lub hasło nie jest poprawny";
+            user.Error_Messege = "Zly login, lub email";
             temp.Add(user);
             return temp;
         }
@@ -549,14 +549,14 @@ namespace CGC.Funkcje.UserFuncFolder
                     }
                     else
                     {
-                        user.Error_Messege = "Email nie został wysłany";
+                        user.Error_Messege = "Email nie zostal wyslany";
                         temp.Add(user);
                         return temp;
                     }
                 }
             }
 
-            user.Error_Messege = "Zły login, lub email";
+            user.Error_Messege = "Zly login, lub email";
             temp.Add(user);
             return temp;
         }
@@ -581,17 +581,17 @@ namespace CGC.Funkcje.UserFuncFolder
                     }
                     else
                     {
-                        user.Error_Messege = "Email nie został wysłany";
+                        user.Error_Messege = "Email nie zostal wyslany";
                         temp.Add(user);
                         return temp;
                     }
                 }
             }
-            user.Error_Messege = "Zły kod";
+            user.Error_Messege = "Zly kod";
             temp.Add(user);
             return temp;
         }
 
-        //<-- Zarządzanie kontem
+        //<-- Zarzadzanie kontem
     }
 }

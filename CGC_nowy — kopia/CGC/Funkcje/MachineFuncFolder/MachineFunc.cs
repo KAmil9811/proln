@@ -78,7 +78,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     return machineBaseModify.Add_Machine(user, machines);
                 }
             }
-            machines.Error_Message = "Nie znaleziona użytkownika";
+            machines.Error_Message = "Nie znaleziono uzytkownika";
             temp.Add(machines);
             return temp;
         }
@@ -110,12 +110,12 @@ namespace CGC.Funkcje.MachineFuncFolder
                             return machineBaseModify.Change_Status_Machine(user, machines);
                         }
                     }
-                    machines.Error_Message = "Nie znaleziona maszyny";
+                    machines.Error_Message = "Nie znaleziono maszyny";
                     temp.Add(machines);
                     return temp;
                 }
             }
-            machines.Error_Message = "Nie znaleziona użytkownika";
+            machines.Error_Message = "Nie znaleziono uzytkownika";
             temp.Add(machines);
             return temp;
         }
@@ -134,7 +134,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     return machineBaseModify.Change_Type_Machine(user, machines);
                 }
             }
-            machines.Error_Message = "Nie znaleziona użytkownika";
+            machines.Error_Message = "Nie znaleziono uzytkownika";
             temp.Add(machines);
             return temp;
         }
@@ -153,7 +153,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                 }
             }
             
-            machines.Error_Message = "Nie znaleziona użytkownika";
+            machines.Error_Message = "Nie znaleziono uzytkownika";
             temp.Add(machines);
             return temp;
         }
@@ -171,7 +171,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     return machineBaseModify.Restore_Machine(user, machines);
                 }
             }
-            machines.Error_Message = "Nie znaleziona użytkownika";
+            machines.Error_Message = "Nie znaleziono uzytkownika";
             temp.Add(machines);
             return temp;
         }
@@ -190,7 +190,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     {
                         if (types == type)
                         {
-                            temp.Add("Typ już istnieje");
+                            temp.Add("Typ juz istnieje");
                             return temp;
                         }
                     }
@@ -198,7 +198,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     return machineBaseModify.Add_Type_Admin(user, type);
                 }
             }
-            temp.Add("Nie znaleziona użytkownika");
+            temp.Add("Nie znaleziono uzytkownika");
             return temp;
         }
         public List<string> Change_Type_Admin(Receiver receiver)
@@ -212,7 +212,7 @@ namespace CGC.Funkcje.MachineFuncFolder
             {
                 if (type == new_type)
                 {
-                    temp.Add("Typ już istnieje");
+                    temp.Add("Typ juz istnieje");
                     return temp;
                 }
             }
@@ -232,7 +232,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     return temp;
                 }
             }
-            temp.Add("Nie znaleziona użytkownika");
+            temp.Add("Nie znaleziono uzytkownika");
             return temp;
         }
     }

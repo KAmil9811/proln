@@ -39,6 +39,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
             for (int i = glass.Count; i > 0; i--)
             {
+                code = 0;
+
                 foreach (Glass gl in glasses)
                 {
                     foreach (Glass_Id gl2 in gl.Glass_info)
@@ -52,14 +54,13 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
                 code++;
 
-                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Destroyed,Removed,Type,Color,Owner,Desk,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Destroyed, @Removed, @Type, @Color, @Owner, @Desk, @code)";
+                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @code)";
 
                 SqlCommand command = new SqlCommand(query, connect.cnn);
                 command.Parameters.Add("@Hight", SqlDbType.Decimal).Value = glass.Hight;
                 command.Parameters.Add("@Width", SqlDbType.Decimal).Value = glass.Width;
                 command.Parameters.Add("@Length", SqlDbType.Decimal).Value = glass.Length;
                 command.Parameters.Add("@Used", SqlDbType.Bit).Value = 0;
-                command.Parameters.Add("@Destroyed", SqlDbType.Bit).Value = 0;
                 command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 0;
                 command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
                 command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
@@ -71,14 +72,16 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Dodałeś szkło " + code;
-                string magazinehistory = "Szkło " + code + " zostało dodane";
+                string userhistory = "Dodales szklo " + code;
+                string magazinehistory = "Szklo " + code + " zostalo dodane";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
 
-                //SetOrderStan();
+                glass.Glass_info.Add(new Glass_Id { Id = code });
 
+                //SetOrderStan();
+                glasses.Add(glass);
                 temp.Add(glass);
             }
             return temp;
@@ -108,8 +111,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "Zedytowałeś szkło " + glass_Id;
-                string magazinehistory = "Szkło " + glass_Id + " zostało zedytowane";
+                string userhistory = "Zedytowales szklo " + glass_Id;
+                string magazinehistory = "Szklo " + glass_Id + " zostalo zedytowane";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Magazine_History(magazinehistory, user.Login);                
@@ -133,14 +136,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                         {
                             if (ids.Used == true)
                             {
-                                glass.Error_Messege = "Szkło jet już zużyte";
+                                glass.Error_Messege = "Szklo zostalo juz zuzyte";
                                 temp.Add(glass);
                                 return temp;
                             }
 
                             if (ids.Removed == true)
                             {
-                                glass.Error_Messege = "Szkło zostało już usunięte";
+                                glass.Error_Messege = "Szklo zostalo juz usuniete";
                                 temp.Add(glass);
                                 return temp;
                             }
@@ -156,8 +159,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                             command.Dispose();
                             connect.cnn.Close();
 
-                            string userhistory = "Usunąłeś szkło " + ids.Id;
-                            string magazinehistory = "Szkło " + ids.Id + " zostało usunięte";
+                            string userhistory = "Usunales szklo " + ids.Id;
+                            string magazinehistory = "Szklo " + ids.Id + " zostalo usuniete";
 
                             insertHistory.Insert_User_History(userhistory, user.Login);
                             insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
@@ -188,14 +191,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                         {
                             if (ids.Used == true)
                             {
-                                glass.Error_Messege = "Szkło jet już zużyte";
+                                glass.Error_Messege = "Szklo zostalo juz zuzyte";
                                 temp.Add(glass);
                                 return temp;
                             }
 
                             if (ids.Removed == false)
                             {
-                                glass.Error_Messege = "Szkło zostało już przywrócone";
+                                glass.Error_Messege = "Szklo zostalo juz przywrocone";
                                 temp.Add(glass);
                                 return temp;
                             }
@@ -211,8 +214,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                             command.Dispose();
                             connect.cnn.Close();
 
-                            string userhistory = "Przywróciłeś szkło " + ids.Id;
-                            string magazinehistory = "Szkło " + ids.Id + " zostało przywrócone";
+                            string userhistory = "Przywrociles szklo " + ids.Id;
+                            string magazinehistory = "Szklo " + ids.Id + " zostalo przywrocone";
 
                             insertHistory.Insert_User_History(userhistory, user.Login);
                             insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
@@ -240,8 +243,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Dodałeś nowy typ szkła: " + type;
-            string magazinehistory = "Typ szkła " + type + " został dodany";
+            string userhistory = "Dodales nowy typ szkla: " + type;
+            string magazinehistory = "Typ szkla " + type + " zostal dodany";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
@@ -263,8 +266,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Dodałeś nowy kolor szkła: " + color;
-            string magazinehistory = "Kolor szkła " + color + " został dodany";
+            string userhistory = "Dodales nowy kolor szkla: " + color;
+            string magazinehistory = "Kolor szkla " + color + " zostal dodany";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
@@ -299,8 +302,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             connect.cnn.Close();
 
 
-            string userhistory = "Zmieniłeś typ: " + old_type + " na: " + new_type;
-            string magazinehistory = "Typ " + old_type + " został zmieniony na: " + new_type;
+            string userhistory = "Zmieniles typ z " + old_type + " na: " + new_type;
+            string magazinehistory = "Typ " + old_type + " zostal zmieniony na: " + new_type;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
@@ -334,8 +337,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zmieniłeś kolor: " + old_color + " na: " + new_color;
-            string magazinehistory = "Kolor " + old_color + " został zmieniony na: " + new_color;
+            string userhistory = "Zmieniles kolor z " + old_color + " na: " + new_color;
+            string magazinehistory = "Kolor " + old_color + " zostal zmieniony na: " + new_color;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Magazine_History(magazinehistory, user.Login);

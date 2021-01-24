@@ -45,7 +45,6 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 glass_Receiver.Width = Convert.ToDouble(sqlDataReader["Width"]);
                 glass_Receiver.Length = Convert.ToDouble(sqlDataReader["Length"]);
                 glass_Receiver.Used = Convert.ToBoolean(sqlDataReader["Used"]);
-                glass_Receiver.Destroyed = Convert.ToBoolean(sqlDataReader["Destroyed"]);
                 glass_Receiver.Removed = Convert.ToBoolean(sqlDataReader["Removed"]);
                 glass_Receiver.Type = sqlDataReader["Type"].ToString();
                 glass_Receiver.Color = sqlDataReader["Color"].ToString();
@@ -76,7 +75,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                     if (glass.Width == glass_Receiver.Width && glass.Hight == glass_Receiver.Hight && glass.Length == glass_Receiver.Length && glass.Type == glass_Receiver.Type && glass.Color == glass_Receiver.Color && glass.Owner == glass_Receiver.Owner)
                     {
                         glass.Count = glass.Count + 1;
-                        glass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Destroyed = glass_Receiver.Destroyed, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
+                        glass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
                         check = true;
                     }
                 }
@@ -92,7 +91,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                     newGlass.Color = glass_Receiver.Color;
                     newGlass.Owner = glass_Receiver.Owner;
                     newGlass.Desk = glass_Receiver.Desk;
-                    newGlass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Destroyed = glass_Receiver.Destroyed, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
+                    newGlass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
                     newGlass.Count = 1;
                     temp.Add(newGlass);
                 }
@@ -119,7 +118,6 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 glass_Receiver.Width = Convert.ToDouble(sqlDataReader["Width"]);
                 glass_Receiver.Length = Convert.ToDouble(sqlDataReader["Length"]);
                 glass_Receiver.Used = Convert.ToBoolean(sqlDataReader["Used"]);
-                glass_Receiver.Destroyed = Convert.ToBoolean(sqlDataReader["Destroyed"]);
                 glass_Receiver.Removed = Convert.ToBoolean(sqlDataReader["Removed"]);
                 glass_Receiver.Type = sqlDataReader["Type"].ToString();
                 glass_Receiver.Color = sqlDataReader["Color"].ToString();
@@ -163,7 +161,6 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 glass_Receiver.Width = Convert.ToDouble(sqlDataReader["Width"]);
                 glass_Receiver.Length = Convert.ToDouble(sqlDataReader["Length"]);
                 glass_Receiver.Used = Convert.ToBoolean(sqlDataReader["Used"]);
-                glass_Receiver.Destroyed = Convert.ToBoolean(sqlDataReader["Destroyed"]);
                 glass_Receiver.Removed = Convert.ToBoolean(sqlDataReader["Removed"]);
                 glass_Receiver.Type = sqlDataReader["Type"].ToString();
                 glass_Receiver.Color = sqlDataReader["Color"].ToString();
@@ -207,7 +204,6 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 glass_Receiver.Width = Convert.ToDouble(sqlDataReader["Width"]);
                 glass_Receiver.Length = Convert.ToDouble(sqlDataReader["Length"]);
                 glass_Receiver.Used = Convert.ToBoolean(sqlDataReader["Used"]);
-                glass_Receiver.Destroyed = Convert.ToBoolean(sqlDataReader["Destroyed"]);
                 glass_Receiver.Removed = Convert.ToBoolean(sqlDataReader["Removed"]);
                 glass_Receiver.Type = sqlDataReader["Type"].ToString();
                 glass_Receiver.Color = sqlDataReader["Color"].ToString();

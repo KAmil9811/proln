@@ -62,7 +62,7 @@ namespace CGC.Funkcje.ProductFuncFolder
             {
                 if (pro.Status != "Gotowy")
                 {
-                    product.Error_Messege = "Produkty nie są gotowe";
+                    product.Error_Messege = "Produkty nie sa gotowe";
                     temp.Add(product);
                     return temp;
                 }
@@ -103,9 +103,9 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (Product pro in products_to_delete)
             {
-                if (pro.Status != "Usunięty")
+                if (pro.Status != "Usuniety")
                 {
-                    producted.Error_Messege = "Produkty nie są usunięte";
+                    producted.Error_Messege = "Produkty nie sa usuniete";
                     temp.Add(producted);
                     return temp;
                 }
@@ -122,7 +122,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                     return temp;
                 }
             }
-            producted.Error_Messege = "User not found";
+            producted.Error_Messege = "Nie znaleziono użytkownika";
             temp.Add(producted);
             return temp;
         }

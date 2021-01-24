@@ -63,10 +63,10 @@ namespace CGC.Funkcje.MagazineFuncFolder
             {
                 if (usere.Login == user.Login)
                 {
-                    magazineBaseModify.Add_Glass(user, glass, code, magazineBaseReturn.Getglass());
+                    return magazineBaseModify.Add_Glass(user, glass, code, magazineBaseReturn.Getglass());
                 }
             }
-            glass.Error_Messege = "Użytkownik nie istnieje";
+            glass.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(glass);
             return temp;
         }
@@ -86,7 +86,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
                 }
             }
 
-            glass.Error_Messege = "Użytkownik nie istnieje";
+            glass.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(glass);
 
             return temp;
@@ -108,7 +108,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
                     return magazineBaseModify.Remove_Glass(user, Id_glasses, magazineBaseReturn.Getglass());
                 }
             }
-            glass.Error_Messege = "Użytkownik nie istnieje";
+            glass.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(glass);
             return temp;
         }
@@ -129,7 +129,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
                     return magazineBaseModify.Restore_Glass(user, Id_glasses, magazineBaseReturn.Getglass());
                 }
             }
-            glass.Error_Messege = "Użytkownik nie istnieje";
+            glass.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(glass);
             return temp;
         }
@@ -149,14 +149,14 @@ namespace CGC.Funkcje.MagazineFuncFolder
                     {
                         if (types == type)
                         {
-                            temp.Add("Typ już istnieje");
+                            temp.Add("Typ juz istnieje");
                             return temp;
                         }
                     }
                     return magazineBaseModify.Add_Type_Admin(user, type);
                 }
             }
-            temp.Add("Użytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje");
             return temp;
         }
 
@@ -174,14 +174,14 @@ namespace CGC.Funkcje.MagazineFuncFolder
                     {
                         if (colors == color)
                         {
-                            temp.Add("Kolor już istnieje");
+                            temp.Add("Kolor juz istnieje");
                             return temp;
                         }
                     }
                     return magazineBaseModify.Add_Color_Admin(user, color);
                 }
             }
-            temp.Add("Użytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje");
             return temp;
         }
 
@@ -196,7 +196,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
             {
                 if (type == new_type)
                 {
-                    temp.Add("Typ już istnieje");
+                    temp.Add("Typ juz istnieje");
                     return temp;
                 }
             }
@@ -216,7 +216,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
                     return temp;
                 }
             }
-            temp.Add("Użytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje");
             return temp;
         }
 
@@ -231,7 +231,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
             {
                 if (type == new_color)
                 {
-                    temp.Add("Kolor już istnieje");
+                    temp.Add("Kolor juz istnieje");
                     return temp;
                 }
             }
@@ -251,7 +251,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
                     return temp;
                 }
             }
-            temp.Add("Użytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje");
             return temp;
         }
     }

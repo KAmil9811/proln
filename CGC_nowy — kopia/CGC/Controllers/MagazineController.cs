@@ -102,76 +102,7 @@ namespace CGC.Controllers
         [HttpPost("Remove_Glass")]
         public async Task<List<Glass>> Remove_Glass([FromBody] Receiver receiver)
         {
-<<<<<<< HEAD
             return magazineFunc.Remove_Glass(receiver);
-=======
-            List<Glass> temp = new List<Glass>();
-            List<int> Id_glasses = receiver.glass_Id;
-
-            Glass glass = new Glass();            
-            
-            User user = receiver.user;
-
-            foreach (User usere in usersController.GetUsers())
-            {
-                if (usere.Login == user.Login)
-                {
-                    foreach (Glass glasse in Getglass())
-                    {
-                        foreach (Glass_Id ids in glasse.Glass_info)
-                        {
-                            foreach (int id_glasse in Id_glasses)
-                            {
-                                if (ids.Id == id_glasse)
-                                {
-                                    if (ids.Used == true)
-                                    {
-                                        glass.Error_Messege = "Glass_already_Used";
-                                        temp.Add(glass);
-                                        return temp;
-                                    }
-
-                                    if (ids.Removed == true)
-                                    {
-                                        glass.Error_Messege = "Glass_already_deleted";
-                                        temp.Add(glass);
-                                        return temp;
-                                    }
-
-                                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
-                                    SqlCommand command = new SqlCommand(query, cnn);
-
-                                    command.Parameters.Add("@Removed", SqlDbType.Bit).Value = true;
-                                    command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = id_glasse;
-
-                                    cnn.Open();
-                                    command.ExecuteNonQuery();
-                                    command.Dispose();
-                                    cnn.Close();
-
-                                    string userhistory = "You deleted glass " + ids.Id;
-                                    string magazinehistory = "Glass " + ids.Id + " has been deleted";
-
-                                    usersController.Insert_User_History(userhistory, user.Login);
-                                    Insert_Magazine_History(magazinehistory, user.Login);
-
-                                    //SetOrderStan();
-
-                                    temp.Add(glass);
-                                    return temp;
-                                }
-                            }
-                        }
-                    }
-                    glass.Error_Messege = "Glass_Id_no_exist";
-                    temp.Add(glass);
-                    return temp;
-                }
-            }
-            glass.Error_Messege = "User_no_exist";
-            temp.Add(glass);
-            return temp;
->>>>>>> 4de351d24a0a353bab027ad0c3bcf836076fd202
         }
 
         [HttpPost("Restore_Glass")]

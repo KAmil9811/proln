@@ -52,7 +52,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                     command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
                     command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
                     command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
-                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Oczekujący";
+                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Oczekujacy";
                     command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
                     command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
                     command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = 0;
@@ -73,7 +73,7 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order.Id_Order;
             command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = order.Owner;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Oczekujący";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Oczekujace";
             command.Parameters.Add("@Priority", SqlDbType.Int).Value = order.Priority;
             command.Parameters.Add("@Deadline", SqlDbType.VarChar, 40).Value = order.Deadline;
             command.Parameters.Add("@Stan", SqlDbType.VarChar, 40).Value = orderCheck.Avaible_Cut(order).ToString() + "/" + order.items.Count + "/" + "0";
@@ -86,8 +86,8 @@ namespace CGC.Funkcje.OrderFuncFolder
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Dodałeś zamówienie " + order.Id_Order;
-            string orderhistory = "Zamówienie zostało stworzone";
+            string userhistory = "Dodaleś zamowienie " + order.Id_Order;
+            string orderhistory = "Zamowienie zostalo dodane";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order);
@@ -115,8 +115,8 @@ namespace CGC.Funkcje.OrderFuncFolder
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zedytowałeś zamówienie " + order.Id_Order;
-            string orderhistory = "Zamówienie zostało zedytowane";
+            string userhistory = "Zedytowaleś zamowienie " + order.Id_Order;
+            string orderhistory = "Zamowienie zostalo zedytowane";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order);
@@ -147,8 +147,8 @@ namespace CGC.Funkcje.OrderFuncFolder
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zedytowałeś pozycję zamówienia " + order.Id_Order;
-            string orderhistory = "Pozycja zamówienia została zedytowana";
+            string userhistory = "Zedytowaleś pozycje zamowienia " + item.Id + " z zamowienia " + order.Id_Order;
+            string orderhistory = "Pozycja zamowienia zostala zedytowana " + item.Id;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order);
@@ -176,8 +176,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "You change order status " + ord.Id_Order + " on deletead";
-                string orderhistory = "Order has been deleted";
+                string userhistory = "Usunaleś zamowienie " + ord.Id_Order;
+                string orderhistory = "Zamowienie zostalo usuniete";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
@@ -199,8 +199,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "You changed order ststus " + ord.Id_Order + " on restored";
-                string orderhistory = "Order has been restored";
+                string userhistory = "Przywrociles zamowienie " + ord.Id_Order;
+                string orderhistory = "Zamoienie zostalo przywrocone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
@@ -222,8 +222,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "You change order status " + ord.Id_Order + " on frozen";
-                string orderhistory = "Order has been frozen";
+                string userhistory = "Zamrozileś zamowienie " + ord.Id_Order;
+                string orderhistory = "Zamoienie zostalo zamrozone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
@@ -245,8 +245,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "You changed order status " + ord.Id_Order + " on unfrozen";
-                string orderhistory = "Order has been unfrozen";
+                string userhistory = "Odmrozileś zamowienie " + ord.Id_Order;
+                string orderhistory = "Zamowienie zostalo odmrozone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
@@ -268,8 +268,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "You change order status " + ord.Id_Order + "on released";
-                string orderhistory = "Order has been released";
+                string userhistory = "Zmienileś status zamowienia " + ord.Id_Order + " na dostarczony";
+                string orderhistory = "Zamowienie zostalo dostarczone";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
@@ -291,8 +291,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 command.Dispose();
                 connect.cnn.Close();
 
-                string userhistory = "You change order status " + ord.Id_Order + " to ready";
-                string orderhistory = "Order ststus has been changed to ready";
+                string userhistory = "Zmienileś status zmowienia " + ord.Id_Order + " na gotowe";
+                string orderhistory = "Status zamowienia zostal zmieniony na gotowe";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
@@ -320,7 +320,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                     query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
                     command = new SqlCommand(query, connect.cnn);
 
-                    command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                    command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Wydany";
                     command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
 
                     connect.cnn.Open();
@@ -331,7 +331,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                     query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Product_Id;";
                     command = new SqlCommand(query, connect.cnn);
 
-                    command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                    command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Wydany";
                     command.Parameters.Add("@Product_Id", SqlDbType.Int).Value = item.Product_Id;
 
                     connect.cnn.Open();
@@ -339,8 +339,11 @@ namespace CGC.Funkcje.OrderFuncFolder
                     command.Dispose();
                     connect.cnn.Close();
 
-                    string producthistory = "Product has been released";
+                    string magazinehistory = "Pozycja zamowienia " + item.Id + " z zamowienia "  + order.Id_Order + "zostala wydana";
+                    string producthistory = "Produkt zostal wydany";
+
                     insertHistory.InsertProductHistory(item.Product_Id, user.Login, producthistory);
+                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
                 }
             }
 
@@ -357,8 +360,8 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             temp.Add(order);
 
-            string userhistory = "Wydałeś zamówienie " + order.Id_Order;
-            string orderhistory = "Zamówienie zostało wydane";
+            string userhistory = "Wydaleś zamowienie " + order.Id_Order;
+            string orderhistory = "Zamowienie zostalo wydane";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order);
@@ -376,7 +379,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 string query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Released";
+                command.Parameters.Add("@Status", SqlDbType.Bit).Value = "Wydany";
                 command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
 
                 connect.cnn.Open();
@@ -386,8 +389,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                 
                 temp.Add(temp_item);
 
-                string userhistory = "Wydałeś pozycja zamówienia " + item.Id + " z zamówienia " + item.Order_id;
-                string orderhistory = "Pozycja zamówienia " + item.Id + " została wydana";
+                string userhistory = "Wydaleś pozycje zamowienia " + item.Id + " z zamowienia " + item.Order_id;
+                string orderhistory = "Pozycja zamowienia " + item.Id + " zostala wydana";
 
                 insertHistory.Insert_User_History(userhistory, user.Login);
                 insertHistory.Insert_Order_History(orderhistory, user.Login, item.Order_id);
@@ -408,7 +411,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                         string query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
                         SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usunięty";
+                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usuniety";
                         command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = itm.Id;
 
                         connect.cnn.Open();
@@ -416,8 +419,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                         command.Dispose();
                         connect.cnn.Close();
 
-                        string userhistory = "Usunołęś pozycje " + itm.Id + " z zamówienia " + order.Id_Order;
-                        string orderhistory = "Pozycja " + itm.Id + " została usunięta";
+                        string userhistory = "Usunoleś pozycje " + itm.Id + " z zamowienia " + order.Id_Order;
+                        string orderhistory = "Pozycja " + itm.Id + " zostala usunieta";
 
                         insertHistory.Insert_User_History(userhistory, user.Login);
                         insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order);
@@ -429,7 +432,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                                 query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id_item = @Id_item and Status = @Status_old;";
                                 command = new SqlCommand(query, connect.cnn);
 
-                                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usunięty";
+                                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usuniety";
                                 command.Parameters.Add("@Status_old", SqlDbType.VarChar, 40).Value = "Gotowy";
                                 command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = itm.Id;
 
@@ -443,8 +446,8 @@ namespace CGC.Funkcje.OrderFuncFolder
                                 Console.WriteLine(e.ToString());
                             }
 
-                            userhistory = "Usunołęś produkt " + itm.Product_Id;
-                            string producthistory = "Produkt został usunięty";
+                            userhistory = "Usunoleś produkt " + itm.Product_Id;
+                            string producthistory = "Produkt zostal usuniety";
 
                             insertHistory.Insert_User_History(userhistory, user.Login);
                             insertHistory.InsertProductHistory(itm.Product_Id, user.Login, producthistory);

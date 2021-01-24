@@ -41,7 +41,7 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.Int).Value = machines.No;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Gotowa";
             command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = machines.Type;
             command.Parameters.Add("@Stan", SqlDbType.Bit).Value = false;
 
@@ -53,8 +53,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
 
             connect.cnn.Close();
 
-            string userhistory = "Dodałes maszynę " + machines.No;
-            string machinehistoryall = "Maszyna została stworzona";
+            string userhistory = "Dodales maszynę " + machines.No;
+            string machinehistoryall = "Maszyna zostala dodana";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -80,8 +80,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zmieniłeś status maszyny " + machines.No + " na " + machines.Status;
-            string machinehistoryall = "Status maszyny został zmieniony na " + machines.Status;
+            string userhistory = "Zmieniles status maszyny " + machines.No + " na " + machines.Status;
+            string machinehistoryall = "Status maszyny zostal zmieniony na " + machines.Status;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -94,7 +94,7 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "UPDATE  Machines SET Typ = @Typ  WHERE No = @No;";
+            string query = "UPDATE Machines SET Typ = @Typ  WHERE No = @No;";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.Int).Value = machines.No;
@@ -107,8 +107,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Zmieniłeś typ maszyny " + machines.No + " na " + machines.Type;
-            string machinehistoryall = "Status maszyny został zmieniony na " + machines.Type;
+            string userhistory = "Zmieniles typ maszyny " + machines.No + " na " + machines.Type;
+            string machinehistoryall = "Typ maszyny zostal zmieniony na " + machines.Type;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -134,8 +134,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "You deleted machine " + machines.No;
-            string machinehistoryall = "Machine has been deleted";
+            string userhistory = "Usunales maszyne " + machines.No;
+            string machinehistoryall = "Maszyna zostala usunieta";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -161,8 +161,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "You deleted machine " + machines.No;
-            string machinehistoryall = "Machine has been deleted";
+            string userhistory = "Przywrociles maszyne " + machines.No;
+            string machinehistoryall = "Maszyna zostala przywrocona";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
@@ -187,8 +187,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             command.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Dodałęś nowy typ maszyny: " + type;
-            string machinehistoryall = type + " został stworzony";
+            string userhistory = "Dodales nowy typ maszyny: " + type;
+            string machinehistoryall = type + " zostal dodany";
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(user.Login, machinehistoryall);
@@ -227,8 +227,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
                 }
             }
 
-            string userhistory = "Zmieniłeś typ maszyn " + old_type + " na " + new_type;
-            string machinehistoryall = old_type + " został zmieniony na " + new_type;
+            string userhistory = "Zmieniles typ maszyny z " + old_type + " na " + new_type;
+            string machinehistoryall = old_type + " zostal zmieniony na " + new_type;
 
             insertHistory.Insert_User_History(userhistory, user.Login);
             insertHistory.Insert_Machine_History_All(user.Login, machinehistoryall);

@@ -99,7 +99,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                 foreach (Glass_Id glass_Id in glass.Glass_info)
                 {
-                    if (glass_Id.Used == false && glass_Id.Destroyed == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                    if (glass_Id.Used == false &&  glass_Id.Removed == false && glass_Id.Cut_id == 0)
                     {
                         kontrolka = true;
                     }
@@ -428,7 +428,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             foreach (Item item in orderBaseReturn.GetItems(order))
             {
-                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Awaiting")
+                if (item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Oczekujacy")
                 {
                     packages.Item.Add(item);
                     backup.Item.Add(item);
@@ -456,7 +456,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                     foreach (Glass_Id glass_Id in glass.Glass_info)
                     {
-                        if (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                        if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                         {
                             glass1.Glass_info.Add(glass_Id);
                         }
@@ -732,7 +732,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             foreach (Item item in orderBaseReturn.GetItems(order))
             {
-                if (item.Cut_id == 0 && item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Awaiting")
+                if (item.Cut_id == 0 && item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Oczekujacy")
                 {
                     packages.Item.Add(item);
                     backup.Item.Add(item);
@@ -761,7 +761,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                     foreach (Glass_Id glass_Id in glass.Glass_info)
                     {
-                        if (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                        if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                         {
                             glass1.Glass_info.Add(glass_Id);
                         }
@@ -882,7 +882,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     {
                         List<int> Done = new List<int>();
                         Glass tmp = new Glass();
-                        tmp.Error_Messege = "zabraklo miejsca dla: ";
+                        tmp.Error_Messege = "Zabraklo miejsca dla: ";
 
                         Glass_Id glass_Id = new Glass_Id();
 

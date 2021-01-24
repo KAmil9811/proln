@@ -1,4 +1,5 @@
 ﻿using CGC.Funkcje.History;
+using CGC.Funkcje.MagazineFuncFolder.MagazineBase;
 using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Models;
 using System;
@@ -14,6 +15,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
     {
         private Connect connect = new Connect();
         private OrderBaseReturn orderBaseReturn = new OrderBaseReturn();
+        private MagazineBaseReturn magazineBaseReturn = new MagazineBaseReturn();
         private InsertHistory insertHistory = new InsertHistory();
         private static CutBaseModify m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -84,6 +86,11 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                     }
                 }
             }
+
+            string userhistory = "Zapisales projekt: " + code;
+
+            insertHistory.Insert_User_History(userhistory, user.Login);
+
             return code;
         }
 
@@ -95,7 +102,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usunięty";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Usuniety";
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -127,6 +134,9 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command.Dispose();
             connect.cnn.Close();
 
+            string userhistory = "Usunales projekt: " + cut_Project.Cut_id;
+
+            insertHistory.Insert_User_History(userhistory, user.Login);
 
             cut_Projects.Add(cut_Project);
             return cut_Projects;
@@ -140,7 +150,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command.Parameters.Add("@Id", SqlDbType.Int).Value = code;
             command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
             command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Gotowy";
             command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
             command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
 
@@ -154,12 +164,19 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
             command.Parameters.Add("@Product_id", SqlDbType.Int).Value = code;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Gotowy";
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
             command.Dispose();
             connect.cnn.Close();
+
+            string producthistory = "Produkt zostal wyciety";
+            string orderhistory = item.Id + " zostal wyciety";
+
+            insertHistory.InsertProductHistory(code, user.Login, producthistory);
+            insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
+
         }
 
         public string Post_Production_step2(User user, Machines machines, Cut_Project cut_Project)
@@ -174,6 +191,18 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command2.ExecuteNonQuery();
             command2.Dispose();
             connect.cnn.Close();
+
+            foreach(Glass gl in magazineBaseReturn.Getglass())
+            {
+                foreach(Glass_Id glass_Id in gl.Glass_info)
+                {
+                    if(glass_Id.Cut_id == cut_Project.Cut_id)
+                    {
+                        string magazinehistory = "Szklo " + glass_Id.Id + "zostalo zuzyte";
+                        insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+                    }
+                }
+            }
 
 
             string query3 = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id";
@@ -199,10 +228,14 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command4.Dispose();
             connect.cnn.Close();
 
-            string userhistory = "Wyciołeś projekt " + cut_Project.Cut_id;
-            insertHistory.Insert_User_History(userhistory, user.Login);
 
-            return "Done";
+            string userhistory = "Wycioles projekt " + cut_Project.Cut_id;
+            string machinehistory = "Projekt " + cut_Project.Cut_id + " został wyciety";
+
+            insertHistory.Insert_User_History(userhistory, user.Login);
+            insertHistory.Insert_Machine_History(cut_Project.Cut_id, user.Login, machinehistory, machines.No);
+
+            return "Wykonane";
         }
 
         public string Start_Production(Machines machines, Cut_Project cut_Project)
@@ -211,7 +244,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.Int, 40).Value = machines.No;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Gotowa";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Zajeta";
             command.Parameters.Add("@Last_Cut_id", SqlDbType.Int, 40).Value = cut_Project.Cut_id;
 
 
@@ -224,7 +257,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "W trakcie cięcia";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "W trakcie ciecia";
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -232,7 +265,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             connect.cnn.Close();
 
 
-            return "Rozpoczęto cięcie";
+            return "Rozpoczeto ciecie";
         }
     }
 }

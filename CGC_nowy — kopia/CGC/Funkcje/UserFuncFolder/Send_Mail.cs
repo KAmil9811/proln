@@ -86,8 +86,8 @@ namespace CGC.Models
                 MailMessage mail = new MailMessage("inzynierkacgc@gmail.com", email);
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                mail.Subject = "Reset password to CGC";
-                mail.Body = "Your code: " + code;
+                mail.Subject = "Resetowanie hasła do CGC";
+                mail.Body = "Twój kod: " + code;
 
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("inzynierkacgc@gmail.com", "inz2020CGC");
@@ -116,8 +116,8 @@ namespace CGC.Models
                 MailMessage mail = new MailMessage("inzynierkacgc@gmail.com", email);
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                mail.Subject = "Reset password to CGC";
-                mail.Body = "Your password is: " + password;
+                mail.Subject = "Resetowanie hasła do CGC";
+                mail.Body = "Twoje hasło: " + password;
 
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("inzynierkacgc@gmail.com", "inz2020CGC");

@@ -97,7 +97,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             {
                 if (item.Amount == 1)
                 {
-                    item.Status = "Oczekujący";
+                    item.Status = "Oczekujacy";
                     item.Can_Be_Createad = false;
                     item.Id = last_free_id;
                     last_free_id++;
@@ -105,7 +105,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
                 else if (item.Amount > 1)
                 {
-                    item.Status = "Oczekujący";
+                    item.Status = "Oczekujacy";
                     item.Can_Be_Createad = false;
 
                     item.Id = last_free_id;
@@ -114,7 +114,6 @@ namespace CGC.Funkcje.OrderFuncFolder
                     while (item.Amount > 1)
                     {
                         Item new_item = new Item();
-                        new_item.Shape = item.Shape;
                         new_item.Width = item.Width;
                         new_item.Length = item.Length;
                         new_item.Can_Be_Createad = false;
@@ -152,7 +151,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
 
-            order.Error_Messege = "Użytkownik nie istnieje";
+            order.Error_Messege = "Uzytkownik nie istnieje";
 
             temp.Add(order);
 
@@ -161,7 +160,7 @@ namespace CGC.Funkcje.OrderFuncFolder
 
         public List<Order> Edit_Order(Receiver receiver)
         {
-            List<Order> temp = new List<Order>(); //breakpoint
+            List<Order> temp = new List<Order>();
 
             Order order = receiver.order;
             User user = receiver.user;
@@ -173,7 +172,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                     orderBaseModify.Edit_Order(user, order);
                 }
             }
-            order.Error_Messege = "Użytkownik nie istnieje";
+            order.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(order);
             return temp;
         }
@@ -197,12 +196,12 @@ namespace CGC.Funkcje.OrderFuncFolder
                             return orderBaseModify.Edit_Order_Items(user, order, items);
                         }
                     }
-                    order.Error_Messege = "Pozycja zamówienia nie istnieje";
+                    order.Error_Messege = "Pozycja zamowienia nie istnieje";
                     temp.Add(order);
                     return temp;
                 }
             }
-            order.Error_Messege = "Użytkownik nie istnieje";
+            order.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(order);
             return temp;
         }
@@ -229,7 +228,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
 
-            order.Error_Messege = "Użytkownik nie istnieje";
+            order.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(order);
             return temp;
         }
@@ -246,12 +245,12 @@ namespace CGC.Funkcje.OrderFuncFolder
                     {
                         orderBaseModify.ReleasedOrder(user, order, orderBaseReturn.GetItems(order));
                     }
-                    order.Error_Messege = "Zamówienie nie jest gotowe";
+                    order.Error_Messege = "Zamowienie nie jest gotowe";
                     temp.Add(order);
                     return temp;
                 }
             }
-            order.Error_Messege = "Użytkownik nie istnieje";
+            order.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(order);
             return temp;
 
@@ -270,7 +269,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 {
                     if (item.Status != "Gotowy" && item.Id == itm.Id)
                     {
-                        temp_item.Error_Messege = "Pozycje zamówienia nie są gotowe";
+                        temp_item.Error_Messege = "Pozycje zamowienia nie sa gotowe";
                         temp.Add(temp_item);
                         return temp;
                     }
@@ -284,7 +283,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                     orderBaseModify.ReleasedItems(user, items);
                 }
             }
-            temp_item.Error_Messege = "Użytkownik nie istnieje";
+            temp_item.Error_Messege = "Uzytkownik nie istnieje";
             temp.Add(temp_item);
             return temp;
         }
@@ -299,9 +298,9 @@ namespace CGC.Funkcje.OrderFuncFolder
             {
                 foreach (int it in items)
                 {
-                    if (it == item.Id && item.Status == "Usunięty")
+                    if (it == item.Id && item.Status == "Usuniety")
                     {         
-                        item.Error_Messege = "Pozycje zamówienia są już usunięte";
+                        item.Error_Messege = "Pozycje zamowienia zostały juz usuniete";
                         temp.Add(item);
                         return temp;                   
                     }
@@ -317,7 +316,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             }
 
             Item iteme = new Item();
-            iteme.Error_Messege = "Nie znaleziono użytkownika";
+            iteme.Error_Messege = "Nie znaleziono Uzytkownika";
             temp.Add(iteme);
 
             return temp;

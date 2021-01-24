@@ -129,7 +129,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             foreach (Order order in orderBaseReturn.GetOrders())
             {
-                if (order.Status == "Oczekujący" || order.Status == "Zatrzymany")
+                if (order.Status == "Oczekujace" || order.Status == "Zatrzymany")
                 {
                     if (orderCheck.Avaible_Cut(order) > 0)
                     {
@@ -166,7 +166,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     {
                         foreach (Glass_Id glass_Id in glass.Glass_info)
                         {
-                            if (glass_Id.Used == false && glass_Id.Destroyed == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                            if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                             {
                                 if (item.Length <= glass.Length && item.Width <= glass.Width)
                                 {
@@ -178,7 +178,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     }
                 }
 
-                if (item.Status == "Oczekujący" && item.Cut_id == 0 && kontrol2 == true)
+                if (item.Status == "Oczekujacy" && item.Cut_id == 0 && kontrol2 == true)
                 {
                     kontrol = false;
                     if (temp.Count != 0)
@@ -231,7 +231,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             foreach (Machines mach in machineBaseReturn.GetMachines())
             {
-                if (mach.Stan == false && mach.Status == "Ready")
+                if (mach.Stan == false && mach.Status == "Gotowa")
                 {
                     machines.Add(mach);
                 }

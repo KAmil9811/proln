@@ -131,5 +131,31 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             return temp;
         }
 
+        public List<Cut_Project> Get_Inuse_Cut_Project_User()
+        {
+            List<Cut_Project> temp = new List<Cut_Project>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status;", connect.cnn);
+
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "W trakcie cięcia";
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Cut_Project cut_Project = new Cut_Project();
+                cut_Project.Cut_id = Convert.ToInt32(sqlDataReader["Cut_id"]);
+                cut_Project.Order_id = sqlDataReader["Order_id"].ToString();
+                cut_Project.Status = sqlDataReader["Status"].ToString();
+
+                temp.Add(cut_Project);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
+
     }
 }

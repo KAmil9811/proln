@@ -35,7 +35,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             int count = 0;
             foreach (Item item in orderBaseReturn.GetItems(order))
             {
-                if (item.Status == "Awaiting" && item.Cut_id == 0)
+                if (item.Status == "Oczekujacy" && item.Cut_id == 0)
                 {
                     foreach (Glass glass in magazineBaseReturn.Getglass())
                     {
@@ -43,7 +43,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                         {
                             foreach (Glass_Id glass_Id in glass.Glass_info)
                             {
-                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Destroyed == false && glass_Id.Cut_id == 0)
+                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                                 {
                                     count++;
                                 }
@@ -60,7 +60,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             int count = 0;
             foreach (Item item in order.items)
             {
-                if (item.Status == "Oczekujący")
+                if (item.Status == "Oczekujacy")
                 {
                     count++;
                 }
@@ -73,7 +73,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             int count = 0;
             foreach (Item item in order.items)
             {
-                if (item.Status == "InUse")
+                if (item.Status == "W uzyciu")
                 {
                     count++;
                 }

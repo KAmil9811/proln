@@ -35,7 +35,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
                 List<Glass_Id> temp2 = new List<Glass_Id>();
                 foreach (Glass_Id glass_Id in glass.Glass_info)
                 {
-                    if (glass_Id.Destroyed == false && glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
+                    if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                     {
                         temp2.Add(glass_Id);
                     }

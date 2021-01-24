@@ -34,7 +34,7 @@ namespace CGC.Funkcje.History
 
         public void Insert_User_History(string Description, string Login)
         {
-            string data = DateTime.Today.ToString("g");
+            string data = DateTime.Now.ToString("g");
 
             string query = "INSERT INTO dbo.User_History(Data, Description, Login) VALUES(@data, @Description, @Login)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
@@ -51,7 +51,7 @@ namespace CGC.Funkcje.History
 
         public void Insert_Machine_History_All(int No, string Login, string Description)
         {
-            string data = DateTime.Today.ToString("d");
+            string data = DateTime.Now.ToString("g");
             string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description) VALUES(@Date, @No, @Login, @Description)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
@@ -70,7 +70,7 @@ namespace CGC.Funkcje.History
         {
             try
             {
-                string data = DateTime.Today.ToString("d");
+                string data = DateTime.Now.ToString("g");
                 string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
@@ -91,7 +91,7 @@ namespace CGC.Funkcje.History
 
         public void Insert_Machine_History(int Cut_id, string Login, string Description, int No)
         {
-            string data = DateTime.Today.ToString("d");
+            string data = DateTime.Now.ToString("g");
             string query = "INSERT INTO dbo.Machines_History_All(Date, Cut_Id, Login, Description, No) VALUES(@data, @Cut_Id, @Login, @Description, @No)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
@@ -109,7 +109,7 @@ namespace CGC.Funkcje.History
 
         public void Insert_Magazine_History(string Description, string Login)
         {
-            string data = DateTime.Today.ToString("d");
+            string data = DateTime.Now.ToString("g");
             string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description) VALUES(@data, @Login, @Description)";
 
             SqlCommand command = new SqlCommand(query, connect.cnn);
@@ -126,7 +126,7 @@ namespace CGC.Funkcje.History
 
         public void Insert_Order_History(string Description, string Login, string Id_Order)
         {
-            string data = DateTime.Today.ToString("d");
+            string data = DateTime.Now.ToString("g");
             string query = "INSERT INTO dbo.[Order_History](Date, Login, Description, Id_Order) VALUES(@data, @Login, @Description, @Id_Order)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
@@ -143,7 +143,7 @@ namespace CGC.Funkcje.History
 
         public void InsertProductHistory(int Id, string Login, string Description)
         {
-            string data = DateTime.Today.ToString("d");
+            string data = DateTime.Now.ToString("g");
             string query = "INSERT INTO dbo.[Product_History](Data, Login, Description, Id) VALUES(@data, @Login, @Description, @Id)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
