@@ -42,12 +42,21 @@ export class AddTypeMachine extends Component {
     }
 
     render() {
-        return (
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
 
-            <div className="AddTypeMachine">
-                    <Sidebar />  
+                <div className="AddTypeMachine">
+                    <Sidebar />
                     <div className="add_TypeMachine">
-                  
+
                         <form>
                             <div className="form-group">
                                 <h2>Dodaj typ maszyny:</h2>
@@ -62,12 +71,13 @@ export class AddTypeMachine extends Component {
                             <div className="add_type_machine_b_c">
                                 <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Anuluj</button>
                                 <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Dodaj</button>
-                               
+
                             </div>
 
                         </form>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

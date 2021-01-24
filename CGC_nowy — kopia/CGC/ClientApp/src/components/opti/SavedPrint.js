@@ -258,30 +258,40 @@ export class SavedPrint extends Component {
 
 
     render() {
-        return (
-            <div>
-                <Sidebar />
-                <div className="test_c">
-                    <div className="canva">
-                        <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
-                    </div>
-                    <div className="table2">
-                        <h2>Tafle</h2>
-                        <GlassTableProject />
-                    </div>
-                    <div className="table3">
-                        <h2>Produkty</h2>
-                        <ItemsTable />
-                    </div>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
+                    <div className="test_c">
+                        <div className="canva">
+                            <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
+                        </div>
+                        <div className="table2">
+                            <h2>Tafle</h2>
+                            <GlassTableProject />
+                        </div>
+                        <div className="table3">
+                            <h2>Produkty</h2>
+                            <ItemsTable />
+                        </div>
                         <div>
                             <button className="prim_test" onClick={this.saveProject}>Powrót</button>
                             <button className="success_test" onClick={this.cutOrder}>Wytnij</button>
 
                         </div>
-                    
 
+
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

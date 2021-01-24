@@ -140,9 +140,18 @@ export class EditOrderItem extends Component {
     render() {
         let x = this.colorsSelector()
         let y = this.typeSelector()
-        return (
-            <div>
-                    <Sidebar/>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
                     <div className="userChange">
                         <form>
                             <div className="form-group">
@@ -222,16 +231,17 @@ export class EditOrderItem extends Component {
                                     <option value="deleted">Usunięte</option>
                                 </select>
                             </div>
-                  
+
 
                             <div className="form-group">
                                 <button type="submit" className="danger_edit_order_item" onClick={this.cancelItemEdit}>Anuluj</button>
-                            <Link to="/oneorder"><button type="submit" className="success_edit_order_item" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
+                                <Link to="/oneorder"><button type="submit" className="success_edit_order_item" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
                             </div>
                         </form>
-                </div>
+                    </div>
 
-            </div>
-        );
+                </div>
+            );
+        }
     }
 }

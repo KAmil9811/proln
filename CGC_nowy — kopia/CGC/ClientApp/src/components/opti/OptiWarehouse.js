@@ -33,22 +33,32 @@ export class OptiWarehouse extends Component {
 
     
     render() {
-        return (
-            <div>
-
-                <Sidebar />
-                <div className="nav_mw">
-                    <button className="add_machine" onClick={this.addMachine}>Oblicz nową partię</button>
-                    <OptiWarehouseTable/>
-
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-                <div className="conteiner_mw">
-                
-            </div>
+            );
+        }
+        else {
+            return (
+                <div>
+
+                    <Sidebar />
+                    <div className="nav_mw">
+                        <button className="add_machine" onClick={this.addMachine}>Oblicz nową partię</button>
+                        <OptiWarehouseTable />
+
+                    </div>
+                    <div className="conteiner_mw">
+
+                    </div>
 
 
-                
-            </div >
-        );
+
+                </div >
+            );
+        }
     }
 }

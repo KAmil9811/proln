@@ -120,7 +120,7 @@ export class PackagesTable extends Component {
                 searchTop
 
 
-               // materialSearch
+                materialSearch
                 searchBottom={false}
                 // barReverse
                 //  pagingTop

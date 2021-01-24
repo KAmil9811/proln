@@ -293,31 +293,41 @@ export class Test extends Component {
 
 
     render() {
-        return (
-            <div>
-                <Sidebar />
-                <div className="test_c">
-                    <div className="canva">
-                        <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
-                    </div>
-                    <h3>{sessionStorage.getItem('uncat')}</h3>
-                    <div className="table2">
-                        <h2>Tafle</h2>
-                        <OptiTable />
-                    </div>
-                    <div className="table3">
-                        <h2>Produkty</h2>
-                        <OptiTableItems />
-                        <div>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
+                    <div className="test_c">
+                        <div className="canva">
+                            <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
+                        </div>
+                        <h3>{sessionStorage.getItem('uncat')}</h3>
+                        <div className="table2">
+                            <h2>Tafle</h2>
+                            <OptiTable />
+                        </div>
+                        <div className="table3">
+                            <h2>Produkty</h2>
+                            <OptiTableItems />
+                            <div>
                                 <button className="prim_test" onClick={this.saveProject}>Zapisz projekt</button>
                                 <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
 
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 

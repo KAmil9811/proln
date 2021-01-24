@@ -163,6 +163,7 @@ export class OneHistory extends Component {
 
     render() {
         let xd = this.table();
+
         return (
             <div>
                 {xd}

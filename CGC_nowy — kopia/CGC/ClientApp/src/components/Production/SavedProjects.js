@@ -37,18 +37,28 @@ export class SavedProjects extends Component {
 
 
     render() {
-        return (
-            <div className="SavedProject">
-                <Sidebar />
-                <div className="save_project_conteiner">
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="SavedProject">
+                    <Sidebar />
+                    <div className="save_project_conteiner">
 
 
-                    <SavedOrdersTable />
+                        <SavedOrdersTable />
+
+                    </div>
+
 
                 </div>
-
-
-            </div>
-        );
+            );
+        }
     }
 }

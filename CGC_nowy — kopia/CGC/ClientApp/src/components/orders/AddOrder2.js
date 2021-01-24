@@ -57,6 +57,7 @@ export class AddOrderTwo extends Component {
             },
             colors: [],
             type: [],
+            check:'',
         }
     }
 
@@ -104,6 +105,7 @@ export class AddOrderTwo extends Component {
                 });
             })
     }
+
     handleAddOrder = (event) => {
         event.preventDefault();
         const receiver = {
@@ -117,6 +119,10 @@ export class AddOrderTwo extends Component {
                 login: sessionStorage.getItem('login'),
             }
         }
+        if (this.state.check === '') {
+            alert('Nie dodano żadnego elementu')
+        }
+        else { 
         fetch(`api/Order/Add_Order`, {
             method: "post",
             body: JSON.stringify(receiver),
@@ -134,6 +140,7 @@ export class AddOrderTwo extends Component {
             .then(json => {
                 this.props.history.push('/orderwarehouse')
             })
+    }
     }
 
     goBack = (event) => {
@@ -216,7 +223,8 @@ export class AddOrderTwo extends Component {
                    // delete: <button className="danger_t" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń  </button>,
                     shape: 'rectangle',
                 }]),
-            }
+            },
+            check:'ok'
         })
             console.log(this.state.table.rows)
         }
@@ -304,13 +312,22 @@ export class AddOrderTwo extends Component {
         let x = this.colorsSelector()
         let y = this.typeSelector()
         let table = this.table();
-        return (
-            <div>
-                    <Sidebar/>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
                     <div className="AddOrder2">
                         <form>
-                    
-                                <div className="form-group">
+
+                            <div className="form-group">
                                 <h2>Dodawanie obiektu</h2>
                                 <label>Długość</label>
                                 <input
@@ -367,24 +384,25 @@ export class AddOrderTwo extends Component {
                                     {y}
                                 </select>
                             </div>
-                    
-                   
+
+
                         </form>
                         <div className="form-group">
-                                <button type="submit" className="success_order2_1" onClick={this.addItem}>Dodaj element</button>
-                        
-                              <button type="submit" className="danger_order2" onClick={this.cancelAdding}>Anuluj zlecenie</button>
-                               
-                        
-                            </div>
+                            <button type="submit" className="success_order2_1" onClick={this.addItem}>Dodaj element</button>
+
+                            <button type="submit" className="danger_order2" onClick={this.cancelAdding}>Anuluj zlecenie</button>
+
+
+                        </div>
                         <div className="ordertable">
                             {table}
                         </div>
-                    <button type="submit" className="success_order2_2" onClick={this.handleAddOrder}>Dodaj</button>
-                </div>
+                        <button type="submit" className="success_order2_2" onClick={this.handleAddOrder}>Dodaj</button>
+                    </div>
 
-            </div>
-        )
+                </div>
+            )
+        }
     }
 
 }

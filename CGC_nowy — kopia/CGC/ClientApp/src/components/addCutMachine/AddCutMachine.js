@@ -98,35 +98,44 @@ export class AddCutMachine extends Component {
 
     render() {   
         let y = this.typeSelector()
-        return (
-            <div className="AddCutMachine">
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="AddCutMachine">
 
-                    <Sidebar />  
+                    <Sidebar />
                     <div className="addCutMachine">
-                  
+
                         <form>
 
                             <h2>Dodaj maszyne</h2>
                             <h3>Rodzaj maszyny</h3>
-                        <select onChange={(e) => {
-                            this.setState({ value: e.target.value });
-                            console.log(this.state)
-                        }} >
+                            <select onChange={(e) => {
+                                this.setState({ value: e.target.value });
+                                console.log(this.state)
+                            }} >
                                 {y}
                             </select>
-                           <div className="form-group">
-                          
+                            <div className="form-group">
+
                                 <button type="reset" className="danger_add_cm" onClick={this.cancel}>Anuluj</button>
-                              
+
                                 <button type="submit" className="success_add_cm" onClick={this.handleAddCutMachine}>Dodaj</button>
-                               
-                           
-                           </div>
+
+
+                            </div>
 
                         </form>
                     </div>
-            </div>
-
-               );
+                </div>
+            );
+        }
     }
 }

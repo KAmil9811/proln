@@ -144,19 +144,29 @@ export class CutMachineEdit extends Component {
 
     render() {
         let typeTable = this.table();
-        return (
-            <div className="cutMEdit">
-                <Sidebar />
-                <div className="cut_machine_edit">
-                    <div className="nav_machine_e">
-                    </div>
-                    <div className="conceiner_machine_e">
-                        <button type="button" className="success_cm_edit" onClick={this.addTypeMachine}>Dodaj typ</button>
-                        {typeTable}
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="cutMEdit">
+                    <Sidebar />
+                    <div className="cut_machine_edit">
+                        <div className="nav_machine_e">
+                        </div>
+                        <div className="conceiner_machine_e">
+                            <button type="button" className="success_cm_edit" onClick={this.addTypeMachine}>Dodaj typ</button>
+                            {typeTable}
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 
 

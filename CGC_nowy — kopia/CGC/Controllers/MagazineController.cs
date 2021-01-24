@@ -435,12 +435,11 @@ namespace CGC.Controllers
         public async Task<List<Glass>> Remove_Glass([FromBody] Receiver receiver)
         {
             List<Glass> temp = new List<Glass>();
+            List<int> Id_glasses = receiver.glass_Id;
 
             Glass glass = new Glass();            
             
             User user = receiver.user;
-            string help = receiver.id_glass;
-            int id_glass = Convert.ToInt32(help);
 
             foreach (User usere in usersController.GetUsers())
             {
@@ -450,43 +449,46 @@ namespace CGC.Controllers
                     {
                         foreach (Glass_Id ids in glasse.Glass_info)
                         {
-                            if (ids.Id == id_glass)
+                            foreach (int id_glasse in Id_glasses)
                             {
-                                if (ids.Used == true)
+                                if (ids.Id == id_glasse)
                                 {
-                                    glass.Error_Messege = "Glass_already_Used";
+                                    if (ids.Used == true)
+                                    {
+                                        glass.Error_Messege = "Glass_already_Used";
+                                        temp.Add(glass);
+                                        return temp;
+                                    }
+
+                                    if (ids.Removed == true)
+                                    {
+                                        glass.Error_Messege = "Glass_already_deleted";
+                                        temp.Add(glass);
+                                        return temp;
+                                    }
+
+                                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
+                                    SqlCommand command = new SqlCommand(query, cnn);
+
+                                    command.Parameters.Add("@Removed", SqlDbType.Bit).Value = true;
+                                    command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = id_glasse;
+
+                                    cnn.Open();
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
+                                    cnn.Close();
+
+                                    string userhistory = "You deleted glass " + ids.Id;
+                                    string magazinehistory = "Glass " + ids.Id + " has been deleted";
+
+                                    usersController.Insert_User_History(userhistory, user.Login);
+                                    Insert_Magazine_History(magazinehistory, user.Login);
+
+                                    //SetOrderStan();
+
                                     temp.Add(glass);
                                     return temp;
                                 }
-
-                                if (ids.Removed == true)
-                                {
-                                    glass.Error_Messege = "Glass_already_deleted";
-                                    temp.Add(glass);
-                                    return temp;
-                                }
-
-                                string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
-                                SqlCommand command = new SqlCommand(query, cnn);
-
-                                command.Parameters.Add("@Removed", SqlDbType.Bit).Value = true;
-                                command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = id_glass;
-
-                                cnn.Open();
-                                command.ExecuteNonQuery();
-                                command.Dispose();
-                                cnn.Close();
-
-                                string userhistory = "You deleted glass " + ids.Id;
-                                string magazinehistory = "Glass " + ids.Id + " has been deleted";
-
-                                usersController.Insert_User_History(userhistory, user.Login);
-                                Insert_Magazine_History(magazinehistory, user.Login);
-
-                                //SetOrderStan();
-
-                                temp.Add(glass);
-                                return temp;
                             }
                         }
                     }

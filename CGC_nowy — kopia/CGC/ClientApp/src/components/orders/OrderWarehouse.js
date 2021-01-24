@@ -52,20 +52,30 @@ export class OrderWarehouse extends Component {
 
     render() {
       //  let history = this.history();
-        return (
-            <div className="OrderWarehouse">
-                <Sidebar />
-                <div className="order_warehouse_conteiner">
-                  
-                    <button className="succes_add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
-                  
-                    <div className="tablewar">
-                        <OrderTable />
-                    </div>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
+            );
+        }
+        else {
+            return (
+                <div className="OrderWarehouse">
+                    <Sidebar />
+                    <div className="order_warehouse_conteiner">
 
-                
-            </div>
-        );
+                        <button className="succes_add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
+
+                        <div className="tablewar">
+                            <OrderTable />
+                        </div>
+                    </div>
+
+
+                </div>
+            );
+        }
     }
 }

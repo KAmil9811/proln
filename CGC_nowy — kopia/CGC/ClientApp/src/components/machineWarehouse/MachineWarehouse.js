@@ -50,16 +50,26 @@ export class MachineWarehouse extends Component {
 
     render() {
      //   let history = this.history();
-        return (
-            <div>
-
-                <Sidebar />
-                
-                <div className="machine_warhouse_conteiner">
-                    <button className="success_cm_add_wr" onClick={this.addMachine}>Dodaj maszynę</button>
-                    <MachineTable />
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
                 </div>
-            </div>
-        );
+            );
+        }
+        else {
+            return (
+                <div>
+
+                    <Sidebar />
+
+                    <div className="machine_warhouse_conteiner">
+                        <button className="success_cm_add_wr" onClick={this.addMachine}>Dodaj maszynę</button>
+                        <MachineTable />
+                    </div>
+                </div>
+            );
+        }
     }
 }

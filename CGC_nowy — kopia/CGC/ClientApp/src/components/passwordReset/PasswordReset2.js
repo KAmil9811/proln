@@ -44,38 +44,48 @@ export class PasswordReset2 extends Component {
     }
 
     render() {
-        return (
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
 
 
-            <div className="PasswordReset2">
-                <form>
-                    <h2>Resetowanie hasła</h2>
+                <div className="PasswordReset2">
+                    <form>
+                        <h2>Resetowanie hasła</h2>
 
 
-                    <div className="form-group">
-                        <label>Kod werfikacyjny</label>
-                        <input
-                            type="text"
-                            name="Code"
-                            className="form-control"
-                            id="inputCode"
-                            placeholder="Podaj kod"
-                            ref="code"
-                        />
-                    </div>
+                        <div className="form-group">
+                            <label>Kod werfikacyjny</label>
+                            <input
+                                type="text"
+                                name="Code"
+                                className="form-control"
+                                id="inputCode"
+                                placeholder="Podaj kod"
+                                ref="code"
+                            />
+                        </div>
 
 
 
 
 
-                    <div className="form-group">
-                        <button type="button" className="danger_reset2" onClick={this.cancelResetPassword2}>Anuluj</button>
-                        <button type="button" className=" success_reset2" onClick={this.handlePasswordReset2}>Dalej</button>
-                        
-                    </div>
+                        <div className="form-group">
+                            <button type="button" className="danger_reset2" onClick={this.cancelResetPassword2}>Anuluj</button>
+                            <button type="button" className=" success_reset2" onClick={this.handlePasswordReset2}>Dalej</button>
 
-                </form>
-            </div>
-        );
+                        </div>
+
+                    </form>
+                </div>
+            );
+        }
     }
 }

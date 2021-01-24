@@ -32,9 +32,7 @@ export class GlassWarehouse extends Component {
         this.props.history.push('/home')
     }
 
-    addGlass = (event) => {
-        this.props.history.push('/add_glass')
-    }
+  
 
     historyGlass = (event) => {
         this.props.history.push('/glass_history')
@@ -94,29 +92,45 @@ export class GlassWarehouse extends Component {
         this.props.history.push('/ready_glass_warehouse')
     }
 
+    gotohell = (event) => {
+        this.props.history.push('/add_glass')
+    }
+    
    /* history() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
                 <button type="button" className="add_glass" onClick={this.historyGlass}>Historia szkła</button>
             )
         }
+
+         <button type="button" className="danger_glas_magazine" onClick={this.delGlass}>Usuń szkło</button>
     }*/
     render() {
     //    let history = this.history();
-        return (
-            <div>
+        if (sessionStorage.getItem('valid') === '') {
+            return (
+                <div className="HomePage">
+                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
 
-                <Sidebar />
-                <div className="conteiner_gll">
-                    <button type="button" className="danger_glas_magazine" onClick={this.delGlass}>Usuń szkło</button>
-                    <button type="button" className="success_glas_magazine" onClick={this.addGlass}>Dodaj szkło</button>
-            
+                    <Sidebar />
+                    <div className="conteiner_gll">
 
-                    <div className="tableglass">
-                        <GlassTable />
+                        <button type="button" className="success_glas_magazine" onClick={this.gotohell}>Dodaj szkło</button>
+
+                        <div className="tableglass">
+
+                            <GlassTable />
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }

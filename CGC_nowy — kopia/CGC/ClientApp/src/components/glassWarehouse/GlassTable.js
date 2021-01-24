@@ -4,6 +4,9 @@ import { MDBDataTableV5 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import './GlassTable.css';
 import Sidebar from '../Sidebar';
+import { Route, withRouter } from 'react-router-dom';
+
+import { history } from 'react-router-dom';
 
 
 export class GlassTable extends Component {
@@ -14,11 +17,12 @@ export class GlassTable extends Component {
                 columns: [],
                 rows: []
             },
-            ids:'',
+            ids: '',
+            send: [],
         };
     }
 
-
+    
 
     componentDidMount() {
         var table2 = [];       
@@ -43,6 +47,7 @@ export class GlassTable extends Component {
                         amount: json[i].length,
                         owner: json[i].owner,
                         desk: json[i].desk,
+                        choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
                         id: '',
                         
                         /*action: <button className="delete" id={i} onClick={
@@ -165,6 +170,12 @@ export class GlassTable extends Component {
                                 sort: 'asc',
                                 width: 150
                             },
+                            {
+                                label: '',
+                                field: 'choice',
+                                sort: 'asc',
+                                width: 150
+                            }
 
                            /* {
                                 label: 'Usuń',
@@ -179,6 +190,80 @@ export class GlassTable extends Component {
                 });
             })
     };
+
+    check(number, id, miejsce) {
+        var checkBox = document.getElementById(number);
+        var arr = this.state.send
+        if (checkBox.checked == true) {
+            //alert('dodane' + '' + number)
+            arr.push(id)
+            this.setState.send = arr
+            console.log('tablica' + '---' + this.state.send)
+
+        } else {
+            //alert('usunięte' + '' + number)
+            const index = arr.indexOf(id);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+            this.setState.send = arr
+            console.log('tablica' + '---' + this.state.send)
+        }
+    };
+ 
+
+    delete = (event) => {
+        event.preventDefault();
+        const receiver = {
+            user: {
+                login: sessionStorage.getItem('login')
+            },
+            glass_Id: this.state.send
+        }
+        console.log(this.state.send)
+       fetch(`api/Magazine/Remove_Glass`, {
+            method: "post",
+            body: JSON.stringify(receiver),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return (json);
+            })
+            .then(json => {
+                
+                    alert("Usunięto wybrane szkła")
+                    window.location.reload();
+              
+
+            })
+    }
+
+    render() {
+        let xd = this.table();
+        return (
+
+            <div>
+                <div className="glass_table_b">
+                    <button className="danger_glas_magazine" onClick={this.delete}>Usuń zaznaczone </button>
+                    
+                </div>
+
+                {xd}
+            
+                
+            </div>
+        )
+    }
+
+    
+   
+    
+    
 
     table() {
         return (
@@ -201,7 +286,7 @@ export class GlassTable extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-                bordered
+              //  bordered
 
 
 
@@ -238,14 +323,6 @@ export class GlassTable extends Component {
         )
     }
 
-    render() {
-        let xd = this.table();
-        return (
-
-            <div>
-                {xd}
-            </div>
-        )
-    }
+    
 
 }
