@@ -4,6 +4,7 @@ import { OptiTable } from './OptiTable'
 import { OptiTableItems } from './OptiTableItems'
 import Sidebar from '../Sidebar';
 import jsPDF from 'jspdf';
+import ReactToPdf from "react-to-pdf";
 
 export class Test extends Component {
     constructor(props) {
@@ -19,7 +20,15 @@ export class Test extends Component {
     }
 
     componentDidMount() {
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(10, 10, 99000, 99000);
+
         const receiver = {
+
             order: {
                 id_order: sessionStorage.getItem('idOpti'),
             },
@@ -292,11 +301,16 @@ export class Test extends Component {
 
     }
 
-
-/*<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>*/
+/*<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>   onClick={this.function}  x={1} y={1} scale={0.3}*/
 
     render() {
-        if (sessionStorage.getItem('valid') === '') {
+        const ref = React.createRef();
+        const options = {
+            orientation: 'landscape',
+           /* unit: 'in',
+            format: [4, 2]*/
+        };
+        /*if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
                     <h1>Zaloguj się, aby usyskać dostęp!</h1>
@@ -304,13 +318,14 @@ export class Test extends Component {
                 </div>
             );
         }
-        else {
+        else {*/
             return (
                 <div>
                     <Sidebar />
                     <div className="test_c">
                         <div className="canva">
-                            <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
+                            <canvas className="canvas" ref={ref} id="canvas" width="10000" height="10000" ></canvas>
+
                         </div>
                         <h3>{sessionStorage.getItem('uncat')}</h3>
                         <div className="table2">
@@ -323,14 +338,18 @@ export class Test extends Component {
                             <div>
                                 <button className="prim_test" onClick={this.saveProject}>Zapisz projekt</button>
                                 <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
-                                <button className="success_test" onClick={this.function}>PDFFFF mordo</button>
+                                <ReactToPdf targetRef={ref} filename="div-blue.pdf" options={options} >
+                                    {({ toPdf }) => (
+                                        <button className="success_test" onClick={toPdf} >PDFFFF mordo</button>
+                                    )}
+                                </ReactToPdf>
                             </div>
                         </div>
 
                     </div>
                 </div>
             );
-        }
+        /*}*/
     }
 
     function() {

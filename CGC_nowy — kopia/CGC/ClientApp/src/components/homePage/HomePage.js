@@ -12,6 +12,10 @@ export class HomePage extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        var title = 'Home'
+        sessionStorage.setItem('title', this.title)
+    }
     logOut = (event) => {
         event.preventDefault();
         sessionStorage.removeItem('email')

@@ -7,7 +7,22 @@ import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
+import './Sidebar.css' 
 
+
+const Titleee = styled.div`
+  background: #15171c;
+  height: 10px;
+  width: 100%;
+  display: flex;
+  color: #ffffff;
+  justify-content: flex-start;
+  align-items: center;
+  top:0;
+  position: fixed;
+  z-index: 100;
+ 
+`
 
 const Nav = styled.div`
   background: #15171c;
@@ -73,18 +88,20 @@ const SidebarWrap = styled.div`
 `;
 
 
-
-
+const title = sessionStorage.getItem('title');
 
 const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
 
-    const showSidebar = () => setSidebar(!sidebar);
+    const showSidebar = () => {
+        setSidebar(!sidebar);
+        sessionStorage.setItem('title', title)
+    };
 
 
 
 
-    
+ 
    
 
     return (
@@ -92,11 +109,11 @@ const Sidebar = () => {
             
             <Nav>
               
-                    <NavIcon to='#'>
-                         <FaIcons.FaBars onClick={showSidebar} />
-                    </NavIcon>
-                  
+                <NavIcon to='#'>
+                    <FaIcons.FaBars onClick={showSidebar} />
+                </NavIcon>
 
+                <h1>{sessionStorage.getItem('title')}</h1>
               
                 <OutIcon to='/' >
                     <FiIcons.FiLogOut/>
@@ -108,6 +125,7 @@ const Sidebar = () => {
                         <NavIcon to='#'>
                             <AiIcons.AiOutlineClose onClick={showSidebar} />
                         </NavIcon>
+                        
                         {SidebarData.map((item, index) => {
                             return <SubMenu item={item} key={index} />;
                         })}
