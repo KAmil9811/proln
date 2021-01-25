@@ -4,9 +4,14 @@ using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Funkcje.ProductFuncFolder.ProductBase;
 using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sharp3DBinPacking;
+using Spire.Pdf;
+using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -762,12 +767,15 @@ namespace CGC.Funkcje.CutFuncFolder
             Item item1 = receiver.item;
             List<Glass> glasses = new List<Glass>();
             List<Item> To_big = new List<Item>();
+            Random random = new Random();
             bool kon = false;
             int kontrol;
             
 
             Package packages = new Package();
             Package backup = new Package();
+            List<Rectangle> rectangles = new List<Rectangle>();
+            int Last_posX = 0, Last_posY = 0, PaintX = 0, PaintY =0;
 
             List<Glass> tempo = magazineBaseReturn.Getglass();
 
@@ -990,14 +998,112 @@ namespace CGC.Funkcje.CutFuncFolder
                         }
                     }
 
-                     
+                    foreach(Glass glass2 in wynik)
+                    {
+                        PaintX += (int)glass2.Width;
+                        PaintY += (int)glass2.Length;
+
+                        PaintX += 100;
+                        PaintY += 100;
+                    }
+
+                    try
+                    {
+                        Image newImage = Image.FromFile("Project.bmp");
+                        Bitmap bitmap = new Bitmap(newImage, PaintX, PaintY);
+                        Last_posX = 0;
+
+                        foreach (Glass glass1 in wynik)
+                        {
+                            using (Graphics graphics = Graphics.FromImage(bitmap))
+                            {
+                                using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30,29, 4, 32)))
+                                {
+                                    graphics.FillRectangle(myBrush, new Rectangle(Last_posX, Last_posY, (int)glass1.Width, (int)glass1.Length)); // whatever
+                                                                                                                                                                 // and so on...
+                                } // myBrush will be disposed at this line
+                                bitmap.Save("Project.jpg");
+                            } // graphics will be disposed at this line
+
+
+                            foreach (Glass_Id glass_Id in glass1.Glass_info)
+                            {
+                                foreach (Piece piece in glass_Id.Pieces)
+                                {
+                                    if (piece.Widht >= piece.Lenght)
+                                    {
+                                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                                        {
+                                            using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
+                                            {
+                                                //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), (float)piece.X + (float)piece.Widht / 2 - 45, (float)piece.Y + (float)piece.Lenght / 2 - 20);
+                                            }
+                                            bitmap.Save("Project.jpg");
+                                        } // graphics will be disposed at this line
+                                    }
+                                    else
+                                    {
+                                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                                        {
+                                            using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
+                                            {
+                                                //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
+                                                drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+                                                graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), (float)piece.X + (float)piece.Widht / 2 - 20, (float)piece.Y + (float)piece.Lenght / 2 - 45, drawFormat);
+                                            }
+                                            bitmap.Save("Project.jpg");
+                                        }
+                                    }
+                                }
+                            }
+                            Last_posX += (int)glass1.Width;
+                            bitmap.Save("Project.jpg");
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        e.ToString();
+                    }
+                        
                     return wynik;
                 }
             }
-
             //błąd nie ma takiego usera
             return wynik;
         }
 
+        void CreatePdf()
+        {
+            PdfDocument doc = new PdfDocument();
+
+            PdfSection section = doc.Sections.Add();
+
+            PdfPageBase page = doc.Pages.Add();
+
+            PdfImage image = PdfImage.FromFile("Projekt.jpg");
+
+
+            float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
+
+            float heightFitRate = image.PhysicalDimension.Height / page.Canvas.ClientSize.Height;
+
+            float fitRate = Math.Max(widthFitRate, heightFitRate);
+
+            float fitWidth = image.PhysicalDimension.Width / fitRate;
+
+            float fitHeight = image.PhysicalDimension.Height / fitRate;
+
+            page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
+
+            doc.SaveToFile("Projekt.pdf");
+
+            doc.Close();
+
+          //  System.Diagnostics.Process.Start("image to pdf.pdf");
+        }
     }
 }
