@@ -70,7 +70,7 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (User use in userBaseReturn.GetUsers())
             {
-                if (use.Login == user.Login)
+                if (use.Login == user.Login && (user.Manager == true || user.Super_Admin == true || user.Admin || user.Magazine_management == true))
                 {
                     return productBaseModify.Released_Product(user, products_to_change);
                 }
@@ -113,7 +113,7 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (User use in userBaseReturn.GetUsers())
             {
-                if (use.Login == user.Login)
+                if (use.Login == user.Login && (user.Manager == true || user.Super_Admin == true || user.Admin || user.Magazine_management == true))
                 {
                     foreach (Product product in productBaseReturn.GetProducts())
                     {

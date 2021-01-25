@@ -145,9 +145,9 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
                 {
-                    return orderBaseModify.Add_Order(user, order);
+                    return orderBaseModify.Add_Order(usere, order);
                 }
             }
 
@@ -167,9 +167,9 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
                 {
-                    orderBaseModify.Edit_Order(user, order);
+                    orderBaseModify.Edit_Order(usere, order);
                 }
             }
             order.Error_Messege = "Uzytkownik nie istnieje";
@@ -187,13 +187,13 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
                 {
                     foreach (Item item in orderBaseReturn.GetItems(order))
                     {
                         if (item.Id == items.Id)
                         {
-                            return orderBaseModify.Edit_Order_Items(user, order, items);
+                            return orderBaseModify.Edit_Order_Items(usere, order, items);
                         }
                     }
                     order.Error_Messege = "Pozycja zamowienia nie istnieje";
@@ -216,13 +216,13 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
                 {
                     foreach (Order ord in orderBaseReturn.GetOrders())
                     {
                         if (ord.Id_Order == order.Id_Order)
                         {
-                            orderBaseModify.Set_stan(user, ord, name);
+                            orderBaseModify.Set_stan(usere, ord, name);
                         }
                     }
                 }
@@ -239,11 +239,11 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User use in userBaseReturn.GetUsers())
             {
-                if (use.Login == user.Login)
+                if (use.Login == user.Login && (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true))
                 {
                     if (order.Status == "Wykonany")
                     {
-                        orderBaseModify.ReleasedOrder(user, order, orderBaseReturn.GetItems(order));
+                        orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order));
                     }
                     order.Error_Messege = "Zamowienie nie jest gotowe";
                     temp.Add(order);
@@ -278,9 +278,9 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User use in userBaseReturn.GetUsers())
             {
-                if (use.Login == user.Login)
+                if (use.Login == user.Login && (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true))
                 {
-                    orderBaseModify.ReleasedItems(user, items);
+                    orderBaseModify.ReleasedItems(use, items);
                 }
             }
             temp_item.Error_Messege = "Uzytkownik nie istnieje";
@@ -309,9 +309,9 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
                 {
-                    orderBaseModify.Remove_Item(user, receiver.order, items, orderBaseReturn.GetItems(receiver.order));
+                    orderBaseModify.Remove_Item(usere, receiver.order, items, orderBaseReturn.GetItems(receiver.order));
                 }
             }
 

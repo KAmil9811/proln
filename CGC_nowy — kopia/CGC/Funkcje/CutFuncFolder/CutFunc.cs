@@ -545,32 +545,38 @@ namespace CGC.Funkcje.CutFuncFolder
                 code = 1;
             }
 
-            foreach(Glass glass in magazineBaseReturn.Getglass())
+            foreach (User usere in userBaseReturn.GetUsers())
             {
-                foreach (Glass_Id glass_Id in glass.Glass_info)
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
                 {
-                    foreach (Glass gla in glasses)
+                    foreach (Glass glass in magazineBaseReturn.Getglass())
                     {
-                        if (glass_Id.Id == gla.Glass_info.First().Id && glass_Id.Cut_id != 0)
+                        foreach (Glass_Id glass_Id in glass.Glass_info)
                         {
-                            return 0;
-                        }
-
-                        foreach (Item item in orderBaseReturn.GetItems(order))
-                        {
-                            foreach (Piece piece in gla.Glass_info.First().Pieces)
+                            foreach (Glass gla in glasses)
                             {
-                                if (piece.Id == item.Id && item.Cut_id != 0)
+                                if (glass_Id.Id == gla.Glass_info.First().Id && glass_Id.Cut_id != 0)
                                 {
                                     return 0;
                                 }
+
+                                foreach (Item item in orderBaseReturn.GetItems(order))
+                                {
+                                    foreach (Piece piece in gla.Glass_info.First().Pieces)
+                                    {
+                                        if (piece.Id == item.Id && item.Cut_id != 0)
+                                        {
+                                            return 0;
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }                 
+                    }
+                    return cutBaseModify.Save_Project(receiver.user, order, code, glasses);
                 }
             }
-
-            return cutBaseModify.Save_Project(receiver.user, order, code, glasses);
+            return 0;
         }
 
         public List<Cut_Project> Remove_Project(Receiver receiver)
@@ -581,8 +587,14 @@ namespace CGC.Funkcje.CutFuncFolder
 
             Cut_Project cut_Project = receiver.cut_Project;
             order.Id_Order = cut_Project.Order_id;
-
-            return cutBaseModify.Remove_Project(cut_Project, order, user);
+            foreach (User usere in userBaseReturn.GetUsers())
+            {
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                {
+                    return cutBaseModify.Remove_Project(cut_Project, order, user);
+                }
+            }
+            return cut_Projects;
         }
 
         public string Post_Production(Receiver receiver)
@@ -621,12 +633,27 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            return cutBaseModify.Post_Production_step2(user, machines, cut_Project);
+            foreach (User usere in userBaseReturn.GetUsers())
+            {
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                {
+                    return cutBaseModify.Post_Production_step2(user, machines, cut_Project);
+                }
+            }
+
+            return "Blad";
         }
 
         public string Start_Production(Receiver receiver)
         {
-            return cutBaseModify.Start_Production(receiver.machines, receiver.cut_Project);
+            foreach (User usere in userBaseReturn.GetUsers())
+            {
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                {
+                    cutBaseModify.Start_Production(receiver.machines, receiver.cut_Project);
+                }
+            }
+            return "Blad";
         }
 
         /*[HttpPost("Save_and_cut")]
@@ -737,6 +764,7 @@ namespace CGC.Funkcje.CutFuncFolder
             List<Item> To_big = new List<Item>();
             bool kon = false;
             int kontrol;
+            
 
             Package packages = new Package();
             Package backup = new Package();
@@ -962,6 +990,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         }
                     }
 
+                     
                     return wynik;
                 }
             }

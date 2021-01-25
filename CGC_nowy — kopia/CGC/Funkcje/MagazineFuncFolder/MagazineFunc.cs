@@ -61,9 +61,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
-                    return magazineBaseModify.Add_Glass(user, glass, code, magazineBaseReturn.Getglass());
+                    return magazineBaseModify.Add_Glass(usere, glass, code, magazineBaseReturn.Getglass());
                 }
             }
             glass.Error_Messege = "Uzytkownik nie istnieje";
@@ -80,9 +80,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (user.Login == usere.Login)
+                if (user.Login == usere.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
-                    magazineBaseModify.Edit_Glass(user, glass);
+                    magazineBaseModify.Edit_Glass(usere, glass);
                 }
             }
 
@@ -103,9 +103,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
-                    return magazineBaseModify.Remove_Glass(user, Id_glasses, magazineBaseReturn.Getglass());
+                    return magazineBaseModify.Remove_Glass(usere, Id_glasses, magazineBaseReturn.Getglass());
                 }
             }
             glass.Error_Messege = "Uzytkownik nie istnieje";
@@ -124,9 +124,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
-                    return magazineBaseModify.Restore_Glass(user, Id_glasses, magazineBaseReturn.Getglass());
+                    return magazineBaseModify.Restore_Glass(usere, Id_glasses, magazineBaseReturn.Getglass());
                 }
             }
             glass.Error_Messege = "Uzytkownik nie istnieje";
@@ -143,7 +143,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (user.Login == usere.Login)
+                if (user.Login == usere.Login && user.Password == usere.Password && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
                     foreach (string types in magazineBaseReturn.GetTypes())
                     {
@@ -153,10 +153,10 @@ namespace CGC.Funkcje.MagazineFuncFolder
                             return temp;
                         }
                     }
-                    return magazineBaseModify.Add_Type_Admin(user, type);
+                    return magazineBaseModify.Add_Type_Admin(usere, type);
                 }
             }
-            temp.Add("Uzytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje lub zle haslo");
             return temp;
         }
 
@@ -168,7 +168,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && user.Password == usere.Password && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
                     foreach (string colors in magazineBaseReturn.GetColor())
                     {
@@ -178,10 +178,10 @@ namespace CGC.Funkcje.MagazineFuncFolder
                             return temp;
                         }
                     }
-                    return magazineBaseModify.Add_Color_Admin(user, color);
+                    return magazineBaseModify.Add_Color_Admin(usere, color);
                 }
             }
-            temp.Add("Uzytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje lub zle haslo");
             return temp;
         }
 
@@ -203,20 +203,20 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && user.Password == usere.Password && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
                     foreach (string type in magazineBaseReturn.GetTypes())
                     {
                         if (type == old_type)
                         {
-                            magazineBaseModify.Change_Type_Admin(user, new_type, old_type);
+                            magazineBaseModify.Change_Type_Admin(usere, new_type, old_type);
                         }
                     }
                     temp.Add("Typ nie istnieje");
                     return temp;
                 }
             }
-            temp.Add("Uzytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje lub zle haslo");
             return temp;
         }
 
@@ -238,20 +238,20 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && user.Password == usere.Password && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
                 {
                     foreach (string color in magazineBaseReturn.GetColor())
                     {
                         if (color == old_color)
                         {
-                            magazineBaseModify.Change_Color_Admin(user, new_color, old_color);
+                            magazineBaseModify.Change_Color_Admin(usere, new_color, old_color);
                         }
                     }
                     temp.Add("Kolor nie istnieje");
                     return temp;
                 }
             }
-            temp.Add("Uzytkownik nie istnieje");
+            temp.Add("Uzytkownik nie istnieje lub zle haslo");
             return temp;
         }
     }
