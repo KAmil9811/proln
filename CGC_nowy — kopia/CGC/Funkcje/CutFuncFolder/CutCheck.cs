@@ -171,7 +171,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                 foreach (Glass glass in magazineBaseReturn.Getglass())
                 {
-                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == glass.Hight)
+                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == glass.Hight && (glass.Owner == "" || glass.Owner == order.Owner))
                     {
                         foreach (Glass_Id glass_Id in glass.Glass_info)
                         {

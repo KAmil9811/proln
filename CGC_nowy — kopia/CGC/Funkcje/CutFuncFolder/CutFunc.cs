@@ -110,9 +110,9 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            glasses.OrderBy(glasse => glasse.Width).ThenBy(glasses2 => glasses2.Length);
+            var sort_glasses = glasses.OrderBy(glasse => glasse.Width).ThenBy(glasses2 => glasses2.Length);
 
-            foreach (Glass glass in glasses)
+            foreach (Glass glass in sort_glasses)
             {
                 foreach (Glass_Id glass_id in glass.Glass_info)
                 {
@@ -743,9 +743,18 @@ namespace CGC.Funkcje.CutFuncFolder
 
             List<Glass> tempo = magazineBaseReturn.Getglass();
 
+            foreach (Order ord in orderBaseReturn.GetOrders())
+            {
+                if (ord.Id_Order == order.Id_Order)
+                {
+                    order.Owner = ord.Owner;
+                    break;
+                }
+            }
+
             foreach (Glass glass in magazineBaseReturn.Getglass())
             {
-                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight)
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight && (glass.Owner == "" || glass.Owner == order.Owner))
                 {
                     Glass glass1 = new Glass();
 
@@ -768,13 +777,13 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            glasses.OrderBy(gla => gla.Length).ThenBy(gla2 => gla2.Width);
+            var sort_glasses = glasses.OrderByDescending(gla => gla.Length).ThenByDescending(gla => gla.Width);
 
             foreach (Item item in orderBaseReturn.GetItems(order))
             {
                 if (item.Cut_id == 0 && item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Oczekujacy")
                 {
-                    if (item.Width <= glasses.First().Width && item.Length <= glasses.First().Length)
+                    if (item.Width <= sort_glasses.First().Width && item.Length <= sort_glasses.First().Length)
                     {
                         packages.Item.Add(item);
                         backup.Item.Add(item);
@@ -797,7 +806,7 @@ namespace CGC.Funkcje.CutFuncFolder
             {
                 if (usere.Login == user.Login)
                 {
-                    foreach (Glass glass in glasses)
+                    foreach (Glass glass in sort_glasses)
                     {
                         foreach (Glass_Id glass_id in glass.Glass_info)
                         {
