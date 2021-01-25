@@ -118,7 +118,7 @@ namespace CGC.Funkcje.CutFuncFolder
                 {
                     if (packages.Item.Count > 0)
                     {
-                        Glass_Id glass_Id2 = new Glass_Id { Pieces = new List<Piece>() };
+                        Glass_Id glass_Id2 = new Glass_Id { Id = glass_id.Id, Pieces = new List<Piece>() };
                         List<Item> Used = new List<Item>();
                         List<Cuboid> temporary = new List<Cuboid>();
                         foreach (Item itm in packages.Item)
@@ -137,6 +137,8 @@ namespace CGC.Funkcje.CutFuncFolder
                         tmp.Width = Convert.ToDouble(parameter.BinWidth);
                         tmp.Hight = Convert.ToDouble(parameter.BinDepth);
                         tmp.Length = Convert.ToDouble(parameter.BinHeight);
+                        tmp.Color = glass.Color;
+                        tmp.Type = glass.Type;
 
                         foreach (var cub in result.BestResult[0])
                         {
@@ -749,8 +751,9 @@ namespace CGC.Funkcje.CutFuncFolder
 
                     glass1.Length = glass.Length;
                     glass1.Width = glass.Width;
-                    glass1.Length = glass.Length;
                     glass1.Hight = glass.Hight;
+                    glass1.Color = glass.Color;
+                    glass1.Type = glass.Type;
 
 
                     foreach (Glass_Id glass_Id in glass.Glass_info)
@@ -800,7 +803,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         {
                             if (packages.Item.Count > 0)
                             {
-                                Glass_Id glass_Id2 = new Glass_Id { Pieces = new List<Piece>() };
+                                Glass_Id glass_Id2 = new Glass_Id { Id = glass_id.Id, Pieces = new List<Piece>() };
                                 List<Item> Used = new List<Item>();
                                 List<Cuboid> temporary = new List<Cuboid>();
                                 foreach (Item itm in packages.Item)
@@ -820,6 +823,8 @@ namespace CGC.Funkcje.CutFuncFolder
                                 tmp.Width = Convert.ToDouble(parameter.BinWidth);
                                 tmp.Hight = Convert.ToDouble(parameter.BinDepth);
                                 tmp.Length = Convert.ToDouble(parameter.BinHeight);
+                                tmp.Color = glass.Color;
+                                tmp.Type = glass.Type;
 
                                 foreach (var cub in result.BestResult[0])
                                 {
