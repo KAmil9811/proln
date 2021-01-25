@@ -37,54 +37,61 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
         public int Save_Project(User user, Order order, int code, List<Glass> glasses)
         {
-            string query = "INSERT INTO dbo.[Cut_Project](Cut_id, Order_id, Status) VALUES(@Cut_id,@Order_id, @Status)";
-            SqlCommand command = new SqlCommand(query, connect.cnn);
-
-            command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
-            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Zapisany";
-
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
-
-            foreach (Glass glass in glasses)
+            try
             {
-                if (glass.Error_Messege == null)
+                string query = "INSERT INTO dbo.[Cut_Project](Cut_id, Order_id, Status) VALUES(@Cut_id,@Order_id, @Status)";
+                SqlCommand command = new SqlCommand(query, connect.cnn);
+
+                command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Zapisany";
+
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
+
+                foreach (Glass glass in glasses)
                 {
-                    query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
-                    command = new SqlCommand(query, connect.cnn);
-
-                    command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
-                    command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass.Glass_info.First().Id;
-
-                    connect.cnn.Open();
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                    connect.cnn.Close();
-
-
-                    foreach (Item item in orderBaseReturn.GetItems(order))
+                    if (glass.Error_Messege == null)
                     {
-                        foreach (Piece piece in glass.Glass_info.First().Pieces)
+                        query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
+                        command = new SqlCommand(query, connect.cnn);
+
+                        command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                        command.Parameters.Add("@Glass_Id", SqlDbType.Int).Value = glass.Glass_info.First().Id;
+
+                        connect.cnn.Open();
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        connect.cnn.Close();
+
+
+                        foreach (Item item in orderBaseReturn.GetItems(order))
                         {
-                            if (piece.Id == item.Id)
+                            foreach (Piece piece in glass.Glass_info.First().Pieces)
                             {
-                                query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
-                                command = new SqlCommand(query, connect.cnn);
+                                if (piece.Id == item.Id)
+                                {
+                                    query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
+                                    command = new SqlCommand(query, connect.cnn);
 
-                                command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
-                                command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
+                                    command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = code;
+                                    command.Parameters.Add("@Id", SqlDbType.Int).Value = item.Id;
 
-                                connect.cnn.Open();
-                                command.ExecuteNonQuery();
-                                command.Dispose();
-                                connect.cnn.Close();
+                                    connect.cnn.Open();
+                                    command.ExecuteNonQuery();
+                                    command.Dispose();
+                                    connect.cnn.Close();
+                                }
                             }
                         }
                     }
                 }
+            }
+            catch(Exception e)
+            {
+                return 0;
             }
 
             string userhistory = "Zapisales projekt: " + code;

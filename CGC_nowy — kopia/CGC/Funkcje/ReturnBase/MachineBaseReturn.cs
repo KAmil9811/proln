@@ -70,20 +70,32 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History_All];", connect.cnn);
             connect.cnn.Open();
 
+      
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {
                 Machines_History_All machines_History_All = new Machines_History_All();
-                machines_History_All.No = Convert.ToInt32(sqlDataReader["No"]);
+
                 machines_History_All.Login = sqlDataReader["Login"].ToString();
                 machines_History_All.Date = sqlDataReader["Date"].ToString();
                 machines_History_All.Description = sqlDataReader["Description"].ToString();
 
+                try
+                {
+                    machines_History_All.No = Convert.ToInt32(sqlDataReader["No"]);
+                }
+                catch (Exception e)
+                {
+                    e.ToString();
+                }
+
                 machines_History_Alls.Add(machines_History_All);
+
             }
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+            
 
             return machines_History_Alls;
         }

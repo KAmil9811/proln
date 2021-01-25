@@ -44,15 +44,7 @@ export class PasswordReset2 extends Component {
     }
 
     render() {
-        if (sessionStorage.getItem('valid') === '') {
-            return (
-                <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
-                </div>
-            );
-        }
-        else {
+        
             return (
 
 
@@ -86,6 +78,6 @@ export class PasswordReset2 extends Component {
                     </form>
                 </div>
             );
-        }
+       
     }
 }

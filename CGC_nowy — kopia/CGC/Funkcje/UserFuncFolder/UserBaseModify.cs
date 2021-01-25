@@ -304,15 +304,22 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
 
             SqlCommand command = new SqlCommand("UPDATE dbo.[User] SET Password = @Password, Reset_pass = @Reset_pass WHERE Email = @Email", connect.cnn);
 
-            command.Parameters.Add("@Password", SqlDbType.VarChar, 40).Value = word;
-            command.Parameters.Add("@Reset_pass", SqlDbType.VarChar, 40).Value = "";
-            command.Parameters.Add("@Email", SqlDbType.VarChar, 40).Value = user.Email;
+            try
+            {
+                command.Parameters.Add("@Password", SqlDbType.VarChar, 40).Value = word;
+                command.Parameters.Add("@Reset_pass", SqlDbType.VarChar, 40).Value = "";
+                command.Parameters.Add("@Email", SqlDbType.VarChar, 40).Value = user.Email;
 
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
 
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
             string userhistory = "Zresetowales swoje haslo";
 
             insertHistory.Insert_User_History(userhistory, user.Login);

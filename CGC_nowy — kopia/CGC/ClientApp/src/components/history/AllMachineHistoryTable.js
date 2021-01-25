@@ -35,8 +35,9 @@ export class AllMachineHistoryTable extends Component {
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         who: json[i].login,
+                        no: json[i].no,
                         what: json[i].description,
-                        when: json[i].data
+                        when: json[i].date
                     })
                 }
 
@@ -53,6 +54,12 @@ export class AllMachineHistoryTable extends Component {
                                 width: 150
                             },
                             {
+                                label: 'Nr. maszyny',
+                                field: 'no',
+                                sort: 'asc',
+                                width: 50
+                            },
+                            {
                                 label: 'Co',
                                 field: 'what',
                                 sort: 'asc',
@@ -62,8 +69,9 @@ export class AllMachineHistoryTable extends Component {
                                 label: 'Kiedy',
                                 field: 'when',
                                 sort: 'asc',
-                                width: 200
+                                width: 150
                             },
+                            
                             /*{
                                 label: 'Uprawnienia',
                                 field: 'permissions',

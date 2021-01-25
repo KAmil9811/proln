@@ -299,11 +299,11 @@ export class Test extends Component {
 
     render() {
         const ref = React.createRef();
-        const options = {
+       /* const options = {
             orientation: 'landscape',
-           /* unit: 'in',
-            format: [4, 2]*/
-        };
+           *//* unit: 'in',
+            format: [4, 2]*//*
+        };*/
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
@@ -332,9 +332,9 @@ export class Test extends Component {
                             <div>
                                 <button className="prim_test" onClick={this.saveProject}>Zapisz projekt</button>
                                 <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
-                                <ReactToPdf targetRef={ref} filename="div-blue.pdf" options={options} >
+                                <ReactToPdf targetRef={ref} filename="div-blue.pdf"  >
                                     {({ toPdf }) => (
-                                        <button className="success_test" onClick={toPdf} >PDFFFF mordo</button>
+                                        <button className="success_test" onClick={toPdf} >Wygeneruj PDF projektu</button>
                                     )}
                                 </ReactToPdf>
                             </div>

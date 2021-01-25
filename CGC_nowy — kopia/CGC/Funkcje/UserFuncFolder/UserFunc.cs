@@ -577,7 +577,7 @@ namespace CGC.Funkcje.UserFuncFolder
 
                     if (helper.check == true)
                     {
-                        return userBaseModify.Save_Reset_Password(user, helper.word);
+                        return userBaseModify.Save_Reset_Password(usere, helper.word);
                     }
                     else
                     {

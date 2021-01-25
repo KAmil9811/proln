@@ -44,7 +44,6 @@ export class GlassTable extends Component {
                         thickness: json[i].hight,
                         color: json[i].color,
                         type: json[i].type,
-                        amount: json[i].length,
                         owner: json[i].owner,
                         desk: json[i].desk,
                         choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
@@ -149,12 +148,6 @@ export class GlassTable extends Component {
                             {
                                 label: 'Właściciel',
                                 field: 'owner',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Ilość',
-                                field: 'amount',
                                 sort: 'asc',
                                 width: 150
                             },

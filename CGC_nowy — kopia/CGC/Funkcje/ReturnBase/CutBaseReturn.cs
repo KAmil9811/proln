@@ -76,6 +76,27 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            foreach(Cut_Project cut in temp)
+            {
+                command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order;", connect.cnn);
+
+                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = cut.Order_id;
+
+                connect.cnn.Open();
+
+                sqlDataReader = command.ExecuteReader();
+                while (sqlDataReader.Read())
+               {
+                    cut.Priority = Convert.ToInt32(sqlDataReader["Priority"]);
+                    cut.Deadline = sqlDataReader["Deadline"].ToString();
+                    cut.Status = sqlDataReader["Status"].ToString();
+                }
+                sqlDataReader.Close();
+                command.Dispose();
+                connect.cnn.Close();
+            }
+
             return temp;
         }
 
