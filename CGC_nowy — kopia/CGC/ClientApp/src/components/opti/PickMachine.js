@@ -61,7 +61,6 @@ export class PickMachine extends Component {
             cut_Project: {
                 Cut_id: sessionStorage.getItem('id_order')
             }
-
         }
 
 
@@ -78,9 +77,16 @@ export class PickMachine extends Component {
                 console.log(json)
                 return (json)
             })*/
-        this.props.history.push('/glasswarehouse');
 
-        console.log(receiver)
+        if (window.confirm("Czy chcesz dodać odpadki do magazynu?")) {
+            this.props.history.push('/add_glass');
+        } else {
+            this.props.history.push('/selection_of_orders');
+        }
+
+        /*this.props.history.push('/glasswarehouse');
+
+        console.log(receiver)*/
 
     }
 

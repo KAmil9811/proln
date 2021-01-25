@@ -334,7 +334,7 @@ export class Test extends Component {
                                 <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
                                 <ReactToPdf targetRef={ref} filename="div-blue.pdf" options={options} >
                                     {({ toPdf }) => (
-                                        <button className="success_test" onClick={toPdf} >PDFFFF mordo</button>
+                                        <button className="success_test" onClick={toPdf} >Wygeneruj PDF projektu</button>
                                     )}
                                 </ReactToPdf>
                             </div>
