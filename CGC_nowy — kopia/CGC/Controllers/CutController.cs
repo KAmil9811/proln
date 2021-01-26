@@ -308,10 +308,7 @@ namespace CGC.Controllers
         [HttpGet("CreatePdf")]
         public async Task<string> CreatePdf()
         {
-            cutFunc.CreatePdf();
-
-            return "done";
+            return cutFunc.CreatePdf();
         }
-
     }
 }

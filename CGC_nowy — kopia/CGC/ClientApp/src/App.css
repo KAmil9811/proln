@@ -406,11 +406,12 @@ label {
 
 
 .EmailChange_c,
+.EditOrder_c,
 .PasswordChange_c,
 .user_change_conteiner,
 .conteiner_cp,
 .cut_machine_edit,
-.EditTypeM,
+.EditTypeM_c,
 .AddTypeMachine_c,
 .glass_attributes_conteiner,
 .AddColor_c,
@@ -427,7 +428,7 @@ label {
 .machine_warhouse_conteiner,
 .UserChange_c,
 .conteiner_rgw,
-.AddOrder1,
+.AddOrder1_c,
 .AddType_c,
 .conteiner_mw,
 .AddAcount_c,
@@ -444,7 +445,7 @@ label {
 .ResetPassword_c,
 .PasswordReset2_c,
 .Login_c,
-.typeEdit,
+.TypeEdit_c,
 .AddCutMachine_c {
     z-index: 0;
     padding-top: 19vh;

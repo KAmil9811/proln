@@ -87,12 +87,12 @@ export class EditOrder extends Component {
         }
         else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div>
+                <div className="EditOrder">
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Edit order</h1>
                     </div>
-                    <div className="userChange">
+                    <div className="EditOrder_c">
                         <form>
                             <div className="form-group">
                              
@@ -129,8 +129,10 @@ export class EditOrder extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="submit" className="danger_edit_order" onClick={this.cancelEditOrder}>Cancel</button>
                                 <button type="submit" className="success_edit_order" onClick={this.handleEditOrder}>Edit order</button>
+
+                                <button type="submit" className="danger_edit_order" onClick={this.cancelEditOrder}>Cancel</button>
+                                
                             </div>
 
                         </form>

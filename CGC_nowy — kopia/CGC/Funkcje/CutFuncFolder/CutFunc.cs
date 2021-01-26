@@ -1076,34 +1076,44 @@ namespace CGC.Funkcje.CutFuncFolder
             return wynik;
         }
 
-        void CreatePdf()
+        public string CreatePdf()
         {
-            PdfDocument doc = new PdfDocument();
+            try
+            {
+                PdfDocument doc = new PdfDocument();
 
-            PdfSection section = doc.Sections.Add();
+                PdfSection section = doc.Sections.Add();
 
-            PdfPageBase page = doc.Pages.Add();
+                PdfPageBase page = doc.Pages.Add();
 
-            PdfImage image = PdfImage.FromFile("Projekt.jpg");
+                PdfImage image = PdfImage.FromFile("Projekt.jpg");
 
 
-            float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
+                float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
 
-            float heightFitRate = image.PhysicalDimension.Height / page.Canvas.ClientSize.Height;
+                float heightFitRate = image.PhysicalDimension.Height / page.Canvas.ClientSize.Height;
 
-            float fitRate = Math.Max(widthFitRate, heightFitRate);
+                float fitRate = Math.Max(widthFitRate, heightFitRate);
 
-            float fitWidth = image.PhysicalDimension.Width / fitRate;
+                float fitWidth = image.PhysicalDimension.Width / fitRate;
 
-            float fitHeight = image.PhysicalDimension.Height / fitRate;
+                float fitHeight = image.PhysicalDimension.Height / fitRate;
 
-            page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
+                page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
 
-            doc.SaveToFile("Projekt.pdf");
+                doc.SaveToFile("Projekt.pdf");
 
-            doc.Close();
+                doc.Close();
 
-          //  System.Diagnostics.Process.Start("image to pdf.pdf");
+                System.Diagnostics.Process.Start("Projekt.pdf");
+
+                return "Projekt.pdf";
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+                return "Projekt.pdf";
+            }
         }
     }
 }

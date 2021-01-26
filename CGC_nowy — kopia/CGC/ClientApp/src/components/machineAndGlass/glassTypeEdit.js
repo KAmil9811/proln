@@ -60,29 +60,32 @@ export class GlassTypeEdit extends Component {
         }
         else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div className="typeedit">
+                <div className="TypeEdit">
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Edit glass type</h1>
                     </div>
-                    <div className="typeEdit">
-                        <form>
-                            <div className="form-group">
-                                <input
-                                    type="text"
-                                    name="color"
-                                    className="form-control"
-                                    id="inputColor"
-                                    placeholder="Enter type"
-                                    ref="type"
-                                    defaultValue={sessionStorage.getItem('type')}
-                                />
-                            </div>
+                     <form>
+                            <div className="TypeEdit_c">
+                       
+                                    <div className="form-group">
+                                        <input
+                                            type="text"
+                                            name="color"
+                                            className="form-control"
+                                            id="inputColor"
+                                            placeholder="Enter type"
+                                            ref="type"
+                                            defaultValue={sessionStorage.getItem('type')}
+                                        />
+                                    </div>
+                                    <button type="button" className="success_type_edit" onClick={this.changeColor}>Edit type</button>
 
-                            <button type="button" className="danger_type_edit" onClick={this.return}>Cancel</button>
-                            <button type="button" className="success_type_edit" onClick={this.changeColor}>Edit type</button>
-                        </form>
-                    </div>
+                                    <button type="button" className="danger_type_edit" onClick={this.return}>Cancel</button>
+                          
+                       
+                            </div>
+                     </form>
                 </div>
             )
         }

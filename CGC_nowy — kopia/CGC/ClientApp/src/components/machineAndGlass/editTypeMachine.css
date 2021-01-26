@@ -1,12 +1,13 @@
-﻿@media all and (min-width: 480px) {
-    .EditTypeM {
+﻿
+@media all and (min-width: 480px) {
+    .EditTypeM_c {
         padding: 60px 0;
     }
 
-        .EditTypeM form {
-            margin: 0 auto;
-            max-width: 320px;
-        }
+    .EditTypeM form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
 }
 
 
@@ -14,14 +15,18 @@
 .danger_cm_edit_type:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     outline: 0;
 }
 
 .danger_cm_edit_type {
     background-color: #ff3547;
     height: 3rem;
-    width: 13rem;
-    /* padding: 6px 6px;*/
+    width: 12rem;
+    padding: 6px 6px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
@@ -31,15 +36,13 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /* position:center;*/
-    /*  margin: 0 auto;*/
-    /*  margin-right: 1.5rem;*/
+    position: center;
+    margin: 0 auto;
     margin-right: auto;
-    margin-left: 2rem;
-    /* position: center;*/
-    /* float: right;*/
+    /* float: left;*/
     display: inline-block;
     float: left;
+    margin-left: 1vw;
 }
 
 .success_cm_edit_type {
@@ -58,22 +61,39 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /* margin-right: 1.5rem;*/
     margin-left: auto;
-    margin-right: 2rem;
+    margin-right: auto;
     /* position: center;*/
-    /* float: right;*/
-    display: inline-block;
     float: right;
+    margin-right: 1vw;
 }
 
-.success_cm_edit_type:hover{
-    background-color: #00913b;
+.success_cm_edit_type:hover {
+    background-color: #339933;
     transform: scale(1.05);
-    border-radius: 12px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
     outline: 0;
+}
+
+
+@media (max-width: 767px) {
+
+    .danger_cm_edit_type {
+        margin-left: 1vh;
+    }
+
+    .success_cm_edit_type {
+        margin-right: 1vh;
+    }
+
+    .title {
+        height: 5vh;
+    }
+
+    .titletext {
+        font-size: 4vh;
+    }
 }

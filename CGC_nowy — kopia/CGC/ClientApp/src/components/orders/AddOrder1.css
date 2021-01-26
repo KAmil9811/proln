@@ -1,50 +1,48 @@
 ﻿@media all and (min-width: 480px) {
-    .AddOrder1 {
+    .AddOrder1_c {
         padding: 60px 0;
     }
 
-        .AddOrder1 form {
-            margin: 0 auto;
-            max-width: 320px;
-        }
+    .AddOrder1 form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
 }
 
 
 
-
-
-
+.danger_add_order:hover {
+    background-color: #ee2425;
+    transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: 0;
+}
 
 .danger_add_order {
     background-color: #ff3547;
     height: 3rem;
     width: 12rem;
-    /* padding: 6px 6px;*/
+    padding: 6px 6px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    /* position:center;*/
-    /*  margin: 0 auto;*/
-    /*  margin-right: 1.5rem;*/
+    position: center;
+    margin: 0 auto;
     margin-right: auto;
-    margin-left: 2rem;
-    /* position: center;*/
-    /* float: right;*/
+    /* float: left;*/
     display: inline-block;
     float: left;
+    margin-left: 1vw;
 }
-
-    .danger_add_order:hover {
-        background-color: #ee2425;
-        transform: scale(1.05);
-        outline: 0;
-    }
 
 .success_add_order {
     background-color: #00c851;
@@ -62,17 +60,39 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /* margin-right: 1.5rem;*/
     margin-left: auto;
-    margin-right: 2rem;
+    margin-right: auto;
     /* position: center;*/
-    /* float: right;*/
-    display: inline-block;
     float: right;
+    margin-right: 1vw;
 }
 
-    .success_add_order:hover {
-        background-color: #339933;
-        transform: scale(1.05);
-        outline: 0;
+.success_add_order:hover {
+    background-color: #339933;
+    transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: 0;
+}
+
+
+@media (max-width: 767px) {
+
+    .danger_add_order {
+        margin-left: 1vh;
     }
+
+    .success_add_order {
+        margin-right: 1vh;
+    }
+
+    .title {
+        height: 5vh;
+    }
+
+    .titletext {
+        font-size: 4vh;
+    }
+}

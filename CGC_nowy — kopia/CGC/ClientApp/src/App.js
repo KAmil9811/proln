@@ -53,7 +53,7 @@ import { PickMachine } from './components/opti/PickMachine'
 import { SavedPrint } from './components/opti/SavedPrint';
 import { SavedProjects } from './components/Production/SavedProjects';
 
-
+import { download } from './components/opti/Project.pdf'
 
 
 
@@ -69,7 +69,7 @@ export default class App extends Component {
             <Router>
 
                 <Switch>
-
+                    <Route exact path='/download' component={download} />
                     <Route exact path='/' component={Login} />
                     <Route path='/userpanel' component={ControlPanel} />
                     <Route path='/controlpaneladmin' component={ControlPanel2} />

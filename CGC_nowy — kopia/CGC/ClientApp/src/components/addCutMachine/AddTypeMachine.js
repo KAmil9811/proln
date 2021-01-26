@@ -55,7 +55,7 @@ export class AddTypeMachine extends Component {
 
                 <div className="AddTypeMachine">
                     <Sidebar />
-                    <div className="title_atm">
+                    <div className="title">
                         <h1 className="titletext">Add machine type</h1>
                     </div>
                     <form>

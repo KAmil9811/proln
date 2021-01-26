@@ -60,13 +60,14 @@ export class MachineTypeEdit extends Component {
         }
         else if ( sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div className="editTypeM">
+                <div className="EditTypeM">
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Edit type machine</h1>
                     </div>
-                    <div className="EditTypeM">
-                        <form>
+                    <form>
+                    <div className="EditTypeM_c">
+                        
                             <div className="form-group">
                               
                                 <input
@@ -79,12 +80,16 @@ export class MachineTypeEdit extends Component {
                                     defaultValue={sessionStorage.getItem('machinetype')}
                                 />
                             </div>
+                            <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Edit type</button>
+
 
                             <button type="button" className="danger_cm_edit_type" onClick={this.return}>Cancel</button>
-                            <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Edit type</button>
-                        </form>
+                           
+
+                       
 
                     </div>
+                  </form>
                 </div>
             )
         }
