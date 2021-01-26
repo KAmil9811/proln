@@ -4,9 +4,14 @@ using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Funkcje.ProductFuncFolder.ProductBase;
 using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Sharp3DBinPacking;
+using Spire.Pdf;
+using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -110,9 +115,9 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            glasses.OrderBy(glasse => glasse.Width).ThenBy(glasses2 => glasses2.Length);
+            var sort_glasses = glasses.OrderBy(glasse => glasse.Width).ThenBy(glasses2 => glasses2.Length);
 
-            foreach (Glass glass in glasses)
+            foreach (Glass glass in sort_glasses)
             {
                 foreach (Glass_Id glass_id in glass.Glass_info)
                 {
@@ -545,32 +550,38 @@ namespace CGC.Funkcje.CutFuncFolder
                 code = 1;
             }
 
-            foreach(Glass glass in magazineBaseReturn.Getglass())
+            foreach (User usere in userBaseReturn.GetUsers())
             {
-                foreach (Glass_Id glass_Id in glass.Glass_info)
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
                 {
-                    foreach (Glass gla in glasses)
+                    foreach (Glass glass in magazineBaseReturn.Getglass())
                     {
-                        if (glass_Id.Id == gla.Glass_info.First().Id && glass_Id.Cut_id != 0)
+                        foreach (Glass_Id glass_Id in glass.Glass_info)
                         {
-                            return 0;
-                        }
-
-                        foreach (Item item in orderBaseReturn.GetItems(order))
-                        {
-                            foreach (Piece piece in gla.Glass_info.First().Pieces)
+                            foreach (Glass gla in glasses)
                             {
-                                if (piece.Id == item.Id && item.Cut_id != 0)
+                                if (glass_Id.Id == gla.Glass_info.First().Id && glass_Id.Cut_id != 0)
                                 {
                                     return 0;
                                 }
+
+                                foreach (Item item in orderBaseReturn.GetItems(order))
+                                {
+                                    foreach (Piece piece in gla.Glass_info.First().Pieces)
+                                    {
+                                        if (piece.Id == item.Id && item.Cut_id != 0)
+                                        {
+                                            return 0;
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }                 
+                    }
+                    return cutBaseModify.Save_Project(receiver.user, order, code, glasses);
                 }
             }
-
-            return cutBaseModify.Save_Project(receiver.user, order, code, glasses);
+            return 0;
         }
 
         public List<Cut_Project> Remove_Project(Receiver receiver)
@@ -581,8 +592,14 @@ namespace CGC.Funkcje.CutFuncFolder
 
             Cut_Project cut_Project = receiver.cut_Project;
             order.Id_Order = cut_Project.Order_id;
-
-            return cutBaseModify.Remove_Project(cut_Project, order, user);
+            foreach (User usere in userBaseReturn.GetUsers())
+            {
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                {
+                    return cutBaseModify.Remove_Project(cut_Project, order, user);
+                }
+            }
+            return cut_Projects;
         }
 
         public string Post_Production(Receiver receiver)
@@ -621,12 +638,27 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            return cutBaseModify.Post_Production_step2(user, machines, cut_Project);
+            foreach (User usere in userBaseReturn.GetUsers())
+            {
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                {
+                    return cutBaseModify.Post_Production_step2(user, machines, cut_Project);
+                }
+            }
+
+            return "Blad";
         }
 
         public string Start_Production(Receiver receiver)
         {
-            return cutBaseModify.Start_Production(receiver.machines, receiver.cut_Project);
+            foreach (User usere in userBaseReturn.GetUsers())
+            {
+                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                {
+                    cutBaseModify.Start_Production(receiver.machines, receiver.cut_Project);
+                }
+            }
+            return "Blad";
         }
 
         /*[HttpPost("Save_and_cut")]
@@ -735,17 +767,30 @@ namespace CGC.Funkcje.CutFuncFolder
             Item item1 = receiver.item;
             List<Glass> glasses = new List<Glass>();
             List<Item> To_big = new List<Item>();
+            Random random = new Random();
             bool kon = false;
             int kontrol;
+            
 
             Package packages = new Package();
             Package backup = new Package();
+            List<Rectangle> rectangles = new List<Rectangle>();
+            int Last_posX = 0, Last_posY = 0, PaintX = 0, PaintY =0;
 
             List<Glass> tempo = magazineBaseReturn.Getglass();
 
+            foreach (Order ord in orderBaseReturn.GetOrders())
+            {
+                if (ord.Id_Order == order.Id_Order)
+                {
+                    order.Owner = ord.Owner;
+                    break;
+                }
+            }
+
             foreach (Glass glass in magazineBaseReturn.Getglass())
             {
-                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight)
+                if (glass.Type == item1.Type && glass.Color == item1.Color && item1.Thickness == glass.Hight && (glass.Owner == "" || glass.Owner == order.Owner))
                 {
                     Glass glass1 = new Glass();
 
@@ -768,13 +813,13 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            glasses.OrderBy(gla => gla.Length).ThenBy(gla2 => gla2.Width);
+            var sort_glasses = glasses.OrderByDescending(gla => gla.Length).ThenByDescending(gla => gla.Width);
 
             foreach (Item item in orderBaseReturn.GetItems(order))
             {
                 if (item.Cut_id == 0 && item.Color == item1.Color && item.Type == item1.Type && item1.Thickness == item.Thickness && item.Status == "Oczekujacy")
                 {
-                    if (item.Width <= glasses.First().Width && item.Length <= glasses.First().Length)
+                    if (item.Width <= sort_glasses.First().Width && item.Length <= sort_glasses.First().Length)
                     {
                         packages.Item.Add(item);
                         backup.Item.Add(item);
@@ -797,7 +842,7 @@ namespace CGC.Funkcje.CutFuncFolder
             {
                 if (usere.Login == user.Login)
                 {
-                    foreach (Glass glass in glasses)
+                    foreach (Glass glass in sort_glasses)
                     {
                         foreach (Glass_Id glass_id in glass.Glass_info)
                         {
@@ -953,13 +998,112 @@ namespace CGC.Funkcje.CutFuncFolder
                         }
                     }
 
+                    foreach(Glass glass2 in wynik)
+                    {
+                        PaintX += (int)glass2.Width;
+                        PaintY += (int)glass2.Length;
+
+                        PaintX += 100;
+                        PaintY += 100;
+                    }
+
+                    try
+                    {
+                        Image newImage = Image.FromFile("Project.bmp");
+                        Bitmap bitmap = new Bitmap(newImage, PaintX, PaintY);
+                        Last_posX = 0;
+
+                        foreach (Glass glass1 in wynik)
+                        {
+                            using (Graphics graphics = Graphics.FromImage(bitmap))
+                            {
+                                using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30,29, 4, 32)))
+                                {
+                                    graphics.FillRectangle(myBrush, new Rectangle(Last_posX, Last_posY, (int)glass1.Width, (int)glass1.Length)); // whatever
+                                                                                                                                                                 // and so on...
+                                } // myBrush will be disposed at this line
+                                bitmap.Save("Project.jpg");
+                            } // graphics will be disposed at this line
+
+
+                            foreach (Glass_Id glass_Id in glass1.Glass_info)
+                            {
+                                foreach (Piece piece in glass_Id.Pieces)
+                                {
+                                    if (piece.Widht >= piece.Lenght)
+                                    {
+                                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                                        {
+                                            using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
+                                            {
+                                                //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), (float)piece.X + (float)piece.Widht / 2 - 45, (float)piece.Y + (float)piece.Lenght / 2 - 20);
+                                            }
+                                            bitmap.Save("Project.jpg");
+                                        } // graphics will be disposed at this line
+                                    }
+                                    else
+                                    {
+                                        using (Graphics graphics = Graphics.FromImage(bitmap))
+                                        {
+                                            using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
+                                            {
+                                                //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                                System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
+                                                drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
+                                                graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), (float)piece.X + (float)piece.Widht / 2 - 20, (float)piece.Y + (float)piece.Lenght / 2 - 45, drawFormat);
+                                            }
+                                            bitmap.Save("Project.jpg");
+                                        }
+                                    }
+                                }
+                            }
+                            Last_posX += (int)glass1.Width;
+                            bitmap.Save("Project.jpg");
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        e.ToString();
+                    }
+                        
                     return wynik;
                 }
             }
-
             //błąd nie ma takiego usera
             return wynik;
         }
 
+        void CreatePdf()
+        {
+            PdfDocument doc = new PdfDocument();
+
+            PdfSection section = doc.Sections.Add();
+
+            PdfPageBase page = doc.Pages.Add();
+
+            PdfImage image = PdfImage.FromFile("Projekt.jpg");
+
+
+            float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
+
+            float heightFitRate = image.PhysicalDimension.Height / page.Canvas.ClientSize.Height;
+
+            float fitRate = Math.Max(widthFitRate, heightFitRate);
+
+            float fitWidth = image.PhysicalDimension.Width / fitRate;
+
+            float fitHeight = image.PhysicalDimension.Height / fitRate;
+
+            page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
+
+            doc.SaveToFile("Projekt.pdf");
+
+            doc.Close();
+
+          //  System.Diagnostics.Process.Start("image to pdf.pdf");
+        }
     }
 }

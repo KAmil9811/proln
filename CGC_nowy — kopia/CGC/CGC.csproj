@@ -11,14 +11,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.PDF" Version="21.1.0" />
+    <PackageReference Include="itext7" Version="7.1.14" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Graph.Core" Version="1.24.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
     <PackageReference Include="MySql.Data" Version="8.0.20" />
     <PackageReference Include="Sharp3DBinPacking" Version="2.0.0" />
+    <PackageReference Include="Spire.PDF" Version="7.1.10" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

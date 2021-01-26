@@ -305,5 +305,13 @@ namespace CGC.Controllers
             return cutFunc.Magic(receiver);
         }
 
+        [HttpGet("CreatePdf")]
+        public async Task<string> CreatePdf()
+        {
+            cutFunc.CreatePdf();
+
+            return "done";
+        }
+
     }
 }

@@ -73,9 +73,9 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    return machineBaseModify.Add_Machine(user, machines);
+                    return machineBaseModify.Add_Machine(usere, machines);
                 }
             }
             machines.Error_Message = "Nie znaleziono uzytkownika";
@@ -101,13 +101,13 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
                     foreach (Machines edit_machines in machineBaseReturn.GetMachines())
                     {
                         if (edit_machines.No == machines.No)
                         {
-                            return machineBaseModify.Change_Status_Machine(user, machines);
+                            return machineBaseModify.Change_Status_Machine(usere, machines);
                         }
                     }
                     machines.Error_Message = "Nie znaleziono maszyny";
@@ -129,9 +129,9 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    return machineBaseModify.Change_Type_Machine(user, machines);
+                    return machineBaseModify.Change_Type_Machine(usere, machines);
                 }
             }
             machines.Error_Message = "Nie znaleziono uzytkownika";
@@ -147,9 +147,9 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    return machineBaseModify.Remove_Machine(user, machines);
+                    return machineBaseModify.Remove_Machine(usere, machines);
                 }
             }
             
@@ -166,9 +166,9 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    return machineBaseModify.Restore_Machine(user, machines);
+                    return machineBaseModify.Restore_Machine(usere, machines);
                 }
             }
             machines.Error_Message = "Nie znaleziono uzytkownika";
@@ -184,7 +184,7 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (user.Login == usere.Login)
+                if (user.Login == usere.Login && usere.Password == user.Password && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
                     foreach (string types in machineBaseReturn.Get_Types())
                     {
@@ -195,10 +195,10 @@ namespace CGC.Funkcje.MachineFuncFolder
                         }
                     }
 
-                    return machineBaseModify.Add_Type_Admin(user, type);
+                    return machineBaseModify.Add_Type_Admin(usere, type);
                 }
             }
-            temp.Add("Nie znaleziono uzytkownika");
+            temp.Add("Nie znaleziono uzytkownika lub zle haslo");
             return temp;
         }
         public List<string> Change_Type_Admin(Receiver receiver)
@@ -219,7 +219,7 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             foreach (User usere in userBaseReturn.GetUsers())
             {
-                if (usere.Login == user.Login)
+                if (usere.Login == user.Login && usere.Password == user.Password && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
                     foreach (string type in machineBaseReturn.Get_Types())
                     {
@@ -232,7 +232,7 @@ namespace CGC.Funkcje.MachineFuncFolder
                     return temp;
                 }
             }
-            temp.Add("Nie znaleziono uzytkownika");
+            temp.Add("Nie znaleziono uzytkownika lub zle haslo");
             return temp;
         }
     }

@@ -39,11 +39,11 @@ namespace CGC.Funkcje.OrderFuncFolder
                 {
                     foreach (Glass glass in magazineBaseReturn.Getglass())
                     {
-                        if (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type)
+                        if (item.Width <= glass.Width && item.Thickness == glass.Hight && item.Length <= glass.Length && glass.Color == item.Color && glass.Type == item.Type && (glass.Owner == order.Owner || glass.Owner == ""))
                         {
                             foreach (Glass_Id glass_Id in glass.Glass_info)
                             {
-                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0 && (glass.Owner == order.Owner || glass.Owner == ""))
+                                if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == 0)
                                 {
                                     count++;
                                 }

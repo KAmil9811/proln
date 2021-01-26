@@ -143,9 +143,14 @@ namespace CGC.Funkcje.CutFuncFolder
                 order.Deadline2 = Convert.ToDateTime(order.Deadline);
             }
 
-            orders.OrderBy(orderer => orderer.Deadline2);
+            var sort_orders = orders.OrderBy(orderer => orderer.Deadline2);
 
-            return orders;
+            foreach(Order order1 in sort_orders)
+            {
+                temp.Add(order1);
+            }
+
+            return temp;
         }
 
         public List<Package> Return_Package_To_Cut(Receiver receiver)
@@ -171,7 +176,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                 foreach (Glass glass in magazineBaseReturn.Getglass())
                 {
-                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == glass.Hight)
+                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == glass.Hight && (glass.Owner == "" || glass.Owner == order.Owner))
                     {
                         foreach (Glass_Id glass_Id in glass.Glass_info)
                         {
