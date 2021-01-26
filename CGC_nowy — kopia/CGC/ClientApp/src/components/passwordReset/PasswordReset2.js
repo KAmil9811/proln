@@ -30,9 +30,9 @@ export class PasswordReset2 extends Component {
             })
             .then(json => {
                 if (json[0].error_Messege === "Wrong_code" || this.refs.code.value === "") {
-                    alert("Niepoprawny kod")
+                    alert("Wrong code")
                 } else {
-                    alert('Wysłano nowe hasło na maila')
+                    alert('New password has been sended to your e-maila=')
                     this.props.history.push('/')
                 }
                 
@@ -49,33 +49,45 @@ export class PasswordReset2 extends Component {
 
 
                 <div className="PasswordReset2">
+                    <div className="tit_log">
+
+                        <h1 className="tit_text">Reset password </h1>
+                    </div>
+
                     <form>
-                        <h2>Resetowanie hasła</h2>
+                            <div className="PasswordReset2_c">
+                            
+                        
 
 
-                        <div className="form-group">
-                            <label>Kod werfikacyjny</label>
-                            <input
-                                type="text"
-                                name="Code"
-                                className="form-control"
-                                id="inputCode"
-                                placeholder="Podaj kod"
-                                ref="code"
-                            />
-                        </div>
+                                        <div className="form-group">
+                                            <label>Verification code</label>
+                                            <input
+                                                type="text"
+                                                name="Code"
+                                                className="form-control"
+                                                id="inputCode"
+                                                placeholder="Enter code"
+                                                ref="code"
+                                            />
+                                        </div>
 
 
 
 
 
-                        <div className="form-group">
-                            <button type="button" className="danger_reset2" onClick={this.cancelResetPassword2}>Anuluj</button>
-                            <button type="button" className=" success_reset2" onClick={this.handlePasswordReset2}>Dalej</button>
+                                        <div className="form-group">
+                                            <button type="button" className="danger_reset2" onClick={this.cancelResetPassword2}>Cancel</button>
+                                            <button type="button" className=" success_reset2" onClick={this.handlePasswordReset2}>Accept</button>
+
+                                        </div>
+
+                        
 
                         </div>
 
                     </form>
+
                 </div>
             );
        

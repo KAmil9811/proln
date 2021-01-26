@@ -40,6 +40,13 @@ export class MachineWarehouse extends Component {
         this.props.history.push('all_machine_history')
     }
 
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
   /*  history() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
@@ -53,8 +60,24 @@ export class MachineWarehouse extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
+        else if (sessionStorage.getItem('machineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
+                <div>
+
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext"> Machines</h1>
+                    </div>
+
+                    <div className="machine_warhouse_conteiner">
+                        <button className="success_cm_add_wr" onClick={this.addMachine}>Add machine</button>
+                        <MachineTable />
+                    </div>
                 </div>
             );
         }
@@ -63,13 +86,17 @@ export class MachineWarehouse extends Component {
                 <div>
 
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext"> Machines</h1>
+                    </div>
 
                     <div className="machine_warhouse_conteiner">
-                        <button className="success_cm_add_wr" onClick={this.addMachine}>Dodaj maszynę</button>
                         <MachineTable />
                     </div>
                 </div>
             );
+            
         }
+
     }
 }

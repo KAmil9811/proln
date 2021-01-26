@@ -1,5 +1,5 @@
 ﻿@media all and (min-width: 480px) {
-    .AddAcount {
+    .AddAcount_c {
         padding: 60px 0;
     }
 
@@ -11,18 +11,37 @@
 
 
 
-
-
-
-.success_n_add_a:hover {
-    background-color: #00913b;
+.danger_n_add_a:hover {
+    background-color: #ee2425;
     transform: scale(1.05);
-    border-radius: 12px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
     outline: 0;
+}
+
+.danger_n_add_a {
+    background-color: #ff3547;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    position: center;
+    margin: 0 auto;
+    margin-right: auto;
+    /* float: left;*/
+    display: inline-block;
+    float: left;
+    margin-left: 1vw;
 }
 
 .success_n_add_a {
@@ -41,59 +60,40 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    /* margin-right: 1.5rem;*/
     margin-left: auto;
-    margin-right: 2rem;
+    margin-right: auto;
     /* position: center;*/
-    /* float: right;*/
-    display: inline-block;
     float: right;
+    margin-right: 1vw;
 }
 
-.danger_n_add_a:hover {
-    background-color: #ee2436;
+.success_n_add_a:hover {
+    background-color: #339933;
     transform: scale(1.05);
-    outline: 0;
-}
-
-.danger_n_add_a {
-    background-color: #ff3547;
-    height: 3rem;
-    width: 13rem;
-    /* padding: 6px 6px;*/
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: center;
-    color: white;
-    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    /* position:center;*/
-    /*  margin: 0 auto;*/
-    /*  margin-right: 1.5rem;*/
-    margin-right: auto;
-    margin-left: 2rem;
-    /* position: center;*/
-    /* float: right;*/
-    display: inline-block;
-    float: left;
+    outline: 0;
 }
 
 
 
+@media (max-width: 767px) {
 
+    .danger_n_add_a {
+        margin-left: 1vh;
+    }
 
+    .success_n_add_a {
+        margin-right: 1vh;
+    }
 
-.nextline {
-    clear: both;
-}
-.select{
-    color: gray;
-}
+    .title {
+        height: 5vh;
+    }
 
-.
-.text{
-    color:black;
+    .titletext {
+        font-size: 4vh;
+    }
 }

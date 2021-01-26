@@ -47,7 +47,7 @@ export class OrdersTable extends Component {
                                 sessionStorage.setItem('orderId2', table2[e.target.id].number)
 
                             }
-                            } > Wybierz </button></Link>
+                            } > Select </button></Link>
 
 
 
@@ -57,13 +57,13 @@ export class OrdersTable extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Id',
+                                label: 'No.',
                                 field: 'number',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Klient',
+                                label: 'Client',
                                 field: 'klient',
                                 sort: 'asc',
                                 width: 150
@@ -76,7 +76,7 @@ export class OrdersTable extends Component {
                             },
 
                             {
-                                label: 'Priorytet',
+                                label: 'Priority',
                                 field: 'priority',
                                 sort: 'asc',
                                 width: 30
@@ -94,7 +94,7 @@ export class OrdersTable extends Component {
                                 width: 30
                             },*/
                             {
-                                label: 'Wybierz',
+                                label: '',
                                 field: 'choose',
                                 width: 30
                             }

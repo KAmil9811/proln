@@ -52,38 +52,41 @@ export class AddOrderOne extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
 
                 <div>
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Order</h1>
+                    </div>
                     <div className="AddOrder1">
                         <form>
                             <div className="form-group">
-                                <label>Klient</label>
+                                <label>Client</label>
                                 <input
                                     type="text"
                                     name="client"
                                     className="form-control"
                                     id="inputClient"
-                                    placeholder="Wprowadź nazwę klienta"
+                                    placeholder="Enter client name"
                                     ref="client"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Priorytet</label>
+                                <label>Priority</label>
                                 <input
                                     type="number"
                                     min="1"
                                     max="5"
                                     className="form-control"
                                     id="inputLogin"
-                                    placeholder="Podaj liczbę od 1 do 5 ( 1 najwyższy priorytet)"
+                                    placeholder="Enter number from 1 to 5 ( 1 is the highest priority )"
                                     ref="priority"
                                 />
                             </div>
@@ -99,8 +102,8 @@ export class AddOrderOne extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="button" className="danger_add_order" onClick={this.cancelAdding}>Anuluj</button>
-                                <button type="button" className="success_add_order" onClick={this.nextPage}>Dalej</button>
+                                <button type="button" className="danger_add_order" onClick={this.cancelAdding}>Cancel</button>
+                                <button type="button" className="success_add_order" onClick={this.nextPage}>Go next</button>
 
                             </div>
                         </form>
@@ -108,6 +111,14 @@ export class AddOrderOne extends Component {
 
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
         }
     }
 

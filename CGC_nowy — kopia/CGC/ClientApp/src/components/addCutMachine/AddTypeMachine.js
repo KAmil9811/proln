@@ -32,7 +32,7 @@ export class AddTypeMachine extends Component {
                 return (json);
             })
             .then(json => {
-                alert("Dodano typ maszyny do bazy danych")
+                alert("You added new machine type")
                 this.props.history.push('/cutmachineedit')
             })
     }
@@ -45,39 +45,55 @@ export class AddTypeMachine extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to get access</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
+        else if (sessionStorage.getItem('machineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
+
+                <div className="AddTypeMachine">
+                    <Sidebar />
+                    <div className="title_atm">
+                        <h1 className="titletext">Add machine type</h1>
+                    </div>
+                    <form>
+
+                        <div className="AddTypeMachine_c">
+
+                        
+                                <div className="form-group">
+                              
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="inputType"
+                                        placeholder='Enter the machine type'
+                                        ref="type"
+                                    />
+                                </div>
+                                 <div className="add_type_machine_b_c">
+                                    <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Add type</button>
+                                    <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Cancel</button>
+                                    
+
+                                </div>
+
+                        
+                            </div>
+                    </form>
                 </div>
             );
         }
         else {
             return (
-
-                <div className="AddTypeMachine">
-                    <Sidebar />
-                    <div className="add_TypeMachine">
-
-                        <form>
-                            <div className="form-group">
-                                <h2>Dodaj typ maszyny:</h2>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="inputType"
-                                    placeholder='Podaj typ maszyny'
-                                    ref="type"
-                                />
-                            </div>
-                            <div className="add_type_machine_b_c">
-                                <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Anuluj</button>
-                                <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Dodaj</button>
-
-                            </div>
-
-                        </form>
-                    </div>
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
         }
+    
     }
 }

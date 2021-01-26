@@ -33,54 +33,69 @@ export class AddType extends Component {
             })
             .then(json => {
                 if (json[0] === 'Type_alredy_exist') {
-                    alert("Ten typ już istnieje")
+                    alert("Type already exist")
                 }
                 else {
-                    alert("Dodano typ szkła do bazy danych")
+                    alert("You added nwe glass type")
                     this.props.history.push('/glassatibutes')
                 }
             })
     }
 
     cancelAddType = (event) => {
-        this.props.history.push('/controlpaneladmin')
+        this.props.history.push('/glassatibutes')
     }
 
     render() {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
+        else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true'){
+            return (
+                <div className="AddType">
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Add glass type</h1>
+                    </div>
+                    <form>
+                      <div className="AddType_c">
+                        
+                            <div className="form-group">
+                            
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputType"
+                                    placeholder="Enter glass type"
+                                    ref="type"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="success_glass_type_add" onClick={this.handleAddType}>Add type</button>
+
+                                <button type="button" className="danger_glass_type_add" onClick={this.cancelAddType}>Cancel</button>
+                              
+                            </div>
+
+                      
+                          </div>
+                      </form>
                 </div>
             );
         }
         else {
             return (
-                <div className="Addtype">
-                    <Sidebar />
-                    <div className="addType">
-                        <form>
-                            <div className="form-group">
-                                <h2>Dodaj typ szkła:</h2>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="inputType"
-                                    placeholder="Wprowadź typ szkła"
-                                    ref="type"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button type="button" className="danger_glass_type_add" onClick={this.cancelAddType}>Anuluj</button>
-                                <button type="button" className="success_glass_type_add" onClick={this.handleAddType}>Dodaj</button>
-
-                            </div>
-
-                        </form>
-                    </div>
+                <div className="HomePage">
+                    <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Cancel</button>
+                    <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Add glass</button>
                 </div>
             );
+
         }
     }
 }

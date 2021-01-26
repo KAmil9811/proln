@@ -32,87 +32,92 @@ export class OrderTable extends Component {
                 console.log(json.length);
                 console.log(json);
                 for (var i = 0; i < json.length; i++) {
-                    table2.push({
-                        number: json[i].id_Order,
-                        status: json[i].status,
-                        klient: json[i].owner,
-                        x: json[i].stan,
-                        priority: json[i].priority,
-                        deadline: json[i].deadline,
-                        items: json[i].items,
-                        more: <Link to="/oneorder"><button className="prim_t" id={i}
-                            onClick={
-                                (e) => {
-                                   /* console.log(table2[e.target.id].items);*/
-                                    sessionStorage.setItem('orderId', table2[e.target.id].number);
-                                    sessionStorage.setItem('klient', table2[e.target.id].klient);
-                                    sessionStorage.setItem('deadline', table2[e.target.id].deadline);
-                                    sessionStorage.setItem('priority', table2[e.target.id].priority);
-                                    
-                                }
-                            }>Szczegóły</button></Link>
-                    })
+                   
+                        table2.push({
+                            number: json[i].id_Order,
+                            status: json[i].status,
+                            klient: json[i].owner,
+                            x: json[i].stan,
+                            priority: json[i].priority,
+                            deadline: json[i].deadline,
+                            items: json[i].items,
+                            more: <Link to="/oneorder"><button className="prim_t" id={i}
+                                onClick={
+                                    (e) => {
+                                        /* console.log(table2[e.target.id].items);*/
+                                        sessionStorage.setItem('orderId', table2[e.target.id].number);
+                                        sessionStorage.setItem('klient', table2[e.target.id].klient);
+                                        sessionStorage.setItem('deadline', table2[e.target.id].deadline);
+                                        sessionStorage.setItem('priority', table2[e.target.id].priority);
+
+                                    }
+                                }>Details</button></Link>
+                        })
+                    
                 };
-                this.setState({
-                    table: {
-                        columns: [
-                            {
-                                label: 'Id',
-                                field: 'number',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Klient',
-                                field: 'klient',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'X/Y/Z',
-                                field: 'x',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            /*{
-                                label: 'Y',
-                                field: 'y',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'z',
-                                field: 'z',
-                                sort: 'asc',
-                                width: 30
-                            },*/
-                            {
-                                label: 'Priorytet',
-                                field: 'priority',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Deadline',
-                                field: 'deadline',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Status',
-                                field: 'status',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Więcej',
-                                field: 'more',
-                                width: 30
-                            }
-                        ],
-                        rows: table2
-                    }
-                });
+                
+                    this.setState({
+                        table: {
+                            columns: [
+                                {
+                                    label: 'Id',
+                                    field: 'number',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Client',
+                                    field: 'klient',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'X/Y/Z',
+                                    field: 'x',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                /*{
+                                    label: 'Y',
+                                    field: 'y',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'z',
+                                    field: 'z',
+                                    sort: 'asc',
+                                    width: 30
+                                },*/
+                                {
+                                    label: 'Priority',
+                                    field: 'priority',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Deadline',
+                                    field: 'deadline',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Status',
+                                    field: 'status',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Details',
+                                    field: 'more',
+                                    width: 30
+                                }
+                            ],
+                            rows: table2
+                        }
+                    });
+               
+                
             })
     };
     table() {

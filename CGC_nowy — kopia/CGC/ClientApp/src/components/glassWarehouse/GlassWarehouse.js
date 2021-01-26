@@ -110,19 +110,41 @@ export class GlassWarehouse extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div>
+                <div className="Glass_Warehause">
 
                     <Sidebar />
-                    <div className="conteiner_gll">
+                    <div className="title">
+                        <h1 className="titletext">Magazine</h1>
+                    </div>
+                    <div className="Glass_Warehause_c">
 
-                        <button type="button" className="success_glas_magazine" onClick={this.gotohell}>Dodaj szkło</button>
+                        <button type="button" className="success_glas_magazine" onClick={this.gotohell}>Add glass</button>
+
+                        <div className="tableglass">
+
+                            <GlassTable />
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        else {
+            return (
+                <div className="Glass_Warehause">
+
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Magazine</h1>
+                    </div>
+                    <div className="Glass_Warehause_c">
 
                         <div className="tableglass">
 

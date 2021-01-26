@@ -60,7 +60,7 @@ export class ControlPanel2 extends Component {
 
     addAcouButton() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
-            return (<button className="success_add_user" onClick={this.addUser}>Dodaj Konto</button>);
+            return (<button className="success_add_user" onClick={this.addUser}>Add account</button>);
         }
     }
 
@@ -82,14 +82,14 @@ export class ControlPanel2 extends Component {
     typeMachineAdd() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="prim_type_machine" onClick={this.editMachine}>Typy maszyn</button>
+                <button type="button" className="prim_type_machine" onClick={this.editMachine}>Machine types</button>
             )
         }
     }
     colorAndTypeGlassEdit() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="prim_color_glass_edit" onClick={this.editGlassColor}>Zarządzanie szkłem</button>
+                <button type="button" className="prim_color_glass_edit" onClick={this.editGlassColor}>Glass administration</button>
             )
         }
     }
@@ -97,7 +97,7 @@ export class ControlPanel2 extends Component {
     usersHistoryTable() {
         if (sessionStorage.getItem('admin') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true') {
             return (
-                <button type="button" className="prim_all_user_history" onClick={this.userHistory}>Historia użytkowników</button>
+                <button type="button" className="prim_all_user_history" onClick={this.userHistory}>Users history</button>
             )
         }
     }
@@ -108,7 +108,7 @@ export class ControlPanel2 extends Component {
     }
     userPermissionsRender() {
         if (sessionStorage.getItem('user') === 'true') {
-            return (<option>Pracownik</option>)
+            return (<option>Empolyee</option>)
         }
     }
     superAdminPermissionsRender() {
@@ -166,25 +166,39 @@ export class ControlPanel2 extends Component {
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('machineMenagment') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="ControlPanel" >
 
 
                     <Sidebar />
-                    <div className="conteiner_cp">
-                        <div className="control_b">
-                            {typeMachine}
-                            {colorGlassEdit}
-                            {userHistoryTable}
-                            {buttonAdd}
+                    <div className="onteiner_cp2">
+                        <div className="title">
+                            <h1 className="titletext">Control panel</h1>
                         </div>
-                        {xd}
-                       
+                        <div className="conteiner_cp">
+                            <div className="control_b">
+                                {typeMachine}
+                                {colorGlassEdit}
+                                {userHistoryTable}
+                                {buttonAdd}
+                            </div>
+                            {xd}
+
+                        </div>
                     </div>
                 </div>
 
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
+
         }
     }
 

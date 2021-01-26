@@ -34,15 +34,18 @@ export class UserHistory extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="User_History">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">User history</h1>
+                    </div>
                     <div className="user_history_conteiner">
 
                         <div>
@@ -51,6 +54,15 @@ export class UserHistory extends Component {
                     </div>
                 </div>
             );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
+
         }
     }
 }

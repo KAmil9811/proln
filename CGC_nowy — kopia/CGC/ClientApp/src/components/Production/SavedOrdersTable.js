@@ -49,7 +49,7 @@ export class SavedOrdersTable extends Component {
                                 sessionStorage.setItem('cutId2', table2[e.target.id].cut_id)
                                 sessionStorage.setItem('orderId2', table2[e.target.id].number)
                             }
-                            } > Wybierz </button></Link>
+                            } > Select </button></Link>
 
 
 
@@ -59,19 +59,19 @@ export class SavedOrdersTable extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Numer referencyjny',
+                                label: 'No.',
                                 field: 'number',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Klient',
+                                label: 'Client',
                                 field: 'klient',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Priorytet',
+                                label: 'Priority',
                                 field: 'priority',
                                 sort: 'asc',
                                 width: 30
@@ -89,7 +89,7 @@ export class SavedOrdersTable extends Component {
                                 width: 30
                             },*/
                             {
-                                label: 'Wybierz',
+                                label: '',
                                 field: 'choose',
                                 width: 30
                             }

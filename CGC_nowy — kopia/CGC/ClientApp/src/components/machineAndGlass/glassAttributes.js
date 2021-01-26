@@ -42,7 +42,7 @@ export class GlassAtributes extends Component {
                                         console.log(e.target.id);
                                         sessionStorage.setItem('color', json[e.target.id]);
                                     }
-                                }>Edytuj</button>
+                                }>Edit</button>
                             </Link>
                     })
                 };
@@ -50,19 +50,19 @@ export class GlassAtributes extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Nr',
+                                label: 'No.',
                                 field: 'number',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Kolor',
+                                label: 'Color',
                                 field: 'color',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Edycja',
+                                label: 'Edit',
                                 field: 'edit',
                                 width: 150
                             },                            
@@ -95,7 +95,7 @@ export class GlassAtributes extends Component {
                                         console.log(e.target.id);
                                         sessionStorage.setItem('type', json[e.target.id]);
                                     }
-                                }>Edytuj</button>
+                                }>Edit</button>
                             </Link>
                     })
                 };
@@ -103,19 +103,19 @@ export class GlassAtributes extends Component {
                     table2: {
                         columns: [
                             {
-                                label: 'Nr',
+                                label: 'No.',
                                 field: 'number',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Typ',
+                                label: 'Type',
                                 field: 'type',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Edycja',
+                                label: 'Edit',
                                 field: 'edit',
                                 width: 150
                             },
@@ -176,7 +176,7 @@ export class GlassAtributes extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-               // bordered
+                bordered
 
 
 
@@ -277,22 +277,24 @@ export class GlassAtributes extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="glassattributes">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Glass attributes</h1>
+                    </div>
                     <div className="glass_attributes_conteiner">
-                        <div className="nav_ga1">
-                        </div>
+
                         <div className="conteiner_ga1">
-                            <button type="button" className="success_glass_att" onClick={this.addColor}>Dodaj kolor</button>
+                            <button type="button" className="success_glass_att" onClick={this.addColor}>Add color</button>
                             {colorTable}
-                            <button type="button" className="success_glass_att" onClick={this.addType}>Dodaj typ</button>
+                            <button type="button" className="success_glass_att" onClick={this.addType}>Add type</button>
                             {typeTable}
                         </div>
 
@@ -301,6 +303,14 @@ export class GlassAtributes extends Component {
                     </div>
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
         }
     }
 

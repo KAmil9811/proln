@@ -46,10 +46,10 @@ export class UsersTable extends Component {
                 for (var i = 0; i < json.length; i++) {
                     var deleted = '';
                     if (json[i].deleted === false) {
-                        deleted = 'Aktywny'
+                        deleted = 'Active'
                     }
                     else {
-                        deleted = 'Usunięty'
+                        deleted = 'Deleted'
                     }
                     table.push({
                         id: i + 1,
@@ -58,7 +58,7 @@ export class UsersTable extends Component {
                         password: json[i].password,
                         secondName: json[i].surname,
                         email: json[i].email,
-                        permissions: 'Pracownik',
+                        permissions: 'Employee',
                         deleted: deleted,
                         action: <Link to="/user_change"><button className="info_t" id={i}
                             onClick={
@@ -72,8 +72,8 @@ export class UsersTable extends Component {
                                     sessionStorage.setItem('editSecondName', table[e.target.id].secondName);
                                     sessionStorage.setItem('editMail', table[e.target.id].email);
                                 }
-                            }>Edytuj</button></Link>,
-                        del: <button className="danger_t" id={i} onClick={(e) => { this.delete(table[e.target.id].login, table[e.target.id].deleted) }}> Usuń/Przywróć  </button> 
+                            }>Edit</button></Link>,
+                        del: <button className="danger_t" id={i} onClick={(e) => { this.delete(table[e.target.id].login, table[e.target.id].deleted) }}> Delete/Restore  </button> 
                     })
                 };
                
@@ -85,19 +85,19 @@ export class UsersTable extends Component {
                         table[k].permissions = table[k].permissions + ', ' + 'Super admin'
                     }
                     if (json[k].manager === true) {
-                        table[k].permissions = table[k].permissions + ', ' + 'Menedżer'
+                        table[k].permissions = table[k].permissions + ', ' + 'Manager'
                     }
                     if (json[k].magazine_management === true) {
-                        table[k].permissions = table[k].permissions + ', ' + 'Magazynier'
+                        table[k].permissions = table[k].permissions + ', ' + 'Magazine management'
                     }
                     if (json[k].machine_management === true) {
-                        table[k].permissions = table[k].permissions + ', ' + 'Menedżer maszyn'
+                        table[k].permissions = table[k].permissions + ', ' + 'Machine management'
                     }
                     if (json[k].order_management === true) {
-                        table[k].permissions = table[k].permissions + ', ' + 'Menedżer zleceń'
+                        table[k].permissions = table[k].permissions + ', ' + 'Order management'
                     }
                     if (json[k].cut_management === true) {
-                        table[k].permissions = table[k].permissions +', '+ 'Menedżer cięcia'
+                        table[k].permissions = table[k].permissions + ', ' + 'Cut management'
                     }
                 }
                 this.setState({
@@ -110,35 +110,35 @@ export class UsersTable extends Component {
                                 width: 150
                             },
                             {
-                                label: 'Imie',
+                                label: 'Name',
                                 field: 'name',
                                 sort: 'asc',
                                 width: 250
                             },
                             {
-                                label: 'Nazwisko',
+                                label: 'Surname',
                                 field: 'secondName',
                                 sort: 'asc',
                                 width: 200
                             },
                             {
-                                label: 'Uprawnienia',
+                                label: 'Permissions',
                                 field: 'permissions',
                                 sort: 'asc',
                                 width: 100
                             },
                             {
-                                label: 'Edycja',
+                                label: 'Edit',
                                 field: 'action',
                                 width: 100
                             },
                             {
-                                label: 'Status konta',
+                                label: 'Account status',
                                 field: 'deleted',
                                 width: 100
                             },
                             {
-                                label: 'Usuń',
+                                label: 'Delete',
                                 field: 'del',
                                 width: 100
                             }
@@ -160,7 +160,7 @@ export class UsersTable extends Component {
         }
         console.log(receiver)
 
-        if (deleted === 'Aktywny') {
+        if (deleted === 'Active') {
             fetch(`api/Users/Remove_User_Admin`, {
                 method: "post",
                 body: JSON.stringify(receiver),
@@ -175,7 +175,7 @@ export class UsersTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Usunięto użytkownika")
+                    alert("You deleted user")
                 })
                 .then(json => {
                     window.location.reload();
@@ -196,7 +196,7 @@ export class UsersTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Aktywowano użytkownika")
+                    alert("You activated user")
                 })
                 .then(json => {
                     window.location.reload();
@@ -228,7 +228,7 @@ export class UsersTable extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-               // bordered
+                bordered
 
 
 
@@ -254,7 +254,7 @@ export class UsersTable extends Component {
                 // barReverse
                 className="User_table"
                 // noBottomColumns
-                sortable
+               // sortable
                 //info={false}
 
 

@@ -130,8 +130,8 @@ export class ControlPanel extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -141,6 +141,9 @@ export class ControlPanel extends Component {
 
 
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Your account</h1>
+                    </div>
                     <div className="conteiner_cp">
 
 
@@ -151,18 +154,19 @@ export class ControlPanel extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label>
-                                        Hasło:
-                                        <button type="button" className="prim_password_change" onClick={this.changePassword}>Zmień hasło</button>
+                                        <div> Password:</div>
+                                        <button type="button" className="prim_password_change" onClick={this.changePassword}>Change password</button>
                                     </label>
                                 </div>
                                 <div className="form-group">
                                     <label>
-                                        E-mail: {sessionStorage.getItem('email')}
-                                        <button type="button" className="prim_email_change" onClick={this.changeEmail}>Zmień email</button>
+                                        <div> E-mail: {sessionStorage.getItem('email')}</div>
+
+                                        <button type="button" className="prim_email_change" onClick={this.changeEmail}>Change email</button>
                                     </label>
                                 </div>
                                 <div className="form-group">
-                                    <label>Uprawnienia:
+                                    <label>Permission:
                                     {perm}
                                     </label>
                                 </div>

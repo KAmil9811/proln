@@ -143,20 +143,22 @@ export class EditOrderItem extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div>
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Edit items</h1>
+                    </div>
                     <div className="userChange">
                         <form>
                             <div className="form-group">
-                                <h2>Edycja elementu</h2>
-                                <label>Długość</label>
+                                <label>Length</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -167,7 +169,7 @@ export class EditOrderItem extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Szerokość</label>
+                                <label>Width</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -178,7 +180,7 @@ export class EditOrderItem extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Typ</label>
+                                <label>Type</label>
                                 <select
                                     type="text"
                                     className="form-control"
@@ -192,7 +194,7 @@ export class EditOrderItem extends Component {
 
                             </div>
                             <div className="form-group">
-                                <label>Grubość</label>
+                                <label>Thickness</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -203,7 +205,7 @@ export class EditOrderItem extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Kolor</label>
+                                <label>Color</label>
                                 <select
                                     type="text"
                                     className="form-control"
@@ -234,12 +236,20 @@ export class EditOrderItem extends Component {
 
 
                             <div className="form-group">
-                                <button type="submit" className="danger_edit_order_item" onClick={this.cancelItemEdit}>Anuluj</button>
-                                <Link to="/oneorder"><button type="submit" className="success_edit_order_item" onClick={this.handleItemEdit}>Zastosuj zmiany</button></Link>
+                                <button type="submit" className="danger_edit_order_item" onClick={this.cancelItemEdit}>Cancel</button>
+                                <Link to="/oneorder"><button type="submit" className="success_edit_order_item" onClick={this.handleItemEdit}>Edit item</button></Link>
                             </div>
                         </form>
                     </div>
 
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
         }

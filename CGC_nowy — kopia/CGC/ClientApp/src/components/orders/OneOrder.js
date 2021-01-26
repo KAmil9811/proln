@@ -36,15 +36,18 @@ export class OneOrder extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div>
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Order</h1>
+                    </div>
 
                     <div className="one_order_conteiner">
                         <div className="key">
@@ -54,7 +57,32 @@ export class OneOrder extends Component {
                             <p>Priorytet: {sessionStorage.getItem('priority')}</p>
 
                         </div>
-                        <button type="button" className="prim_one_order" onClick={this.dataEdit}>Edytuj dane</button>
+                        <button type="button" className="prim_one_order" onClick={this.dataEdit}>Edit order</button>
+
+                        <div className="oneordertable">
+                            <OneOrderTable />
+                        </div>
+                    </div>
+
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Order</h1>
+                    </div>
+
+                    <div className="one_order_conteiner">
+                        <div className="key">
+                            <p>Id zlecenia: {sessionStorage.getItem('orderId')}</p>
+                            <p>Zleceniodawca: {sessionStorage.getItem('klient')}</p>
+                            <p>Deadline: {sessionStorage.getItem('deadline')}</p>
+                            <p>Priorytet: {sessionStorage.getItem('priority')}</p>
+
+                        </div>
 
                         <div className="oneordertable">
                             <OneOrderTable />

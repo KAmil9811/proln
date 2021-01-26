@@ -40,8 +40,8 @@ export class SelectionOfOrders extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -49,6 +49,9 @@ export class SelectionOfOrders extends Component {
             return (
                 <div className="SelectionOfOrders">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Select order</h1>
+                    </div>
                     <div className="selection_of_orders_conteiner">
 
 

@@ -34,15 +34,18 @@ export class AllMachineHistory extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="AllMachinehistory">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Machine history</h1>
+                    </div>
                     <div className="allMachineHistory">
 
                         <div>
@@ -58,5 +61,14 @@ export class AllMachineHistory extends Component {
                 </div>
             );
         }
+            else {
+                return (
+                    <div className="HomePage">
+                        <h1>Check if you have perrmission to this panel</h1>
+                        <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                    </div>
+                );
+
+            }
     }
 }

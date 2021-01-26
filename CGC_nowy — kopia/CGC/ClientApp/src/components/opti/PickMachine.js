@@ -95,27 +95,30 @@ export class PickMachine extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('cutManagement') === 'true' ||sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
 
                 <div>
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Pick machine</h1>
+                    </div>
                     <div className="AddOrder1">
                         <form>
                             <div className="form-group">
-                                <label>Wybierz maszynę:</label>
+                                <label>Choose machine:</label>
                                 <select ref="type" type="text" className="form-control">
                                     {x}
                                 </select>
                             </div>
                             <div className="form-group">
-                                <button type="button" className="danger_pick_machine" onClick={this.cancelAdding}>Anuluj</button>
-                                <button type="button" className="success_pick_machine" onClick={this.saveProject}>Wytnij</button>
+                                <button type="button" className="danger_pick_machine" onClick={this.cancelAdding}>Cancel</button>
+                                <button type="button" className="success_pick_machine" onClick={this.saveProject}>Cut</button>
 
                             </div>
                         </form>
@@ -123,6 +126,14 @@ export class PickMachine extends Component {
 
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
         }
     }
 

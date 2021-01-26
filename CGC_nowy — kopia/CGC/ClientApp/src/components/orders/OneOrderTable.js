@@ -40,94 +40,161 @@ export class OneOrderTable extends Component {
             .then(json => {
                 var table2 = [];
                 for (var i = 0; i < json.length; i++) {
-                    table2.push({
-                        length: json[i].length,
-                        width: json[i].width,
-                        thickness: json[i].thickness,
-                        color: json[i].color,
-                        type: json[i].type,
-                        ids: json[i].id,
-                        status: json[i].status,
-                        desk: json[i].desk,
-                        more: <Link to="/edit_order_item"><button className="prim_t" id={i}
-                            onClick={
-                                (e) => {
-                                    /* console.log(table2[e.target.id].items);*/
-                                    sessionStorage.setItem('thickness', table2[e.target.id].thickness);
-                                    sessionStorage.setItem('length', table2[e.target.id].length);
-                                    sessionStorage.setItem('width', table2[e.target.id].width);
-                                    sessionStorage.setItem('color', table2[e.target.id].color);
-                                    sessionStorage.setItem('type', table2[e.target.id].type);
-                                    sessionStorage.setItem('status', table2[e.target.id].status);
-                                    sessionStorage.setItem('desk', table2[e.target.id].desk);
-                                    sessionStorage.setItem('itemId', table2[e.target.id].ids);
-                                }
-                            }>Edytuj szkło</button></Link>,
-                        choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].ids, i) }} />,
-                            
-                    })
-                };
-                this.setState({
-                    table: {
-                        columns: [
-                            {
-                                label: 'Długość',
-                                field: 'length',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Szerokość',
-                                field: 'width',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Grubość',
-                                field: 'thickness',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Kolor',
-                                field: 'color',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Rodzaj',
-                                field: 'type',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Id',
-                                field: 'ids',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Status',
-                                field: 'status',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Edycja',
-                                field: 'more',
-                                sort: 'asc',
-                                width: 30
-                            },
-                            {
-                                label: 'Zaznacz',
-                                field: 'choice',
-                                sort: 'asc',
-                                width: 30
-                            },
-                        ],
-                        rows: table2
+                    if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                        table2.push({
+                            length: json[i].length,
+                            width: json[i].width,
+                            thickness: json[i].thickness,
+                            color: json[i].color,
+                            type: json[i].type,
+                            ids: json[i].id,
+                            status: json[i].status,
+                            desk: json[i].desk,
+                            more: <Link to="/edit_order_item"><button className="prim_t" id={i}
+                                onClick={
+                                    (e) => {
+                                        /* console.log(table2[e.target.id].items);*/
+                                        sessionStorage.setItem('thickness', table2[e.target.id].thickness);
+                                        sessionStorage.setItem('length', table2[e.target.id].length);
+                                        sessionStorage.setItem('width', table2[e.target.id].width);
+                                        sessionStorage.setItem('color', table2[e.target.id].color);
+                                        sessionStorage.setItem('type', table2[e.target.id].type);
+                                        sessionStorage.setItem('status', table2[e.target.id].status);
+                                        sessionStorage.setItem('desk', table2[e.target.id].desk);
+                                        sessionStorage.setItem('itemId', table2[e.target.id].ids);
+                                    }
+                                }>Edit glass</button></Link>,
+                            choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].ids, i) }} />,
+                        })
                     }
-                });
+                    else {
+                        table2.push({
+                            length: json[i].length,
+                            width: json[i].width,
+                            thickness: json[i].thickness,
+                            color: json[i].color,
+                            type: json[i].type,
+                            ids: json[i].id,
+                            status: json[i].status,
+                            desk: json[i].desk,
+                           
+                        })
+                        }
+                }
+                if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                    this.setState({
+                        table: {
+                            columns: [
+                                {
+                                    label: 'Length',
+                                    field: 'length',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Width',
+                                    field: 'width',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Thickness',
+                                    field: 'thickness',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Color',
+                                    field: 'color',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Type',
+                                    field: 'type',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Id',
+                                    field: 'ids',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Status',
+                                    field: 'status',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Edit',
+                                    field: 'more',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: '',
+                                    field: 'choice',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                            ],
+                            rows: table2
+                        }
+                    });
+                }
+                else {
+                    this.setState({
+                        table: {
+                            columns: [
+                                {
+                                    label: 'Length',
+                                    field: 'length',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Width',
+                                    field: 'width',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Thickness',
+                                    field: 'thickness',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Color',
+                                    field: 'color',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Type',
+                                    field: 'type',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Id',
+                                    field: 'ids',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Status',
+                                    field: 'status',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                            ],
+                            rows: table2
+                        }
+                    });
+                }
             })
     }
 
@@ -176,7 +243,7 @@ export class OneOrderTable extends Component {
                 return (json)
             })
             .then(json => {
-                alert('Przedmioty o id:' + ' ' + this.state.send + ' ' + 'zostały usunięte')
+                alert('Items with id:' + ' ' + this.state.send + ' ' + ' has been deleted')
             })
             .then(json => {
                 window.location.reload();
@@ -250,14 +317,27 @@ export class OneOrderTable extends Component {
 
     render() {
         let table = this.table();
-        return (
+        if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
 
-            <div>
+                <div>
 
-                <button className="danger_one_order_table" onClick={this.sendId}>Usuń zaznaczone</button>
-                {table}
-            </div>
-        )
+                    <button className="danger_one_order_table" onClick={this.sendId}>Delete selected</button>
+                    {table}
+                </div>
+            )
+
+        }
+        else {
+            return (
+
+                <div>
+
+                    
+                    {table}
+                </div>
+            )
+        }
     }
 
 }

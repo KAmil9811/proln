@@ -54,19 +54,19 @@ export class OneHistory extends Component {
                     table333: {
                         columns: [
                             {
-                                label: 'Kto',
+                                label: 'Who',
                                 field: 'who',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Co',
+                                label: 'What',
                                 field: 'what',
                                 sort: 'asc',
                                 width: 250
                             },
                             {
-                                label: 'Kiedy',
+                                label: 'When',
                                 field: 'when',
                                 sort: 'asc',
                                 width: 200

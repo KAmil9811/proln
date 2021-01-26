@@ -33,10 +33,10 @@ export class MachineTypeEdit extends Component {
             })
             .then(json => {
                 if (json[0] === 'New_Type_already_exist') {
-                    alert("Taki typ już istnieje")
+                    alert("New type already exist")
                 }
                 else {
-                    alert("Typ został zedytowany")
+                    alert("Type has been edited")
                     this.props.history.push('/cutmachineedit')
                     sessionStorage.removeItem('machinetype')
                 }
@@ -53,37 +53,48 @@ export class MachineTypeEdit extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
         }
-        else {
+        else if ( sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="editTypeM">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Edit type machine</h1>
+                    </div>
                     <div className="EditTypeM">
                         <form>
                             <div className="form-group">
-                                <h2>Edytuj typ:</h2>
+                              
                                 <input
                                     type="text"
                                     name="type"
                                     className="form-control"
                                     id="inputColor"
-                                    placeholder="Podaj typ"
+                                    placeholder="Enter type"
                                     ref="type"
                                     defaultValue={sessionStorage.getItem('machinetype')}
                                 />
                             </div>
 
-                            <button type="button" className="danger_cm_edit_type" onClick={this.return}>Anuluj</button>
-                            <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Zatwierdź</button>
+                            <button type="button" className="danger_cm_edit_type" onClick={this.return}>Cancel</button>
+                            <button type="button" className="success_cm_edit_type" onClick={this.changeType}>Edit type</button>
                         </form>
 
                     </div>
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
         }
     }
 }

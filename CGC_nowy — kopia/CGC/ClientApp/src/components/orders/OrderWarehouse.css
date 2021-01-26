@@ -54,20 +54,6 @@
     color: white;
 }
 
-.nav_ow {
-    float: right;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-}
 
-.conteiner_ow {
-    clear: both;
-}
 
-.tablewar{
-    width:96%;
-    margin-left:2%;
-}
 

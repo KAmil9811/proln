@@ -82,19 +82,19 @@ export class UserChanging extends Component {
         if (sessionStorage.getItem('manager') === 'true') {
             return (
                 <div className="form-group">
-                    <label>Uprawnienia:</label><br />
+                    <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
                         console.log(this.state)
                     }} >
-                        <option value="user">Pracownik</option>
+                        <option value="user">Employee</option>
                         <option value="admin">Admin</option>
                         <option value="superAdmin">Super admin</option>
                     </select><br />
-                    <input type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazynier<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Maszynista<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Menedżer zamówień<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Menedżer cięcia<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazine management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Machine management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Order management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Cut management<br />
                 </div>
             )
         }
@@ -106,30 +106,30 @@ export class UserChanging extends Component {
                         this.setState({ value: e.target.value });
                         console.log(this.state)
                     }} >
-                        <option value="user">Pracownik</option>
+                        <option value="user">Employee</option>
                         <option value="admin">Admin</option>
                     </select><br />
-                    <input type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazynier<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Maszynista<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Menedżer zamówień<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Menedżer cięcia<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazine management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Machine management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Order management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Cut management<br />
                 </div>
             )
         }
         else {
             return (
                 <div className="form-group">
-                    <label>Uprawnienia:</label><br />
+                    <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
                         console.log(this.state)
                     }} >
-                        <option value="user">Pracownik</option>
+                        <option value="user">Employee</option>
                     </select><br />
-                    <input type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazynier<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Maszynista<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Menedżer zamówień<br />
-                    <input type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Menedżer cięcia<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazine management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Machine management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Order management<br />
+                    <input type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Cut management<br />
                 </div>
             )
         }
@@ -141,23 +141,27 @@ export class UserChanging extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if ( sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true'){
             return (
                 <div className="UserChange">
                     <Sidebar />
-                    <div className="user_change_conteiner">
-                        <form>
+                    <div className="title">
+                        <h1 className="titletext">Change user</h1>
+                    </div>
+                    <form>
+                    <div className="UserChange_c">
+                       
                             <div className="form-group">
-                                <h2>Edycja konta</h2>
+                              
                                 <label>Login: {sessionStorage.getItem('editLogin')}</label>
                             </div>
                             <div className="form-group">
-                                <label>Email</label>
+                                <label>Email:</label>
                                 <input
                                     type="email"
                                     name="text"
@@ -168,7 +172,7 @@ export class UserChanging extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Hasło</label>
+                                <label>Password:</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -178,7 +182,7 @@ export class UserChanging extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Imie</label>
+                                <label>Name:</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -188,7 +192,7 @@ export class UserChanging extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Nazwisko</label>
+                                <label>Surname:</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -198,25 +202,37 @@ export class UserChanging extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Aktualne uprawnienia: {sessionStorage.getItem('editPerm')}</label>
+                                <label>Current permissions: {sessionStorage.getItem('editPerm')}</label>
 
                             </div>
                             <div className="form-group">
-                                <label>Jakie uprawnienia po edycji ma posiadać pracownik?</label>
+                                <label>What permission after editing should the employee have?</label>
                                 {perm}
 
                             </div>
 
                             <div className="form-group">
-                                <button type="submit" className="danger_user_change" onClick={this.cancelUserChanging}>Anuluj</button>
-                                <button type="submit" className="success_user_change" onClick={this.handleUserChanging}>Zastosuj zmiany</button>
 
+                                <button type="submit" className="success_user_change" onClick={this.handleUserChanging}>Change user</button>
+
+                                <button type="submit" className="danger_user_change" onClick={this.cancelUserChanging}>Cancel</button>
+                                
                             </div>
 
-                        </form>
-                    </div>
+                       
+                        </div>
+                    </form>
                 </div>
             );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+
         }
     }
 }

@@ -134,22 +134,25 @@ export class GlassEdit extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true'){
             return (
                 <div className="GlassEdit">
                     <Sidebar />
-                    <div className="Glass_Edit">
+                    <div className="title">
+                        <h1 className="titletext">Edit glass</h1>
+                    </div>
+                    <div className="GlassEdit_c">
                         <form>
 
                             <div className="glass_edit_conteiner">
                                 <div className="form-group">
-                                    <h2>Edycja szkła</h2>
-                                    <label>Długość</label>
+                                   
+                                    <label>Length:</label>
                                     <input
                                         type="number"
                                         className="form-control"
@@ -160,7 +163,7 @@ export class GlassEdit extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Szerokość</label>
+                                    <label>Width:</label>
                                     <input
                                         type="number"
                                         className="form-control"
@@ -171,7 +174,7 @@ export class GlassEdit extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Typ</label>
+                                    <label>Type:</label>
                                     <select
                                         type="text"
                                         className="form-control"
@@ -185,7 +188,7 @@ export class GlassEdit extends Component {
 
                                 </div>
                                 <div className="form-group">
-                                    <label>Grubość</label>
+                                    <label>Thickness:</label>
                                     <input
                                         type="number"
                                         className="form-control"
@@ -196,7 +199,7 @@ export class GlassEdit extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Kolor</label>
+                                    <label>Color:</label>
                                     <select
                                         type="text"
                                         className="form-control"
@@ -210,7 +213,7 @@ export class GlassEdit extends Component {
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Właściciel</label>
+                                    <label>Owner:</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -221,11 +224,13 @@ export class GlassEdit extends Component {
                                     />
                                 </div>
 
-                                <div className="glass_edit_b_c">
-                                    <button type="submit" className="danger_glass_edit" onClick={this.cancelGlassEdit}>Anuluj</button>
-                                    <div className="empty" />
-                                    <button type="submit" className="success_glass_edit" onClick={this.handleGlassEdit}>Zastosuj zmiany</button>
+                                <div >
 
+                                    <button type="submit" className="success_glass_edit" onClick={this.handleGlassEdit}>Edit glass</button>
+
+                                    <button type="submit" className="danger_glass_edit" onClick={this.cancelGlassEdit}>Cancel</button>
+                                  
+                                   
                                 </div>
                             </div>
 
@@ -233,6 +238,15 @@ export class GlassEdit extends Component {
                     </div>
                 </div>
             );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
+
         }
     }
 }

@@ -48,25 +48,25 @@ export class AllMachineHistoryTable extends Component {
                     table333: {
                         columns: [
                             {
-                                label: 'Kto',
+                                label: 'Who',
                                 field: 'who',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Nr. maszyny',
+                                label: 'No.',
                                 field: 'no',
                                 sort: 'asc',
                                 width: 50
                             },
                             {
-                                label: 'Co',
+                                label: 'What',
                                 field: 'what',
                                 sort: 'asc',
                                 width: 250
                             },
                             {
-                                label: 'Kiedy',
+                                label: 'When',
                                 field: 'when',
                                 sort: 'asc',
                                 width: 150
@@ -110,15 +110,15 @@ export class AllMachineHistoryTable extends Component {
 
 
                 hover
-                entriesOptions={[10, 20, 50, 100]}
-                entries={15}
-                pagesAmount={10}
+                entriesOptions={[15, 20, 50, 100]}
+                entries={10}
+                pagesAmount={1}
                 data={this.state.table333}
                 searchTop
                 materialSearch
                 searchBottom={false}
                 responsive
-               // bordered
+                bordered
                 sortable
                 theadTextWhite
                 theadTextWhite

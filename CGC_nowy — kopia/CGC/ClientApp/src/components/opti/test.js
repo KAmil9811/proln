@@ -205,24 +205,12 @@ export class Test extends Component {
 
                             }
                         }
-                        ///////////////////// Koniec rysowania tafli
-                        ///////////////////// Rysowanie itemów
-                        /*if (json[i].width === 0) {
-                            sessionStorage.setItem('uncat', json[i].error_Messege)
-
-                        }
-                        else {
-                            for (var j = 0; j < json[i].glass_info[0].pieces.length; j++) {
-                                ctx.strokeRect(json[i].glass_info[0].pieces[j].x, json[i].glass_info[0].pieces[j].y + (2000 * i), json[i].glass_info[0].pieces[j].widht, json[i].glass_info[0].pieces[j].lenght);///itemy
-                            }
-                        }*/
                     }
                 };
 
                 this.setState({
                     glass_ids: table2
                 })
-                //return (json)
             })
     }
 
@@ -307,15 +295,18 @@ export class Test extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div>
+                <div >
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Cut project</h1>
+                    </div>
                     <div className="test_c">
                         <div className="canva">
                             <canvas className="canvas" ref={ref} id="canvas" width="10000" height="10000" ></canvas>
@@ -323,18 +314,18 @@ export class Test extends Component {
                         </div>
                         <h3>{sessionStorage.getItem('uncat')}</h3>
                         <div className="table2">
-                            <h2>Tafle</h2>
+                            <h2>Glasses</h2>
                             <OptiTable />
                         </div>
                         <div className="table3">
-                            <h2>Produkty</h2>
+                            <h2>Products</h2>
                             <OptiTableItems />
                             <div>
-                                <button className="prim_test" onClick={this.saveProject}>Zapisz projekt</button>
-                                <button className="success_test" onClick={this.cutOrder}>Zapisz i wytnij</button>
+                                <button className="prim_test" onClick={this.saveProject}>Save project</button>
+                                <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
                                 <ReactToPdf targetRef={ref} filename="div-blue.pdf"  >
                                     {({ toPdf }) => (
-                                        <button className="success_test" onClick={toPdf} >Wygeneruj PDF projektu</button>
+                                        <button className="success_test" onClick={toPdf} >Generate PDF </button>
                                     )}
                                 </ReactToPdf>
                             </div>
@@ -343,7 +334,34 @@ export class Test extends Component {
                     </div>
                 </div>
             );
-       }
+        }
+        else {
+            
+                return (
+                <div >
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Cut project</h1>
+                    </div>
+                    <div className="test_c">
+                        <div className="canva">
+                            <canvas className="canvas" ref={ref} id="canvas" width="10000" height="10000" ></canvas>
+
+                        </div>
+                        <h3>{sessionStorage.getItem('uncat')}</h3>
+                        <div className="table2">
+                            <h2>Glasses</h2>
+                            <OptiTable />
+                        </div>
+                        <div className="table3">
+                            <h2>Products</h2>
+                            <OptiTableItems />
+                        </div>
+
+                    </div>
+                </div>
+            );
+        }
     }
 
     function() {

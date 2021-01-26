@@ -69,11 +69,11 @@ export class AddCutMachine extends Component {
                 const machine2 = json[0].error_Messege
                 console.log(machine2)
                 if (machine2 == null) {
-                    console.log("Dodano maszynę")
+                    console.log("You added machine")
                     this.props.history.push('/machinewarehouse')
                 }
                 else {
-                    alert("Coś poszło nie tak :(")
+                    alert("Something went wrong :(")
                 }
             })
     }
@@ -101,39 +101,53 @@ export class AddCutMachine extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('machineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="AddCutMachine">
 
                     <Sidebar />
-                    <div className="addCutMachine">
+                    <div className="title">
+                        <h1 className="titletext">Add machine</h1>
+                    </div>
+                    <form>
+                    <div className="AddCutMachine_c">
 
-                        <form>
+                        <div className="AddCutMachine_c_center">
 
-                            <h2>Dodaj maszyne</h2>
-                            <h3>Rodzaj maszyny</h3>
-                            <select onChange={(e) => {
+                                <h3 className="h3_add_cut_machine">Select the machine type</h3>
+                                <select className="select_add_cut_machine" onChange={(e) => {
                                 this.setState({ value: e.target.value });
                                 console.log(this.state)
                             }} >
                                 {y}
                             </select>
+
+                       </div>
                             <div className="form-group">
 
-                                <button type="reset" className="danger_add_cm" onClick={this.cancel}>Anuluj</button>
+                                <button type="submit" className="success_add_cm" onClick={this.handleAddCutMachine}>Add machine</button>
+                                <button type="reset" className="danger_add_cm" onClick={this.cancel}>Cancel</button>
 
-                                <button type="submit" className="success_add_cm" onClick={this.handleAddCutMachine}>Dodaj</button>
-
+                                
 
                             </div>
 
-                        </form>
-                    </div>
+                        
+                        </div>
+                    </form>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }

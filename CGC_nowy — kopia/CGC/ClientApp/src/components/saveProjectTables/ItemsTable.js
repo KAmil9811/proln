@@ -57,13 +57,13 @@ export class ItemsTable extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Długość',
+                                label: 'Length',
                                 field: 'length',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Szerokość',
+                                label: 'Width',
                                 field: 'width',
                                 sort: 'asc',
                                 width: 30

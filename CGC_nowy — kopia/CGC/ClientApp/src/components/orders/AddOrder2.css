@@ -1,9 +1,9 @@
 ﻿@media all and (min-width: 480px) {
-    .AddOrder2{
+    .AddOrder2_c {
         padding: 60px 0;
     }
 
-        .AddOrder2 form {
+        .AddOrder2_c form {
             margin: 0 auto;
             max-width: 320px;
         }
@@ -20,7 +20,7 @@
 .danger_order2 {
     background-color: #ff3547;
     height: 3rem;
-    width: 13rem;
+    width: 12rem;
     /* padding: 6px 6px;*/
     font-size: 1rem;
     font-weight: 600;
@@ -93,7 +93,7 @@
     text-align: center;
     background-image: none;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
@@ -103,13 +103,4 @@
     margin-top: 5px;
     position: center;
 }
-.ordertable{
-    width: 96%;
-    margin-left: 2%;
-}
 
-.AddOrder2 {
-    margin-top: 14rem;
-    width: 96%;
-    clear: both;
-}

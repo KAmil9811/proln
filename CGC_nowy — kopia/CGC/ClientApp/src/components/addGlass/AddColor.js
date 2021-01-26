@@ -33,11 +33,11 @@ export class AddColor extends Component {
                 
             })
             .then(json => {
-                if (json[0] === 'Color_alredy_exist') {
-                    alert("Kolor już istnieje")
+                if (json[0] === 'Kolor juz istnieje') {
+                    alert("Color already exist")
                 }
                 else {
-               alert("Dodano kolor do bazy danych")
+                alert("You added new glass color")
                     this.props.history.push('/glassatibutes')
                 }
             })
@@ -51,37 +51,52 @@ export class AddColor extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
+        else if (sessionStorage.getItem('machineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
+                <div className="AddColor">
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Add glass color</h1>
+                    </div>
+                    <form>
+                        <div className="AddColor_c">
+                        
+                                <div className="form-group">
+                              
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="inputColor"
+                                        placeholder="Enter glass color"
+                                        ref="color"
+                                    />
+                                </div>
+                            <div className="form-group">
+                                  <button type="button" className="success_glass_color_add" onClick={this.handleAddColor}>Add color</button>
+
+                                    <button type="button" className="danger_glass_color_add" onClick={this.cancelAddColor}>Cancel</button>
+                                  
+                                </div>
+
+                        
+                        </div>
+                    </form>
                 </div>
             );
         }
         else {
             return (
-                <div className="AddColor">
-                    <Sidebar />
-                    <div className="add_Color">
-                        <form>
-                            <div className="form-group">
-                                <h2>Dodaj kolor szkła:</h2>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="inputColor"
-                                    placeholder="Wprowadź kolor szkła"
-                                    ref="color"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button type="button" className="danger_glass_color_add" onClick={this.cancelAddColor}>Anuluj</button>
-                                <button type="button" className="success_glass_color_add" onClick={this.handleAddColor}>Dodaj</button>
-
-                            </div>
-
-                        </form>
-                    </div>
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
+
         }
     }
 }

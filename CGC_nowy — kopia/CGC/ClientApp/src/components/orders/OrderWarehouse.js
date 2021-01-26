@@ -55,8 +55,26 @@ export class OrderWarehouse extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
+        else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
+                <div className="OrderWarehouse">
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Orders</h1>
+                    </div>
+                    <div className="order_warehouse_conteiner">
+
+                        <button className="success_add_order" onClick={this.addOrder}>Add order</button>
+
+                        <div className="tablewar">
+                            <OrderTable />
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -64,16 +82,14 @@ export class OrderWarehouse extends Component {
             return (
                 <div className="OrderWarehouse">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Orders</h1>
+                    </div>
                     <div className="order_warehouse_conteiner">
-
-                        <button className="succes_add_order" onClick={this.addOrder}>Dodaj Zlecenie</button>
-
                         <div className="tablewar">
                             <OrderTable />
                         </div>
                     </div>
-
-
                 </div>
             );
         }

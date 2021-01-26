@@ -44,7 +44,7 @@ export class PasswordChange extends Component {
                        
                        .then(json => {
                            if (json[0].error_Messege === "Wrong_old_password") {
-                               alert("Podano błędne stare hasło!")
+                               alert("Wrong old password!")
                             }
                            else {
                                sessionStorage.setItem('password', json[0].password)
@@ -53,15 +53,15 @@ export class PasswordChange extends Component {
                        })      
                 }
                 else {
-                    alert("Nowe hasła nie są takie same!")
+                    alert("The passwords don't match!")
                 }
             }
             else {
-                alert("Stare hasło się nie zgadza!")
+                alert("Wrong old password!")
             }
         }
         else {
-            alert("Wpisano dwa różne stare hasła!")
+            alert("The old passwords don't match!")
         }
     }
 
@@ -73,20 +73,24 @@ export class PasswordChange extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
         else {
             return (
-                <div className="changepassword">
+                <div className="PasswordChange">
                     <Sidebar />
-                    <div className="ChangePassword">
-                        <form>
+                    <div className="title">
+                        <h1 className="titletext">Change password</h1>
+                    </div>
+                    <form>
+                    <div className="PasswordChange_c">
+                        
                             <div className="form-group">
-                                <h2>Zmiana hasła</h2>
-                                <label>Podaj stare hasło:</label>
+                              
+                                <label>Enter old password:</label>
                                 <input
                                     type="password"
                                     name="Password"
@@ -98,7 +102,7 @@ export class PasswordChange extends Component {
                             </div>
                             <div className="form-group">
 
-                                <label>Powtórz stare hasło:</label>
+                                <label>Repeat old password:</label>
                                 <input
                                     type="password"
                                     name="Password"
@@ -109,7 +113,7 @@ export class PasswordChange extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Podaj nowe hasło:</label>
+                                <label>Enter new password:</label>
                                 <input
                                     type="password"
                                     name="Password"
@@ -120,7 +124,7 @@ export class PasswordChange extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Podaj nowe hasło:</label>
+                                <label>Repeat new password:</label>
                                 <input
                                     type="password"
                                     name="Password"
@@ -131,13 +135,16 @@ export class PasswordChange extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <button type="button" className="danger_change_own_pass" onClick={this.cancelChanging}>Anuluj</button>
-                                <button type="button" className="success_change_own_pass" onClick={this.passwordChange}>Zmiań hasła</button>
 
+                                <button type="button" className="success_change_own_pass" onClick={this.passwordChange}>Change password</button>
+
+                                <button type="button" className="danger_change_own_pass" onClick={this.cancelChanging}>Cancel</button>
+                                
                             </div>
 
-                        </form>
-                    </div>
+                        
+                       </div>
+                    </form>
                 </div>
             );
         }

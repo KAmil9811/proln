@@ -36,18 +36,21 @@ export class OptiWarehouse extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div>
 
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext"> Saved projects</h1>
+                    </div>
                     <div className="nav_mw">
-                        <button className="add_machine" onClick={this.addMachine}>Oblicz nową partię</button>
+                        <button className="add_machine" onClick={this.addMachine}>Optimize the new batch</button>
                         <OptiWarehouseTable />
 
                     </div>

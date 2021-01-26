@@ -40,32 +40,90 @@ export class MachineTable extends Component {
                     else {
                         deleted = 'Usunięta'
                     }
+                    if (sessionStorage.getItem('machineMenagment') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                        table2.push({
+                            number: json[i].no,
+                            status: json[i].status,
+                            type: json[i].type,
+                            deleted: deleted,
+                            chstatus: <button type="button" className="info_t" id={i} onClick={
+                                (e) => {
+                                    this.machineBroken(table2[e.target.id].number, table2[e.target.id].status)
+                                }}
+                            >Change status</button>,
+                            delete: <button className="danger_t" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Delete/Restore  </button>,
+
+                            action: <Link to="/single_machine_history"><button className="prim_t" id={json[i].no} onClick={(e) => { this.single(e.target.id) }}>History</button></Link>
+                        })
+                    }
+                    else {
                     table2.push({
                         number: json[i].no,
                         status: json[i].status,
                         type: json[i].type,
                         deleted: deleted,
-                        chstatus: <button type="button" className="info_t" id={i} onClick={
-                            (e) => {
-                                this.machineBroken(table2[e.target.id].number, table2[e.target.id].status)
-                            }}
-                        >Zmień status</button>,
-                        delete: <button className="danger_t" id={i} onClick={(e) => { this.delete(table2[e.target.id].number, table2[e.target.id].deleted) }}> Usuń/Przywróć  </button>,
-
-                        action: <Link to="/single_machine_history"><button className="prim_t" id={json[i].no} onClick={(e) => { this.single(e.target.id) }}>Historia</button></Link>
                     })
+                    }
                 };
-                this.setState({
+                if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                    this.setState({
+                        table: {
+                            columns: [
+                                {
+                                    label: 'No.',
+                                    field: 'number',
+                                    sort: 'asc',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Type',
+                                    field: 'type',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Status',
+                                    field: 'status',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Change status',
+                                    field: 'chstatus',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Stan',
+                                    field: 'deleted',
+                                    width: 30
+                                },
+                                {
+                                    label: 'Delete',
+                                    field: 'delete',
+                                    width: 30
+                                },
+                                {
+                                    label: 'History',
+                                    field: 'action',
+                                    width: 100
+                                },
+                            ],
+                            rows: table2
+                        }
+                    });
+                }
+                else {
+this.setState({
                     table: {
                         columns: [
                             {
-                                label: 'Nr',
+                                label: 'No.',
                                 field: 'number',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Rodzaj',
+                                label: 'Type',
                                 field: 'type',
                                 sort: 'asc',
                                 width: 150
@@ -77,29 +135,16 @@ export class MachineTable extends Component {
                                 width: 150
                             },
                             {
-                                label: 'Zmień status',
-                                field: 'chstatus',
-                                width: 30
-                            },
-                            {
                                 label: 'Stan',
                                 field: 'deleted',
                                 width: 30
-                            },
-                            {
-                                label: 'Usuń',
-                                field: 'delete',
-                                width: 30
-                            },
-                            {
-                                label: 'Akcja',
-                                field: 'action',
-                                width: 100
                             },
                         ],
                         rows: table2
                     }
                 });
+                }
+                
             })
     };
     single(number) {
@@ -132,14 +177,14 @@ export class MachineTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Maszyna zepsuta!")
+                    alert("Machine is broken!")
                 })
                 .then(json => {
                     window.location.reload();
                 })
         }
         else if (status === 'InUse') { ///w użyciu 
-            alert("Maszyna w użyciu, nie można zmienić stanu")
+            alert("Machine is in use, you can't change status!")
         }
         else {
             fetch(`api/Machine/Change_Status_Machine`, {
@@ -156,7 +201,7 @@ export class MachineTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Naprawiono maszynę")
+                    alert("Machine is fixed")
                 })
                 .then(json => {
                     window.location.reload();
@@ -190,7 +235,7 @@ export class MachineTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Usunięto maszyne")
+                    alert("You deleted machine")
                 })
                 .then(json => {
                     window.location.reload();
@@ -211,7 +256,7 @@ export class MachineTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Aktywowano maszyne")
+                    alert("You activated machine")
                 })
                 .then(json => {
                     window.location.reload();

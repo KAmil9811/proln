@@ -51,7 +51,7 @@ export class PackagesTable extends Component {
                                 sessionStorage.setItem('thicknessOpti', table3[e.target.id].thickness)
                                 
                             }
-                            } > Wybierz </button></Link>
+                            } > Select </button></Link>
                     })
                 };
                 this.setState({
@@ -64,37 +64,37 @@ export class PackagesTable extends Component {
                                 width: 30
                             },
                             {
-                                label: 'Kolor',
+                                label: 'Color',
                                 field: 'color',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Klient',
+                                label: 'Client',
                                 field: 'owner',
                                 sort: 'asc',
                                 width: 150
                             },
 
                             {
-                                label: 'Typ',
+                                label: 'Type',
                                 field: 'type',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Grubość',
+                                label: 'Thickness',
                                 field: 'thickness',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Ilość szkieł',
+                                label: 'Amount',
                                 field: 'amount',
                                 width: 30
                             },
                              {
-                                label: 'Wybierz',
+                                label: '',
                                 field: 'more',
                                 width: 30
                             }

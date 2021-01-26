@@ -33,10 +33,10 @@ export class GlassColorEdit extends Component {
                 })
             .then(json => {
                 if (json[0] === 'New_Color_already_exist') {
-                    alert("Taki kolor ju¿ istnieje")
+                    alert("New color already exist")
                 }
                 else {
-                    alert("Kolor zosta³ zedytowany")
+                    alert("Color has been edited")
                     this.props.history.push('/glassatibutes')
                     sessionStorage.removeItem('color')
                 }
@@ -50,22 +50,25 @@ export class GlassColorEdit extends Component {
     }
     
     render() {
-        if (sessionStorage.getItem('valid') === '') {
+        if ((sessionStorage.getItem('valid') === '') && (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true')) {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj siê, aby usyskaæ dostêp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="editColor">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Edit glass color</h1>
+                    </div>
                     <div className="EditColor">
                         <form>
                             <div className="form-group">
-                                <h2>Edytuj kolor:</h2>
+                                
                                 <input
                                     type="text"
                                     name="color"
@@ -77,12 +80,20 @@ export class GlassColorEdit extends Component {
                                 />
                             </div>
 
-                            <button type="button" className="danger_color_edit" onClick={this.return}>Anuluj</button>
-                            <button type="button" className="success_color_edit" onClick={this.changeColor}>Edytuj</button>
+                            <button type="button" className="danger_color_edit" onClick={this.return}>Cancel</button>
+                            <button type="button" className="success_color_edit" onClick={this.changeColor}>Edit</button>
                         </form>
                     </div>
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
         }
     }
 }

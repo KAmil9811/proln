@@ -34,7 +34,7 @@ export class EmailChange extends Component {
                     })
                     .then(json => {
                         if (json[0].error_Messege === "Email_taken") {
-                            alert("Email jest już zajęty!")
+                            alert("Email is already taken!")
                         }
                         else {
                             sessionStorage.setItem('email', json[0].email)
@@ -43,7 +43,7 @@ export class EmailChange extends Component {
                     })
             }
             else {
-                alert("Podano błędne hasło!")
+                alert("Wrong password!")
             }
         }
     
@@ -56,48 +56,56 @@ export class EmailChange extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
         else {
             return (
-                <div className="Changeemail">
+                <div className="EmailChange">
                     <Sidebar />
-                    <div className="ChangeEmail">
-                        <form>
-                            <div className="form-group">
-                                <h2>Zmiana e-maila</h2>
-                                <label>Podaj hasło:</label>
-                                <input
-                                    type="password"
-                                    name="Password"
-                                    className="form-control"
-                                    id="inputPassword"
-                                    placeholder="*********"
-                                    ref="password"
-                                />
+                    
+                            <div className="title">
+                                <h1 className="titletext">Change e-mail</h1>
                             </div>
-                            <div className="form-group">
-                                <label>Podaj nowy email:</label>
-                                <input
-                                    type="email"
-                                    name="newEmail"
-                                    className="form-control"
-                                    id="inputNewEmail"
-                                    placeholder="smapleemail@domain.com"
-                                    ref="newEmail"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button type="button" className="danger_change_own_em" onClick={this.cancelChanging}>Anuluj</button>
-                                <button type="button" className="success_change_own_em" onClick={this.emailChange}>Zmiań email</button>
+                    <form>
+                        <div className="EmailChange_c">
+                              
+                                    <div className="form-group">
+                                        <label>Your password:</label>
+                                        <input
+                                            type="password"
+                                            name="Password"
+                                            className="form-control"
+                                            id="inputPassword"
+                                            placeholder="*********"
+                                            ref="password"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>New e-mail:</label>
+                                        <input
+                                            type="email"
+                                            name="newEmail"
+                                            className="form-control"
+                                            id="inputNewEmail"
+                                            placeholder="smapleemail@domain.com"
+                                            ref="newEmail"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <button type="button" className="success_change_own_em" onClick={this.emailChange}>Change e-mail</button>
 
-                            </div>
+                                        <button type="button" className="danger_change_own_em" onClick={this.cancelChanging}>Cancel</button>
+                                        
+                                     </div>
 
-                        </form>
-                    </div>
+
+                        </div>
+
+                      
+                    </form>
                 </div>
             );
         }

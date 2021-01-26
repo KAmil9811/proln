@@ -65,19 +65,19 @@ export class OptiTableItems extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Długość',
+                                label: 'Length',
                                 field: 'length',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Szerokość',
+                                label: 'Width',
                                 field: 'width',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Id',
+                                label: 'No.',
                                 field: 'ids',
                                 sort: 'asc',
                                 width: 30

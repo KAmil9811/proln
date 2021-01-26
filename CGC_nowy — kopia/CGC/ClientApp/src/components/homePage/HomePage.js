@@ -72,8 +72,8 @@ export class HomePage extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -82,16 +82,19 @@ export class HomePage extends Component {
                 <div className="HomePage">
                     <form>
                         <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Home page</h1>
+                        </div>
                         <div className="conteiner">
-                            <button className="ele2" onClick={this.Production}>Produkcja</button>
-                            <button className="ele2" onClick={this.glassWarehouse}>Magazyn</button>
-                            <button className="ele2" onClick={this.readyGlassWarehouse}>Gotowe produkty</button>
+                            <button className="ele3" onClick={this.Production}>Production</button>
+                            <button className="ele2" onClick={this.glassWarehouse}>Magazine</button>
+                            <button className="ele2" onClick={this.readyGlassWarehouse}>Products</button>
 
-                            <button className="ele2" onClick={this.orderWarehouse}>Zlecenia</button>
-                            <button className="ele2" onClick={this.machineWarehouse}>Maszyny</button>
-                            <button className="ele2" onClick={this.userPanel}>Twoje konto</button>
-                            <button className="ele2" onClick={this.saveProject}>Zapisane projekty</button>
-                            <button className="ele2" onClick={this.controlPanel}>Panel sterowania</button>
+                            <button className="ele2" onClick={this.orderWarehouse}>Orders</button>
+                            <button className="ele2" onClick={this.machineWarehouse}>Machines</button>
+                            <button className="ele2" onClick={this.userPanel}>Your account</button>
+                            <button className="ele2" onClick={this.saveProject}>Saved projects</button>
+                            <button className="ele4" onClick={this.controlPanel}>Control panel</button>
                         </div>
                     </form>
                 </div>

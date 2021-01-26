@@ -101,11 +101,11 @@ export class AddGlass extends Component {
                     const glass2 = json[0].error_Messege
                     console.log(glass2)
                     if (glass2 == null) {
-                        console.log("Dodano szkło")
+                        console.log("You added glass")
                         this.props.history.push('/glasswarehouse')
                     }
                     else if (glass2 == "User_no_permission") {
-                        alert("Nie posiadasz uprawnień aby dodać szkło");
+                        alert("You have no perrmission to add glass");
                     }
 
 
@@ -148,92 +148,96 @@ export class AddGlass extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true'){
             return (
                 <div className="AddGlass">
                     <Sidebar />
-                    <div className="add_glass_conteiner">
-                        <form>
+                    <div className="title">
+                        <h1 className="titletext">Add glass</h1>
+                    </div>
+                    <form>
+                         <div className="AddGlass_c">
+                        
                             <div className="form-group">
-                                <h2>Dodawanie szkła</h2>
-                                <label>Długość</label>
+                               
+                                <label>Length</label>
                                 <input
                                     type="number"
                                     min="1"
                                     name="Height"
                                     className="form-control"
                                     id="inputHeight"
-                                    placeholder="Podaj długość w milimetrach"
+                                    placeholder="Enter the length in millimeters"
                                     ref="length"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Szerokość</label>
+                                <label>Width</label>
                                 <input
                                     type="number"
                                     min="1"
                                     className="form-control"
                                     id="inputWidth"
-                                    placeholder="Podaj szerokość w milimetrach"
+                                    placeholder="Enter the width in millimeters"
                                     ref="width"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Grubość</label>
+                                <label>Thickness</label>
                                 <input
                                     type="number"
                                     min="1"
                                     className="form-control"
                                     id="inputLength"
-                                    placeholder="Podaj grubość w milimetrach"
+                                    placeholder="Enter the thickness in millimeters"
                                     ref="height"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Właściciel</label>
+                                <label>Owner</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="inputOwner"
-                                    placeholder="Podaj właściciela"
+                                    placeholder="Enter owner name"
                                     ref="owner"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Kolor</label>
+                                <label>Color</label>
                                 <select ref="color" type="text" className="form-control">
                                     {x}
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>Typ</label>
+                                <label>Type</label>
                                 <select ref="type" type="text" className="form-control">
                                     {y}
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>Miejsce</label>
+                                <label>Shelf</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="inputDesk"
-                                    placeholder="Podaj miejsce przechowania szkła"
+                                    placeholder="Enter the shelf number"
                                     ref="desk"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Ilosć</label>
+                                <label>Amount</label>
                                 <input
                                     type="number"
                                     min='1'
                                     className="form-control"
                                     id="inputDesk"
-                                    placeholder="Podaj liczbę"
+                                    placeholder="Enter the number"
                                     ref="amount"
                                 />
                             </div>
@@ -241,14 +245,27 @@ export class AddGlass extends Component {
 
                             <div className="form-group">
 
-                                <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Anuluj</button>
-                                <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Dodaj</button>
+                                <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Add glass</button>
+
+                                <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Cancel</button>
+                               
+
                             </div>
 
-                        </form>
-                    </div>
+                        
+                        </div>
+                    </form>
                 </div>
             );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
+
         }
     }
 }

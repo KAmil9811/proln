@@ -1,13 +1,12 @@
 ﻿
 @media all and (min-width: 480px) {
-    .GlassEdit {
+    .GlassEdit_c {
         padding: 60px 0;
     }
 
-        .Glass_Edit form {
+        .GlassEdit_c form {
             margin: 0 auto;
             max-width: 320px;
-          
         }
 }
 
@@ -76,17 +75,12 @@
     }
 
 .glass_edit_b_c {
-
-
-   
-  
 }
-    .empty {
-        width: 1rem;
-        display: inline-block;
-    }
 
-.glass_edit_conteiner{
+.empty {
+    width: 1rem;
+    display: inline-block;
+}
 
-
+.glass_edit_conteiner {
 }

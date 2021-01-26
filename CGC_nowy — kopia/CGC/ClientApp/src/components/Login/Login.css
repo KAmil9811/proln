@@ -1,28 +1,20 @@
 ﻿@media all and (min-width: 480px) {
     .Login {
         padding: 60px 0;
+    
     }
 
-        .Login form {
-            margin: 0 auto;
-            max-width: 320px;
-        }
-}
-@media (max-width: 767px) {
-    #root {
-        /* width: -webkit-max-content; */
-        width: -moz-max-content;
-        width: 100%;
+    .Login form {
+        margin: 0 auto;
+       
+        max-width: 320px;
     }
 }
+
 .Login_c{
 
-}
-
-.Login_b_c{
 
 }
-
 
 /*.danger_resset_pass:active {
     background-color: #ee2425;
@@ -33,7 +25,6 @@
     border-right: none;
     outline: 0;
 }*/
-
 .danger_resset_pass:hover {
     background-color: #ee2425;
     transform: scale(1.05);
@@ -47,7 +38,7 @@
 .danger_resset_pass {
     background-color: #ff3547;
     height: 3rem;
-    width: 13rem;
+    width: 12rem;
     padding: 6px 6px;
     font-size: 1rem;
     font-weight: 600;
@@ -58,12 +49,13 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    position:center;
-    margin-left: 1.5rem;
- 
-   /* float: left;*/
+    position: center;
+    margin: 0 auto;
+    margin-right: auto;
+    /* float: left;*/
     display: inline-block;
     float: left;
+    margin-left: 1vw;
 }
 
 .success_login {
@@ -82,13 +74,13 @@
     border-top: none;
     border-left: none;
     border-right: none;
-   
-   margin-right: 1.5rem;
-   /* position: center;*/
-   /* float: right;*/
-    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    /* position: center;*/
     float: right;
-   
+    margin-right:1vw;
+
+    
 }
 
     .success_login:hover {
@@ -104,11 +96,20 @@
 
 
 
-.Login_b_c {
-    position: center;
-    margin: 0 auto;
-}
+@media (max-width: 767px) {
 
-.empty{
-    clear:both;
+    .danger_resset_pass {
+        margin-left: 2vh;
+    }
+
+    .success_login {
+        margin-right: 2vh;
+    }
+    .tit_log{
+        height: 5vh;
+
+    }
+    .tit_text {
+        font-size:  4vh;
+    }
 }

@@ -11,43 +11,43 @@ export class AddOrderTwo extends Component {
             table: {
                 columns: [
                     {
-                        label: 'Długość',
+                        label: 'Length',
                         field: 'length',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Szerokość',
+                        label: 'Width',
                         field: 'width',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Grubość',
+                        label: 'Thickness',
                         field: 'thickness',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Kolor',
+                        label: 'Color',
                         field: 'color',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Rodzaj',
+                        label: 'Type',
                         field: 'type',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Ilość',
+                        label: 'Amount',
                         field: 'amount',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Usuń',
+                        label: 'Delete',
                         field: 'action',
                         sort: 'asc',
                         width: 150
@@ -120,7 +120,7 @@ export class AddOrderTwo extends Component {
             }
         }
         if (this.state.check === '') {
-            alert('Nie dodano żadnego elementu')
+            alert('You did not add any item')
         }
         else { 
         fetch(`api/Order/Add_Order`, {
@@ -171,43 +171,43 @@ export class AddOrderTwo extends Component {
             table: {
                 columns: [
                     {
-                        label: 'Długość',
+                        label: 'Length',
                         field: 'length',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Szerokość',
+                        label: 'Width',
                         field: 'width',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Grubość',
+                        label: 'Thickness',
                         field: 'thickness',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Kolor',
+                        label: 'Color',
                         field: 'color',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Rodzaj',
+                        label: 'Type',
                         field: 'type',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Ilość',
+                        label: 'Amount',
                         field: 'amount',
                         sort: 'asc',
                         width: 150
                     },
                     {
-                        label: 'Usuń',
+                        label: 'Delete',
                         field: 'action',
                         sort: 'asc',
                         width: 150
@@ -315,93 +315,102 @@ export class AddOrderTwo extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div>
                     <Sidebar />
-                    <div className="AddOrder2">
+                    <div className="title">
+                        <h1 className="titletext">Add items</h1>
+                    </div>
+                    <div className="AddOrder2_c">
                         <form>
 
                             <div className="form-group">
-                                <h2>Dodawanie obiektu</h2>
-                                <label>Długość</label>
+                                
+                                <label>Length</label>
                                 <input
                                     type="number"
                                     className="form-control"
                                     min="1"
-                                    placeholder="Podaj wysokość"
+                                    placeholder="Enter length"
                                     id="inputHeight"
                                     ref="length"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Szerokość</label>
+                                <label>Width</label>
                                 <input
                                     type="number"
                                     className="form-control"
                                     min="1"
-                                    placeholder="Podaj szerokość"
+                                    placeholder="Enter width"
                                     id="inputWidth"
                                     ref="width"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Grubość</label>
+                                <label>Thickness</label>
                                 <input
                                     type="number"
                                     className="form-control"
                                     min="1"
-                                    placeholder="Podaj grubość"
+                                    placeholder="Enter thickness"
                                     id="inputThickness"
                                     ref="thickness"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Kolor</label>
+                                <label>Color</label>
                                 <select ref="color" type="text" className="form-control">
                                     {x}
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>Ilość</label>
+                                <label>Amount</label>
                                 <input
                                     type="number"
                                     min="1"
                                     className="form-control"
                                     id="inputLogin"
-                                    placeholder="Podaj lilość"
+                                    placeholder="Enter amount"
                                     ref="amount"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Rodzaj</label>
+                                <label>Type</label>
                                 <select ref="type" type="text" className="form-control">
                                     {y}
                                 </select>
                             </div>
 
+                            <button type="submit" className="success_order2_1" onClick={this.addItem}>Add item</button>
+
+                            <button type="submit" className="danger_order2" onClick={this.cancelAdding}>Cancel order</button>
 
                         </form>
-                        <div className="form-group">
-                            <button type="submit" className="success_order2_1" onClick={this.addItem}>Dodaj element</button>
-
-                            <button type="submit" className="danger_order2" onClick={this.cancelAdding}>Anuluj zlecenie</button>
-
-
-                        </div>
+                     
                         <div className="ordertable">
+                            <button type="submit" className="success_order2_2" onClick={this.handleAddOrder}>Add</button>
                             {table}
                         </div>
-                        <button type="submit" className="success_order2_2" onClick={this.handleAddOrder}>Dodaj</button>
+                       
                     </div>
 
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿import React, { Component } from "react";
-import './test.css';
+import './SavedPrint.css';
 import { ItemsTable } from '../saveProjectTables/ItemsTable'
 import { GlassTableProject } from '../saveProjectTables/glassTableProject'
 import Sidebar from '../Sidebar';
@@ -261,8 +261,38 @@ export class SavedPrint extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
+        else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
+                <div>
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Saved projects</h1>
+                    </div>
+                    <div className="SavedPrint_c">
+                        <div className="canva">
+                            <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
+                        </div>
+                        <div className="table2">
+                            <h2>Glasses</h2>
+                            <GlassTableProject />
+                        </div>
+                        <div className="table3">
+                            <h2>Products</h2>
+                            <ItemsTable />
+                        </div>
+                        <div>
+                            <button className="prim_test" onClick={this.saveProject}>Back</button>
+                            <button className="success_test" onClick={this.cutOrder}>Cut</button>
+
+                        </div>
+
+
+                    </div>
                 </div>
             );
         }
@@ -270,25 +300,24 @@ export class SavedPrint extends Component {
             return (
                 <div>
                     <Sidebar />
-                    <div className="test_c">
+                    <div className="title">
+                        <h1 className="titletext">Saved projects</h1>
+                    </div>
+                    <div className="SavedPrint_c">
                         <div className="canva">
                             <canvas className="canvas" id="canvas" width="10000" height="10000" ></canvas>
                         </div>
                         <div className="table2">
-                            <h2>Tafle</h2>
+                            <h2>Glasses</h2>
                             <GlassTableProject />
                         </div>
                         <div className="table3">
-                            <h2>Produkty</h2>
+                            <h2>Products</h2>
                             <ItemsTable />
                         </div>
                         <div>
-                            <button className="prim_test" onClick={this.saveProject}>Powrót</button>
-                            <button className="success_test" onClick={this.cutOrder}>Wytnij</button>
-
+                            <button className="prim_test" onClick={this.saveProject}>Back</button>
                         </div>
-
-
                     </div>
                 </div>
             );

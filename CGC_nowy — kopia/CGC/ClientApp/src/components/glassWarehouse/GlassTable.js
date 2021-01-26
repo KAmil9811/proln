@@ -38,70 +38,51 @@ export class GlassTable extends Component {
                 console.log(json.length);
                 console.log(json);
                 for (var i = 0; i < json.length; i++) {
-                    table2.push({
-                        length: json[i].length,
-                        width: json[i].width,
-                        thickness: json[i].hight,
-                        color: json[i].color,
-                        type: json[i].type,
-                        owner: json[i].owner,
-                        desk: json[i].desk,
-                        choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
-                        id: '',
-                        
-                        /*action: <button className="delete" id={i} onClick={
-                            (e) => {
-                                e.preventDefault();
-                                console.log(json[e.target.id].glass_info)
-                                var amount = prompt("Podaj ilość sztuk do usunięcia z przedziału od 1 do ");
-                                var amount2 = parseInt(amount)
-
-
-                                //TO przerobić w następnym semestrze 
-                                *//*if (amount === null) {
-                                    return;
-                                }
-                                else if (isNaN(amount2)) {
-                                    alert("Proszę wprowadzić liczbę!");
-                                    console.log(amount2)
-                                }
-                                else if (amount2 > json[e.target.id].glass_info.length) {
-                                    alert("Wprowadź liczbę z odpowiedniego przedziału!")
-                                }
-                                else {
-                                   
-                                    for (var j = 0; j < amount2; j++) {
-                                        this.setState({ ids: this.state.ids.concat(json[e.target.id].glass_info[j].id) })
-                                        console.log(this.state.ids)
+                    if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                        table2.push({
+                            length: json[i].length,
+                            width: json[i].width,
+                            thickness: json[i].hight,
+                            color: json[i].color,
+                            type: json[i].type,
+                            owner: json[i].owner,
+                            desk: json[i].desk,
+                            choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
+                            id: '',
+                            edit:
+                                <Link to="/glass_edit"><button className="info_t" id={i}
+                                    onClick={
+                                        (e) => {
+                                            //console.log(e.target.id);
+                                            sessionStorage.setItem('length', json[e.target.id].length);
+                                            sessionStorage.setItem('width', json[e.target.id].width);
+                                            sessionStorage.setItem('thickness', json[e.target.id].hight);
+                                            sessionStorage.setItem('color', json[e.target.id].color);
+                                            sessionStorage.setItem('type', json[e.target.id].type);
+                                            //sessionStorage.setItem('amount', json[e.target.id].length);
+                                            sessionStorage.setItem('owner', json[e.target.id].owner);
+                                            sessionStorage.setItem('desk', json[e.target.id].desk);
+                                            sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_Id));
                                         }
-                                   
-                                   
-                                    
-                                }*//*
-                                
-                            }
-                        }>Usuń</button>,*/
-                        edit:
-                            <Link to="/glass_edit"><button className="info_t" id={i}
-                                onClick={
-                                    (e) => {
-                                        //console.log(e.target.id);
-                                        sessionStorage.setItem('length', json[e.target.id].length);
-                                        sessionStorage.setItem('width', json[e.target.id].width);
-                                        sessionStorage.setItem('thickness', json[e.target.id].hight);
-                                        sessionStorage.setItem('color', json[e.target.id].color);
-                                        sessionStorage.setItem('type', json[e.target.id].type);
-                                        //sessionStorage.setItem('amount', json[e.target.id].length);
-                                        sessionStorage.setItem('owner', json[e.target.id].owner);
-                                        sessionStorage.setItem('desk', json[e.target.id].desk);
-                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_Id));
-                                    }
-                                }>Edytuj</button>
-                            </Link>
+                                    }>Edit</button>
+                                </Link>
 
-                    })
+                        })
+                    }
+                    else {
+                        table2.push({
+                            length: json[i].length,
+                            width: json[i].width,
+                            thickness: json[i].hight,
+                            color: json[i].color,
+                            type: json[i].type,
+                            owner: json[i].owner,
+                            desk: json[i].desk,
+                            id: '',
+                        })
+
+                    }
                 };
-                ///kod zamienia id w stringa do wyświetlenia
 
                 for (var k = 0; k < table2.length; k++) {
                     var amount = json[k].length;
@@ -111,76 +92,128 @@ export class GlassTable extends Component {
                     };
                 }
 
-                
-                this.setState({
-                    table: {
-                        columns: [
-                            {
-                                label: 'Długość',
-                                field: 'length',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Szerokość',
-                                field: 'width',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Grubość',
-                                field: 'thickness',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Kolor',
-                                field: 'color',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Rodzaj',
-                                field: 'type',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Właściciel',
-                                field: 'owner',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Numer referencyjny',
-                                field: 'id',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: 'Edycja',
-                                field: 'edit',
-                                sort: 'asc',
-                                width: 150
-                            },
-                            {
-                                label: '',
-                                field: 'choice',
-                                sort: 'asc',
-                                width: 150
-                            }
+                if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                    this.setState({
+                        table: {
+                            columns: [
+                                {
+                                    label: 'Length',
+                                    field: 'length',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Width',
+                                    field: 'width',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Thickness',
+                                    field: 'thickness',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Color',
+                                    field: 'color',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Type',
+                                    field: 'type',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Owner',
+                                    field: 'owner',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Ref number',
+                                    field: 'id',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Edit',
+                                    field: 'edit',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: '',
+                                    field: 'choice',
+                                    /*sort: 'asc',*/
+                                    width: 150
+                                }
 
-                           /* {
-                                label: 'Usuń',
-                                field: 'action',
-                                sort: 'asc',
-                                width: 150
-                            },*/
-                            
-                        ],
-                        rows: table2
-                    }
-                });
+                                /* {
+                                     label: 'Usuń',
+                                     field: 'action',
+                                     sort: 'asc',
+                                     width: 150
+                                 },*/
+
+                            ],
+                            rows: table2
+                        }
+                    });
+                }
+                else {
+                    this.setState({
+                        table: {
+                            columns: [
+                                {
+                                    label: 'Length',
+                                    field: 'length',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Width',
+                                    field: 'width',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Thickness',
+                                    field: 'thickness',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Color',
+                                    field: 'color',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Type',
+                                    field: 'type',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'Owner',
+                                    field: 'owner',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                                {
+                                    label: 'ref number',
+                                    field: 'id',
+                                    sort: 'asc',
+                                    width: 150
+                                },
+                            ],
+                            rows: table2
+                        }
+                    });
+                }
             })
     };
 
@@ -229,7 +262,7 @@ export class GlassTable extends Component {
             })
             .then(json => {
                 
-                    alert("Usunięto wybrane szkła")
+                    alert("You deleted selected glass")
                     window.location.reload();
               
 
@@ -242,7 +275,7 @@ export class GlassTable extends Component {
 
             <div>
                 <div className="glass_table_b">
-                    <button className="danger_glas_magazine" onClick={this.delete}>Usuń zaznaczone </button>
+                    <button className="danger_glas_magazine" onClick={this.delete}> Delete selected </button>
                     
                 </div>
 
@@ -279,7 +312,7 @@ export class GlassTable extends Component {
                 // scrollY
                 responsive
                 // maxHeight="35vh"
-              //  bordered
+                bordered
 
 
 
@@ -305,7 +338,7 @@ export class GlassTable extends Component {
                 // barReverse
                // className="User_table"
                 // noBottomColumns
-                sortable
+               // sortable
             //info={false}
 
 

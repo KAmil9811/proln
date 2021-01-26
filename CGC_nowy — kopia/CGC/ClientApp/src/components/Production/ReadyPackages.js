@@ -42,8 +42,8 @@ export class ReadyPackages extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -51,6 +51,9 @@ export class ReadyPackages extends Component {
             return (
                 <div className="ReadyPackages">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Select package</h1>
+                    </div>
                     <div className="ready_packages_conteiner">
 
 

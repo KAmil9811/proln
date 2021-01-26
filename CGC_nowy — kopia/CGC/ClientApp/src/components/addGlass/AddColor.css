@@ -1,20 +1,23 @@
-﻿
-
-@media all and (min-width: 480px) {
-    .add_Color {
+﻿@media all and (min-width: 480px) {
+    .AddColor_c {
         padding: 60px 0;
     }
 
-    .add_Color form {
+    .AddColor form {
         margin: 0 auto;
         max-width: 320px;
     }
 }
 
 
+
 .danger_glass_color_add:hover {
     background-color: #ee2425;
     transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     outline: 0;
 }
 
@@ -22,22 +25,23 @@
     background-color: #ff3547;
     height: 3rem;
     width: 12rem;
-    /* padding: 6px 6px;*/
+    padding: 6px 6px;
     font-size: 1rem;
     font-weight: 600;
     text-align: center;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    /*  position:center;*/
-    margin-left: 1.5rem;
-    /* position: center;*/
-    /* float: right;*/
+    position: center;
+    margin: 0 auto;
+    margin-right: auto;
+    /* float: left;*/
     display: inline-block;
     float: left;
+    margin-left: 1vw;
 }
 
 .success_glass_color_add {
@@ -51,20 +55,45 @@
     text-align: center;
     background-image: none;
     color: white;
-    border-radius: 12px;
+    border-radius: 13px;
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-bottom: 0px;
-    margin-right: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
     /* position: center;*/
-    /* float: right;*/
-    display: inline-block;
     float: right;
+    margin-right: 1vw;
 }
-    .success_glass_color_add:hover {
-        background-color: #339933;
-        transform: scale(1.05);
-        outline: 0;
+
+.success_glass_color_add:hover {
+    background-color: #339933;
+    transform: scale(1.05);
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: 0;
+}
+
+
+
+@media (max-width: 767px) {
+
+    .danger_glass_color_add {
+        margin-left: 1vh;
     }
+
+    .success_glass_color_add {
+        margin-right: 1vh;
+    }
+
+    .title {
+        height: 5vh;
+    }
+
+    .titletext {
+        font-size: 4vh;
+    }
+}

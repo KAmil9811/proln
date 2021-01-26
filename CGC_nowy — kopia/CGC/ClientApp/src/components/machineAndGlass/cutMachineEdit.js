@@ -38,7 +38,7 @@ export class CutMachineEdit extends Component {
                                         console.log(e.target.id);
                                         sessionStorage.setItem('machinetype', json[e.target.id]);
                                     }
-                                }>Edytuj</button>
+                                }>Edit</button>
                             </Link>
                     })
                 };
@@ -46,19 +46,19 @@ export class CutMachineEdit extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Nr',
+                                label: 'No.',
                                 field: 'number',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Typ',
+                                label: 'Type',
                                 field: 'type',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Edycja',
+                                label: 'Edit',
                                 field: 'edit',
                                 width: 150
                             },
@@ -147,25 +147,37 @@ export class CutMachineEdit extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
-        else {
+        else if (sessionStorage.getItem('machineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="cutMEdit">
                     <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Machine types</h1>
+                    </div>
                     <div className="cut_machine_edit">
                         <div className="nav_machine_e">
                         </div>
                         <div className="conceiner_machine_e">
-                            <button type="button" className="success_cm_edit" onClick={this.addTypeMachine}>Dodaj typ</button>
+                            <button type="button" className="success_cm_edit" onClick={this.addTypeMachine}>Add type</button>
                             {typeTable}
                         </div>
                     </div>
                 </div>
             )
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
+
         }
     }
 

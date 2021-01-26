@@ -57,31 +57,31 @@ export class GlassTableProject extends Component {
                     table: {
                         columns: [
                             {
-                                label: 'Długość',
+                                label: 'Length',
                                 field: 'length',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Szerokość',
+                                label: 'Width',
                                 field: 'width',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Grubość',
+                                label: 'Thickness',
                                 field: 'thickness',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Kolor',
+                                label: 'Color',
                                 field: 'color',
                                 sort: 'asc',
                                 width: 30
                             },
                             {
-                                label: 'Rodzaj',
+                                label: 'Type',
                                 field: 'type',
                                 sort: 'asc',
                                 width: 30

@@ -66,26 +66,26 @@ export class AddAcount extends Component{
                 const access2 = json[0].error_Messege
                 console.log(access2)
                 if (access2 == null) {
-                    console.log("Dodano użytkownika")
+                    console.log("You added user")
                     this.props.history.push('/controlpaneladmin')
                 }
                 else if (access2 == "Wrong_passowrd") {
-                    alert("Hasło musi zawierać dużą i małą literę oraz cyfrę i zawierać min 8 znaków!")
+                    alert("The password must contain upper and lower case letters, number and must be at least 8 in length!")
                 }
-                else if (access2 == "Wrong_login") {
-                    alert("Login moze zawierać jedynie znaki angielskiego alfabetu!")
+                else if (access2 == "Wrong_login") {  
+                    alert("Login may only contain characters of the English alphabet!")
                 }
                 else if (access2 == "Login_taken") {
-                    alert("Login zajęty!")
+                    alert("Login is taken!")
                 }
                 else if (access2 == "Email_taken") {
-                    alert("Email zajęty!")
+                    alert("Email is taken!")
                 }
                 else if (access2 == "Wrong_email") {
-                    alert("Email niepoprawny!")
+                    alert("Wrong email!")
                 }
                 else {
-                    alert("Coś poszło nie tak :(")
+                    alert("Something went wrong :(")
                 }
             })
     }
@@ -98,22 +98,22 @@ export class AddAcount extends Component{
         if (sessionStorage.getItem('manager') === 'true') {
             return (
                 <div className="form-group">
-                    <label>Uprawnienia:</label><br />
+                    <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
                         console.log(this.state)
                     }} >
-                        <option value="user">Pracownik</option>
+                        <option value="user">Employee</option>
                         <option value="admin">Admin</option>
                             <option value="superAdmin">Super admin</option>
                       
                     
                         </select><br />
                         <div className="uprawnienia">
-                        <input className="check" type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazynier<br />
-                        <input className="check" type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />  Menedżer maszyn<br />
-                        <input className="check" type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Menedżer zamówień<br />
-                        <input className="check" type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Menedżer cięcia<br />
+                        <input className="check" type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazine management <br />
+                        <input className="check" type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />  Machine management <br />
+                        <input className="check" type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Order management <br />
+                        <input className="check" type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Cut management <br />
                         </div>
                 </div>
             )
@@ -121,35 +121,35 @@ export class AddAcount extends Component{
         else if (sessionStorage.getItem('superAdmin') === 'true') {
             return (
                 <div className="form-group">
-                    <label>Uprawnienia:</label><br />
+                    <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
                         console.log(this.state)
                     }} >
-                        <option value="user">Pracownik</option>
+                        <option value="user">Employee</option>
                         <option value="admin">Admin</option>
                     </select><br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazynier<br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Menedżer maszyn<br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Menedżer zamówień<br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Menedżer cięcia<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazine management<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Machine management<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Order management<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Cut management <br />
                 </div>
             )
         }
         else {
             return (
                 <div className="form-group">
-                    <label>Uprawnienia:</label><br />
+                    <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
                         console.log(this.state)
                     }} >
                         <option value="user">Pracownik</option>
                     </select><br/>
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazynier<br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Menedżer maszyn<br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Menedżer zamówień<br />
-                    <input className="check" type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Menedżer cięcia<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ magazineManagement: !this.state.magazineManagement })} />   Magazine management<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ machineManagement: !this.state.machineManagement })} />   Machine management<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ orderManagement: !this.state.orderManagement })} />   Order management<br />
+                    <input className="check" type="checkbox" onChange={(e) => this.setState({ cutManagement: !this.state.cutManagement })} />   Cut management<br />
                 </div>
             )
         }
@@ -158,11 +158,11 @@ export class AddAcount extends Component{
 
     render() {
         var perm = this.permRender()
-        if (sessionStorage.getItem('valid') === '') {
+        if ((sessionStorage.getItem('valid') === '') && (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') ) {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in or check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -170,70 +170,77 @@ export class AddAcount extends Component{
             return (
                 <div className="AddAcount">
                     <Sidebar />
-                    <div className="add_acount_conteiner">
-                        <form>
+                    <div className="title">
+                        <h1 className="titletext">Add user</h1>
+                    </div>
+                    <form>
+                    <div className="AddAcount_c">
+                        
                             <div className="form-group">
-                                <h2>Dodawanie konta</h2>
-                                <label>Email</label>
+                                
+                                <label>Email:</label>
                                 <input
                                     type="email"
                                     name="Email"
                                     className="form-control"
                                     id="inputEmail"
-                                    placeholder="Podaj email"
+                                    placeholder="Enter email"
                                     ref="email"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Login</label>
+                                <label>Login:</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="inputLogin"
-                                    placeholder="Podaj login"
+                                    placeholder="Enter login"
                                     ref="login"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Hasło</label>
+                                <label>Password:</label>
                                 <input
                                     type="password"
                                     className="form-control"
                                     id="inputPassword"
-                                    placeholder="Podaj hasło"
+                                    placeholder="Enter password"
                                     ref="password"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Imie</label>
+                                <label>Name:</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="inputFirstName"
-                                    placeholder="Podaj imie"
+                                    placeholder="Enter name"
                                     ref="name"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Nazwisko</label>
+                                <label>Surname:</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="inputSecondName"
-                                    placeholder="Podaj nazwisko"
+                                    placeholder="Enter surname"
                                     ref="surname"
                                 />
                             </div>
                             {perm}
 
                             <div className="form-group">
-                                <button type="button" className="danger_n_add_a" onClick={this.cancelAdding}>Anuluj</button>
-                                <button type="button" className="success_n_add_a" onClick={this.handleAddAcount}>Dadaj użytkownika</button>
+                                <button type="button" className="success_n_add_a" onClick={this.handleAddAcount}>Add user</button>
 
+                                <button type="button" className="danger_n_add_a" onClick={this.cancelAdding}>Cancel</button>
+                               
                             </div>
 
-                        </form>
-                    </div>
+                      
+                        </div>
+                    </form>
+
                 </div>
             );
         }

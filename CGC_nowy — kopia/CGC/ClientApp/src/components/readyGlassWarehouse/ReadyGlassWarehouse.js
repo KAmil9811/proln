@@ -51,8 +51,8 @@ export class ReadyGlassWarehouse extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -60,9 +60,10 @@ export class ReadyGlassWarehouse extends Component {
             return (
                 <div>
                     <Sidebar />
-                    <div className="conteiner_gw">
-
-                    </div >
+                    <div className="title">
+                        <h1 className="titletext">Products</h1>
+                    </div>
+                    
 
                     <div className="conteiner_rgw">
 

@@ -43,29 +43,39 @@ export class ReadyGlassTable extends Component {
                     else {
                         deleted = 'Usunięty'
                     }
-                    table2.push({
-                        id: json[i].id,
-                        id_item: json[i].id_item,
-                        owner: json[i].owner,
-                        status: json[i].status,
-                        desk: json[i].desk,
-                        edit:
-                            <Link to="/product_edit"><button className="delete1" id={i}
-                                onClick={
-                                    (e) => {
-                                        //console.log(e.target.id)
+                    if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+                        table2.push({
+                            id: json[i].id,
+                            id_item: json[i].id_item,
+                            owner: json[i].owner,
+                            status: json[i].status,
+                            desk: json[i].desk,
+                            edit:
+                                <Link to="/product_edit"><button className="delete1" id={i}
+                                    onClick={
+                                        (e) => {
+                                            //console.log(e.target.id)
 
-                                        sessionStorage.setItem('owner', json[e.target.id].owner);
-                                        sessionStorage.setItem('status', json[e.target.id].status);
-                                        sessionStorage.setItem('desk', json[e.target.id].desk);
-                                        sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_id));
-                                    }
-                                }>Edytuj</button>
-                            </Link>,
-                        choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
-
-
-                    })
+                                            sessionStorage.setItem('owner', json[e.target.id].owner);
+                                            sessionStorage.setItem('status', json[e.target.id].status);
+                                            sessionStorage.setItem('desk', json[e.target.id].desk);
+                                            sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_id));
+                                        }
+                                    }>Edit</button>
+                                </Link>,
+                            choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
+                        })
+                    }
+                    else {
+                        table2.push({
+                            id: json[i].id,
+                            id_item: json[i].id_item,
+                            owner: json[i].owner,
+                            status: json[i].status,
+                            desk: json[i].desk,
+                            
+                        })
+                    }
                 };
                 this.setState({
                     table: {
@@ -86,19 +96,19 @@ export class ReadyGlassTable extends Component {
                             },
 
                             {
-                                label: 'Właściciel',
+                                label: 'Owner',
                                 field: 'owner',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Półka',
+                                label: 'Shelf',
                                 field: 'desk',
                                 sort: 'asc',
                                 width: 150
                             },
                             {
-                                label: 'Status_product',
+                                label: 'Status',
                                 field: 'status',
                                 sort: 'asc',
                                 width: 150
@@ -190,7 +200,7 @@ export class ReadyGlassTable extends Component {
             //alert('dodane' + '' + number)
             arr.push(id) 
             this.setState.send = arr
-            console.log('tablica' + '---' + this.state.send)
+            console.log('Table' + '---' + this.state.send)
             
         } else {
             //alert('usunięte' + '' + number)
@@ -199,7 +209,7 @@ export class ReadyGlassTable extends Component {
                 arr.splice(index, 1);
             }
             this.setState.send = arr
-            console.log('tablica' + '---' + this.state.send)
+            console.log('Table' + '---' + this.state.send)
         }
     };
 
@@ -225,7 +235,7 @@ export class ReadyGlassTable extends Component {
                 return (json)
             })
             .then(json => {
-                alert('Produkty:' + ' ' + this.state.send + ' ' + 'wysłano do magazynu')
+                alert('Products:' + ' ' + this.state.send + ' ' + 'have been sended')
             })
             .then(json => {
                 window.location.reload();
@@ -257,7 +267,7 @@ export class ReadyGlassTable extends Component {
                     return (json);
                 })
                 .then(json => {
-                    alert("Usunięto produkt")
+                    alert("You deleted product")
                 })
                 /*.then(json => {
                     window.location.reload();
@@ -269,21 +279,32 @@ export class ReadyGlassTable extends Component {
 
     render() {
         let xd = this.table();
-        return (
+        if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
 
-            <div>
-                <div className="ready_glass_table_conteiner">
-                        <button className="success_ready_glass_warehouse" onClick={this.sendId}>Wyślij zaznaczone do magazynu</button>
+                <div>
+                    <div className="ready_glass_table_conteiner">
+                        <button className="success_ready_glass_warehouse" onClick={this.sendId}>Sent selected to magazine</button>
 
-                        <button className="danger_ready_glass_warehouse" onClick={this.delete}>Usuń zaznaczone </button>
-                       
+                        <button className="danger_ready_glass_warehouse" onClick={this.delete}>Delete selected </button>
+
+                    </div>
+                    <div className="ready_glass_table_t_cointeiner">
+                        {xd}
+                    </div>
+
                 </div>
-                <div className="ready_glass_table_t_cointeiner">
-                    {xd}
-                </div>
-               
-            </div>
-        )
+            )
+        }
+        else {
+                return (
+                    <div>
+                        <div className="ready_glass_table_t_cointeiner">
+                            {xd}
+                        </div>
+                    </div>
+                )
+        }
     }
 
 }

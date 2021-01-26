@@ -79,7 +79,7 @@ export class Login extends Component {
                     this.props.history.push('/home');
                 }
                 else {
-                    alert("Zły login lub hasło!");
+                    alert("Wrong e-mail or password!");
                     /*console.log('wlogin= ' + user.login);
                     console.log('whasło= ' + user.password);
                     console.log(user);
@@ -93,10 +93,18 @@ export class Login extends Component {
         return (
 
             <div className="Login">
+
+
+
+
+                <div className="tit_log">
+   
+                    <h1 className="tit_text">Login</h1>
+                </div>
                 <form>
                     <div className="Login_c">
                             <div className="form-group">
-                                <label>Login</label>
+                                <label>Login:</label>
                                 <input
                                     type="text"
                                     name="Login"
@@ -107,23 +115,23 @@ export class Login extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Hasło</label>
+                                <label>Password:</label>
                                 <input
                                     type="password"
                                     className="form-control"
                                     id="inputPassword"
-                                    placeholder="Hasło"
+                                    placeholder="*********"
                                     ref="password"  
                                 />
                         </div>
                     </div>
-                    <div className="Login_b_c">
-                        <button type="submit" className="success_login" onClick={this.handleLoging} >Zaloguj</button>
-                        <button className="danger_resset_pass" onClick={this.resetPassword1} >Zresetuj hasło</button>
+                    <div>
+                        <button type="submit" className="success_login" onClick={this.handleLoging} >Log in</button>
+                        <button className="danger_resset_pass" onClick={this.resetPassword1} >Reset password</button>
                         
                         
                     </div>
-                   </form>
+                </form>
             </div>
         );
     }

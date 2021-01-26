@@ -8,20 +8,25 @@ import * as RiIcons from 'react-icons/ri';
 
 export const SidebarData = [
     {
-        title: 'Strona główna',
+        title: 'Home page',
         path: '/home',
         icon: <AiIcons.AiFillHome />,
     },
 
     {
-        title: 'Twoje konto',
+        title: 'Your account',
         path: '/userpanel',
         icon: <AiIcons.AiFillHome />,
 
     },
+    {
+        title: 'Control Panel',
+        path: '/controlpaneladmin',
+        icon: <AiIcons.AiFillHome />,
+    },
 
     {
-        title: 'Historia',
+        title: 'History',
         path: '#',
         icon: <IoIcons.IoIosPaper />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
@@ -29,29 +34,29 @@ export const SidebarData = [
 
         subNav: [
             {
-                title: 'Użytkowników',
+                title: 'Users',
                 path: '/user_history',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             },
             {
-                title: 'Zleceń',
+                title: 'Orders',
                 path: '/order_history',
                 icon: <IoIcons.IoIosPaper />
             },
             {
-                title: 'Magazynu',
+                title: 'Magazine',
                 path: '/glass_history',
                 icon: <IoIcons.IoIosPaper />,
                 cName: 'sub-nav'
             },
             {
-                title: 'Produktów',
+                title: 'Products',
                 path: '/ready_glass_history',
                 icon: <IoIcons.IoIosPaper />
             },
             {
-                title: 'Maszyn',
+                title: 'Machines',
                 path: '/all_machine_history',
                 icon: <IoIcons.IoIosPaper />
             }
@@ -59,46 +64,42 @@ export const SidebarData = [
         ]
     },
 
+    
     {
-        title: 'Panel sterowania',
-        path: '/controlpaneladmin',
-        icon: <AiIcons.AiFillHome />,
-    },
-    {
-        title: 'Zamówienia',
+        title: 'Orders',
         path: '/orderwarehouse',
         icon: <AiIcons.AiFillHome />,
 
     },
     {
-        title: 'Magazyn',
+        title: 'Magazine',
         path: '/glasswarehouse',
         icon: <AiIcons.AiFillHome />,
 
     },
     {
-        title: 'Produkcja',
+        title: 'Production',
         path: '/selection_of_orders',
         icon: <AiIcons.AiFillHome />,
 
     },
 
     {
-        title: 'Zapisane projekty',
+        title: 'Saved projects',
         path: '/saved_projects',
         icon: <AiIcons.AiFillHome />,
 
     },
 
     {
-        title: 'Produkty',
+        title: 'Products',
         path: '/ready_glass_warehouse',
         icon: <AiIcons.AiFillHome />,
 
     },
 
     {
-        title: 'Maszyny',
+        title: 'Machines',
         path: '/machinewarehouse',
         icon: <AiIcons.AiFillHome />,
 

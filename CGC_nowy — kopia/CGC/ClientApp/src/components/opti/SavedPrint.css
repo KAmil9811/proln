@@ -1,0 +1,10 @@
+﻿@media all and (min-width: 480px) {
+    .SavedPrint_c {
+        padding: 60px 0;
+    }
+
+        .SavedPrint_c form {
+            margin: 0 auto;
+            max-width: 320px;
+        }
+}
