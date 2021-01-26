@@ -168,7 +168,7 @@ export class Test extends Component {
                             <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
                             <button className="success_test" onClick={this.generator} >Generate PDF </button>
                             <button className="success_test" onClick={this.open} >hhh </button>
-                            <a href="/download" title="Download" download=".\Project.pdf">hjbbhhvhv</a>
+                            <a href="/download" title="Download" download="./Project.pdf">hjbbhhvhv</a>
                             </div>
                         </div>
                     </div>
