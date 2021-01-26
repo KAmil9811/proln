@@ -1,3 +1,16 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/projekt-inz/databases/projekt-inz",
+      "type": "mssql.azure",
+      "connectionId": "UserContext",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/projekt-inz/databases/projekt-inz",
+      "type": "mssql.azure",
+      "connectionId": "CGCContext",
+      "secretStore": "AzureAppSettings"
+    }
+  }
 }
