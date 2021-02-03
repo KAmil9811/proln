@@ -1,0 +1,133 @@
+﻿@media all and (min-width: 480px) {
+    .test_c {
+        padding: 60px 0;
+    }
+
+        .test_c form {
+            margin: 0 auto;
+            max-width: 320px;
+        }
+}
+
+
+.body {
+    background-color: white;
+    background-image: unset;
+}
+
+
+
+.canvas {
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.canva {
+    float: right;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+}
+
+.table2 {
+    margin: 30px;
+    width: 40%;
+    float: left;
+}
+
+.table3 {
+    margin: 30px;
+    width: 40%;
+    float: left;
+}
+
+.h2 {
+    text-align: center !important;
+    color: black !important;
+}
+
+.h3 {
+    color: red !important;
+    text-align: center !important;
+}
+
+/*Ciemmo_niebieski*/
+.prim_test:hover {
+    background-color: #3174e3;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.prim_test {
+    background-color: #4285f4;
+    height: 3rem;
+    width: 12rem;
+    /* padding: 6px 6px;*/
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    /*  position:center;*/
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    background-image: none;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+/*     Duże    */
+.success_test:hover {
+    background-color: #00b740;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.success_test {
+    float: right;
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 12px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 50px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+@media all and (min-width: 800px) {
+    .phone {
+        visibility: hidden
+    }
+}
+
+@media all and (max-width: 800px) {
+    .success_login, .hhh {
+        visibility: hidden
+    }
+
+    .aaaaaaaa {
+        visibility: hidden
+    }
+}

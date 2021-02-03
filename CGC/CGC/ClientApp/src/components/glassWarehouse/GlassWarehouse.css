@@ -1,0 +1,71 @@
+﻿
+@media all and (min-width: 480px) {
+    .Glass_Warehause_c {
+        padding: 60px 0;
+    }
+
+        .Glass_Warehause_c form {
+            margin: 0 auto;
+            max-width: 320px;
+        }
+}
+
+.nextline {
+    clear: both;
+}
+
+.conteiner_gll {
+    margin-top: 14rem;
+}
+
+.tableglass {
+    width: 96%;
+    margin-left: 2%;
+}
+
+
+.nav_gw {
+    float: right;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.conteiner_gw {
+    width: 96%;
+    margin-top: 2%;
+    margin-left: 2%;
+    clear: both;
+}
+
+
+.success_glas_magazine:hover {
+    background-color: #00b740;
+    transform: scale(1.05);
+    outline: 0;
+}
+
+.success_glas_magazine {
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-right: 6vw;
+    margin-left: auto;
+    /* position: center;*/
+    /* float: right;*/
+    display: inline-block;
+    float: right;
+}
