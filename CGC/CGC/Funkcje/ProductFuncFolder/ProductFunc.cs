@@ -33,7 +33,7 @@ namespace CGC.Funkcje.ProductFuncFolder
 
         public List<Product> Get_Products()
         {
-            return productBaseReturn.GetProductsUser();
+            return productBaseReturn.GetProducts("Ready");
         }
 
         public List<Product_History> Get_Product_History(Receiver receiver)
@@ -47,14 +47,11 @@ namespace CGC.Funkcje.ProductFuncFolder
             List<Product> products_to_change = new List<Product>();
             Product product = new Product();
 
-            foreach (Product pro in productBaseReturn.GetProducts())
+            foreach (int pro2 in product_id)
             {
-                foreach (int pro2 in product_id)
+                foreach (Product pro in productBaseReturn.GetProduct(pro2.ToString()))
                 {
-                    if (pro2.ToString() == pro.Id)
-                    {
-                        products_to_change.Add(pro);
-                    }
+                    products_to_change.Add(pro);
                 }
             }
 
@@ -68,11 +65,11 @@ namespace CGC.Funkcje.ProductFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(user.Login, false))
             {
-                if (use.Login == user.Login && (user.Manager == true || user.Super_Admin == true || user.Admin || user.Magazine_management == true))
+                if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Magazine_management == true)
                 {
-                    return productBaseModify.Released_Product(user, products_to_change);
+                    return productBaseModify.Released_Product(use, products_to_change);
                 }
             }
 
@@ -90,14 +87,11 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             Product producted = new Product();
 
-            foreach (Product pro in productBaseReturn.GetProducts())
+            foreach (int pro2 in product_id)
             {
-                foreach (int pro2 in product_id)
+                foreach (Product pro in productBaseReturn.GetProduct(pro2.ToString()))
                 {
-                    if (pro2.ToString() == pro.Id)
-                    {
-                        products_to_delete.Add(pro);
-                    }
+                    products_to_delete.Add(pro);
                 }
             }
 
@@ -111,15 +105,11 @@ namespace CGC.Funkcje.ProductFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(user.Login))
             {
-                if (use.Login == user.Login && (user.Manager == true || user.Super_Admin == true || user.Admin || user.Magazine_management == true))
+                if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Magazine_management == true)
                 {
-                    foreach (Product product in productBaseReturn.GetProducts())
-                    {
-                        return productBaseModify.Delete_Product(user, products_to_delete);
-                    }
-                    return temp;
+                    return productBaseModify.Delete_Product(user, products_to_delete);
                 }
             }
             producted.Error_Messege = "User not found";

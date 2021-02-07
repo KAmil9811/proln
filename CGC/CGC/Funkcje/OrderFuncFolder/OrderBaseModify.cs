@@ -43,19 +43,20 @@ namespace CGC.Funkcje.OrderFuncFolder
             {
                 try
                 {
-                    query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Order_id, Product_Id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Order_id, @Product_Id)";
+                    query = "INSERT INTO dbo.[Item](Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Cut_id, Order_id, Product_Id) VALUES(@Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Cut_id, @Order_id, @Product_Id)";
                     command = new SqlCommand(query, connect.cnn);
 
                     command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
-                    command.Parameters.Add("@Weight", SqlDbType.Float).Value = item.Width;
-                    command.Parameters.Add("@Height", SqlDbType.Float).Value = item.Thickness;
-                    command.Parameters.Add("@Lenght", SqlDbType.Float).Value = item.Length;
+                    command.Parameters.Add("@Weight", SqlDbType.Float).Value = Convert.ToDouble(item.Width);
+                    command.Parameters.Add("@Height", SqlDbType.Float).Value = Convert.ToDouble(item.Thickness);
+                    command.Parameters.Add("@Lenght", SqlDbType.Float).Value = Convert.ToDouble(item.Length);
                     command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
                     command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
                     command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Awaiting";
                     command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                    command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
                     command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
-                    command.Parameters.Add("@Product_Id", SqlDbType.VarChar, 40).Value = 0;
+                    command.Parameters.Add("@Product_Id", SqlDbType.VarChar, 40).Value = "0";
 
                     connect.cnn.Open();
                     command.ExecuteNonQuery();
@@ -132,9 +133,9 @@ namespace CGC.Funkcje.OrderFuncFolder
             string query = "UPDATE dbo.[Item] SET Height = @Height, Lenght = @Lenght, Weight = @Weight, Glass_Type = @Glass_Type, Color = @Color, Status = @Status, Desk = @Desk WHERE Id = @Id;";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
-            command.Parameters.Add("@Height", SqlDbType.Decimal).Value = item.Thickness;
-            command.Parameters.Add("@Lenght", SqlDbType.Decimal).Value = item.Length;
-            command.Parameters.Add("@Weight", SqlDbType.Decimal).Value = item.Width;
+            command.Parameters.Add("@Height", SqlDbType.Float).Value = Convert.ToDouble(item.Thickness);
+            command.Parameters.Add("@Lenght", SqlDbType.Float).Value = Convert.ToDouble(item.Length);
+            command.Parameters.Add("@Weight", SqlDbType.Float).Value = Convert.ToDouble(item.Width);
             command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = item.Status;

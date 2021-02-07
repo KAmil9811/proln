@@ -37,21 +37,23 @@ namespace CGC.Funkcje.CutFuncFolder
             }
         }
 
+        //do usunięcia
         public void Return_Area(Package package)
         {
             foreach (Item item in package.Item)
             {
-                item.Area = item.Length * item.Width;
+                item.Area = Convert.ToDouble(item.Length) * Convert.ToDouble(item.Width);
             }
         }
 
+        //do usunięcia
         public void Set_Package(Package package)
         {
-            double temp;
+            string temp;
 
             foreach (Item item in package.Item)
             {
-                if (item.Width > item.Length)
+                if (Convert.ToDouble(item.Width) > Convert.ToDouble(item.Length))
                 {
                     temp = item.Length;
                     item.Length = item.Width;
@@ -59,12 +61,13 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
         }
-
+        
         //do usunięcia
         public void Sort_Package(Package package)
         {
             package.Item.OrderByDescending(item => item.Fit_pos).ThenBy(item => item.Area).ThenBy(item => item.Length).ThenBy(item => item.Width);
         }
+       
         //do usunięcia
         public void Set_Pieces(List<Piece> pieces)
         {
@@ -77,7 +80,8 @@ namespace CGC.Funkcje.CutFuncFolder
                 piece.Y = temp;
             }
         }
-
+        
+        //do usunięcia
         public void Set_Fit(Package package, double Pw, double Pl)
         {
             int Fit;
@@ -85,18 +89,18 @@ namespace CGC.Funkcje.CutFuncFolder
             foreach (Item item in package.Item)
             {
                 Fit = 0;
-                if (Pl < item.Length || Pw < item.Width)
+                if (Pl < Convert.ToDouble(item.Length) || Pw < Convert.ToDouble(item.Width))
                 {
                     Fit = 0;
                 }
                 else
                 {
                     Fit++;
-                    if (Pl == item.Length)
+                    if (Pl == Convert.ToDouble(item.Length))
                     {
                         Fit++;
                     }
-                    if (Pw == item.Width)
+                    if (Pw == Convert.ToDouble(item.Width))
                     {
                         Fit++;
                     }
@@ -105,6 +109,7 @@ namespace CGC.Funkcje.CutFuncFolder
             }
         }
 
+        //do usunięcia
         public Item Find_Area(Package package)
         {
             double wynik;
@@ -125,115 +130,99 @@ namespace CGC.Funkcje.CutFuncFolder
         public List<Order> Return_Orders_To_Cut()
         {
             List<Order> orders = new List<Order>();
-            List<Order> temp = new List<Order>();
+            List<Order> sort_orders = new List<Order>();
 
-            foreach (Order order in orderBaseReturn.GetOrders())
+            foreach (Order order in orderBaseReturn.GetOrders("Awaiting", "Stopped", false, false))
             {
-                if (order.Status == "Awaiting" || order.Status == "Stopped")
+                if (orderCheck.Avaible_Cut_Check(order) == true)
                 {
-                    if (orderCheck.Avaible_Cut(order) > 0)
-                    {
-                        orders.Add(order);
-                    }
-                }
+                    order.Deadline2 = Convert.ToDateTime(order.Deadline);
+                    orders.Add(order);
+                }           
             }
 
-            foreach (Order order in orders)
-            {
-                order.Deadline2 = Convert.ToDateTime(order.Deadline);
-            }
+            //sort_orders = (List<Order>)orders.OrderBy(orderer => orderer.Deadline2);
 
-            var sort_orders = orders.OrderBy(orderer => orderer.Deadline2);
-
-            foreach(Order order1 in sort_orders)
-            {
-                temp.Add(order1);
-            }
-
-            return temp;
+            return orders; //sort_orders;
         }
 
         public List<Package> Return_Package_To_Cut(Receiver receiver)
         {
             Order order = receiver.order;
             List<Package> temp = new List<Package>();
+            List<Package> wynik = new List<Package>();
             bool kontrol;
-            bool kontrol2;
 
-            foreach(Order ord in orderBaseReturn.GetOrders())
+            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order))
             {
-                if(ord.Id_Order == order.Id_Order)
-                {
-                    order.Owner = ord.Owner;
-                    break;
-                }
+                order.Owner = ord.Owner;
+                break;
             }
 
-            foreach (Item item in orderBaseReturn.GetItems(order))
+            foreach(Item item in orderBaseReturn.GetItems(order))
             {
-                kontrol = false;
-                kontrol2 = false;
-
-                foreach (Glass glass in magazineBaseReturn.Getglass())
-                {
-                    if (glass.Type == item.Type && glass.Color == item.Color && item.Thickness == Convert.ToDouble(glass.Hight) && (glass.Owner == "" || glass.Owner == order.Owner))
-                    {
-                        foreach (Glass_Id glass_Id in glass.Glass_info)
-                        {
-                            if (glass_Id.Used == false && glass_Id.Removed == false && glass_Id.Cut_id == "0")
-                            {
-                                if (item.Length <= Convert.ToDouble(glass.Length) && item.Width <= Convert.ToDouble(glass.Width))
-                                {
-                                    kontrol2 = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (item.Status == "Awaiting" && item.Cut_id == "0" && kontrol2 == true)
+                if (item.Status == "Awaiting" && item.Cut_id == "0")
                 {
                     kontrol = false;
                     if (temp.Count != 0)
                     {
                         foreach (Package package in temp)
                         {
-                            if (package.Color == item.Color && package.Type == item.Type && item.Thickness == package.Thickness)
+                            if (package.Color == item.Color && package.Type == item.Type && Convert.ToDouble(item.Thickness) == package.Thickness)
                             {
-                                package.Item.Add(item);
                                 kontrol = true;
+                                package.Item.Add(item);
                             }
                         }
                     }
 
                     if (kontrol == false)
                     {
-                        Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = item.Thickness, Item = new List<Item>(), Owner = order.Owner };
+                        Package package = new Package { Color = item.Color, Type = item.Type, Id_Order = order.Id_Order, Thickness = Convert.ToDouble(item.Thickness), Item = new List<Item>(), Owner = order.Owner };
                         package.Item.Add(item);
 
                         temp.Add(package);
                     }
                 }
             }
-            return temp;
+
+            foreach (Package pack in temp)
+            {
+                foreach (Item item in pack.Item)
+                {
+                    kontrol = false;
+                    Glass glasss = new Glass { Type = item.Type, Color = item.Color, Hight = item.Thickness, Owner = order.Owner, Length = item.Length, Width = item.Width };
+
+                    foreach (Glass glass in magazineBaseReturn.Getglass(glasss))
+                    {
+                        wynik.Add(pack);
+                        kontrol = true;
+                        break;
+                    }               
+                    if(kontrol == true)
+                    {
+                        break;
+                    }
+                }
+            }
+            return wynik;
         }
 
         public List<Glass> Return_Glass_To_Cut(Receiver receiver)
         {
             Package package = receiver.package;
             List<Glass> glasses = new List<Glass>();
+            List<Item> Sort__items;
 
-            Sort_Package(package);
+            Sort__items = (List<Item>)package.Item.OrderBy(ordere => ordere.Width).ThenBy(ordere => ordere.Length);
 
-            foreach (Glass glasse in magazineCheck.Set_Filter(magazineBaseReturn.Getglass()))
+            Glass glasss = new Glass { Type = package.Type, Color = package.Color, Hight = package.Thickness.ToString() , Length = Sort__items.First().Length, Width = Sort__items.First().Width};
+
+            foreach (Glass glasse in magazineBaseReturn.Getglass(glasss))
             {
-                if (glasse.Type == package.Type && glasse.Color == package.Color && Convert.ToDouble(glasse.Hight) == package.Thickness)
+                if (Convert.ToDouble(Sort__items.First().Length) <= Convert.ToDouble(glasse.Length) && Convert.ToDouble(Sort__items.First().Width) <= Convert.ToDouble(glasse.Width))
                 {
-                    if (package.Item.First().Length <= Convert.ToDouble(glasse.Length) && package.Item.First().Width <= Convert.ToDouble(glasse.Width))
-                    {
-                        glasses.Add(glasse);
-                    }
+                    glasses.Add(glasse);
                 }
             }
             return glasses;
@@ -241,16 +230,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
         public List<Machines> Return_Machine_To_Cut()
         {
-            List<Machines> machines = new List<Machines>();
-
-            foreach (Machines mach in machineBaseReturn.GetMachines())
-            {
-                if (mach.Stan == false && mach.Status == "Ready")
-                {
-                    machines.Add(mach);
-                }
-            }
-            return machines;
+            return machineBaseReturn.GetMachines("Ready", false);
         }
 
         public CutBin Packing(CutBin cutBin)
@@ -279,7 +259,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     {
                         foreach (Item itm in cutBin.package.Item)
                         {
-                            if (itm.Width == Convert.ToDouble(cuboid.Width) && itm.Length == Convert.ToDouble(cuboid.Height))
+                            if (Convert.ToDecimal(itm.Width) == cuboid.Width && Convert.ToDecimal(itm.Length) == cuboid.Height)
                             {
                                 kon = false;
                                 foreach (Item i in To_delete)

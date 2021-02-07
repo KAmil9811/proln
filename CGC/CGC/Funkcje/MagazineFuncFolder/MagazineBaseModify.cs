@@ -55,18 +55,19 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
                 code++;
 
-                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @code)";
+                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code)";
 
                 SqlCommand command = new SqlCommand(query, connect.cnn);
-                command.Parameters.Add("@Hight", SqlDbType.VarChar, 40).Value = glass.Hight;
-                command.Parameters.Add("@Width", SqlDbType.VarChar, 40).Value = glass.Width;
-                command.Parameters.Add("@Length", SqlDbType.VarChar, 40).Value = glass.Length;
+                command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
+                command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
+                command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
                 command.Parameters.Add("@Used", SqlDbType.Bit).Value = 0;
                 command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 0;
                 command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
                 command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
                 command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
                 command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
+                command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
                 command.Parameters.Add("@code", SqlDbType.VarChar, 40).Value = code.ToString();
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -97,9 +98,9 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 string query = "UPDATE dbo.[Glass] SET Hight = @Hight, Width = @Width, Length = @Length, Type = @Type, Color = @Color, Owner = @Owner, Desk = @Desk WHERE Glass_Id = @Glass_Id;";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                command.Parameters.Add("@Hight", SqlDbType.VarChar, 40).Value = glass.Hight;
-                command.Parameters.Add("@Width", SqlDbType.VarChar, 40).Value = glass.Width;
-                command.Parameters.Add("@Length", SqlDbType.VarChar, 40).Value = glass.Length;
+                command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
+                command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
+                command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
                 command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
                 command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
                 command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
@@ -122,110 +123,80 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Glass> Remove_Glass(User user, List<int> Id_glasses, List<Glass> glasses)
+        public List<Glass> Remove_Glass(User user, List<int> Id_glasses)
         {
             List<Glass> temp = new List<Glass>();
             Glass glass = new Glass();
 
-            foreach (Glass glasse in glasses)
+            foreach (int id_glasse in Id_glasses)
             {
-                foreach (Glass_Id ids in glasse.Glass_info)
+                try
                 {
-                    foreach (int id_glasse in Id_glasses)
-                    {
-                        if (ids.Id == id_glasse.ToString())
-                        {
-                            if (ids.Used == true)
-                            {
-                                glass.Error_Messege = "Glass has alreasy been used";
-                                temp.Add(glass);
-                                return temp;
-                            }
+                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
+                    SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                            if (ids.Removed == true)
-                            {
-                                glass.Error_Messege = "Glass has already been deleted";
-                                temp.Add(glass);
-                                return temp;
-                            }
+                    command.Parameters.Add("@Removed", SqlDbType.Bit).Value = true;
+                    command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id_glasse.ToString();
 
-                            string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
-                            SqlCommand command = new SqlCommand(query, connect.cnn);
+                    connect.cnn.Open();
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    connect.cnn.Close();
 
-                            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = true;
-                            command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id_glasse.ToString();
+                    string userhistory = "You deleted glass " + id_glasse;
+                    string magazinehistory = "Glass " + id_glasse + " has been deleted";
 
-                            connect.cnn.Open();
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-                            connect.cnn.Close();
+                    insertHistory.Insert_User_History(userhistory, user.Login);
+                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
 
-                            string userhistory = "You deleted glass " + ids.Id;
-                            string magazinehistory = "Glass " + ids.Id + " has been deleted";
+                    //SetOrderStan();
 
-                            insertHistory.Insert_User_History(userhistory, user.Login);
-                            insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
-
-                            //SetOrderStan();
-
-                            temp.Add(glass);
-                        }
-                    }
+                    temp.Add(glass);
+                }
+                catch
+                {
+                    Glass error = new Glass { Error_Messege = "Id don't exist" };
+                    temp.Add(error);
                     return temp;
                 }
-            }
+            }              
             return temp;
         }
 
-        public List<Glass> Restore_Glass(User user, List<int> Id_glasses, List<Glass> glasses)
+        public List<Glass> Restore_Glass(User user, List<int> Id_glasses)
         {
             List<Glass> temp = new List<Glass>();
             Glass glass = new Glass();
 
-            foreach (Glass glasse in glasses)
+            foreach (int id_glasse in Id_glasses)
             {
-                foreach (Glass_Id ids in glasse.Glass_info)
+                try
                 {
-                    foreach (int id_glasse in Id_glasses)
-                    {
-                        if (ids.Id == id_glasse.ToString())
-                        {
-                            if (ids.Used == true)
-                            {
-                                glass.Error_Messege = "Glass has alreasy been used";
-                                temp.Add(glass);
-                                return temp;
-                            }
+                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
+                    SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                            if (ids.Removed == false)
-                            {
-                                glass.Error_Messege = "Glass has already been restored";
-                                temp.Add(glass);
-                                return temp;
-                            }
+                    command.Parameters.Add("@Removed", SqlDbType.Bit).Value = false;
+                    command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id_glasse.ToString();
 
-                            string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
-                            SqlCommand command = new SqlCommand(query, connect.cnn);
+                    connect.cnn.Open();
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    connect.cnn.Close();
 
-                            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = false;
-                            command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id_glasse.ToString();
+                    string userhistory = "You restored glass " + id_glasse;
+                    string magazinehistory = "Glass " + id_glasse + " has been restored";
 
-                            connect.cnn.Open();
-                            command.ExecuteNonQuery();
-                            command.Dispose();
-                            connect.cnn.Close();
+                    insertHistory.Insert_User_History(userhistory, user.Login);
+                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
 
-                            string userhistory = "You restored glass " + ids.Id;
-                            string magazinehistory = "Glass " + ids.Id + " has been restored";
+                    //SetOrderStan();
 
-                            insertHistory.Insert_User_History(userhistory, user.Login);
-                            insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
-
-                            //SetOrderStan();
-
-                            temp.Add(glass);
-                        }
-                    }
+                    temp.Add(glass);
+                }
+                catch
+                {
+                    Glass error = new Glass {Error_Messege = "Id don't exist" };
+                    temp.Add(error);
                     return temp;
                 }
             }
@@ -286,10 +257,18 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Parameters.Add("@new_type", SqlDbType.VarChar, 40).Value = new_type;
             command.Parameters.Add("@old_type", SqlDbType.VarChar, 40).Value = old_type;
 
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
+            try
+            {
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
+            }
+            catch
+            {
+                temp.Add("Type don't exist");
+                return temp;
+            }
 
 
             command = new SqlCommand("UPDATE dbo.Glass SET Type = @new_type WHERE Type = @old_type", connect.cnn);
@@ -322,11 +301,18 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Parameters.Add("@new_color", SqlDbType.VarChar, 40).Value = new_color;
             command.Parameters.Add("@old_color", SqlDbType.VarChar, 40).Value = old_color;
 
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
-
+            try
+            {
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
+            }
+            catch
+            {
+                temp.Add("Color don't exist");
+                return temp;
+            }
 
             command = new SqlCommand("UPDATE dbo.Glass SET Color = @new_color WHERE Color = @old_color", connect.cnn);
 

@@ -39,7 +39,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 {
                     foreach (Glass glass in magazineBaseReturn.Getglass())
                     {
-                        if (item.Width <= Convert.ToDouble(glass.Width) && item.Thickness == Convert.ToDouble(glass.Hight) && item.Length <= Convert.ToDouble(glass.Length) && glass.Color == item.Color && glass.Type == item.Type && (glass.Owner == order.Owner || glass.Owner == ""))
+                        if (Convert.ToDouble(item.Width) <= Convert.ToDouble(glass.Width) && Convert.ToDouble(item.Thickness) == Convert.ToDouble(glass.Hight) && Convert.ToDouble(item.Length) <= Convert.ToDouble(glass.Length) && glass.Color == item.Color && glass.Type == item.Type && (glass.Owner == order.Owner || glass.Owner == ""))
                         {
                             foreach (Glass_Id glass_Id in glass.Glass_info)
                             {
@@ -53,6 +53,34 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
             return count;
+        }
+
+        public bool Avaible_Cut_Check(Order order)
+        {
+            List<Glass> temp;
+            List<Item> temp2 = orderBaseReturn.GetItems(order);
+
+            temp2.OrderBy(it => it.WidthSort).ThenBy(it => it.LengthSort);
+
+            foreach (Item item in temp2)
+            {
+                if (item.Status == "Awaiting" && (item.Cut_id == "0" || item.Cut_id == ""))
+                {
+                    Glass glasse = new Glass { Color = item.Color, Type = item.Type, Hight = item.Thickness, Owner = order.Owner, Length = item.Length, Width = item.Width};
+                    temp = magazineBaseReturn.Getglass(glasse);
+                    temp.OrderBy(gl => gl.WidthSort).ThenBy(gl => gl.LengthSort);
+                    
+
+                    foreach (Glass glass in temp)
+                    {
+                        if (Convert.ToDouble(item.Width) <= Convert.ToDouble(glass.Width) && Convert.ToDouble(item.Length) <= Convert.ToDouble(glass.Length))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public int Item_To_Cut(Order order)

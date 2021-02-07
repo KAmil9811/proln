@@ -31,10 +31,13 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             }
         }
 
-        public List<Order> GetOrders()
+        public List<Order> GetOrder(string id_order)
         {
             List<Order> temp = new List<Order>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Order];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order;", connect.cnn);
+
+            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = id_order;
+
             connect.cnn.Open();
 
             try
@@ -59,6 +62,44 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
                 command.Dispose();
                 connect.cnn.Close();
             }
+            catch (Exception e)
+            {
+                e.ToString();
+                return temp;
+            }
+
+            return temp;
+        }
+
+        public List<Order> GetOrders()
+        {
+            List<Order> temp = new List<Order>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order];", connect.cnn);
+            connect.cnn.Open();
+
+            try
+            {
+                SqlDataReader sqlDataReader = command.ExecuteReader();
+                while (sqlDataReader.Read())
+                {
+                    Order order = new Order();
+                    order.Id_Order = sqlDataReader["Id_Order"].ToString();
+                    order.Owner = sqlDataReader["Owner"].ToString();
+                    order.Status = sqlDataReader["Status"].ToString();
+                    order.Priority = sqlDataReader["Priority"].ToString();
+                    order.Deadline = sqlDataReader["Deadline"].ToString();
+                    order.Stan = sqlDataReader["Stan"].ToString();
+                    order.Deleted = Convert.ToBoolean(sqlDataReader["Deletead"]);
+                    order.Frozen = Convert.ToBoolean(sqlDataReader["Frozen"]);
+                    order.Released = Convert.ToBoolean(sqlDataReader["Released"]);
+                    order.Deadline2 = Convert.ToDateTime(order.Deadline);
+
+                    temp.Add(order);
+                }
+                sqlDataReader.Close();
+                command.Dispose();
+                connect.cnn.Close();
+            }
             catch(Exception e)
             {
                 e.ToString();
@@ -68,13 +109,13 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
-        public List<Order> GetOrdersUser()
+        public List<Order> GetOrders(bool deletead, bool released)
         {
             List<Order> temp = new List<Order>();
             SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE Deletead = @Deletead and Released = @Released;", connect.cnn);
 
-            command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = false;
-            command.Parameters.Add("@Released", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = deletead;
+            command.Parameters.Add("@Released", SqlDbType.Bit).Value = released;
 
             connect.cnn.Open();
 
@@ -91,6 +132,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
                 order.Deleted = Convert.ToBoolean(sqlDataReader["Deletead"]);
                 order.Frozen = Convert.ToBoolean(sqlDataReader["Frozen"]);
                 order.Released = Convert.ToBoolean(sqlDataReader["Released"]);
+                order.Deadline2 = Convert.ToDateTime(order.Deadline);
 
                 temp.Add(order);
             }
@@ -101,12 +143,14 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
-        public List<Order> GetDeletedOrdersUser()
+        public List<Order> GetOrders(string status, bool deletead, bool released)
         {
             List<Order> temp = new List<Order>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE Deletead = @Deletead;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE Status = @Status AND Deletead = @Deletead AND Released = @Released;", connect.cnn);
 
-            command.Parameters.Add("@Deleted", SqlDbType.Bit).Value = true;
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
+            command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = deletead;
+            command.Parameters.Add("@Released", SqlDbType.Bit).Value = released;
 
             connect.cnn.Open();
 
@@ -123,6 +167,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
                 order.Deleted = Convert.ToBoolean(sqlDataReader["Deletead"]);
                 order.Frozen = Convert.ToBoolean(sqlDataReader["Frozen"]);
                 order.Released = Convert.ToBoolean(sqlDataReader["Released"]);
+                order.Deadline2 = Convert.ToDateTime(order.Deadline);
 
                 temp.Add(order);
             }
@@ -133,12 +178,15 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
-        public List<Order> GetReleasedOrdersUser()
+        public List<Order> GetOrders(string status, string status2, bool deletead, bool released)
         {
             List<Order> temp = new List<Order>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE Released = @Released;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order] WHERE (Status = @Status OR Status = @Status2) AND Deletead = @Deletead AND Released = @Released;", connect.cnn);
 
-            command.Parameters.Add("@Released", SqlDbType.VarChar ,40).Value = true;
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
+            command.Parameters.Add("@Status2", SqlDbType.VarChar, 40).Value = status2;
+            command.Parameters.Add("@Deletead", SqlDbType.Bit).Value = deletead;
+            command.Parameters.Add("@Released", SqlDbType.Bit).Value = released;
 
             connect.cnn.Open();
 
@@ -149,12 +197,13 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
                 order.Id_Order = sqlDataReader["Id_Order"].ToString();
                 order.Owner = sqlDataReader["Owner"].ToString();
                 order.Status = sqlDataReader["Status"].ToString();
-                order.Priority =sqlDataReader["Priority"].ToString();
+                order.Priority = sqlDataReader["Priority"].ToString();
                 order.Deadline = sqlDataReader["Deadline"].ToString();
                 order.Stan = sqlDataReader["Stan"].ToString();
                 order.Deleted = Convert.ToBoolean(sqlDataReader["Deletead"]);
                 order.Frozen = Convert.ToBoolean(sqlDataReader["Frozen"]);
                 order.Released = Convert.ToBoolean(sqlDataReader["Released"]);
+                order.Deadline2 = Convert.ToDateTime(order.Deadline);
 
                 temp.Add(order);
             }
@@ -179,30 +228,33 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             {
                 Item item = new Item();
                 item.Id = sqlDataReader["Id"].ToString();
-                item.Thickness = Convert.ToDouble(sqlDataReader["Height"]);
-                item.Width = Convert.ToDouble(sqlDataReader["Weight"]);
-                item.Length = Convert.ToDouble(sqlDataReader["Lenght"]);
+                item.Thickness = sqlDataReader["Height"].ToString();
+                item.Width = sqlDataReader["Weight"].ToString();
+                item.Length = sqlDataReader["Lenght"].ToString();
                 item.Type = sqlDataReader["Glass_Type"].ToString();
                 item.Color = sqlDataReader["Color"].ToString();
                 item.Status = sqlDataReader["Status"].ToString();
                 item.Order_id = sqlDataReader["Order_id"].ToString();
                 item.Desk = sqlDataReader["Desk"].ToString();
+                item.WidthSort = Convert.ToDouble(item.Width);
+                item.LengthSort = Convert.ToDouble(item.Length);
 
-                if (sqlDataReader["Cut_id"].ToString() == "")
-                {
-                    item.Cut_id = "0";
-                }
-                else
+                try
                 {
                     item.Cut_id = sqlDataReader["Cut_id"].ToString();
                 }
-                if (sqlDataReader["Product_Id"].ToString() == "")
+                catch
                 {
-                    item.Product_Id = "0";
+                    item.Cut_id = "0";
                 }
-                else
+
+                try
                 {
                     item.Product_Id = sqlDataReader["Product_Id"].ToString();
+                }
+                catch
+                {
+                    item.Product_Id = "0";
                 }
 
                 temp.Add(item);
@@ -225,31 +277,31 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             {
                 Item item = new Item();
                 item.Id = sqlDataReader["Id"].ToString();
-                item.Thickness = Convert.ToDouble(sqlDataReader["Height"]);
-                item.Width = Convert.ToDouble(sqlDataReader["Weight"]);
-                item.Length = Convert.ToDouble(sqlDataReader["Lenght"]);
+                item.Thickness = sqlDataReader["Height"].ToString();
+                item.Width = sqlDataReader["Weight"].ToString();
+                item.Length = sqlDataReader["Lenght"].ToString();
                 item.Type = sqlDataReader["Glass_Type"].ToString();
                 item.Color = sqlDataReader["Color"].ToString();
                 item.Status = sqlDataReader["Status"].ToString();
                 item.Order_id = sqlDataReader["Order_id"].ToString();
                 item.Desk = sqlDataReader["Desk"].ToString();
 
-                if (sqlDataReader["Cut_id"].ToString() == "")
-                {
-                    item.Cut_id = "0";
-                }
-                else
+                try
                 {
                     item.Cut_id = sqlDataReader["Cut_id"].ToString();
                 }
-
-                if (sqlDataReader["Product_Id"].ToString() == "")
+                catch (Exception e)
                 {
-                    item.Product_Id = "0";
+                    item.Cut_id = "0";
                 }
-                else
+
+                try
                 {
                     item.Product_Id = sqlDataReader["Product_Id"].ToString();
+                }
+                catch (Exception e)
+                {
+                    item.Product_Id = "0";
                 }
 
                 temp.Add(item);
@@ -259,6 +311,29 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             connect.cnn.Close();
 
             temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
+
+            return temp;
+        }
+
+        public List<Item> GetLastItem()
+        {
+            List<Item> temp = new List<Item>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Item] ORDER BY convert(int, Id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Item item = new Item();
+                item.sort = Convert.ToInt32(sqlDataReader["Id"]);
+
+                temp.Add(item);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            //temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
 
             return temp;
         }

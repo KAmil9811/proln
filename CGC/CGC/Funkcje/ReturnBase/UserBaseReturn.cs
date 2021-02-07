@@ -30,6 +30,151 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             }
         }
 
+        public List<User> GetUser(string login)
+        {
+            List<User> temp = new List<User>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Login = @Login;", connect.cnn);
+
+            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = login;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                User user = new User();
+                user.Login = sqlDataReader["Login"].ToString();
+                user.Password = sqlDataReader["Password"].ToString();
+                user.Email = sqlDataReader["Email"].ToString();
+                user.Name = sqlDataReader["Name"].ToString();
+                user.Surname = sqlDataReader["Surname"].ToString();
+                user.Admin = Convert.ToBoolean(sqlDataReader["Admin"]);
+                user.Super_Admin = Convert.ToBoolean(sqlDataReader["Super_Admin"]);
+                user.Manager = Convert.ToBoolean(sqlDataReader["Manager"]);
+                user.Magazine_management = Convert.ToBoolean(sqlDataReader["Magazine_management"]);
+                user.Machine_management = Convert.ToBoolean(sqlDataReader["Machine_management"]);
+                user.Order_management = Convert.ToBoolean(sqlDataReader["Order_management"]);
+                user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
+                user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
+                user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                temp.Add(user);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
+
+        public List<User> GetUser(string login, bool deleted)
+        {
+            List<User> temp = new List<User>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Login = @Login AND Deleted = @Deleted;", connect.cnn);
+
+            command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = login;
+            command.Parameters.Add("@Deleted", SqlDbType.VarChar, 40).Value = deleted;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                User user = new User();
+                user.Login = sqlDataReader["Login"].ToString();
+                user.Password = sqlDataReader["Password"].ToString();
+                user.Email = sqlDataReader["Email"].ToString();
+                user.Name = sqlDataReader["Name"].ToString();
+                user.Surname = sqlDataReader["Surname"].ToString();
+                user.Admin = Convert.ToBoolean(sqlDataReader["Admin"]);
+                user.Super_Admin = Convert.ToBoolean(sqlDataReader["Super_Admin"]);
+                user.Manager = Convert.ToBoolean(sqlDataReader["Manager"]);
+                user.Magazine_management = Convert.ToBoolean(sqlDataReader["Magazine_management"]);
+                user.Machine_management = Convert.ToBoolean(sqlDataReader["Machine_management"]);
+                user.Order_management = Convert.ToBoolean(sqlDataReader["Order_management"]);
+                user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
+                user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
+                user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                temp.Add(user);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
+
+        public List<User> GetUserByEmail(string email)
+        {
+            List<User> temp = new List<User>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Email = @Email;", connect.cnn);
+
+            command.Parameters.Add("@Email", SqlDbType.VarChar, 40).Value = email;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                User user = new User();
+                user.Login = sqlDataReader["Login"].ToString();
+                user.Password = sqlDataReader["Password"].ToString();
+                user.Email = sqlDataReader["Email"].ToString();
+                user.Name = sqlDataReader["Name"].ToString();
+                user.Surname = sqlDataReader["Surname"].ToString();
+                user.Admin = Convert.ToBoolean(sqlDataReader["Admin"]);
+                user.Super_Admin = Convert.ToBoolean(sqlDataReader["Super_Admin"]);
+                user.Manager = Convert.ToBoolean(sqlDataReader["Manager"]);
+                user.Magazine_management = Convert.ToBoolean(sqlDataReader["Magazine_management"]);
+                user.Machine_management = Convert.ToBoolean(sqlDataReader["Machine_management"]);
+                user.Order_management = Convert.ToBoolean(sqlDataReader["Order_management"]);
+                user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
+                user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
+                user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                temp.Add(user);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
+
+        public List<User> GetUserByCode(string code)
+        {
+            List<User> temp = new List<User>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Reset_pass = @Reset_pass;", connect.cnn);
+
+            command.Parameters.Add("@Reset_pass", SqlDbType.VarChar, 40).Value = code;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                User user = new User();
+                user.Login = sqlDataReader["Login"].ToString();
+                user.Password = sqlDataReader["Password"].ToString();
+                user.Email = sqlDataReader["Email"].ToString();
+                user.Name = sqlDataReader["Name"].ToString();
+                user.Surname = sqlDataReader["Surname"].ToString();
+                user.Admin = Convert.ToBoolean(sqlDataReader["Admin"]);
+                user.Super_Admin = Convert.ToBoolean(sqlDataReader["Super_Admin"]);
+                user.Manager = Convert.ToBoolean(sqlDataReader["Manager"]);
+                user.Magazine_management = Convert.ToBoolean(sqlDataReader["Magazine_management"]);
+                user.Machine_management = Convert.ToBoolean(sqlDataReader["Machine_management"]);
+                user.Order_management = Convert.ToBoolean(sqlDataReader["Order_management"]);
+                user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
+                user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
+                user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                temp.Add(user);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
+
         public List<User> GetUsers()
         {
             List<User> temp = new List<User>();

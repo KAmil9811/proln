@@ -10,12 +10,12 @@ namespace CGC.Models
     {
         //Zalezne od shape
         
-        public double Length { get; set; } //x
-        public double Width { get; set; } //y
+        public string Length { get; set; } //x
+        public string Width { get; set; } //y
 
 
         //Ogólne
-        public double Thickness { get; set; } //z
+        public string Thickness { get; set; } //z
         public string Type { get; set; }
         public bool Can_Be_Createad { get; set; }
         public string Color { get; set; }
@@ -33,6 +33,10 @@ namespace CGC.Models
         public string Cut_id { get; set; }
 
 
+        public int sort { get; set; }
+
+        public double WidthSort { get; set; }
+        public double LengthSort { get; set; }
         public string Error_Messege { get; set; }
     }
 }

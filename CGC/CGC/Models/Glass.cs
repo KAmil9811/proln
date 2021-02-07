@@ -24,6 +24,7 @@ namespace CGC.Models
 
         public List<int> Glass_id { get; set; }
 
-
+        public double WidthSort { get; set; }
+        public double LengthSort { get; set; }
     }
 }

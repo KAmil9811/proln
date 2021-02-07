@@ -111,9 +111,9 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false))
             {
-                if (use.Login == admin.Login && (use.Manager == true || use.Super_Admin == true || use.Admin == true))
+                if (use.Manager == true || use.Super_Admin == true || use.Admin == true)
                 {
                     return userBaseModify.Add_User(user,use);
                 }
@@ -157,36 +157,33 @@ namespace CGC.Funkcje.UserFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(receiver.user.Login))
             {
-                if (use.Login == receiver.user.Login)
+                if (receiver.user.Email != use.Email)
                 {
-                    if (receiver.user.Email != use.Email)
-                    {
-                        temp = Edit_Email_Admin(receiver);
-                    }
-
-                    if (receiver.user.Password != use.Password)
-                    {
-                        temp2 = Change_Password_Admin(receiver);
-                    }
-
-                    if (receiver.user.Name != use.Name)
-                    {
-                        temp3 = Change_Name_Admin(receiver);
-                    }
-
-                    if (receiver.user.Surname != use.Surname)
-                    {
-                        temp4 = Change_Surname_Admin(receiver);
-                    }
-
-
-                    if (use.Cut_management != receiver.user.Cut_management || use.Order_management != receiver.user.Order_management || use.Magazine_management != receiver.user.Magazine_management || use.Machine_management != receiver.user.Machine_management || check2 == true)
-                    {
-                        temp5 = Set_Permissions_Admin(receiver);
-                    }
+                    temp = Edit_Email_Admin(receiver);
                 }
+
+                if (receiver.user.Password != use.Password)
+                {
+                    temp2 = Change_Password_Admin(receiver);
+                }
+
+                if (receiver.user.Name != use.Name)
+                {
+                    temp3 = Change_Name_Admin(receiver);
+                }
+
+                if (receiver.user.Surname != use.Surname)
+                {
+                    temp4 = Change_Surname_Admin(receiver);
+                }
+
+
+                if (use.Cut_management != receiver.user.Cut_management || use.Order_management != receiver.user.Order_management || use.Magazine_management != receiver.user.Magazine_management || use.Machine_management != receiver.user.Machine_management || check2 == true)
+                {
+                    temp5 = Set_Permissions_Admin(receiver);
+                }           
             }
 
             if (temp.Error_Messege != null)
@@ -242,20 +239,14 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false))
             {
-                if (use.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
-                    {
-                        if (usere.Login == user.Login)
-                        {
-                            return userBaseModify.Change_Email_Admin(user, admin);
-                        }
-                    }
-                    admin.Error_Messege = "User not found";
-                    return admin;
+                    return userBaseModify.Change_Email_Admin(user, admin);
                 }
+                admin.Error_Messege = "User not found";
+                return admin;            
             }
             admin.Error_Messege = "Admin not found";
             return admin;
@@ -268,27 +259,21 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User adm in userBaseReturn.GetUsers())
+            foreach (User adm in userBaseReturn.GetUser(admin.Login,false))
             {
-                if (adm.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
+                    if (usere.Deleted == true)
                     {
-                        if (usere.Login == user.Login)
-                        {
-                            if (usere.Deleted == true)
-                            {
-                                user.Error_Messege = "User has been already deleted";
-                                temp.Add(user);
-                                return temp;
-                            }
-                            return userBaseModify.Delete_User(user,admin);
-                        }
+                        user.Error_Messege = "User has been already deleted";
+                        temp.Add(user);
+                        return temp;
                     }
-                    user.Error_Messege = "User not found";
-                    temp.Add(user);
-                    return temp;
+                    return userBaseModify.Delete_User(user,admin);                  
                 }
+                user.Error_Messege = "User not found";
+                temp.Add(user);
+                return temp;               
             }
             user.Error_Messege = "Admin not found";
             temp.Add(user);
@@ -303,28 +288,22 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User adm in userBaseReturn.GetUsers())
+            foreach (User adm in userBaseReturn.GetUser(admin.Login,false))
             {
-                if (adm.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
+                    if (usere.Deleted == true)
                     {
-                        if (usere.Login == user.Login)
-                        {
-                            if (usere.Deleted == true)
-                            {
-                                return userBaseModify.Restore_User(user, admin);
-                            }
-                            user.Error_Messege = "User is active";
-                            temp.Add(user);
-                            return temp;
-                        }
+                        return userBaseModify.Restore_User(user, admin);
                     }
-                    user.Error_Messege = "User not found";
+                    user.Error_Messege = "User is active";
                     temp.Add(user);
-                    return temp;
+                    return temp;                  
                 }
-            }
+                user.Error_Messege = "User not found";
+                temp.Add(user);
+                return temp;
+            }           
             user.Error_Messege = "Admin not found";
             temp.Add(user);
             return temp;
@@ -344,20 +323,14 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false))
             {
-                if (use.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
-                    {
-                        if (usere.Login == user.Login)
-                        {
-                            return userBaseModify.Change_Password_Admin(user, admin);
-                        }
-                    }
-                    admin.Error_Messege = "User not found";
-                    return admin;
+                    return userBaseModify.Change_Password_Admin(user, admin);
                 }
+                admin.Error_Messege = "User not found";
+                return admin;         
             }
             admin.Error_Messege = "Admin not found";
             return admin;
@@ -368,20 +341,14 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false))
             {
-                if (use.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
-                    {
-                        if (usere.Login == user.Login)
-                        {
-                            return userBaseModify.Change_Permision(user, admin);
-                        }
-                    }
-                    admin.Error_Messege = "User not found";
-                    return admin;
+                    return userBaseModify.Change_Permision(user, admin);
                 }
+                admin.Error_Messege = "User not found";
+                return admin;                
             }
             admin.Error_Messege = "Admin not found";
             return admin;
@@ -392,20 +359,14 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false))
             {
-                if (use.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
-                    {
-                        if (usere.Login == user.Login)
-                        {
-                            return userBaseModify.Change_Name_Admin(user, admin);
-                        }
-                    }
-                    admin.Error_Messege = "User not found";
-                    return admin;
+                     return userBaseModify.Change_Name_Admin(user, admin);               
                 }
+                admin.Error_Messege = "User not found";
+                return admin;  
             }
             admin.Error_Messege = "Admin not found";
             return admin;
@@ -416,20 +377,14 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false))
             {
-                if (use.Login == admin.Login)
+                foreach (User usere in userBaseReturn.GetUser(user.Login))
                 {
-                    foreach (User usere in userBaseReturn.GetUsers())
-                    {
-                        if (usere.Login == user.Login)
-                        {
-                            return userBaseModify.Change_Surname_Admin(user, admin);
-                        }
-                    }
-                    admin.Error_Messege = "User not found";
-                    return admin;
+                    return userBaseModify.Change_Surname_Admin(user, admin);
                 }
+                admin.Error_Messege = "User not found";
+                return admin;
             }
             admin.Error_Messege = "Admin not found";
             return admin;
@@ -443,21 +398,12 @@ namespace CGC.Funkcje.UserFuncFolder
             User user = receiver.user;
             List<User> temp = new List<User>();
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
             {
-                if (usere.Login == user.Login && usere.Password == user.Password)
+                if (usere.Password == user.Password)
                 {
-                    if(usere.Deleted == false)
-                    {
-                        temp.Add(usere);
-                        return temp;
-                    }
-                    else
-                    {
-                        user.Error_Messege = "User has been deleted";
-                        temp.Add(user);
-                        return temp;
-                    }
+                    temp.Add(usere);
+                    return temp;
                 }
             }
             user.Error_Messege = "Incorrect login or password";
@@ -489,9 +435,9 @@ namespace CGC.Funkcje.UserFuncFolder
             }
 
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
             {
-                if (usere.Login == user.Login && usere.Password == user.Password)
+                if (usere.Password == user.Password)
                 {
                     return userBaseModify.Change_Email(user);
                 }
@@ -517,9 +463,9 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
             {
-                if (usere.Login == user.Login && usere.Password == user.Password)
+                if (usere.Password == user.Password)
                 {
                     return userBaseModify.Change_Password(user, password);
                 }
@@ -535,25 +481,22 @@ namespace CGC.Funkcje.UserFuncFolder
             List<User> temp = new List<User>();
             Helper helper;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUserByEmail(user.Email))
             {
-                if (usere.Email == user.Email)
+                Send_Mail send_Mail = new Send_Mail();
+
+                helper = send_Mail.Reset_Pass_Code(usere.Email);
+
+                if (helper.check == true)
                 {
-                    Send_Mail send_Mail = new Send_Mail();
-
-                    helper = send_Mail.Reset_Pass_Code(usere.Email);
-
-                    if (helper.check == true)
-                    {
-                        return userBaseModify.Save_Reset_Code(user, helper.word);
-                    }
-                    else
-                    {
-                        user.Error_Messege = "E-mail has nor been sent";
-                        temp.Add(user);
-                        return temp;
-                    }
+                    return userBaseModify.Save_Reset_Code(user, helper.word);
                 }
+                else
+                {
+                    user.Error_Messege = "E-mail has nor been sent";
+                    temp.Add(user);
+                    return temp;
+                }            
             }
 
             user.Error_Messege = "Incorrect login or e-mail";
@@ -567,25 +510,22 @@ namespace CGC.Funkcje.UserFuncFolder
             List<User> temp = new List<User>();
             Helper helper;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUserByCode(user.Reset_pass))
             {
-                if (usere.Reset_pass == user.Reset_pass)
+                Send_Mail send_Mail = new Send_Mail();
+
+                helper = send_Mail.Reset_Pass_Pass(usere.Email);
+
+                if (helper.check == true)
                 {
-                    Send_Mail send_Mail = new Send_Mail();
-
-                    helper = send_Mail.Reset_Pass_Pass(usere.Email);
-
-                    if (helper.check == true)
-                    {
-                        return userBaseModify.Save_Reset_Password(usere, helper.word);
-                    }
-                    else
-                    {
-                        user.Error_Messege = "E-mail has not been sent";
-                        temp.Add(user);
-                        return temp;
-                    }
+                    return userBaseModify.Save_Reset_Password(usere, helper.word);
                 }
+                else
+                {
+                    user.Error_Messege = "E-mail has not been sent";
+                    temp.Add(user);
+                    return temp;
+                }              
             }
             user.Error_Messege = "Incorrect code";
             temp.Add(user);

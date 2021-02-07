@@ -56,6 +56,36 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             return product_Histories;
         }
 
+        public List<Product> GetProduct(string id)
+        {
+            List<Product> temp = new List<Product>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Product] WHERE Id = @Id;", connect.cnn);
+
+            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = id;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product product = new Product();
+                product.Id = sqlDataReader["Id"].ToString();
+                product.Owner = sqlDataReader["Owner"].ToString();
+                product.Status = sqlDataReader["Status"].ToString();
+                product.Desk = sqlDataReader["Desk"].ToString();
+                product.Id_item = sqlDataReader["Id_item"].ToString();
+                product.Id_order = sqlDataReader["Id_order"].ToString();
+
+                temp.Add(product);
+            }
+
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
         public List<Product> GetProducts()
         {
             List<Product> temp = new List<Product>();
@@ -83,42 +113,12 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             return temp;
         }
 
-        public List<Product> GetProductsUser()
+        public List<Product> GetProducts(string status)
         {
             List<Product> temp = new List<Product>();
             SqlCommand command = new SqlCommand("SELECT * FROM [Product] Where Status = @Status;", connect.cnn);
 
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
-
-            connect.cnn.Open();
-
-            SqlDataReader sqlDataReader = command.ExecuteReader();
-            while (sqlDataReader.Read())
-            {
-                Product product = new Product();
-                product.Id = sqlDataReader["Id"].ToString();
-                product.Owner = sqlDataReader["Owner"].ToString();
-                product.Status = sqlDataReader["Status"].ToString();
-                product.Desk = sqlDataReader["Desk"].ToString();
-                product.Id_item = sqlDataReader["Id_item"].ToString();
-                product.Id_order = sqlDataReader["Id_order"].ToString();
-
-                temp.Add(product);
-            }
-
-            sqlDataReader.Close();
-            command.Dispose();
-            connect.cnn.Close();
-
-            return temp;
-        }
-
-        public List<Product> GetDeletedProductsUser()
-        {
-            List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Product] Where Status = @Status;", connect.cnn);
-
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Deleted";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
 
             connect.cnn.Open();
 

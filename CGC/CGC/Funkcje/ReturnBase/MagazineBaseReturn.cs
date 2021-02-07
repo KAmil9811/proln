@@ -96,17 +96,25 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                     temp.Add(newGlass);
                 }
             }
-
             return temp;
         }
 
-        public List<Glass_Receiver> GetglassForUser()
+        public List<Glass> Getglass(Glass glasss)
         {
-            List<Glass_Receiver> temp = new List<Glass_Receiver>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used and Removed = @Removed;", connect.cnn);
+            List<Glass_Receiver> temp2 = new List<Glass_Receiver>();
+            List<Glass> temp = new List<Glass>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2);", connect.cnn);
 
-            command.Parameters.Add("@Used", SqlDbType.Bit).Value = 0;
-            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 0;
+            command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glasss.Hight);
+            command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glasss.Width);
+            command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glasss.Length);
+            command.Parameters.Add("@Used", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
+            command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glasss.Type;
+            command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glasss.Color;
+            command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glasss.Owner;
+            command.Parameters.Add("@Owner2", SqlDbType.VarChar, 40).Value = "";
 
             connect.cnn.Open();
 
@@ -134,65 +142,53 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                     glass_Receiver.Cut_id = sqlDataReader["Cut_id"].ToString();
                 }
 
-                temp.Add(glass_Receiver);
+                temp2.Add(glass_Receiver);
             }
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
 
-            return temp;
-        }
-
-        public List<Glass_Receiver> GetUsedglassForUser()
-        {
-            List<Glass_Receiver> temp = new List<Glass_Receiver>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used and Removed = @Removed;", connect.cnn);
-
-            command.Parameters.Add("@Used", SqlDbType.Bit).Value = 1;
-            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 0;
-
-            connect.cnn.Open();
-
-            SqlDataReader sqlDataReader = command.ExecuteReader();
-            while (sqlDataReader.Read())
+            foreach (Glass_Receiver glass_Receiver in temp2)
             {
-                Glass_Receiver glass_Receiver = new Glass_Receiver();
-                glass_Receiver.Hight = Convert.ToDouble(sqlDataReader["Hight"]);
-                glass_Receiver.Width = Convert.ToDouble(sqlDataReader["Width"]);
-                glass_Receiver.Length = Convert.ToDouble(sqlDataReader["Length"]);
-                glass_Receiver.Used = Convert.ToBoolean(sqlDataReader["Used"]);
-                glass_Receiver.Removed = Convert.ToBoolean(sqlDataReader["Removed"]);
-                glass_Receiver.Type = sqlDataReader["Type"].ToString();
-                glass_Receiver.Color = sqlDataReader["Color"].ToString();
-                glass_Receiver.Owner = sqlDataReader["Owner"].ToString();
-                glass_Receiver.Desk = sqlDataReader["Desk"].ToString();
-                glass_Receiver.Glass_Id = sqlDataReader["Glass_Id"].ToString();
-
-                if (sqlDataReader["Cut_id"].ToString() == "")
+                bool check = false;
+                foreach (Glass glass in temp)
                 {
-                    glass_Receiver.Cut_id = "0";
-                }
-                else
-                {
-                    glass_Receiver.Cut_id = sqlDataReader["Cut_id"].ToString();
+                    if (Convert.ToDouble(glass.Width) == glass_Receiver.Width && Convert.ToDouble(glass.Hight) == glass_Receiver.Hight && Convert.ToDouble(glass.Length) == glass_Receiver.Length && glass.Type == glass_Receiver.Type && glass.Color == glass_Receiver.Color && glass.Owner == glass_Receiver.Owner)
+                    {
+                        glass.Count = (Convert.ToInt32(glass.Count) + 1).ToString();
+                        glass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
+                        check = true;
+                    }
                 }
 
-                temp.Add(glass_Receiver);
+                if (check == false)
+                {
+                    Glass newGlass = new Glass { Glass_info = new List<Glass_Id>() };
+
+                    newGlass.Width = glass_Receiver.Width.ToString();
+                    newGlass.Hight = glass_Receiver.Hight.ToString();
+                    newGlass.Length = glass_Receiver.Length.ToString();
+                    newGlass.WidthSort = glass_Receiver.Width;
+                    newGlass.LengthSort = glass_Receiver.Length;
+                    newGlass.Type = glass_Receiver.Type;
+                    newGlass.Color = glass_Receiver.Color;
+                    newGlass.Owner = glass_Receiver.Owner;
+                    newGlass.Desk = glass_Receiver.Desk;
+                    newGlass.Glass_info.Add(new Glass_Id { Id = glass_Receiver.Glass_Id, Removed = glass_Receiver.Removed, Used = glass_Receiver.Used, Cut_id = glass_Receiver.Cut_id });
+                    newGlass.Count = "1";
+                    temp.Add(newGlass);
+                }
             }
-            sqlDataReader.Close();
-            command.Dispose();
-            connect.cnn.Close();
-
             return temp;
         }
 
-        public List<Glass_Receiver> GetDeletedglassForUser()
+        public List<Glass_Receiver> Getglass(bool used, bool removed)
         {
             List<Glass_Receiver> temp = new List<Glass_Receiver>();
             SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used and Removed = @Removed;", connect.cnn);
 
-            command.Parameters.Add("@Used", SqlDbType.Bit).Value = 0;
-            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 1;
+            command.Parameters.Add("@Used", SqlDbType.Bit).Value = used;
+            command.Parameters.Add("@Removed", SqlDbType.Bit).Value = removed;
 
             connect.cnn.Open();
 

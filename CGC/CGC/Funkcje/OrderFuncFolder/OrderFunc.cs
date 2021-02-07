@@ -37,7 +37,7 @@ namespace CGC.Funkcje.OrderFuncFolder
 
         public List<Order> Return_All_Orders()
         {
-            return orderBaseReturn.GetOrdersUser();
+            return orderBaseReturn.GetOrders(false, false);
         }
 
         public List<Item> Return_All_Items(Receiver receiver)
@@ -55,6 +55,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             List<Order> temp = new List<Order>();
             List<Order> temp2 = new List<Order>();
             List<Item> itemstemp = new List<Item>();
+            List<Item> items;
 
             Order order = receiver.order;
             order.items = new List<Item>();
@@ -64,7 +65,8 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             try
             {
-                last_free_id = Convert.ToInt32(orderBaseReturn.GetAllItems().Last().Id) + 1;
+                items = orderBaseReturn.GetLastItem();
+                last_free_id = items.Last().sort + 1;
             }
             catch (Exception e)
             {
@@ -73,7 +75,7 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             for (int i = 0; i <= receiver.iteme.Count; i= i +6)
             {
-                Item item = new Item { Width = Convert.ToDouble(receiver.iteme[0]), Length = Convert.ToDouble(receiver.iteme[1]), Thickness = Convert.ToDouble(receiver.iteme[2]), Color = receiver.iteme[3], Amount = receiver.iteme[4], Type = receiver.iteme[5] };
+                Item item = new Item { Width = receiver.iteme[0], Length = receiver.iteme[1], Thickness = receiver.iteme[2], Color = receiver.iteme[3], Amount = receiver.iteme[4], Type = receiver.iteme[5] };
                 order.items.Add(item);
             }
 
@@ -151,18 +153,16 @@ namespace CGC.Funkcje.OrderFuncFolder
             }
 
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
                     return orderBaseModify.Add_Order(usere, order);
                 }
             }
 
             order.Error_Messege = "User not exist";
-
             temp.Add(order);
-
             return temp;
         }
 
@@ -173,11 +173,11 @@ namespace CGC.Funkcje.OrderFuncFolder
             Order order = receiver.order;
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    orderBaseModify.Edit_Order(usere, order);
+                    return orderBaseModify.Edit_Order(usere, order);
                 }
             }
             order.Error_Messege = "User not exist";
@@ -193,9 +193,9 @@ namespace CGC.Funkcje.OrderFuncFolder
             User user = receiver.user;
             Item items = receiver.item;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
                     foreach (Item item in orderBaseReturn.GetItems(order))
                     {
@@ -208,6 +208,9 @@ namespace CGC.Funkcje.OrderFuncFolder
                     temp.Add(order);
                     return temp;
                 }
+                order.Error_Messege = "User no permission";
+                temp.Add(order);
+                return temp;
             }
             order.Error_Messege = "User not exist";
             temp.Add(order);
@@ -222,18 +225,18 @@ namespace CGC.Funkcje.OrderFuncFolder
             User user = receiver.user;
             string name = receiver.new_name;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    foreach (Order ord in orderBaseReturn.GetOrders())
+                    foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order))
                     {
-                        if (ord.Id_Order == order.Id_Order)
-                        {
-                            orderBaseModify.Set_stan(usere, ord, name);
-                        }
+                        return orderBaseModify.Set_stan(usere, ord, name);
                     }
                 }
+                order.Error_Messege = "User no permission";
+                temp.Add(order);
+                return temp;
             }
 
             order.Error_Messege = "User not exist";
@@ -245,23 +248,25 @@ namespace CGC.Funkcje.OrderFuncFolder
         {
             List<Order> temp = new List<Order>();
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(user.Login))
             {
-                if (use.Login == user.Login && (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true))
+                if (use.Manager == true || use.Super_Admin == true || use.Admin == true || use.Order_management == true)
                 {
                     if (order.Status == "Ready")
                     {
-                        orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order));
+                        return orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order));
                     }
                     order.Error_Messege = "Order is not ready";
                     temp.Add(order);
                     return temp;
                 }
+                order.Error_Messege = "User no permission";
+                temp.Add(order);
+                return temp;
             }
             order.Error_Messege = "User not exist";
             temp.Add(order);
             return temp;
-
         }
 
         public List<Item> ReleasedItems(User user, List<Item> items)
@@ -284,12 +289,15 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUsers())
+            foreach (User use in userBaseReturn.GetUser(user.Login))
             {
-                if (use.Login == user.Login && (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true))
+                if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true)
                 {
-                    orderBaseModify.ReleasedItems(use, items);
+                    return orderBaseModify.ReleasedItems(use, items);
                 }
+                temp_item.Error_Messege = "User no permission";
+                temp.Add(temp_item);
+                return temp;
             }
             temp_item.Error_Messege = "User not exist";
             temp.Add(temp_item);
@@ -315,12 +323,15 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    orderBaseModify.Remove_Item(usere, receiver.order, items, orderBaseReturn.GetItems(receiver.order));
+                    return orderBaseModify.Remove_Item(usere, receiver.order, items, orderBaseReturn.GetItems(receiver.order));
                 }
+                Item iteme2 = new Item();
+                iteme2.Error_Messege = "User no permission";
+                temp.Add(iteme2);
             }
 
             Item iteme = new Item();

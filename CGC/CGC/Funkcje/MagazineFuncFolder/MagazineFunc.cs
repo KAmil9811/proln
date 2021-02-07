@@ -38,7 +38,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
         public List<Glass_Receiver> Return_All_Glass()
         {
-            return magazineBaseReturn.GetglassForUser();
+            return magazineBaseReturn.Getglass(false,false);
         }
 
         public List<string> Return_All_Type()
@@ -59,9 +59,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
             User user = receiver.user;
             int code = 0;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
                     return magazineBaseModify.Add_Glass(usere, glass, code, magazineBaseReturn.Getglass());
                 }
@@ -78,9 +78,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
             Glass glass = receiver.glass;
             glass.Glass_id = receiver.glass.Glass_id;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
-                if (user.Login == usere.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
                     magazineBaseModify.Edit_Glass(usere, glass);
                 }
@@ -107,11 +107,11 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
-                    return magazineBaseModify.Remove_Glass(usere, i, magazineBaseReturn.Getglass());
+                    return magazineBaseModify.Remove_Glass(usere, i);
                 }
             }
             glass.Error_Messege = "User not exist";
@@ -134,11 +134,11 @@ namespace CGC.Funkcje.MagazineFuncFolder
 
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
-                    return magazineBaseModify.Restore_Glass(usere, i, magazineBaseReturn.Getglass());
+                    return magazineBaseModify.Restore_Glass(usere, i);
                 }
             }
             glass.Error_Messege = "User not exist";
@@ -153,9 +153,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
             string type = receiver.type;
             List<string> temp = new List<string>();
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (user.Login == usere.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
                     foreach (string types in magazineBaseReturn.GetTypes())
                     {
@@ -178,9 +178,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
             List<string> temp = new List<string>();
             string color = receiver.color;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
                     foreach (string colors in magazineBaseReturn.GetColor())
                     {
@@ -213,9 +213,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
                 }
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
                     foreach (string type in magazineBaseReturn.GetTypes())
                     {
@@ -248,9 +248,9 @@ namespace CGC.Funkcje.MagazineFuncFolder
                 }
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
-                if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
                     foreach (string color in magazineBaseReturn.GetColor())
                     {
