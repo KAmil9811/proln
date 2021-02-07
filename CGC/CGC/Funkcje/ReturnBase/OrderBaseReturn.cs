@@ -266,6 +266,63 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
+        public List<Item> GetItems(Order order, Item example)
+        {
+            List<Item> temp = new List<Item>();
+            SqlCommand command = new SqlCommand("SELECT * FROM [Item] Where Order_id = @Order_id AND Height = @Height AND Color = @Color AND Glass_Type = @Glass_Type AND Status = @Status AND Cut_id = @Cut_id", connect.cnn);
+
+            command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+            command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = example.Color;
+            command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = example.Type;
+            command.Parameters.Add("@Height", SqlDbType.Float).Value = Convert.ToDouble(example.Thickness);
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = example.Status;
+            command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = example.Cut_id;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Item item = new Item();
+                item.Id = sqlDataReader["Id"].ToString();
+                item.Thickness = sqlDataReader["Height"].ToString();
+                item.Width = sqlDataReader["Weight"].ToString();
+                item.Length = sqlDataReader["Lenght"].ToString();
+                item.Type = sqlDataReader["Glass_Type"].ToString();
+                item.Color = sqlDataReader["Color"].ToString();
+                item.Status = sqlDataReader["Status"].ToString();
+                item.Order_id = sqlDataReader["Order_id"].ToString();
+                item.Desk = sqlDataReader["Desk"].ToString();
+                item.WidthSort = Convert.ToDouble(item.Width);
+                item.LengthSort = Convert.ToDouble(item.Length);
+
+                try
+                {
+                    item.Cut_id = sqlDataReader["Cut_id"].ToString();
+                }
+                catch
+                {
+                    item.Cut_id = "0";
+                }
+
+                try
+                {
+                    item.Product_Id = sqlDataReader["Product_Id"].ToString();
+                }
+                catch
+                {
+                    item.Product_Id = "0";
+                }
+
+                temp.Add(item);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
         public List<Item> GetAllItems()
         {
             List<Item> temp = new List<Item>();

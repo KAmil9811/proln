@@ -103,7 +103,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         {
             List<Glass_Receiver> temp2 = new List<Glass_Receiver>();
             List<Glass> temp = new List<Glass>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2);", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Width >= @Width AND Length >= @Length AND Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2);", connect.cnn);
 
             command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glasss.Hight);
             command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glasss.Width);
