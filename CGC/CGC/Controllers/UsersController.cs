@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CGC.Funkcje.UserFuncFolder;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public sealed class UsersController : Controller
     {
         private static UsersController m_oInstance = null;
