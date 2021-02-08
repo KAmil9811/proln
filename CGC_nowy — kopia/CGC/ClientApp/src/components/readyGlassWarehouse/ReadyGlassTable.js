@@ -32,8 +32,7 @@ export class ReadyGlassTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+               
                 for (var i = 0; i < json.length; i++) {
                     var j = i;
                     var deleted = '';
@@ -124,7 +123,7 @@ export class ReadyGlassTable extends Component {
                             {
                                 label: '',
                                 field: 'choice',
-                                sort: 'asc',
+                             
                                 width: 150
                             }
                         ],
@@ -139,56 +138,25 @@ export class ReadyGlassTable extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
-
+                className="table_corection"
 
             />
+
         )
     }
 
@@ -200,7 +168,7 @@ export class ReadyGlassTable extends Component {
             //alert('dodane' + '' + number)
             arr.push(id) 
             this.setState.send = arr
-            console.log('Table' + '---' + this.state.send)
+            
             
         } else {
             //alert('usunięte' + '' + number)
@@ -209,7 +177,7 @@ export class ReadyGlassTable extends Component {
                 arr.splice(index, 1);
             }
             this.setState.send = arr
-            console.log('Table' + '---' + this.state.send)
+           
         }
     };
 
@@ -231,7 +199,7 @@ export class ReadyGlassTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+                
                 return (json)
             })
             .then(json => {
@@ -250,7 +218,7 @@ export class ReadyGlassTable extends Component {
                 login: sessionStorage.getItem('login'),
             }
         }
-        console.log(receiver)
+       
 
         
             fetch(`api/Product/Delete_Product`, {
@@ -263,7 +231,7 @@ export class ReadyGlassTable extends Component {
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                   
                     return (json);
                 })
                 .then(json => {

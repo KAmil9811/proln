@@ -50,8 +50,7 @@ export class OrderWarehouse extends Component {
             this.props.history.push('/order_history')
         }
 
-    render() {
-      //  let history = this.history();
+    render() {//  let history = this.history();
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
@@ -69,7 +68,7 @@ export class OrderWarehouse extends Component {
                     </div>
                     <div className="order_warehouse_conteiner">
 
-                        <button className="success_add_order" onClick={this.addOrder}>Add order</button>
+                        <button className="succes_add_order" onClick={this.addOrder}>Add order</button>
 
                         <div className="tablewar">
                             <OrderTable />
@@ -86,9 +85,11 @@ export class OrderWarehouse extends Component {
                         <h1 className="titletext">Orders</h1>
                     </div>
                     <div className="order_warehouse_conteiner">
-                        <div className="tablewar">
+
+                        <div className="table_corection">
                             <OrderTable />
                         </div>
+
                     </div>
                 </div>
             );

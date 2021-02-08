@@ -28,7 +28,7 @@ export class AddType extends Component {
 
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+                
                 return (json);
             })
             .then(json => {
@@ -63,10 +63,10 @@ export class AddType extends Component {
                         <h1 className="titletext">Add glass type</h1>
                     </div>
                     <form>
-                      <div className="AddType_c">
-                        
+                        <div className="AddType_c">
+
                             <div className="form-group">
-                            
+
                                 <input
                                     type="text"
                                     className="form-control"
@@ -79,14 +79,15 @@ export class AddType extends Component {
                                 <button type="button" className="success_glass_type_add" onClick={this.handleAddType}>Add type</button>
 
                                 <button type="button" className="danger_glass_type_add" onClick={this.cancelAddType}>Cancel</button>
-                              
+
                             </div>
 
-                      
-                          </div>
-                      </form>
+
+                        </div>
+                    </form>
                 </div>
-            );
+                
+                );
         }
         else {
             return (

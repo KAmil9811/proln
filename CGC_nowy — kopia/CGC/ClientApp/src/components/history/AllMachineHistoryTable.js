@@ -29,8 +29,7 @@ export class AllMachineHistoryTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+               
 
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
@@ -107,22 +106,26 @@ export class AllMachineHistoryTable extends Component {
     table() {
         return (
             <MDBDataTableV5
-
-
-                hover
-                entriesOptions={[15, 20, 50, 100]}
-                entries={10}
-                pagesAmount={1}
                 data={this.state.table333}
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={10}
+                pagesAmount={10}
                 searchTop
                 materialSearch
                 searchBottom={false}
                 responsive
                 bordered
+                paginationLabel={["Previous", "Next"]}
                 sortable
+                // small
                 theadTextWhite
                 theadTextWhite
+                className="table_corection"
             />
+
+
+
         )
     }
 

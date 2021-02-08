@@ -53,7 +53,8 @@ export class UserHistory extends Component {
                         </div>
                     </div>
                 </div>
-            );
+                
+                );
         }
         else {
             return (

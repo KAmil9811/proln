@@ -29,8 +29,7 @@ export class OrderTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+                
                 for (var i = 0; i < json.length; i++) {
                    
                         table2.push({
@@ -125,60 +124,26 @@ export class OrderTable extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
+                className="table_corection"
 
 
 
-                
+
 
 
             />

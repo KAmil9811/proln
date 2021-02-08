@@ -13,24 +13,44 @@
         /* width: -webkit-max-content; */
         width: -moz-max-content;
         width: 100%;
+        margin-top: 14vh;
     }
 }
 
 
 
+
+@media all and (min-width: 800px) {
+    .phone {
+        visibility: hidden
+    }
+}
+
+@media all and (max-width: 800px) {
+    .success_login, .hhh {
+        visibility: hidden
+    }
+
+    .aaaaaaaa {
+        visibility: hidden
+    }
+}
+
+
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/
-    /* background-color: #c5c5d3;*/ 
+    /* background-color: #c5c5d3;*/
     background-color: #e8e8ed;
 }
 
-th{
-    text-align:center !important;
+th {
+    text-align: center !important;
 }
-table.mdb-dataTable thead .sorting:before, table.mdb-dataTable thead .sorting:after, table.mdb-dataTable thead .sorting_asc:before, table.mdb-dataTable thead .sorting_asc:after, table.mdb-dataTable thead .sorting_desc:before, table.mdb-dataTable thead .sorting_desc:after, table.mdb-dataTable thead .sorting_asc_disabled:before, table.mdb-dataTable thead .sorting_asc_disabled:after, table.mdb-dataTable thead .sorting_desc_disabled:before, table.mdb-dataTable thead .sorting_desc_disabled:after, table thead.mdb-dataTable-head .sorting:before, table thead.mdb-dataTable-head .sorting:after, table thead.mdb-dataTable-head .sorting_asc:before, table thead.mdb-dataTable-head .sorting_asc:after, table thead.mdb-dataTable-head .sorting_desc:before, table thead.mdb-dataTable-head .sorting_desc:after, table thead.mdb-dataTable-head .sorting_asc_disabled:before, table thead.mdb-dataTable-head .sorting_asc_disabled:after, table thead.mdb-dataTable-head .sorting_desc_disabled:before, table thead.mdb-dataTable-head .sorting_desc_disabled:after {
+
+/**table.mdb-dataTable thead .sorting:before, table.mdb-dataTable thead .sorting:after, table.mdb-dataTable thead .sorting_asc:before, table.mdb-dataTable thead .sorting_asc:after, table.mdb-dataTable thead .sorting_desc:before, table.mdb-dataTable thead .sorting_desc:after, table.mdb-dataTable thead .sorting_asc_disabled:before, table.mdb-dataTable thead .sorting_asc_disabled:after, table.mdb-dataTable thead .sorting_desc_disabled:before, table.mdb-dataTable thead .sorting_desc_disabled:after, table thead.mdb-dataTable-head .sorting:before, table thead.mdb-dataTable-head .sorting:after, table thead.mdb-dataTable-head .sorting_asc:before, table thead.mdb-dataTable-head .sorting_asc:after, table thead.mdb-dataTable-head .sorting_desc:before, table thead.mdb-dataTable-head .sorting_desc:after, table thead.mdb-dataTable-head .sorting_asc_disabled:before, table thead.mdb-dataTable-head .sorting_asc_disabled:after, table thead.mdb-dataTable-head .sorting_desc_disabled:before, table thead.mdb-dataTable-head .sorting_desc_disabled:after {
     margin-left: 10px;
-}
+}*/
 
 .md-form input[type="search"]:not(.browser-default) {
     border-bottom: 1px solid #000000 !important;
@@ -38,24 +58,24 @@ table.mdb-dataTable thead .sorting:before, table.mdb-dataTable thead .sorting:af
     margin-right: 0.1rem;
     float: left;
 }
+
 .pagination {
     background-color: rgba(0,0,0,0.15) !important;
 }
+
     .pagination .page-item .page-link {
         font-size: .9rem;
         color: #212529;
         background-color: rgba(0,0,0,0.15) !important;
-        
         border: 0;
         outline: 0;
         -webkit-transition: all 0.3s linear;
         -o-transition: all 0.3s linear;
         transition: all 0.3s linear;
     }
+
 label {
     color: black;
-
-
 }
 
 .p {
@@ -67,11 +87,10 @@ label {
     color: black;
     background-color: #c5c5d3;
 }
+
 .reset_password:hover {
     background-color: #9900cc;
     transform: scale(1.05);
-
-
     border-bottom: none;
     border-top: none;
     border-left: none;
@@ -134,20 +153,19 @@ label {
 .table.table th {
     font-size: 1.3rem;
     font-weight: 900;
-    color:black;
+    color: black;
 }
 
 .success_t:hover {
     background-color: #00a740;
     transform: scale(1.05);
-
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-
     outline: 0;
 }
+
 .success_t {
     background-color: #00c851;
     height: 2.5rem;
@@ -171,12 +189,10 @@ label {
 .prim_t:hover {
     background-color: #3174e3;
     transform: scale(1.05);
-
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-
     outline: 0;
 }
 
@@ -200,6 +216,7 @@ label {
     padding: 6px 12px;
     margin-bottom: 0;
     background-image: none;
+    background-image: none;
     margin: 0 auto;
     display: block;
 }
@@ -208,12 +225,10 @@ label {
 .danger_t:hover {
     background-color: #ee2425;
     transform: scale(1.05);
-
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-
     outline: 0;
 }
 
@@ -245,12 +260,10 @@ label {
 .info_t:hover {
     background-color: #22a4d4;
     transform: scale(1.05);
-
     border-bottom: none;
     border-top: none;
     border-left: none;
     border-right: none;
-
     outline: 0;
 }
 
@@ -284,6 +297,7 @@ label {
     transform: scale(1.05);
     outline: 0;
 }
+
 .success_n {
     float: right;
     background-color: #00c851;
@@ -373,9 +387,7 @@ label {
 .info_n:hover {
     background-color: #22a4d4;
     transform: scale(1.05);
-    
     outline: 0;
-    
 }
 
 .info_n {
@@ -401,7 +413,7 @@ label {
     margin: 0 auto;
     display: block;
 }
-    /*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
+/*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
 
 
 
@@ -423,10 +435,8 @@ label {
 .add_glass_conteiner,
 .selection_of_orders_conteiner,
 .ready_packages_conteiner,
-.order_warehouse_conteiner,
 .save_project_conteiner,
 .machine_warhouse_conteiner,
-.UserChange_c,
 .conteiner_rgw,
 .AddOrder1_c,
 .AddType_c,
@@ -440,32 +450,46 @@ label {
 .AddOrder2_c,
 .SavedPrint_c,
 .test_c,
-.one_order_conteiner,
+.PickMachine_c,
 .conteiner,
 .ResetPassword_c,
 .PasswordReset2_c,
 .Login_c,
 .TypeEdit_c,
-.AddCutMachine_c {
+.AddCutMachine_c,
+.tescik,
+.order_warehouse_conteiner {
     z-index: 0;
-    padding-top: 19vh;
-    width: 94%;
+    margin-top: 16vh;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     clear: both;
 }
 
-/*Widoki bez tabel*/
+.table_corection {
+    margin-left: auto;
+    margin-right: auto;
+    width: 92%;
+}
 
+.table_corection_add_o {
+    margin-left: auto;
+    margin-right: auto;
+    width: 92%;
+    padding-top: 30px;
+}
+/*Widoki bez tabel*/
 .add_CutMachine {
     z-index: 0;
     padding-top: 10rem;
     width: 94%;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     position: center;
     clear: both;
 }
+
 .tit_log {
     background: #15171c;
     height: 80px;
@@ -477,11 +501,14 @@ label {
     position: fixed;
     z-index: 100;
 }
+
 .title {
     height: 80px;
-    width: 40vw;
+    width: 60vw;
+    font-size: 40px;
     display: -ms-flexbox;
     display: flex;
+    top: 0;
     -ms-flex-pack: start;
     justify-content: flex-start;
     -ms-flex-align: center;
@@ -490,15 +517,19 @@ label {
     z-index: 101;
     text-align: center;
     color: white;
-    margin-left: 30vw;
-    margin-right: 30vw;
+    margin-left: 20vw;
+    margin-right: 20vw;
 }
 
 .titletext {
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
+    left: 50%;
+    margin-right: -50%;
+    position: absolute;
+    transform: translate(-50%);
 }
+
 .tit_text {
     text-align: center;
     margin-left: auto;
@@ -515,6 +546,7 @@ label {
     text-align: center;
     color: white;
 }
+
 .title_log {
     height: 80px;
     width: 40vw;
@@ -531,6 +563,7 @@ label {
     margin-left: 30vw;
     margin-right: 30vw;
 }
+
 .nextlin {
     clear: both;
 }

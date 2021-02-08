@@ -1,4 +1,17 @@
-﻿.danger_pick_machine:hover {
+﻿@media all and (min-width: 480px) {
+
+    .PickMachine_c {
+        padding: 60px 0;
+    }
+
+    .PickMachine form {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+
+
+.danger_pick_machine:hover {
     background-color: #ee2425;
     transform: scale(1.05);
     outline: 0;

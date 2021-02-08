@@ -56,7 +56,7 @@ export class MachineWarehouse extends Component {
     }*/
 
     render() {
-     //   let history = this.history();
+        //   let history = this.history();
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
@@ -95,7 +95,7 @@ export class MachineWarehouse extends Component {
                     </div>
                 </div>
             );
-            
+
         }
 
     }

@@ -35,8 +35,7 @@ export class GlassTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+              
                 for (var i = 0; i < json.length; i++) {
                     if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
                         table2.push({
@@ -224,7 +223,7 @@ export class GlassTable extends Component {
             //alert('dodane' + '' + number)
             arr.push(id)
             this.setState.send = arr
-            console.log('tablica' + '---' + this.state.send)
+            
 
         } else {
             //alert('usunięte' + '' + number)
@@ -233,7 +232,7 @@ export class GlassTable extends Component {
                 arr.splice(index, 1);
             }
             this.setState.send = arr
-            console.log('tablica' + '---' + this.state.send)
+           
         }
     };
  
@@ -246,7 +245,7 @@ export class GlassTable extends Component {
             },
             glass_Id: this.state.send
         }
-        console.log(this.state.send)
+        
        fetch(`api/Magazine/Remove_Glass`, {
             method: "post",
             body: JSON.stringify(receiver),
@@ -257,7 +256,7 @@ export class GlassTable extends Component {
 
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+               
                 return (json);
             })
             .then(json => {
@@ -294,58 +293,26 @@ export class GlassTable extends Component {
     table() {
         return (
             <MDBDataTableV5
-
-
-                hover
-                entriesOptions={[10, 20, 50, 100]}
-                entries={15}
-                pagesAmount={10}
-                data={this.state.table}
-                searchTop
-
-
-                materialSearch
-                searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
-                responsive
-                // maxHeight="35vh"
-                bordered
+            data={this.state.table}
+            hover
+            entriesOptions={[10, 20, 50, 100]}
+            entries={10}
+            pagesAmount={10}
+            searchTop
+            materialSearch
+            searchBottom={false}
+            responsive
+            bordered
+            paginationLabel={["Previous", "Next"]}
+            sortable
+            // small
+            theadTextWhite
+            theadTextWhite
+            className="table_corection"
+        />
 
 
 
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
-                sortable
-
-
-                // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
-                theadTextWhite
-                // theadColor="indigo"
-                theadTextWhite
-                // barReverse
-               // className="User_table"
-                // noBottomColumns
-               // sortable
-            //info={false}
-
-
-            //   autoWidth
-
-
-            />
         )
     }
 

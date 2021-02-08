@@ -1,6 +1,8 @@
 ﻿
 
 
+
+
 .danger_ready_glass_warehouse:hover {
     background-color: #ee2425;
     transform: scale(1.05);
@@ -25,7 +27,9 @@
     margin: 0 auto;
     display: block;
     float: right;
-    margin-right: 1rem;
+    margin-right: 1vw;
+    display: inline-block;
+    margin-top: 4px;
 }
 
 .success_ready_glass_warehouse {
@@ -48,7 +52,9 @@
     position: center;
     float: right;
     margin-left: 1rem;
-
+    margin-right: 4vw;
+    display: inline-block;
+    margin-top: 4px;
 }
 
     .success_ready_glass_warehouse:hover {
@@ -56,5 +62,3 @@
         transform: scale(1.05);
         outline: 0;
     }
-
-

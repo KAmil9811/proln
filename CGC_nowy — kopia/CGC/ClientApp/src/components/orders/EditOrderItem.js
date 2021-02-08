@@ -26,7 +26,7 @@ export class EditOrderItem extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+              
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         color: json[i],
@@ -46,7 +46,7 @@ export class EditOrderItem extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+                
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         type: json[i],
@@ -91,8 +91,7 @@ export class EditOrderItem extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(receiver)
-                console.log(json)
+               
                 return (json)
             })
             .then(json => {
@@ -224,7 +223,7 @@ export class EditOrderItem extends Component {
                                 <label>Status:</label><br />
                                 <select onChange={(e) => {
                                     this.setState({ value: e.target.value });
-                                    console.log(this.state)
+                                   
                                 }} >
                                     <option value={sessionStorage.getItem('status')}>{sessionStorage.getItem('status')}</option>
                                     <option value="awaiting">Oczekujące</option>

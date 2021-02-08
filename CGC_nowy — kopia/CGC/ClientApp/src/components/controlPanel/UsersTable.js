@@ -41,8 +41,7 @@ export class UsersTable extends Component {
             })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+              
                 for (var i = 0; i < json.length; i++) {
                     var deleted = '';
                     if (json[i].deleted === false) {
@@ -63,8 +62,7 @@ export class UsersTable extends Component {
                         action: <Link to="/user_change"><button className="info_t" id={i}
                             onClick={
                                 (e) => {
-                                    console.log(e.target.id);
-                                    console.log(table[e.target.id].email);
+                                   
                                     sessionStorage.setItem('editPerm', table[e.target.id].permissions);
                                     sessionStorage.setItem('editLogin', table[e.target.id].login);
                                     sessionStorage.setItem('editPassword', table[e.target.id].password);
@@ -158,7 +156,7 @@ export class UsersTable extends Component {
                 login: sessionStorage.getItem('login')
             }
         }
-        console.log(receiver)
+        
 
         if (deleted === 'Active') {
             fetch(`api/Users/Remove_User_Admin`, {
@@ -171,7 +169,7 @@ export class UsersTable extends Component {
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                    
                     return (json);
                 })
                 .then(json => {
@@ -192,7 +190,7 @@ export class UsersTable extends Component {
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                    
                     return (json);
                 })
                 .then(json => {
@@ -210,25 +208,31 @@ export class UsersTable extends Component {
     table() {  
         return (
             <MDBDataTableV5
-               
+
                 data={this.state.table333}
                 hover
-                entriesOptions={[10,20,50,100]}
-                entries={15}
+                entriesOptions={[10, 20, 50, 100]}
+                entries={10}
                 pagesAmount={10}
                 searchTop
                 materialSearch
                 searchBottom={false}
                 responsive
-                border
+                bordered
                 paginationLabel={["Previous", "Next"]}
                 sortable
-               // small
+                // small
                 theadTextWhite
                 theadTextWhite
+                className="table_corection_add_o"
+
+
+
+
 
 
             />
+           
         )
     }
 

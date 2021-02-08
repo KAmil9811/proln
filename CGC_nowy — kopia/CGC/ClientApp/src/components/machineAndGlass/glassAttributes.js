@@ -29,8 +29,7 @@ export class GlassAtributes extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+              
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         number: i+1,
@@ -39,7 +38,7 @@ export class GlassAtributes extends Component {
                             <Link to="/glasscoloredit"><button className="info_t" id={i}
                                 onClick={
                                     (e) => {
-                                        console.log(e.target.id);
+                                       
                                         sessionStorage.setItem('color', json[e.target.id]);
                                     }
                                 }>Edit</button>
@@ -82,8 +81,7 @@ export class GlassAtributes extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+              
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         number: i + 1,
@@ -92,7 +90,7 @@ export class GlassAtributes extends Component {
                              <Link to="/glasstypeedit"><button className="info_t" id={i}
                                 onClick={
                                     (e) => {
-                                        console.log(e.target.id);
+                                        
                                         sessionStorage.setItem('type', json[e.target.id]);
                                     }
                                 }>Edit</button>
@@ -160,53 +158,22 @@ export class GlassAtributes extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
+                className="table_corection"
 
 
             />
@@ -218,53 +185,22 @@ export class GlassAtributes extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table2}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table2}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
+                className="table_corection"
 
 
             />
@@ -284,6 +220,7 @@ export class GlassAtributes extends Component {
         }
         else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
+
                 <div className="glassattributes">
                     <Sidebar />
                     <div className="title">
@@ -302,6 +239,7 @@ export class GlassAtributes extends Component {
 
                     </div>
                 </div>
+
             )
         }
         else {

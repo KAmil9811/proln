@@ -56,15 +56,15 @@ export class SingleMachineHistory extends Component {
                     </div>
                 </div>
             );
-    }
-    else {
-    return (
-        <div className="HomePage">
-            <h1>Check if you have perrmission to this panel</h1>
-            <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
-        </div>
-    );
+        }
+        else {
+            return (
+                <div className="HomePage">
+                    <h1>Check if you have perrmission to this panel</h1>
+                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                </div>
+            );
 
-}
+        }
     }
 }

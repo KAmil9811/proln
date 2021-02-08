@@ -53,7 +53,7 @@ export class UserChanging extends Component {
                 sessionStorage.removeItem('editPassword');
                 sessionStorage.removeItem('editName');
                 sessionStorage.removeItem('editSecondName');
-                this.props.history.push('/userpanel');
+                this.props.history.push('/controlpaneladmin');
             })   
                 
             
@@ -62,7 +62,7 @@ export class UserChanging extends Component {
     }
 
     cancelUserChanging = (event) => {
-        this.props.history.push('/userpanel');
+        this.props.history.push('/controlpaneladmin');
         sessionStorage.removeItem('editPerm');
         sessionStorage.removeItem('editLogin');
         sessionStorage.removeItem('editPassword');
@@ -70,7 +70,7 @@ export class UserChanging extends Component {
         sessionStorage.removeItem('editSecondName');
     }
     changeUser = (event) => {
-        this.props.history.push('/userpanel');
+        this.props.history.push('/controlpaneladmin');
         sessionStorage.removeItem('editPerm');
         sessionStorage.removeItem('editLogin');
         sessionStorage.removeItem('editPassword');
@@ -149,15 +149,17 @@ export class UserChanging extends Component {
         else if ( sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true'){
             return (
                 <div className="UserChange">
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Change user</h1>
+                    <div>
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Change user</h1>
+                        </div>
                     </div>
                     <form>
-                    <div className="UserChange_c">
-                       
+                        <div className="UserChange_c">
+
                             <div className="form-group">
-                              
+
                                 <label>Login: {sessionStorage.getItem('editLogin')}</label>
                             </div>
                             <div className="form-group">
@@ -216,14 +218,17 @@ export class UserChanging extends Component {
                                 <button type="submit" className="success_user_change" onClick={this.handleUserChanging}>Change user</button>
 
                                 <button type="submit" className="danger_user_change" onClick={this.cancelUserChanging}>Cancel</button>
-                                
+
                             </div>
 
-                       
+
                         </div>
                     </form>
                 </div>
-            );
+
+
+                
+                );
         }
         else {
             return (

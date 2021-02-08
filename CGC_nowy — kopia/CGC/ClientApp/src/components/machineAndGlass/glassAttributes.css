@@ -16,12 +16,10 @@
     border-top: none;
     border-left: none;
     border-right: none;
-   
     margin: 0 auto;
-    margin-right: 1.5rem;
+    margin-right: 4vw;
     position: center;
-    float:right
-
+    float: right
 }
 
     .success_glass_att:hover {

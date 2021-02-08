@@ -23,7 +23,7 @@ export class PickMachine extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+               
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         color: json[i].no,
@@ -60,7 +60,10 @@ export class PickMachine extends Component {
             },
             cut_Project: {
                 Cut_id: sessionStorage.getItem('id_order')
-            }
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
         }
 
 
@@ -72,11 +75,10 @@ export class PickMachine extends Component {
             }
         })
             .then(res => res.json())
-            /*.then(json => {
-                console.log(receiver)
-                console.log(json)
+            .then(json => {
+              
                 return (json)
-            })*/
+            })
 
         if (window.confirm("Czy chcesz dodać odpadki do magazynu?")) {
             this.props.history.push('/add_glass');
@@ -103,12 +105,12 @@ export class PickMachine extends Component {
         else if (sessionStorage.getItem('cutManagement') === 'true' ||sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
 
-                <div>
+                <div className="PickMachine">
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Pick machine</h1>
                     </div>
-                    <div className="AddOrder1">
+                    <div className="PickMachine_c">
                         <form>
                             <div className="form-group">
                                 <label>Choose machine:</label>

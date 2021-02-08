@@ -47,8 +47,7 @@ export class AddAcount extends Component{
         const admin = {
             login: sessionStorage.getItem('login')
         }
-        console.log(receiver);
-        console.log(admin);
+        
         fetch(`api/Users/Add_User_Admin`, {
             method: "post",
             body: JSON.stringify(receiver),
@@ -59,14 +58,14 @@ export class AddAcount extends Component{
             .then(res => res.json())
             .then(json => {
                 
-                console.log(json)
+                
                 return (json);
             })
             .then(json => {
                 const access2 = json[0].error_Messege
-                console.log(access2)
+               
                 if (access2 == null) {
-                    console.log("You added user")
+                    alert("You added user")
                     this.props.history.push('/controlpaneladmin')
                 }
                 else if (access2 == "Wrong_passowrd") {
@@ -101,7 +100,7 @@ export class AddAcount extends Component{
                     <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
-                        console.log(this.state)
+                       
                     }} >
                         <option value="user">Employee</option>
                         <option value="admin">Admin</option>
@@ -124,7 +123,7 @@ export class AddAcount extends Component{
                     <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
-                        console.log(this.state)
+                        
                     }} >
                         <option value="user">Employee</option>
                         <option value="admin">Admin</option>
@@ -142,7 +141,7 @@ export class AddAcount extends Component{
                     <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
-                        console.log(this.state)
+                       
                     }} >
                         <option value="user">Pracownik</option>
                     </select><br/>
@@ -168,16 +167,17 @@ export class AddAcount extends Component{
         }
         else {
             return (
+
                 <div className="AddAcount">
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Add user</h1>
                     </div>
                     <form>
-                    <div className="AddAcount_c">
-                        
+                        <div className="AddAcount_c">
+
                             <div className="form-group">
-                                
+
                                 <label>Email:</label>
                                 <input
                                     type="email"
@@ -234,15 +234,16 @@ export class AddAcount extends Component{
                                 <button type="button" className="success_n_add_a" onClick={this.handleAddAcount}>Add user</button>
 
                                 <button type="button" className="danger_n_add_a" onClick={this.cancelAdding}>Cancel</button>
-                               
+
                             </div>
 
-                      
+
                         </div>
                     </form>
 
                 </div>
-            );
+
+                );
         }
     }
 }

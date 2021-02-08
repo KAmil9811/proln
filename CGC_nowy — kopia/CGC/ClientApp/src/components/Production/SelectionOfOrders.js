@@ -34,34 +34,45 @@ export class SelectionOfOrders extends Component {
         this.props.history.push('/home')
     }
 
-    
-
     render() {
         if (sessionStorage.getItem('valid') === '') {
             return (
-                <div className="HomePage">
-                    <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                <div className="aaaaaaaa" >
+                    <div className="phone">
+                        <h1>No access on the phone</h1>
+                    </div>
+                    <div className="HomePage">
+                        <h1>Log in to have access!</h1>
+                        <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    </div>
                 </div>
             );
         }
         else {
             return (
-                <div className="SelectionOfOrders">
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Select order</h1>
+                <div>
+                    <div className="phone">
+                        <h1>No access on the phone</h1>
+                    </div><div className="aaaaaaaa" >
+                        <div className="SelectionOfOrders">
+                            <Sidebar />
+                            <div className="title">
+                                <h1 className="titletext">Select order</h1>
+                            </div>
+                            <div className="selection_of_orders_conteiner">
+
+
+                                <OrdersTable />
+
+                            </div>
+
+
+                        </div>
                     </div>
-                    <div className="selection_of_orders_conteiner">
-
-
-                        <OrdersTable />
-
-                    </div>
-
-
                 </div>
             );
         }
     }
+
+    
 }

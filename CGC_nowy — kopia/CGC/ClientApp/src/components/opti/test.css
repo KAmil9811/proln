@@ -115,3 +115,19 @@
     margin: 0 auto;
     display: inline-block;
 }
+
+@media all and (min-width: 800px) {
+    .phone {
+        visibility: hidden
+    }
+}
+
+@media all and (max-width: 800px) {
+    .success_login, .hhh {
+        visibility: hidden
+    }
+
+    .aaaaaaaa {
+        visibility: hidden
+    }
+}

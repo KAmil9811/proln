@@ -51,11 +51,10 @@ export class Login extends Component {
         })
             /*.then(console.log(user))
             .then(console.log(JSON.stringify(user)))*/
-            .then(console.log(HTMLBodyElement))
-            .then(console.log(receiver))
+         
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+             
                 return(json)
             })
             .then(json => {
@@ -98,41 +97,42 @@ export class Login extends Component {
 
 
                 <div className="tit_log">
-   
+
                     <h1 className="tit_text">Login</h1>
                 </div>
                 <form>
                     <div className="Login_c">
-                            <div className="form-group">
-                                <label>Login:</label>
-                                <input
-                                    type="text"
-                                    name="Login"
-                                    className="form-control"
-                                    id="inputLogin"
-                                    placeholder="Login"
-                                    ref="login"                         
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Password:</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="inputPassword"
-                                    placeholder="*********"
-                                    ref="password"  
-                                />
+                        <div className="form-group">
+                            <label>Login:</label>
+                            <input
+                                type="text"
+                                name="Login"
+                                className="form-control"
+                                id="inputLogin"
+                                placeholder="Login"
+                                ref="login"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password:</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="inputPassword"
+                                placeholder="*********"
+                                ref="password"
+                            />
                         </div>
                     </div>
                     <div>
                         <button type="submit" className="success_login" onClick={this.handleLoging} >Log in</button>
                         <button className="danger_resset_pass" onClick={this.resetPassword1} >Reset password</button>
-                        
-                        
+
+
                     </div>
                 </form>
             </div>
+
         );
     }
 }

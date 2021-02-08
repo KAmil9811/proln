@@ -13,7 +13,7 @@ export class ControlPanel2 extends Component {
     }
 
     componentDidMount() {
-        console.log(sessionStorage.getItem('manager'))
+       
     }
     logOut = (event) => {
         event.preventDefault();
@@ -168,6 +168,7 @@ export class ControlPanel2 extends Component {
         }
         else if (sessionStorage.getItem('machineMenagment') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
+
                 <div className="ControlPanel" >
 
 
@@ -197,8 +198,8 @@ export class ControlPanel2 extends Component {
                     <h1>Check if you have perrmission to this panel</h1>
                     <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
                 </div>
-            );
-
+                
+                )
         }
     }
 

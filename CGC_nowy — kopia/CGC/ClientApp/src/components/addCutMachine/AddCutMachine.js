@@ -28,7 +28,7 @@ export class AddCutMachine extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+               
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         type: json[i],
@@ -62,14 +62,14 @@ export class AddCutMachine extends Component {
 
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+               
                 return (json);
             })
             .then(json => {
                 const machine2 = json[0].error_Messege
-                console.log(machine2)
+                
                 if (machine2 == null) {
-                    console.log("You added machine")
+                    alert("You add machine")
                     this.props.history.push('/machinewarehouse')
                 }
                 else {
@@ -107,41 +107,41 @@ export class AddCutMachine extends Component {
             );
         }
         else if (sessionStorage.getItem('machineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
-            return (
-                <div className="AddCutMachine">
+            return (<div className="AddCutMachine">
 
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Add machine</h1>
-                    </div>
-                    <form>
+                <Sidebar />
+                <div className="title">
+                    <h1 className="titletext">Add machine</h1>
+                </div>
+                <form>
                     <div className="AddCutMachine_c">
 
                         <div className="AddCutMachine_c_center">
 
-                                <h3 className="h3_add_cut_machine">Select the machine type</h3>
-                                <select className="select_add_cut_machine" onChange={(e) => {
+                            <h3 className="h3_add_cut_machine">Select the machine type</h3>
+                            <select className="select_add_cut_machine" onChange={(e) => {
                                 this.setState({ value: e.target.value });
-                                console.log(this.state)
+                                
                             }} >
                                 {y}
                             </select>
 
-                       </div>
-                            <div className="form-group">
-
-                                <button type="submit" className="success_add_cm" onClick={this.handleAddCutMachine}>Add machine</button>
-                                <button type="reset" className="danger_add_cm" onClick={this.cancel}>Cancel</button>
-
-                                
-
-                            </div>
-
-                        
                         </div>
-                    </form>
-                </div>
-            );
+                        <div className="form-group">
+
+                            <button type="submit" className="success_add_cm" onClick={this.handleAddCutMachine}>Add machine</button>
+                            <button type="reset" className="danger_add_cm" onClick={this.cancel}>Cancel</button>
+
+
+
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+                );
         }
         else {
             return (

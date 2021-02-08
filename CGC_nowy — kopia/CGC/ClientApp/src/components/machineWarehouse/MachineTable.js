@@ -29,9 +29,7 @@ export class MachineTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
-
+               
                 for (var i = 0; i < json.length; i++) {
                     var deleted = '';
                     if (json[i].stan === false) {
@@ -160,7 +158,7 @@ this.setState({
                 status: status
             }
         }
-        console.log(receiver)
+        
 
         if (status === 'Ready') { //Zmieniamy na broken
             fetch(`api/Machine/Change_Status_Machine`, {
@@ -173,7 +171,7 @@ this.setState({
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                
                     return (json);
                 })
                 .then(json => {
@@ -197,7 +195,7 @@ this.setState({
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+         
                     return (json);
                 })
                 .then(json => {
@@ -218,7 +216,7 @@ this.setState({
                 no: id
             }
         }
-        console.log(receiver)
+       
 
         if (deleted === 'Aktywna') {
             fetch(`api/Machine/Remove_Machine`, {
@@ -231,7 +229,7 @@ this.setState({
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                 
                     return (json);
                 })
                 .then(json => {
@@ -252,7 +250,7 @@ this.setState({
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                
                     return (json);
                 })
                 .then(json => {
@@ -271,54 +269,22 @@ this.setState({
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
-
+                className="table_corection"
 
             />
         )

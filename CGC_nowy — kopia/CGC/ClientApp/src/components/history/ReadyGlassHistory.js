@@ -41,6 +41,7 @@ export class ReadyGlassHistory extends Component {
         }
         else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
+
                 <div>
                     <Sidebar />
                     <div className="title">
@@ -50,7 +51,8 @@ export class ReadyGlassHistory extends Component {
                         <UserHistoryTable />
                     </div>
                 </div>
-            );
+                
+                );
         }
         else {
             return (

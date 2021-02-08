@@ -13,7 +13,7 @@ export class ControlPanel extends Component {
     }
 
     componentDidMount() {
-        console.log(sessionStorage.getItem('manager'))
+       
     }
     logOut = (event) => {
         event.preventDefault();
@@ -136,47 +136,50 @@ export class ControlPanel extends Component {
             );
         }
         else {
-            return (
-                <div className="ControlPanel" >
+            return (<div className="ControlPanel" >
 
 
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Your account</h1>
-                    </div>
-                    <div className="conteiner_cp">
-
-
-                        <div className="">
-                            <form>
-                                <div className="form-group">
-                                    <label>Login: {sessionStorage.getItem('login')}</label>
-                                </div>
-                                <div className="form-group">
-                                    <label>
-                                        <div> Password:</div>
-                                        <button type="button" className="prim_password_change" onClick={this.changePassword}>Change password</button>
-                                    </label>
-                                </div>
-                                <div className="form-group">
-                                    <label>
-                                        <div> E-mail: {sessionStorage.getItem('email')}</div>
-
-                                        <button type="button" className="prim_email_change" onClick={this.changeEmail}>Change email</button>
-                                    </label>
-                                </div>
-                                <div className="form-group">
-                                    <label>Permission:
-                                    {perm}
-                                    </label>
-                                </div>
-                            </form>
-                        </div>
-                        <OneHistory />
-                    </div>
+                <Sidebar />
+                <div className="title">
+                    <h1 className="titletext">Your account</h1>
                 </div>
+                <div className="conteiner_cp">
 
-            )
+
+                    <div className="Text_corection">
+                        <form>
+                            <div className="form-group">
+                                <label>Login: {sessionStorage.getItem('login')}</label>
+                            </div>
+                            <div className="form-group">
+                                <label>
+                                    <div> Password:</div>
+                                    <button type="button" className="prim_password_change" onClick={this.changePassword}>Change password</button>
+                                </label>
+                            </div>
+                            <div className="form-group">
+                                <label>
+                                    <div> E-mail: {sessionStorage.getItem('email')}</div>
+
+                                    <button type="button" className="prim_email_change" onClick={this.changeEmail}>Change email</button>
+                                </label>
+                            </div>
+                            <div className="form-group">
+                                <label>Permission:
+                                    {perm}
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <OneHistory />
+                </div>
+            </div>
+
+
+
+
+            );
         }}
 
 

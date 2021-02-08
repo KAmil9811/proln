@@ -47,7 +47,7 @@ export class ReadyGlassWarehouse extends Component {
         }
     }*/
     render() {
-      //  let history = this.history();
+        //  let history = this.history();
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
@@ -63,7 +63,7 @@ export class ReadyGlassWarehouse extends Component {
                     <div className="title">
                         <h1 className="titletext">Products</h1>
                     </div>
-                    
+
 
                     <div className="conteiner_rgw">
 

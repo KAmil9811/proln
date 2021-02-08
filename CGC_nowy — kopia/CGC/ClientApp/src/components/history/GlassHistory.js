@@ -58,7 +58,8 @@ export class GlassHistory extends Component {
                         </div>
                     </div>
                 </div>
-            );
+                
+                );
         }
         else {
             return (
