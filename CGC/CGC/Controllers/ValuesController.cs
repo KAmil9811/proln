@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer3.Core.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Nest;
+﻿using Microsoft.AspNetCore.Mvc;
+using CGC.Models;
+using CGC.Services;
+using CGC.Helpers;
 
 namespace CGC.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class ValuesController : ControllerBase
     {
         private IUserService _userService;
@@ -24,7 +19,7 @@ namespace CGC.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate(AuthenticateRequest model)
         {
-            var response = _userService.AuthenticateExternalAsync(model);
+            var response = _userService.Authenticate(model);
 
             if (response == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
