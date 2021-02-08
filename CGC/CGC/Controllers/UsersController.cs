@@ -86,6 +86,7 @@ namespace CGC.Controllers
         }
 
         //User
+        [AllowAnonymous]
         [HttpPost("Log_in")]
         public async Task<List<User>> Log_in([FromBody] Receiver receiver)
         {

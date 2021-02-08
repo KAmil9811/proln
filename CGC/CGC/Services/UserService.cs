@@ -1,4 +1,4 @@
-﻿using CGC.Entities;
+﻿using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Helpers;
 using CGC.Models;
 using Microsoft.Extensions.Options;
@@ -15,17 +15,13 @@ namespace CGC.Services
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<Entities.User> GetAll();
-        Entities.User GetById(int id);
+        IEnumerable<User> GetAll();
+        User GetById(string id);
     }
 
     public class UserService : IUserService
     {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<Entities.User> _users = new List<Entities.User>
-        {
-            new Entities.User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-        };
+        UserBaseReturn userBaseReturn = new UserBaseReturn();
 
         private readonly AppSettings _appSettings;
 
@@ -36,7 +32,7 @@ namespace CGC.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            var user = userBaseReturn.GetUsers().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
 
             // return null if user not found
             if (user == null) return null;
@@ -47,26 +43,26 @@ namespace CGC.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public IEnumerable<Entities.User> GetAll()
+        public IEnumerable<User> GetAll()
         {
-            return _users;
+            return userBaseReturn.GetUsers();
         }
 
-        public Entities.User GetById(int id)
+        public User GetById(string id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return userBaseReturn.GetUser(id).First();
         }
 
         // helper methods
 
-        private string generateJwtToken(Entities.User user)
+        private string generateJwtToken(User user)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Login.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
