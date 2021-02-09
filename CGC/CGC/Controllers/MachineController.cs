@@ -1,5 +1,6 @@
 ﻿using CGC.Funkcje.MachineFuncFolder;
 using CGC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class MachineController : Controller
     {
         private MachineFunc machineFunc = new MachineFunc();

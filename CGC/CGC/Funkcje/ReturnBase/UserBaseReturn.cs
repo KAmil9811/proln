@@ -58,6 +58,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                try
+                {
+                    user.Token = sqlDataReader["Token"].ToString();
+                }
+                catch
+                {
+                    user.Token = "";
+                }
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -200,6 +208,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                try
+                {
+                    user.Token = sqlDataReader["Token"].ToString();
+                }
+                catch
+                {
+                    user.Token = "";
+                }
                 temp.Add(user);
             }
             sqlDataReader.Close();

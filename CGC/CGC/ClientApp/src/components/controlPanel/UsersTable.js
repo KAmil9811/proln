@@ -24,6 +24,9 @@ export class UsersTable extends Component {
     componentDidMount() {
         var table = [];
         var link = '';
+        const model = {
+            client_id: sessionStorage.getItem('token'),
+        }
         if (sessionStorage.getItem('manager') === 'true') {
             link = 'api/Users/Return_All_Users'
         }
@@ -33,11 +36,16 @@ export class UsersTable extends Component {
         else {
             link = 'api/Users/Return_All_Admin'
         }
-            fetch(`${link}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
+        fetch(`${link}`, {
+            method: "get",
+            /*body: JSON.stringify(
+                model
+            ),*/
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'), 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
             })
             .then(res => res.json())
             .then(json => {

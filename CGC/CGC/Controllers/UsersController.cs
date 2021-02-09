@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CGC.Funkcje.UserFuncFolder;
-using Microsoft.AspNetCore.Authorization;
+using CGC.Helpers;
 
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public sealed class UsersController : Controller
     {
         private static UsersController m_oInstance = null;
@@ -29,31 +28,36 @@ namespace CGC.Controllers
                 }
             }
         }
-     
+
+        [Authorize]
         [HttpGet("Return_All_Users")]
         public List<User> Return_All_Users()
         {       
             return userFunc.Return_All_Users();
         }
 
+        [Authorize]
         [HttpGet("Return_All_SuperAdmin")]
         public async Task<List<User>> Return_All_SuperAdmin()
         {
             return userFunc.Return_All_SuperAdmin();
         }
 
+        [Authorize]
         [HttpGet("Return_All_Admin")]
         public async Task<List<User>> Return_All_Admin()
         {
             return userFunc.Return_All_Admin();
         }
-        
+
+        [Authorize]
         [HttpGet("Return_Users_History")]
         public async Task<List<UserHistory>> Return_Users_History()
         {
             return userFunc.Return_Users_History();
         }
 
+        [Authorize]
         [HttpPost("Return_User_History")]
         public async Task<List<UserHistory>> Return_User_History([FromBody] Receiver receiver)
         {
@@ -61,24 +65,28 @@ namespace CGC.Controllers
         }
 
         //Admin
+        [Authorize]
         [HttpPost("Add_User_Admin")]
         public async Task<List<User>> Add_User_Admin([FromBody] Receiver receiver)
         {
             return userFunc.Add_User_Admin(receiver);
         }
 
+        [Authorize]
         [HttpPost("Edit_User_Admin")]
         public async Task<List<User>> Edit_User_Admin([FromBody] Receiver receiver)
         {
             return userFunc.Edit_User_Admin(receiver);
         }
 
+        [Authorize]
         [HttpPost("Remove_User_Admin")]
         public async Task<List<User>> Remove_User_Admin([FromBody] Receiver receiver)
         {
             return userFunc.Remove_User_Admin(receiver);
         }
 
+        [Authorize]
         [HttpPost("Restore_User_Admin")]
         public async Task<List<User>> Restore_User_Admin([FromBody] Receiver receiver)
         {
@@ -86,7 +94,6 @@ namespace CGC.Controllers
         }
 
         //User
-        [AllowAnonymous]
         [HttpPost("Log_in")]
         public async Task<List<User>> Log_in([FromBody] Receiver receiver)
         {
@@ -94,25 +101,28 @@ namespace CGC.Controllers
             return temp;
         }
 
+        [Authorize]
         [HttpPost("Change_Email")]
         public async Task<List<User>> Change_Email([FromBody] Receiver receiver)
         {
             return userFunc.Change_Email(receiver);
         }
 
+        [Authorize]
         [HttpPost("Change_Password")]
         public async Task<List<User>> Change_Password([FromBody] Receiver receiver)
         {
             return userFunc.Change_Password(receiver);
         }
 
-
+        [Authorize]
         [HttpPost("Reset_Password_Code")]
         public async Task<List<User>> Reset_Password_Code([FromBody] Receiver receiver)
         {
             return userFunc.Reset_Password_Code(receiver);
         }
 
+        [Authorize]
         [HttpPost("Reset_Password_Pass")]
         public async Task<List<User>> Reset_Password_Pass([FromBody] Receiver receiver)
         {

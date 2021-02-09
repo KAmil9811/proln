@@ -57,6 +57,7 @@ namespace CGC.Services
 
         private string generateJwtToken(User user)
         {
+            UserBaseModify userbasemodify = new UserBaseModify();
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -67,6 +68,7 @@ namespace CGC.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
+            userbasemodify.Insert_token(user.Login, tokenHandler.WriteToken(token));
             return tokenHandler.WriteToken(token);
         }
     }

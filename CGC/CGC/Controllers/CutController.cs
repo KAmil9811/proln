@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CGC.Funkcje.CutFuncFolder;
 using CGC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using Sharp3DBinPacking;
@@ -13,6 +14,7 @@ using Sharp3DBinPacking;
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public sealed class CutController : Controller
     {
         private CutFunc cutFunc = new CutFunc();
