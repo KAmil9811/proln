@@ -1,4 +1,4 @@
-﻿using CGC.Entities;
+﻿using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Helpers;
 using CGC.Models;
 using Microsoft.Extensions.Options;
@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using CGC.Entities;
 
 namespace CGC.Services
 {
@@ -16,16 +17,15 @@ namespace CGC.Services
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         IEnumerable<Entities.User> GetAll();
-        Entities.User GetById(int id);
+        Entities.User GetById(string login);
     }
 
     public class UserService : IUserService
     {
+        public static UserBaseReturn userBaseReturn = new UserBaseReturn();
+
+        private List<Entities.User> _users = userBaseReturn.GetUsersToLogin();
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<Entities.User> _users = new List<Entities.User>
-        {
-            new Entities.User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-        };
 
         private readonly AppSettings _appSettings;
 
@@ -36,7 +36,7 @@ namespace CGC.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            var user = _users.SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
 
             // return null if user not found
             if (user == null) return null;
@@ -52,9 +52,9 @@ namespace CGC.Services
             return _users;
         }
 
-        public Entities.User GetById(int id)
+        public Entities.User GetById(string login)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return _users.FirstOrDefault(x => x.Login == login);
         }
 
         // helper methods
@@ -66,7 +66,7 @@ namespace CGC.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("login", user.Login.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -75,3 +75,4 @@ namespace CGC.Services
         }
     }
 }
+

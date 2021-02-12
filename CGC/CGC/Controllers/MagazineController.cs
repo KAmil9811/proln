@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using MySql.Data.MySqlClient;
 using CGC.Funkcje.MagazineFuncFolder;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public sealed class MagazineController : Controller
     {
         private static MagazineController m_oInstance = null;

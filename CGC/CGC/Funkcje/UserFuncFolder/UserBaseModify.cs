@@ -327,5 +327,30 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             temp.Add(user);
             return temp;
         }
+
+        public User Insert_token(string login, string token)
+        {
+            User temp = new User { Login = login, Token = token };
+
+            SqlCommand command = new SqlCommand("UPDATE dbo.[User] SET Token = @Token WHERE Login = @Login", connect.cnn);
+
+            try
+            {
+                command.Parameters.Add("@Token", SqlDbType.VarChar, 200).Value = login;
+                command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = token;
+
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
+
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
+
+            return temp;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Text.Json.Serialization;
 
 namespace CGC.Models
 {
@@ -29,8 +30,8 @@ namespace CGC.Models
         public string Error_Messege { get; set; }
         public string Reset_pass { get; set; }
 
-        public bool Deleted = false;
-
+        public bool Deleted { get; set; }
+        public string Token { get; set; }
 
     }
 }

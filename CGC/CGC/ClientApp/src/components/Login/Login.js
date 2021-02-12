@@ -33,17 +33,17 @@ export class Login extends Component {
 
     handleLoging = (event) => {
         event.preventDefault();
-        const receiver = {
-            user:{login: this.refs.login.value,
-            password: this.refs.password.value}
+        const model = {
+            login: this.refs.login.value,
+            password: this.refs.password.value
             
         }
 
         //Przekazujesz tu całego user
-        fetch(`api/Users/Log_in`, {
+        fetch(`Api/Values/authenticate`, {
             method: "post",
             body: JSON.stringify(
-                receiver
+               model
             ),
             headers: {
                 'Content-Type': 'application/json'
@@ -54,37 +54,33 @@ export class Login extends Component {
          
             .then(res => res.json())
             .then(json => {
-             
+                console.log(json)
                 return(json)
             })
-            .then(json => {
-                const access2 = json[0].error_Messege;
+           .then(json => {
+                const access2 = json.message;
                 /*console.log(access2)*/
-                if (access2 == null) {
-                    sessionStorage.setItem('email', json[0].email);
-                    sessionStorage.setItem('login', json[0].login);
-                    sessionStorage.setItem('name', json[0].name);
-                    sessionStorage.setItem('password', json[0].password);
-                    sessionStorage.setItem('surname', json[0].surname);
+               if (access2 == "Username or password is incorrect") {
+                   alert("Wrong e-mail or password!");
+               }
+               else {
+                    sessionStorage.setItem('token', json.token);
+                    sessionStorage.setItem('email', json.email);
+                    sessionStorage.setItem('login', json.id);
+                    sessionStorage.setItem('name', json.name);
+                    sessionStorage.setItem('surname', json.surname);
                     // permissions
-                    sessionStorage.setItem('admin', json[0].admin);
-                    sessionStorage.setItem('superAdmin', json[0].super_Admin);
-                    sessionStorage.setItem('manager', json[0].manager);
-                    sessionStorage.setItem('magazineManagement', json[0].magazine_management);
-                    sessionStorage.setItem('machineManagement', json[0].machine_management);
-                    sessionStorage.setItem('orderManagement', json[0].order_management);
-                    sessionStorage.setItem('cutManagement', json[0].cut_management);
-                    sessionStorage.setItem('valid', '1')
+                    sessionStorage.setItem('admin', json.admin);
+                    sessionStorage.setItem('superAdmin', json.super_Admin);
+                    sessionStorage.setItem('manager', json.manager);
+                    sessionStorage.setItem('magazineManagement', json.magazine_management);
+                    sessionStorage.setItem('machineManagement', json.machine_management);
+                    sessionStorage.setItem('orderManagement', json.order_management);
+                    sessionStorage.setItem('cutManagement', json.cut_management);
+                    sessionStorage.setItem('valid', '1');
                     this.props.history.push('/home');
                 }
-                else {
-                    alert("Wrong e-mail or password!");
-                    /*console.log('wlogin= ' + user.login);
-                    console.log('whasło= ' + user.password);
-                    console.log(user);
-                    console.log('login który dostaje '  + json[0].login);*/
-                }
-            })     
+           })     
     }
 
    

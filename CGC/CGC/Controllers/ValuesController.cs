@@ -6,7 +6,7 @@ using CGC.Helpers;
 namespace CGC.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ValuesController : ControllerBase
     {
         private IUserService _userService;
