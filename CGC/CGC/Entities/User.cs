@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using CGC.Entities;
 
-namespace CGC.Models
+namespace CGC.Entities
 {
-    public class AuthenticateResponse
+    public class User
     {
-       public string Login { get; set; }
+        public string Login { get; set; }
 
+        [JsonIgnore]
         public string Password { get; set; }
 
         public string Email { get; set; }
@@ -32,22 +33,5 @@ namespace CGC.Models
 
         public bool Deleted { get; set; }
         public string Token { get; set; }
-
-
-        public AuthenticateResponse(Entities.User user, string token)
-        {
-            Name = user.Name;
-            Surname = user.Surname;
-            Login = user.Login;
-            Token = token;
-            Admin = user.Admin;
-            Super_Admin = user.Super_Admin;
-            Manager = user.Manager;
-            Magazine_management = user.Magazine_management;
-            Machine_management = user.Machine_management;
-            Order_management = user.Order_management;
-            Cut_management = user.Cut_management;
-            Error_Messege = user.Error_Messege;
-        }
     }
 }

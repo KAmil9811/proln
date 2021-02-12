@@ -58,14 +58,6 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
-                try
-                {
-                    user.Token = sqlDataReader["Token"].ToString();
-                }
-                catch
-                {
-                    user.Token = "";
-                }
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -208,14 +200,6 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
-                try
-                {
-                    user.Token = sqlDataReader["Token"].ToString();
-                }
-                catch
-                {
-                    user.Token = "";
-                }
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -380,5 +364,44 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return userHistories;
         }
 
+        public List<Entities.User> GetUsersToLogin()
+        {
+            List<Entities.User> temp = new List<Entities.User>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [User];", connect.cnn);
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Entities.User user = new Entities.User();
+                user.Login = sqlDataReader["Login"].ToString();
+                user.Password = sqlDataReader["Password"].ToString();
+                user.Name = sqlDataReader["Name"].ToString();
+                user.Surname = sqlDataReader["Surname"].ToString();
+                user.Admin = Convert.ToBoolean(sqlDataReader["Admin"]);
+                user.Super_Admin = Convert.ToBoolean(sqlDataReader["Super_Admin"]);
+                user.Manager = Convert.ToBoolean(sqlDataReader["Manager"]);
+                user.Magazine_management = Convert.ToBoolean(sqlDataReader["Magazine_management"]);
+                user.Machine_management = Convert.ToBoolean(sqlDataReader["Machine_management"]);
+                user.Order_management = Convert.ToBoolean(sqlDataReader["Order_management"]);
+                user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
+                user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
+                user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                try
+                {
+                    user.Token = sqlDataReader["Token"].ToString();
+                }
+                catch
+                {
+                    user.Token = "";
+                }
+                temp.Add(user);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
     }
 }

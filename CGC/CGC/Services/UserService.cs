@@ -9,19 +9,23 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using CGC.Entities;
 
 namespace CGC.Services
 {
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
-        User GetById(string id);
+        IEnumerable<Entities.User> GetAll();
+        Entities.User GetById(string login);
     }
 
     public class UserService : IUserService
     {
-        UserBaseReturn userBaseReturn = new UserBaseReturn();
+        public static UserBaseReturn userBaseReturn = new UserBaseReturn();
+
+        private List<Entities.User> _users = userBaseReturn.GetUsersToLogin();
+        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
 
         private readonly AppSettings _appSettings;
 
@@ -32,7 +36,7 @@ namespace CGC.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = userBaseReturn.GetUsers().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
+            var user = _users.SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
 
             // return null if user not found
             if (user == null) return null;
@@ -43,33 +47,32 @@ namespace CGC.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<Entities.User> GetAll()
         {
-            return userBaseReturn.GetUsers();
+            return _users;
         }
 
-        public User GetById(string id)
+        public Entities.User GetById(string login)
         {
-            return userBaseReturn.GetUser(id).First();
+            return _users.FirstOrDefault(x => x.Login == login);
         }
 
         // helper methods
 
-        private string generateJwtToken(User user)
+        private string generateJwtToken(Entities.User user)
         {
-            UserBaseModify userbasemodify = new UserBaseModify();
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Login.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("login", user.Login.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            userbasemodify.Insert_token(user.Login, tokenHandler.WriteToken(token));
             return tokenHandler.WriteToken(token);
         }
     }
 }
+

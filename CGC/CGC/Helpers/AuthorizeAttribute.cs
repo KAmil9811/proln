@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using CGC.Models;
+using CGC.Entities;
 
 namespace CGC.Helpers
 {
@@ -16,6 +11,7 @@ namespace CGC.Helpers
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            var temp = context.HttpContext.Items["User"].ToString();
             var user = (User)context.HttpContext.Items["User"];
             if (user == null)
             {
