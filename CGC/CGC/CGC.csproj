@@ -19,7 +19,7 @@
     <PackageReference Include="Aspose.PDF" Version="21.1.0" />
     <PackageReference Include="IdentityServer3" Version="2.6.3" />
     <PackageReference Include="iTextSharp" Version="5.5.13.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
@@ -31,6 +31,7 @@
     <PackageReference Include="Spire.PDF" Version="7.1.10" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
   <ItemGroup>

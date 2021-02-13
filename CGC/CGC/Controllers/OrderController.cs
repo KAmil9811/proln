@@ -56,42 +56,49 @@ namespace CGC.Controllers
             return orderFunc.Return_Order_History(receiver);
         }
 
+        [Authorize]
         [HttpPost("Add_Order")]
         public async Task<List<Order>> Add_Order([FromBody] Receiver receiver)
         {
             return orderFunc.Add_Order(receiver);
         }
 
+        [Authorize]
         [HttpPost("Edit_Order")]
         public async Task<List<Order>> Edit_Order([FromBody] Receiver receiver)
         {
             return orderFunc.Edit_Order(receiver);
         }
 
+        [Authorize]
         [HttpPost("Edit_Order_Items")]
         public async Task<List<Order>> Edit_Order_Items([FromBody] Receiver receiver)
         {
             return orderFunc.Edit_Order_Items(receiver);
         }
 
+        [Authorize]
         [HttpPost("Set_Stan")]
         public async Task<List<Order>> Set_Stan([FromBody] Receiver receiver)
         {
             return orderFunc.Set_Stan(receiver);
         }
 
+        [Authorize]
         [HttpPost("Released_Order")]
         public async Task<List<Order>> Released_Order([FromBody] Receiver receiver)
         {
             return orderFunc.ReleasedOrder(receiver.user, receiver.order);
         }
 
+        [Authorize]
         [HttpPost("Released_Item")]
         public async Task<List<Item>> Released_Item([FromBody] Receiver receiver)
         {
             return orderFunc.ReleasedItems(receiver.user, receiver.items);
         }
 
+        [Authorize]
         [HttpPost("Remove_Item")]
         public async Task<List<Item>> Remove_Item([FromBody] Receiver receiver)
         {

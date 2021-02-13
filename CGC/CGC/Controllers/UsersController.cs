@@ -29,35 +29,30 @@ namespace CGC.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet("Return_All_Users")]
         public List<User> Return_All_Users()
         {       
             return userFunc.Return_All_Users();
         }
 
-        [Authorize]
         [HttpGet("Return_All_SuperAdmin")]
         public async Task<List<User>> Return_All_SuperAdmin()
         {
             return userFunc.Return_All_SuperAdmin();
         }
 
-        [Authorize]
         [HttpGet("Return_All_Admin")]
         public async Task<List<User>> Return_All_Admin()
         {
             return userFunc.Return_All_Admin();
         }
 
-        [Authorize]
         [HttpGet("Return_Users_History")]
         public async Task<List<UserHistory>> Return_Users_History()
         {
             return userFunc.Return_Users_History();
         }
 
-        [Authorize]
         [HttpPost("Return_User_History")]
         public async Task<List<UserHistory>> Return_User_History([FromBody] Receiver receiver)
         {
@@ -115,14 +110,12 @@ namespace CGC.Controllers
             return userFunc.Change_Password(receiver);
         }
 
-        [Authorize]
         [HttpPost("Reset_Password_Code")]
         public async Task<List<User>> Reset_Password_Code([FromBody] Receiver receiver)
         {
             return userFunc.Reset_Password_Code(receiver);
         }
         
-        [Authorize]
         [HttpPost("Reset_Password_Pass")]
         public async Task<List<User>> Reset_Password_Pass([FromBody] Receiver receiver)
         {

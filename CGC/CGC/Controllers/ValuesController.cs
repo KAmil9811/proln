@@ -27,15 +27,8 @@ namespace CGC.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             userBasemodify.Insert_token(response.Login, response.Token);
-            return Ok(response);
-        }
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var users = _userService.GetAll();
-            return Ok(users);
+            return Ok(response);
         }
     }
 }

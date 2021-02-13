@@ -336,8 +336,8 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
 
             try
             {
-                command.Parameters.Add("@Token", SqlDbType.VarChar, 200).Value = login;
-                command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = token;
+                command.Parameters.Add("@Token", SqlDbType.VarChar, 200).Value = token;
+                command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = login;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();

@@ -24,7 +24,6 @@ namespace CGC.Services
     {
         static UserBaseReturn userBaseReturn = new UserBaseReturn();
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<Entities.User> _users = userBaseReturn.GetUsersToLogin();
 
         private readonly AppSettings _appSettings;
 
@@ -35,7 +34,7 @@ namespace CGC.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
+            var user = userBaseReturn.GetUsersToLogin().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
 
             // return null if user not found
             if (user == null) return null;
@@ -48,12 +47,12 @@ namespace CGC.Services
 
         public IEnumerable<Entities.User> GetAll()
         {
-            return _users;
+            return userBaseReturn.GetUsersToLogin();
         }
 
         public Entities.User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            return userBaseReturn.GetUsersToLogin().FirstOrDefault(x => x.Id == id);
         }
 
         // helper methods

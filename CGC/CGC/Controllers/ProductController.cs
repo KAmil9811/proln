@@ -48,12 +48,14 @@ namespace CGC.Controllers
             return productFunc.Get_Product_History(receiver);
         }
 
+        [Authorize]
         [HttpPost("Released_Product")]
         public async Task<List<Product>> Released_Product([FromBody] Receiver receiver)
         {
             return productFunc.Released_Product(receiver.user, receiver.product_Id);
         }
 
+        [Authorize]
         [HttpPost("Delete_Product")]
         public async Task<List<Product>> Delete_Product([FromBody] Receiver receiver)
         {
