@@ -44,6 +44,8 @@ namespace CGC
         // configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<JwtMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,6 +69,13 @@ namespace CGC
                     pattern: "{controller}/{action=Index}/{id?}");
             });
 
+            app.UseCors(x => x
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+
+            app.UseEndpoints(x => x.MapControllers());
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -76,17 +85,6 @@ namespace CGC
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
-            // custom jwt auth middleware
-            app.UseMiddleware<JwtMiddleware>();
-
-            app.UseEndpoints(x => x.MapControllers());
         }
     }
 }

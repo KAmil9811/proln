@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public sealed class MagazineController : Controller
     {
         private static MagazineController m_oInstance = null;
@@ -89,48 +88,56 @@ namespace CGC.Controllers
             return magazineFunc.Return_Magazine_History();
         }
 
+        [Authorize]
         [HttpPost("Add_Glass")]
         public async Task<List<Glass>> Add_Glass([FromBody] Receiver receiver)
         {
             return magazineFunc.Add_Glass(receiver);
         }
 
+        [Authorize]
         [HttpPost("Edit_Glass")]
         public async Task<List<Glass>> Edit_Glass([FromBody] Receiver receiver)
         {
             return magazineFunc.Edit_Glass(receiver);
         }
 
+        [Authorize]
         [HttpPost("Remove_Glass")]
         public async Task<List<Glass>> Remove_Glass([FromBody] Receiver receiver)
         {
             return magazineFunc.Remove_Glass(receiver);
         }
 
+        [Authorize]
         [HttpPost("Restore_Glass")]
         public async Task<List<Glass>> Restore_Glass([FromBody] Receiver receiver)
         {
             return magazineFunc.Restore_Glass(receiver);
         }
 
+        [Authorize]
         [HttpPost("Add_type_Admin")]
         public async Task<List<string>> Add_Type_Admin([FromBody] Receiver receiver)
         {
             return magazineFunc.Add_Type_Admin(receiver);
         }
 
+        [Authorize]
         [HttpPost("Add_Color_Admin")]
         public async Task<List<string>> Add_Color_Admin([FromBody] Receiver receiver)
         {
             return magazineFunc.Add_Color_Admin(receiver);
         }
 
+        [Authorize]
         [HttpPost("Change_type_Admin")]
         public async Task<List<string>> Change_type_Admin([FromBody] Receiver receiver)
         {
             return magazineFunc.Change_Type_Admin(receiver);
         }
 
+        [Authorize]
         [HttpPost("Change_Color_Admin")]
         public async Task<List<string>> Change_Color_Admin([FromBody] Receiver receiver)
         {

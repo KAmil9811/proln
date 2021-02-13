@@ -17,14 +17,12 @@ namespace CGC.Services
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         IEnumerable<Entities.User> GetAll();
-        Entities.User GetById(string login);
+        Entities.User GetById(int id);
     }
 
     public class UserService : IUserService
     {
-        public static UserBaseReturn userBaseReturn = new UserBaseReturn();
-
-        private List<Entities.User> _users = userBaseReturn.GetUsersToLogin();
+        static UserBaseReturn userBaseReturn = new UserBaseReturn();
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
 
         private readonly AppSettings _appSettings;
@@ -36,7 +34,7 @@ namespace CGC.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
+            var user = userBaseReturn.GetUsersToLogin().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
 
             // return null if user not found
             if (user == null) return null;
@@ -49,12 +47,12 @@ namespace CGC.Services
 
         public IEnumerable<Entities.User> GetAll()
         {
-            return _users;
+            return userBaseReturn.GetUsersToLogin();
         }
 
-        public Entities.User GetById(string login)
+        public Entities.User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.Login == login);
+            return userBaseReturn.GetUsersToLogin().FirstOrDefault(x => x.Id == id);
         }
 
         // helper methods
@@ -66,7 +64,7 @@ namespace CGC.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("login", user.Login.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

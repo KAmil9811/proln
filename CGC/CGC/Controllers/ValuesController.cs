@@ -2,6 +2,7 @@
 using CGC.Models;
 using CGC.Services;
 using CGC.Helpers;
+using CGC.Funkcje.UserFuncFolder.UserReturn;
 
 namespace CGC.Controllers
 {
@@ -10,6 +11,7 @@ namespace CGC.Controllers
     public class ValuesController : ControllerBase
     {
         private IUserService _userService;
+        UserBaseModify userBasemodify = new UserBaseModify();
 
         public ValuesController(IUserService userService)
         {
@@ -24,15 +26,9 @@ namespace CGC.Controllers
             if (response == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(response);
-        }
+            userBasemodify.Insert_token(response.Login, response.Token);
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var users = _userService.GetAll();
-            return Ok(users);
+            return Ok(response);
         }
     }
 }

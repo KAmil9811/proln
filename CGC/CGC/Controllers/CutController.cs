@@ -14,7 +14,6 @@ using Sharp3DBinPacking;
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public sealed class CutController : Controller
     {
         private CutFunc cutFunc = new CutFunc();
@@ -179,12 +178,14 @@ namespace CGC.Controllers
         }
         */
 
+        [Authorize]
         [HttpPost("Save_Project")]
         public async Task<int> Save_Project([FromBody] Receiver receiver)
         {
             return cutFunc.Save_Project(receiver);
         }
 
+        [Authorize]
         [HttpPost("Remove_Project")]
         public async Task<List<Cut_Project>> Remove_Project([FromBody] Receiver receiver)
         {
@@ -197,6 +198,7 @@ namespace CGC.Controllers
             return cutFunc.Post_Production(receiver);
         }
 
+        [Authorize]
         [HttpPost("Start_Production")]
         public async Task<string> Start_Production([FromBody] Receiver receiver)
         {

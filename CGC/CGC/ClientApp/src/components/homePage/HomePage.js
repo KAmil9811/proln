@@ -15,6 +15,7 @@ export class HomePage extends Component {
     componentDidMount() {
         var title = 'Home'
         sessionStorage.setItem('title', this.title)
+        console.log(sessionStorage.getItem('token'))
     }
     logOut = (event) => {
         event.preventDefault();

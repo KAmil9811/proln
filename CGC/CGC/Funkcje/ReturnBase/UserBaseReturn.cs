@@ -375,6 +375,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             while (sqlDataReader.Read())
             {
                 Entities.User user = new Entities.User();
+                user.Id = Convert.ToInt32(sqlDataReader["Id"]);
                 user.Login = sqlDataReader["Login"].ToString();
                 user.Password = sqlDataReader["Password"].ToString();
                 user.Name = sqlDataReader["Name"].ToString();
