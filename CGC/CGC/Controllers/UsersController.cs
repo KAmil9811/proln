@@ -121,7 +121,7 @@ namespace CGC.Controllers
         {
             return userFunc.Reset_Password_Code(receiver);
         }
-
+        
         [Authorize]
         [HttpPost("Reset_Password_Pass")]
         public async Task<List<User>> Reset_Password_Pass([FromBody] Receiver receiver)

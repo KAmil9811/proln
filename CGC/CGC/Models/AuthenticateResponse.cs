@@ -8,7 +8,8 @@ namespace CGC.Models
 {
     public class AuthenticateResponse
     {
-       public string Login { get; set; }
+        public int Id { get; set; }
+        public string Login { get; set; }
 
         public string Password { get; set; }
 
@@ -36,6 +37,7 @@ namespace CGC.Models
 
         public AuthenticateResponse(Entities.User user, string token)
         {
+            Id = user.Id;
             Name = user.Name;
             Surname = user.Surname;
             Login = user.Login;

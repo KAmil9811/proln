@@ -17,15 +17,14 @@ namespace CGC.Services
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         IEnumerable<Entities.User> GetAll();
-        Entities.User GetById(string login);
+        Entities.User GetById(int id);
     }
 
     public class UserService : IUserService
     {
-        public static UserBaseReturn userBaseReturn = new UserBaseReturn();
-
-        private List<Entities.User> _users = userBaseReturn.GetUsersToLogin();
+        static UserBaseReturn userBaseReturn = new UserBaseReturn();
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
+        private List<Entities.User> _users = userBaseReturn.GetUsersToLogin();
 
         private readonly AppSettings _appSettings;
 
@@ -52,9 +51,9 @@ namespace CGC.Services
             return _users;
         }
 
-        public Entities.User GetById(string login)
+        public Entities.User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.Login == login);
+            return _users.FirstOrDefault(x => x.Id == id);
         }
 
         // helper methods
@@ -66,7 +65,7 @@ namespace CGC.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("login", user.Login.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
