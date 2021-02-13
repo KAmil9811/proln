@@ -111,6 +111,8 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
+            user.Id = userBaseReturn.GetUsers().OrderByDescending(x=> x.Id).First().Id;
+
             foreach (User use in userBaseReturn.GetUser(admin.Login, false))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin == true)

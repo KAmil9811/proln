@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CGC.Funkcje.CutFuncFolder;
 using CGC.Models;
-using Microsoft.AspNetCore.Authorization;
+using CGC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using Sharp3DBinPacking;

@@ -1,9 +1,9 @@
 ﻿using CGC.Funkcje.MachineFuncFolder;
 using CGC.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CGC.Helpers;
 
 namespace CGC.Controllers
 {

@@ -7,14 +7,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CGC.Funkcje.OrderFuncFolder;
 using CGC.Models;
-using Microsoft.AspNetCore.Authorization;
+using CGC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public sealed class OrderController : Controller
     {
         private static OrderController m_oInstance = null;

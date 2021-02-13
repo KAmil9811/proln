@@ -367,10 +367,16 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
         public List<Entities.User> GetUsersToLogin()
         {
             List<Entities.User> temp = new List<Entities.User>();
-
             SqlCommand command = new SqlCommand("SELECT * FROM [User];", connect.cnn);
-            connect.cnn.Open();
 
+            try
+            {
+                connect.cnn.Open();
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {

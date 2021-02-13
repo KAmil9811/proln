@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CGC.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using MySql.Data.MySqlClient;
 using CGC.Funkcje.MagazineFuncFolder;
-using Microsoft.AspNetCore.Authorization;
+using CGC.Helpers;
 
 namespace CGC.Controllers
 {

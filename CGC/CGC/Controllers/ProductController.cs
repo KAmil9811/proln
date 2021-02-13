@@ -6,14 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using CGC.Funkcje.ProductFuncFolder;
 using CGC.Models;
-using Microsoft.AspNetCore.Authorization;
+using CGC.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
 namespace CGC.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     public sealed class ProductController : Controller
     {
         private static ProductController m_oInstance = null;
