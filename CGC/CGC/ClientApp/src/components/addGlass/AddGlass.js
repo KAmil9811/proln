@@ -85,6 +85,7 @@ export class AddGlass extends Component {
             fetch(`api/Magazine/Add_Glass`, {
                 method: "POST",
                 headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(receiver
