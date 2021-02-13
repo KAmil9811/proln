@@ -28,7 +28,7 @@ export class AddColor extends Component {
 
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+               
                 return (json);
                 
             })
@@ -65,29 +65,30 @@ export class AddColor extends Component {
                     </div>
                     <form>
                         <div className="AddColor_c">
-                        
-                                <div className="form-group">
-                              
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="inputColor"
-                                        placeholder="Enter glass color"
-                                        ref="color"
-                                    />
-                                </div>
+
                             <div className="form-group">
-                                  <button type="button" className="success_glass_color_add" onClick={this.handleAddColor}>Add color</button>
 
-                                    <button type="button" className="danger_glass_color_add" onClick={this.cancelAddColor}>Cancel</button>
-                                  
-                                </div>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputColor"
+                                    placeholder="Enter glass color"
+                                    ref="color"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button type="button" className="success_glass_color_add" onClick={this.handleAddColor}>Add color</button>
 
-                        
+                                <button type="button" className="danger_glass_color_add" onClick={this.cancelAddColor}>Cancel</button>
+
+                            </div>
+
+
                         </div>
                     </form>
                 </div>
-            );
+
+                );
         }
         else {
             return (

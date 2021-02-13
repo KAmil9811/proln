@@ -86,10 +86,10 @@ export class PasswordChange extends Component {
                         <h1 className="titletext">Change password</h1>
                     </div>
                     <form>
-                    <div className="PasswordChange_c">
-                        
+                        <div className="PasswordChange_c">
+
                             <div className="form-group">
-                              
+
                                 <label>Enter old password:</label>
                                 <input
                                     type="password"
@@ -139,14 +139,17 @@ export class PasswordChange extends Component {
                                 <button type="button" className="success_change_own_pass" onClick={this.passwordChange}>Change password</button>
 
                                 <button type="button" className="danger_change_own_pass" onClick={this.cancelChanging}>Cancel</button>
-                                
+
                             </div>
 
-                        
-                       </div>
+
+                        </div>
                     </form>
                 </div>
-            );
+
+
+                
+                );
         }
     }
 }

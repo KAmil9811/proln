@@ -59,7 +59,8 @@ export class AllMachineHistory extends Component {
                         </div>
                     </div>
                 </div>
-            );
+                
+                );
         }
             else {
                 return (

@@ -34,7 +34,7 @@ export class OneOrderTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+               
                 return (json)
             })
             .then(json => {
@@ -206,7 +206,7 @@ export class OneOrderTable extends Component {
             //alert('dodane' + '' + number)
             arr.push(id)
             this.setState.send = arr
-            console.log('tablica' + '---' + this.state.send)
+            
 
         } else {
             //alert('usunięte' + '' + number)
@@ -215,7 +215,7 @@ export class OneOrderTable extends Component {
                 arr.splice(index, 1);
             }
             this.setState.send = arr
-            console.log('tablica' + '---' + this.state.send)
+            
         }
     };
 
@@ -239,7 +239,7 @@ export class OneOrderTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+             
                 return (json)
             })
             .then(json => {
@@ -249,12 +249,12 @@ export class OneOrderTable extends Component {
                 window.location.reload();
             })
 
-        console.log(receiver)
+      
     }
 
     kurwaaaaa = (event) => {
         event.preventDefault();
-        console.log(this.state.send)
+        
     }
 
     table() {
@@ -262,54 +262,22 @@ export class OneOrderTable extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
-
+                className="table_corection"
 
             />
         )

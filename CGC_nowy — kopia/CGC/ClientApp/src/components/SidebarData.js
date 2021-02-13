@@ -16,13 +16,13 @@ export const SidebarData = [
     {
         title: 'Your account',
         path: '/userpanel',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
     {
         title: 'Control Panel',
         path: '/controlpaneladmin',
-        icon: <AiIcons.AiFillHome />,
+
     },
 
     {
@@ -36,79 +36,79 @@ export const SidebarData = [
             {
                 title: 'Users',
                 path: '/user_history',
-                icon: <IoIcons.IoIosPaper />,
+
                 cName: 'sub-nav'
             },
             {
                 title: 'Orders',
                 path: '/order_history',
-                icon: <IoIcons.IoIosPaper />
+
             },
             {
                 title: 'Magazine',
                 path: '/glass_history',
-                icon: <IoIcons.IoIosPaper />,
+
                 cName: 'sub-nav'
             },
             {
                 title: 'Products',
                 path: '/ready_glass_history',
-                icon: <IoIcons.IoIosPaper />
+
             },
             {
                 title: 'Machines',
                 path: '/all_machine_history',
-                icon: <IoIcons.IoIosPaper />
+
             }
-         
+
         ]
     },
 
-    
+
     {
         title: 'Orders',
         path: '/orderwarehouse',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
     {
         title: 'Magazine',
         path: '/glasswarehouse',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
     {
         title: 'Production',
         path: '/selection_of_orders',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
 
     {
         title: 'Saved projects',
         path: '/saved_projects',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
 
     {
         title: 'Products',
         path: '/ready_glass_warehouse',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
 
     {
         title: 'Machines',
         path: '/machinewarehouse',
-        icon: <AiIcons.AiFillHome />,
+
 
     },
 
-    
 
-    
-     
+
+
+
 
     /* {
          title: 'Products',

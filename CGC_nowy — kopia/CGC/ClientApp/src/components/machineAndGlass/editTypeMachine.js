@@ -28,7 +28,7 @@ export class MachineTypeEdit extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+               
                 return (json);
             })
             .then(json => {
@@ -66,10 +66,10 @@ export class MachineTypeEdit extends Component {
                         <h1 className="titletext">Edit type machine</h1>
                     </div>
                     <form>
-                    <div className="EditTypeM_c">
-                        
+                        <div className="EditTypeM_c">
+
                             <div className="form-group">
-                              
+
                                 <input
                                     type="text"
                                     name="type"
@@ -84,14 +84,16 @@ export class MachineTypeEdit extends Component {
 
 
                             <button type="button" className="danger_cm_edit_type" onClick={this.return}>Cancel</button>
-                           
 
-                       
 
-                    </div>
-                  </form>
+
+
+                        </div>
+                    </form>
                 </div>
-            )
+
+
+                );
         }
         else {
             return (

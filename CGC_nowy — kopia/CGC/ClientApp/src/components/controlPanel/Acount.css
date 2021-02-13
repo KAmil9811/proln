@@ -10,6 +10,9 @@
 }
 
 
+.Text_corection {
+    margin-left: 1vw;
+}
 
 .prim_email_change:hover {
     background-color: #3174e3;
@@ -73,19 +76,3 @@
     display: inline-block;
     margin-top: 4px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -4,18 +4,18 @@
         padding: 60px 0;
     }
 
-    .Glass_Warehause_c form {
-        margin: 0 auto;
-        max-width: 320px;
-    }
+        .Glass_Warehause_c form {
+            margin: 0 auto;
+            max-width: 320px;
+        }
 }
 
 .nextline {
     clear: both;
 }
-.conteiner_gll{
 
- margin-top:14rem;
+.conteiner_gll {
+    margin-top: 14rem;
 }
 
 .tableglass {
@@ -24,15 +24,15 @@
 }
 
 
-.nav_gw{
+.nav_gw {
     float: right;
     position: fixed;
     top: 0;
     width: 100%;
-    z-index:100;
+    z-index: 100;
 }
 
-.conteiner_gw{
+.conteiner_gw {
     width: 96%;
     margin-top: 2%;
     margin-left: 2%;
@@ -62,7 +62,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 2rem;
+    margin-right: 6vw;
     margin-left: auto;
     /* position: center;*/
     /* float: right;*/

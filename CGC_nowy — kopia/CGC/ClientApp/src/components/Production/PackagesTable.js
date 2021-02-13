@@ -23,7 +23,7 @@ export class PackagesTable extends Component {
                 id_order: sessionStorage.getItem('orderId2')
             }
         }
-        console.log(receiver)
+       
         fetch(`api/Cut/Return_Package_To_Cut`, {
             method: "post",
             body: JSON.stringify(receiver),
@@ -34,7 +34,7 @@ export class PackagesTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+             
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         id: json[i].id_Order,
@@ -42,7 +42,6 @@ export class PackagesTable extends Component {
                         owner: json[i].owner,
                         type: json[i].type,
                         thickness: json[i].thickness,
-                        amount: json[i].item.length,
                         more: <Link to="/test"> <button className="success_t" id={i}
                             onClick={(e) => {
                                 sessionStorage.setItem('idOpti', table3[e.target.id].id)
@@ -88,11 +87,6 @@ export class PackagesTable extends Component {
                                 sort: 'asc',
                                 width: 30
                             },
-                            {
-                                label: 'Amount',
-                                field: 'amount',
-                                width: 30
-                            },
                              {
                                 label: '',
                                 field: 'more',
@@ -112,56 +106,26 @@ export class PackagesTable extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
+                className="table_corection"
 
 
             />
+           
         )
     }
 

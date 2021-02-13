@@ -46,18 +46,13 @@ export class AddOrderTwo extends Component {
                         sort: 'asc',
                         width: 150
                     },
-                    {
-                        label: 'Delete',
-                        field: 'action',
-                        sort: 'asc',
-                        width: 150
-                    }
                 ],
                 rows: []
             },
             colors: [],
             type: [],
-            check:'',
+            check:  '',
+            tabliastringow: [],
         }
     }
 
@@ -73,7 +68,7 @@ export class AddOrderTwo extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+                
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         color: json[i],
@@ -93,7 +88,7 @@ export class AddOrderTwo extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+                
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         type: json[i],
@@ -114,7 +109,7 @@ export class AddOrderTwo extends Component {
                 priority: sessionStorage.getItem('prioryty'),
                 deadline: sessionStorage.getItem('deadline'),
             },
-            items: this.state.table.rows,
+            iteme: this.state.tabliastringow,
             user: {
                 login: sessionStorage.getItem('login'),
             }
@@ -122,26 +117,22 @@ export class AddOrderTwo extends Component {
         if (this.state.check === '') {
             alert('You did not add any item')
         }
-        else { 
-        fetch(`api/Order/Add_Order`, {
-            method: "post",
-            body: JSON.stringify(receiver),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(json => {
-
-                console.log(json)
-                return (json);
-                this.props.history.push('/orderwarehouse')
+        else {
+            fetch(`api/Order/Add_Order`, {
+                method: "post",
+                body: JSON.stringify(receiver),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
-            .then(json => {
-                this.props.history.push('/orderwarehouse')
-            })
+                .then(res => res.json())
+                .then(json => {
+                    this.props.history.push('/orderwarehouse')
+                })
+            
+        }
     }
-    }
+       
 
     goBack = (event) => {
         sessionStorage.removeItem('client'),
@@ -224,9 +215,10 @@ export class AddOrderTwo extends Component {
                     shape: 'rectangle',
                 }]),
             },
-            check:'ok'
+            check: 'ok',
+            tabliastringow: this.state.tabliastringow.concat(this.refs.width.value, this.refs.length.value, this.refs.thickness.value, this.refs.color.value, this.refs.amount.value, this.refs.type.value,)
         })
-            console.log(this.state.table.rows)
+            
         }
     }
 
@@ -256,54 +248,22 @@ export class AddOrderTwo extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-               // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
-
+                className="table_corection_add_o"
 
             />
         )
@@ -331,7 +291,7 @@ export class AddOrderTwo extends Component {
                         <form>
 
                             <div className="form-group">
-                                
+
                                 <label>Length</label>
                                 <input
                                     type="number"
@@ -393,12 +353,12 @@ export class AddOrderTwo extends Component {
                             <button type="submit" className="danger_order2" onClick={this.cancelAdding}>Cancel order</button>
 
                         </form>
-                     
+
                         <div className="ordertable">
                             <button type="submit" className="success_order2_2" onClick={this.handleAddOrder}>Add</button>
                             {table}
                         </div>
-                       
+
                     </div>
 
                 </div>

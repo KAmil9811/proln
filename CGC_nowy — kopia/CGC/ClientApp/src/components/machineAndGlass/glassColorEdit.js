@@ -28,7 +28,7 @@ export class GlassColorEdit extends Component {
             })
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                   
                     return (json);
                 })
             .then(json => {
@@ -60,6 +60,7 @@ export class GlassColorEdit extends Component {
         }
         else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
+
                 <div className="editColor">
                     <Sidebar />
                     <div className="title">
@@ -68,7 +69,7 @@ export class GlassColorEdit extends Component {
                     <div className="EditColor">
                         <form>
                             <div className="form-group">
-                                
+
                                 <input
                                     type="text"
                                     name="color"
@@ -85,6 +86,7 @@ export class GlassColorEdit extends Component {
                         </form>
                     </div>
                 </div>
+
             )
         }
         else {

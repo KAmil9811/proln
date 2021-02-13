@@ -34,8 +34,6 @@ export class SavedProjects extends Component {
         this.props.history.push('/home')
     }
 
-
-
     render() {
         if (sessionStorage.getItem('valid') === '') {
             return (
@@ -64,4 +62,6 @@ export class SavedProjects extends Component {
             );
         }
     }
+
+    
 }

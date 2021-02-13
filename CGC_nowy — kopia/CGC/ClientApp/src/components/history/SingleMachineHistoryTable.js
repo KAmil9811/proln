@@ -28,7 +28,7 @@ export class SingleMachineHistoryTable extends Component {
                 no: sessionStorage.getItem('no')
             }
         }
-        console.log(receiver)
+       
 
         fetch(`api/Machine/Return_Machines_History`, {
             method: "post",
@@ -39,8 +39,7 @@ export class SingleMachineHistoryTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json.length);
-                console.log(json);
+            
 
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
@@ -113,54 +112,22 @@ export class SingleMachineHistoryTable extends Component {
             <MDBDataTableV5
 
 
+                data={this.state.table333}
                 hover
                 entriesOptions={[10, 20, 50, 100]}
-                entries={15}
+                entries={10}
                 pagesAmount={10}
-                data={this.state.table333}
                 searchTop
-
-
                 materialSearch
                 searchBottom={false}
-                // barReverse
-                //  pagingTop
-                // scrollX
-                // scrollY
                 responsive
-                // maxHeight="35vh"
-                 bordered
-
-
-
-                //   maxHeight="20vh"
-                // borderless
-                // btn
-                // dark
-
-
-                //maxHeight="400px"
-
-                // paginationLabel={["<", ">"]}
-
+                bordered
+                paginationLabel={["Previous", "Next"]}
                 sortable
-
-
                 // small
-                // tego w ciemnym trybie nie ruszać/ striped/
-                // theadColor="indigo"
                 theadTextWhite
-                // theadColor="indigo"
                 theadTextWhite
-                // barReverse
-                // className="User_table"
-                // noBottomColumns
-                sortable
-            //info={false}
-
-
-            //   autoWidth
-
+                className="table_corection"
 
             />
         )

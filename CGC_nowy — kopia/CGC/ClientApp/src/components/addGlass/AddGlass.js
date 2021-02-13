@@ -27,7 +27,7 @@ export class AddGlass extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+               
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         color: json[i],
@@ -47,7 +47,7 @@ export class AddGlass extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+                
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         type: json[i],
@@ -81,7 +81,7 @@ export class AddGlass extends Component {
                     login: sessionStorage.getItem('login'),
                 }
             }
-            console.log(receiver)
+            
             fetch(`api/Magazine/Add_Glass`, {
                 method: "POST",
                 headers: {
@@ -93,15 +93,15 @@ export class AddGlass extends Component {
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                   
                     return (json);
                     
                 })
                 .then(json => {
                     const glass2 = json[0].error_Messege
-                    console.log(glass2)
+                    
                     if (glass2 == null) {
-                        console.log("You added glass")
+                        alert("You added glass")
                         this.props.history.push('/glasswarehouse')
                     }
                     else if (glass2 == "User_no_permission") {
@@ -117,7 +117,7 @@ export class AddGlass extends Component {
 
     cancelAddGlass = (event) => {
         this.props.history.push('/glasswarehouse')
-        console.log(this.state.type)
+       
     }
 
     colorsSelector = (event) => {
@@ -161,10 +161,10 @@ export class AddGlass extends Component {
                         <h1 className="titletext">Add glass</h1>
                     </div>
                     <form>
-                         <div className="AddGlass_c">
-                        
+                        <div className="AddGlass_c">
+
                             <div className="form-group">
-                               
+
                                 <label>Length</label>
                                 <input
                                     type="number"
@@ -172,7 +172,7 @@ export class AddGlass extends Component {
                                     name="Height"
                                     className="form-control"
                                     id="inputHeight"
-                                    placeholder="Enter the length in millimeters"
+                                    placeholder="Enter length in millimeters"
                                     ref="length"
                                 />
                             </div>
@@ -183,7 +183,7 @@ export class AddGlass extends Component {
                                     min="1"
                                     className="form-control"
                                     id="inputWidth"
-                                    placeholder="Enter the width in millimeters"
+                                    placeholder="Enter width in millimeters"
                                     ref="width"
                                 />
                             </div>
@@ -194,7 +194,7 @@ export class AddGlass extends Component {
                                     min="1"
                                     className="form-control"
                                     id="inputLength"
-                                    placeholder="Enter the thickness in millimeters"
+                                    placeholder="Enter thickness in millimeters"
                                     ref="height"
                                 />
                             </div>
@@ -226,7 +226,7 @@ export class AddGlass extends Component {
                                     type="text"
                                     className="form-control"
                                     id="inputDesk"
-                                    placeholder="Enter the shelf number"
+                                    placeholder="Enter shelf number"
                                     ref="desk"
                                 />
                             </div>
@@ -237,7 +237,7 @@ export class AddGlass extends Component {
                                     min='1'
                                     className="form-control"
                                     id="inputDesk"
-                                    placeholder="Enter the number"
+                                    placeholder="Enter amount"
                                     ref="amount"
                                 />
                             </div>
@@ -248,15 +248,17 @@ export class AddGlass extends Component {
                                 <button type="button" className="success_glass_add" onClick={this.handleAddGlass}>Add glass</button>
 
                                 <button type="button" className="danger_glass_add" onClick={this.cancelAddGlass}>Cancel</button>
-                               
+
 
                             </div>
 
-                        
+
                         </div>
                     </form>
                 </div>
-            );
+
+
+                );
         }
         else {
             return (

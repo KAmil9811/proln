@@ -24,7 +24,7 @@ export class GlassEdit extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+               
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         color: json[i],
@@ -44,7 +44,7 @@ export class GlassEdit extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+                
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         type: json[i],
@@ -87,13 +87,12 @@ export class GlassEdit extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(receiver)
-                console.log(json)
+              
                 return (json)
             })
         this.props.history.push('/glasswarehouse');
 
-        console.log(receiver)
+        
     }
 
     cancelGlassEdit = (event) => {
@@ -151,7 +150,7 @@ export class GlassEdit extends Component {
 
                             <div className="glass_edit_conteiner">
                                 <div className="form-group">
-                                   
+
                                     <label>Length:</label>
                                     <input
                                         type="number"
@@ -229,15 +228,17 @@ export class GlassEdit extends Component {
                                     <button type="submit" className="success_glass_edit" onClick={this.handleGlassEdit}>Edit glass</button>
 
                                     <button type="submit" className="danger_glass_edit" onClick={this.cancelGlassEdit}>Cancel</button>
-                                  
-                                   
+
+
                                 </div>
                             </div>
 
                         </form>
                     </div>
                 </div>
-            );
+
+
+                );
         }
         else {
             return (

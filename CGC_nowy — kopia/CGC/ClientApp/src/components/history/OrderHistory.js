@@ -41,6 +41,7 @@ export class OrderHistory extends Component {
         }
         else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
+
                 <div className="OrderHistory">
                     <Sidebar />
                     <div className="title">
@@ -55,7 +56,8 @@ export class OrderHistory extends Component {
                         </div>
                     </div>
                 </div>
-            );
+                
+                );
         }
         else {
             return (

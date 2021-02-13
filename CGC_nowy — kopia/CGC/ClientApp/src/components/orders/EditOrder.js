@@ -25,7 +25,7 @@ export class EditOrder extends Component {
             }
         }
 
-        console.log(receiver);
+        
     }
 
 
@@ -57,8 +57,7 @@ export class EditOrder extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(receiver)
-                console.log(json)
+              
                 return (json)
             })
         sessionStorage.setItem('klient', this.refs.klient.value);
@@ -95,7 +94,7 @@ export class EditOrder extends Component {
                     <div className="EditOrder_c">
                         <form>
                             <div className="form-group">
-                             
+
                                 <label>Customer</label>
                                 <input
                                     type="text"
@@ -132,7 +131,7 @@ export class EditOrder extends Component {
                                 <button type="submit" className="success_edit_order" onClick={this.handleEditOrder}>Edit order</button>
 
                                 <button type="submit" className="danger_edit_order" onClick={this.cancelEditOrder}>Cancel</button>
-                                
+
                             </div>
 
                         </form>

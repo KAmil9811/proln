@@ -67,15 +67,15 @@
     margin-right: 1vw;
 }
 
-.success_type_edit:hover {
-    background-color: #339933;
-    transform: scale(1.05);
-    border-bottom: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    outline: 0;
-}
+    .success_type_edit:hover {
+        background-color: #339933;
+        transform: scale(1.05);
+        border-bottom: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        outline: 0;
+    }
 
 
 @media (max-width: 767px) {

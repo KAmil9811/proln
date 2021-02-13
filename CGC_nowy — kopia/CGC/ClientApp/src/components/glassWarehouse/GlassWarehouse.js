@@ -42,7 +42,7 @@ export class GlassWarehouse extends Component {
         var amount = prompt("Podaj Id szkła które chcesz usunąć:");
         var amount2 = parseInt(amount)
         sessionStorage.setItem('idg', amount)
-        console.log(amount)
+        
         if (amount === null) {
             return;
         }
@@ -67,7 +67,7 @@ export class GlassWarehouse extends Component {
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                  
                     return (json);
                 })
                 .then(json => {
@@ -154,5 +154,6 @@ export class GlassWarehouse extends Component {
                 </div>
             );
         }
+  
     }
 }

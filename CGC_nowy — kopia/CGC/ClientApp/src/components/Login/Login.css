@@ -1,19 +1,15 @@
 ﻿@media all and (min-width: 480px) {
     .Login {
         padding: 60px 0;
-    
     }
 
-    .Login form {
-        margin: 0 auto;
-       
-        max-width: 320px;
-    }
+        .Login form {
+            margin: 0 auto;
+            max-width: 320px;
+        }
 }
 
-.Login_c{
-
-
+.Login_c {
 }
 
 /*.danger_resset_pass:active {
@@ -78,15 +74,12 @@
     margin-right: auto;
     /* position: center;*/
     float: right;
-    margin-right:1vw;
-
-    
+    margin-right: 1vw;
 }
 
     .success_login:hover {
         background-color: #339933;
         transform: scale(1.05);
-
         border-bottom: none;
         border-top: none;
         border-left: none;
@@ -105,11 +98,12 @@
     .success_login {
         margin-right: 2vh;
     }
-    .tit_log{
-        height: 5vh;
 
+    .tit_log {
+        height: 5vh;
     }
+
     .tit_text {
-        font-size:  4vh;
+        font-size: 4vh;
     }
 }

@@ -1,23 +1,23 @@
 ﻿
-.key{
-    color:black;
-    font-weight:700;
+.key {
+    color: black;
+    font-weight: 700;
 }
 
 
- 
-.p{
-    color:black;
+
+.p {
+    color: black;
 }
 
 .prim_one_order:hover {
-    background-color: #3174e3;
+    background-color: #22a4d4;
     transform: scale(1.05);
     outline: 0;
 }
 
 .prim_one_order {
-    background-color: #4285f4;
+    background-color: #33b5e5;
     height: 3rem;
     width: 12rem;
     /* padding: 6px 6px;*/
@@ -37,7 +37,7 @@
     margin-bottom: 0;
     background-image: none;
     margin: 0 auto;
-    margin-right: 1.5rem;
+    margin-right: 4vw;
     float: right;
     display: inline-block;
 }

@@ -3,8 +3,8 @@ import './test.css';
 import { OptiTable } from './OptiTable'
 import { OptiTableItems } from './OptiTableItems'
 import Sidebar from '../Sidebar';
-import jsPDF from 'jspdf';
-import ReactToPdf from "react-to-pdf";
+import { MDBDataTable } from 'mdbreact';
+import { MDBDataTableV5 } from 'mdbreact';
 
 export class Test extends Component {
     constructor(props) {
@@ -16,25 +16,28 @@ export class Test extends Component {
             pieces: [],
             glass_ids: [],
             position: '',
+            table: {
+                columns: [],
+                rows: []
+            },
+            table2: {
+                columns: [],
+                rows: []
+            },
         }
     }
 
     componentDidMount() {
-
         const receiver = {
-
             order: {
                 id_order: sessionStorage.getItem('idOpti'),
+                color: sessionStorage.getItem('colorOpti'),
+                type: sessionStorage.getItem('typeOpti'),
+                thickness: sessionStorage.getItem('thicknessOpti'),
             },
             user: {
                 login: sessionStorage.getItem('login'),
             },
-            item: {
-                color: sessionStorage.getItem('colorOpti'),
-                type: sessionStorage.getItem('typeOpti'),
-                thickness: sessionStorage.getItem('thicknessOpti'),
-
-            }
         }
         fetch(`api/Cut/Magic`, {
             method: "post",
@@ -45,12 +48,116 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
-                
+             
+                return(json)
             })
+            .then(json => {
+                var table3 = [];
+                var table2 = [];
+                sessionStorage.setItem('kolor', json[0].color)
+                sessionStorage.setItem('typ', json[0].type)
+                sessionStorage.setItem('grubosc', json[0].hight)
+                for (var i = 0; i < json.length - 1; i++) {
+                    table3.push({
+                        length: json[i].length,
+                        width: json[i].width,
+                        thickness: json[i].hight,
+                        color: json[i].color,
+                        type: json[i].type,
+                        ids: json[i].glass_info[0].id,
+                        status: json[i].status,
+                        desk: json[i].desk,
+
+
+                    })
+                };
+                this.setState({
+                    table: {
+                        columns: [
+                            {
+                                label: 'Length',
+                                field: 'length',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Width',
+                                field: 'width',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Thickness',
+                                field: 'thickness',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Color',
+                                field: 'color',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Type',
+                                field: 'type',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'No.',
+                                field: 'ids',
+                                sort: 'asc',
+                                width: 30
+                            },
+                        ],
+                        rows: table3
+                    }
+                });
+                for (var i = 0; i < json.length-1; i++) {
+                    for (var j = 0; j < json[i].glass_info.length; j++) {
+                        for (var x = 0; x < json[i].glass_info[j].pieces.length; x++) {
+                            table2.push({
+                                length: json[i].glass_info[0].pieces[x].lenght,
+                                width: json[i].glass_info[0].pieces[x].widht,
+                                ids: json[i].glass_info[0].pieces[x].id,
+                            })
+
+                        }
+
+
+                    }
+                };
+                this.setState({
+                    table2: {
+                        columns: [
+                            {
+                                label: 'Length',
+                                field: 'length',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'Width',
+                                field: 'width',
+                                sort: 'asc',
+                                width: 30
+                            },
+                            {
+                                label: 'No.',
+                                field: 'ids',
+                                sort: 'asc',
+                                width: 30
+                            },
+                        ],
+                        rows: table2
+                    }
+                });
+            })
+            
     }
 
-    
+
     cutOrder = (event) => {
         event.preventDefault();
         const receiver = {
@@ -73,8 +180,7 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(receiver)
-                console.log(json)
+              
                 return (json)
             })
             .then(json => {
@@ -82,10 +188,9 @@ export class Test extends Component {
             })
         this.props.history.push('/pick_machine');
 
-        console.log(receiver)
+       
     }
 
-    //api/Cut/Save_Project
     saveProject = (event) => {
         event.preventDefault();
         const receiver = {
@@ -94,7 +199,10 @@ export class Test extends Component {
             ,
             order: {
                 id_order: sessionStorage.getItem('idOpti')
-            }
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
 
         }
 
@@ -108,19 +216,31 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(receiver)
-                console.log(json)
+                
                 sessionStorage.setItem('id_order', json.order.id_order);
                 return (json)
             })
         //this.props.history.push('/glasswarehouse');
 
-        console.log(receiver)
+       
 
     }
 
     generator = (event) => {
+        const receiver = {
+            order: {
+                id_order: sessionStorage.getItem('idOpti'),
+                color:sessionStorage.getItem('colorOpti'),
+                    type:sessionStorage.getItem('typeOpti'),
+                thickness:sessionStorage.getItem('thicknessOpti'),
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
+        }
         fetch(`api/Cut/CreatePdf`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -128,17 +248,72 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+               
             })
         document.getElementById
-}
-    open = (event) => {
-        event.preventDefault();
     }
 
+
+
+
+    table() {
+        return (
+            <MDBDataTableV5
+
+
+
+                data={this.state.table}
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={10}
+                pagesAmount={10}
+                searchTop
+                materialSearch
+                searchBottom={false}
+                responsive
+                bordered
+                sortable
+                theadTextWhite
+                theadTextWhite
+
+
+
+            />
+        )
+    }
+
+    table2() {
+        return (
+            <MDBDataTableV5
+
+
+
+                data={this.state.table2}
+                hover
+                entriesOptions={[10, 20, 50, 100]}
+                entries={10}
+                pagesAmount={10}
+                searchTop
+                materialSearch
+                searchBottom={false}
+                responsive
+                bordered
+                sortable
+                theadTextWhite
+                theadTextWhite
+
+
+
+            />
+        )
+    }
+
+
     render() {
-        const ref = React.createRef();
-       
+        let table1 = this.table();
+        let table2 = this.table2();
+        let href = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".jpg"
+        let href2 = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
@@ -149,68 +324,53 @@ export class Test extends Component {
         }
         else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div >
+                <div className="tescik" >
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Cut project</h1>
                     </div>
-                    
-                        <h3>{sessionStorage.getItem('uncat')}</h3>
-                        <div className="table2">
-                            <h2>Glasses</h2>
-                            <OptiTable />
-                        </div>
-                        <div className="table3">
-                            <h2>Products</h2>
-                            <OptiTableItems />
-                            <div>
-                                <button className="prim_test" onClick={this.saveProject}>Save project</button>
+
+                    <h3>{sessionStorage.getItem('uncat')}</h3>
+                    <div className="table2">
+                        <h2>Glasses</h2>
+                        {table1}
+                    </div>
+                    <div className="table3">
+                        <h2>Products</h2>
+                        {table2}
+                        <img src={href}/>
+                        <div>
+                            <button className="prim_test" onClick={this.saveProject}>Save project</button>
                             <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
-                            <button className="success_test" onClick={this.generator} >Generate PDF </button>
-                            <button className="success_test" onClick={this.open} >hhh </button>
-                            <a href="/download" title="Download" download="Project.pdf">hjbbhhvhv</a>
-                            </div>
+                            <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
                         </div>
                     </div>
+                </div>
             );
         }
         else {
-            
-                return (
-                <div >
+
+            return (
+                <div className="tescik" >
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Cut project</h1>
                     </div>
                     <div className="test_c">
-                        <div className="canva">
-                            <canvas className="canvas" ref={ref} id="canvas" width="10000" height="10000" ></canvas>
-
-                        </div>
                         <h3>{sessionStorage.getItem('uncat')}</h3>
                         <div className="table2">
                             <h2>Glasses</h2>
-                            <OptiTable />
+                            {table1}
                         </div>
                         <div className="table3">
                             <h2>Products</h2>
-                            <OptiTableItems />
+                            {table2}
                         </div>
-
                     </div>
                 </div>
             );
         }
     }
-
-    function() {
-        // only jpeg is supported by jsPDF
-        var canvas = document.getElementById("canvas");
-        var imgData = canvas.toDataURL("image/jpeg", 0.5);
-        var pdf = new jsPDF();
-
-        pdf.addImage(imgData, 'JPEG', 0, 0);// te zmienne odpowiadają za przesuniecie względem lewego górnego rogu 
-        pdf.save("download.pdf");
-    }
 }
+
 

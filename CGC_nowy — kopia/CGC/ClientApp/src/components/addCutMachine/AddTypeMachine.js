@@ -28,7 +28,7 @@ export class AddTypeMachine extends Component {
 
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+                
                 return (json);
             })
             .then(json => {
@@ -54,37 +54,41 @@ export class AddTypeMachine extends Component {
             return (
 
                 <div className="AddTypeMachine">
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Add machine type</h1>
+                    <div>
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Add machine type</h1>
+                        </div>
                     </div>
                     <form>
 
                         <div className="AddTypeMachine_c">
 
-                        
-                                <div className="form-group">
-                              
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="inputType"
-                                        placeholder='Enter the machine type'
-                                        ref="type"
-                                    />
-                                </div>
-                                 <div className="add_type_machine_b_c">
-                                    <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Add type</button>
-                                    <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Cancel</button>
-                                    
 
-                                </div>
+                            <div className="form-group">
 
-                        
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="inputType"
+                                    placeholder='Enter the machine type'
+                                    ref="type"
+                                />
                             </div>
+                            <div className="add_type_machine_b_c">
+                                <button type="button" className="success_add_type_cm " onClick={this.handleAddType}>Add type</button>
+                                <button type="button" className="danger_add_type_cm" onClick={this.cancelAddType}>Cancel</button>
+
+
+                            </div>
+
+
+                        </div>
                     </form>
                 </div>
-            );
+
+
+                );
         }
         else {
             return (

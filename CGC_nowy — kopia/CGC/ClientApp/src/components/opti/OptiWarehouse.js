@@ -43,24 +43,29 @@ export class OptiWarehouse extends Component {
         }
         else if (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div>
-
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext"> Saved projects</h1>
+                <div className="aaaaaaaa" >
+                    <div className="phone">
+                        <h1>No access on the phone</h1>
                     </div>
-                    <div className="nav_mw">
-                        <button className="add_machine" onClick={this.addMachine}>Optimize the new batch</button>
-                        <OptiWarehouseTable />
+                    <div>
 
-                    </div>
-                    <div className="conteiner_mw">
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext"> Saved projects</h1>
+                        </div>
+                        <div className="nav_mw">
+                            <button className="add_machine" onClick={this.addMachine}>Optimize the new part</button>
+                            <OptiWarehouseTable />
 
-                    </div>
+                        </div>
+                        <div className="conteiner_mw">
+
+                        </div>
 
 
 
-                </div >
+                    </div >
+                </div>
             );
         }
     }
