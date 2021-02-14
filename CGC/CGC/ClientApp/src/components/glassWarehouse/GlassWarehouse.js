@@ -2,6 +2,7 @@
 import { GlassTable } from './GlassTable';
 import './GlassWarehouse.css'
 import Sidebar from '../Sidebar';
+import TestS from '../TestS';
 
 export class GlassWarehouse extends Component {
     displayName = GlassWarehouse.name;
@@ -119,7 +120,7 @@ export class GlassWarehouse extends Component {
             return (
                 <div className="Glass_Warehause">
 
-                    <Sidebar />
+                    <TestS />
                     <div className="title">
                         <h1 className="titletext">Magazine</h1>
                     </div>
@@ -140,10 +141,14 @@ export class GlassWarehouse extends Component {
             return (
                 <div className="Glass_Warehause">
 
-                    <Sidebar />
+                    <TestS />
                     <div className="title">
                         <h1 className="titletext">Magazine</h1>
+                    
                     </div>
+                    
+
+
                     <div className="Glass_Warehause_c">
 
                         <div className="tableglass">
