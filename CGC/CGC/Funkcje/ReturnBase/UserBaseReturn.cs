@@ -186,6 +186,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             while (sqlDataReader.Read())
             {
                 User user = new User();
+                user.Id = Convert.ToInt32(sqlDataReader["Id"]);
                 user.Login = sqlDataReader["Login"].ToString();
                 user.Password = sqlDataReader["Password"].ToString();
                 user.Email = sqlDataReader["Email"].ToString();

@@ -36,7 +36,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
         {
             List<User> temp = new List<User>();
 
-            string query = "INSERT INTO dbo.[User](Login,Password,Email,Name,Surname,Admin,Super_Admin,Manager,Magazine_management,Machine_management,Order_management,Cut_management,Reset_pass,Deleted) VALUES(@Login, @Password, @Email, @Name, @Surname, @Admin, @Super_Admin, @Manager, @Magazine_management, @Machine_management, @Order_management, @Cut_management, @Reset_pass, @Deleted)";
+            string query = "INSERT INTO dbo.[User](Login,Password,Email,Name,Surname,Admin,Super_Admin,Manager,Magazine_management,Machine_management,Order_management,Cut_management,Reset_pass,Deleted,Id) VALUES(@Login, @Password, @Email, @Name, @Surname, @Admin, @Super_Admin, @Manager, @Magazine_management, @Machine_management, @Order_management, @Cut_management, @Reset_pass, @Deleted, @Id)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = user.Login;
@@ -53,6 +53,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             command.Parameters.Add("@Cut_management", SqlDbType.Bit).Value = user.Cut_management;
             command.Parameters.Add("@Reset_pass", SqlDbType.VarChar, 40).Value = "";
             command.Parameters.Add("@Deleted", SqlDbType.Bit).Value = user.Deleted;
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = user.Id + 1;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();

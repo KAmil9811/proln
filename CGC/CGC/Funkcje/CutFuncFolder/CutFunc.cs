@@ -1042,12 +1042,13 @@ namespace CGC.Funkcje.CutFuncFolder
                     }
                 }
 
+                Glass tmp2 = new Glass { Glass_info = new List<Glass_Id>() };
+                tmp2.Error_Messege = "Not enough place for: ";
+                wynik.Add(tmp2);
+
                 if (wynik.Count < backup.Item.Count)
                 {
                     List<int> Done = new List<int>();
-                    Glass tmp = new Glass { Glass_info = new List<Glass_Id>() };
-                    tmp.Error_Messege = "Not enough place for: ";
-
                     Glass_Id glass_Id = new Glass_Id();
 
                     foreach (Item itm in backup.Item)
@@ -1071,16 +1072,16 @@ namespace CGC.Funkcje.CutFuncFolder
                     {
                         Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = Convert.ToDouble(packages.Item[i].Length), Widht = Convert.ToDouble(packages.Item[i].Width) };
                         glass_Id.Pieces.Add(piece);
-                        tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
+                        tmp2.Error_Messege = tmp2.Error_Messege + ", " + packages.Item[i].Id;
                     }
 
                     foreach (Item BigItem in To_big)
                     {
-                        tmp.Error_Messege = tmp.Error_Messege + ", " + BigItem.Id;
+                        tmp2.Error_Messege = tmp2.Error_Messege + ", " + BigItem.Id;
                     }
 
-                    tmp.Glass_info.Add(glass_Id);
-                    wynik.Add(tmp);
+                    tmp2.Glass_info.Add(glass_Id);
+                    wynik[wynik.Count - 1] = tmp2;
                 }
 
                 foreach (Glass gl in wynik)
@@ -1102,7 +1103,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         PaintY += Convert.ToInt32(glass2.Length);
 
                         PaintX += 100;
-                        PaintY += 100;
+                        //PaintY += 100;
                     }
                 }
 
@@ -1138,7 +1139,6 @@ namespace CGC.Funkcje.CutFuncFolder
                                 {
                                     graphics.FillRectangle(myBrush, new Rectangle((Last_posX) / scale, (Last_posY) / scale, (int)(Convert.ToDouble(glass1.Width) / scale), (int)(Convert.ToDouble(glass1.Length) / scale)));
                                 }
-                                //bitmap.Save("Project.jpg");
                             }
 
 
@@ -1151,13 +1151,11 @@ namespace CGC.Funkcje.CutFuncFolder
                                         using (Graphics graphics = Graphics.FromImage(bitmap))
                                         {
                                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
-                                            {
-                                                //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
+                                            {                                                
                                                 graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
                                                 graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX + (float)piece.X + (float)piece.Widht / 2 - 45, Last_posY + (float)piece.Y + (float)piece.Lenght / 2 - 20);
                                             }
-                                            //bitmap.Save(user.Login + order.Id_Order + ".jpg");
-                                        } // graphics will be disposed at this line
+                                        }
                                     }
                                     else
                                     {
@@ -1165,19 +1163,16 @@ namespace CGC.Funkcje.CutFuncFolder
                                         {
                                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                             {
-                                                //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
                                                 graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
                                                 System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
                                                 drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
                                                 graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX + (float)piece.X + (float)piece.Widht / 2 - 20, Last_posY + (float)piece.Y + (float)piece.Lenght / 2 - 45, drawFormat);
                                             }
-                                            //bitmap.Save(user.Login + order.Id_Order + ".jpg");
                                         }
                                     }
                                 }
                             }
                             Last_posX += (Convert.ToInt32(glass1.Width));
-                            //bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
                         }
                     }
                     bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
