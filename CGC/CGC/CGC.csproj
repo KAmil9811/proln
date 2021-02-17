@@ -42,7 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\components\Sidebardatauser\" />
+    <None Remove="ClientApp\src\components\Sidebar2\NewFile.txt" />
+    <None Remove="ClientApp\src\components\Sidebar2\NewFile1.txt" />
+    <None Remove="ClientApp\src\components\Test_SS.js" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

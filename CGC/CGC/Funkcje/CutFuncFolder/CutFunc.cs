@@ -1095,42 +1095,32 @@ namespace CGC.Funkcje.CutFuncFolder
                     }
                 }
 
-                foreach (Glass glass2 in wynik)
-                {
-                    if (glass2.Error_Messege == null)
-                    {
-                        PaintX += Convert.ToInt32(glass2.Width);
-                        PaintY += Convert.ToInt32(glass2.Length);
-
-                        PaintX += 100;
-                        //PaintY += 100;
-                    }
-                }
-
                 try
                 {
-                    Bitmap bitmap = new Bitmap(PaintX, PaintY);
-                    Last_posX = 0;
-                    Last_posY = 0;
+                    int glass_count = 0;
 
                     foreach (Glass glass1 in wynik)
                     {
-                        //if(glass1.Length >= 1000 || glass1.Width >= 1000)
-                        //{
-                        //    scale = 10;
-                        //}
-                        //if (glass1.Length >= 10000 || glass1.Width >= 10000)
-                        //{
-                        //    scale = 100;
-                        //}
-                        //if (glass1.Length >= 100000 || glass1.Width >= 100000)
-                        //{
-                        //    scale = 1000;
-                        //}
-                        //if (glass1.Length >= 1000000 || glass1.Width >= 1000000)
-                        //{
-                        //    scale = 10000;
-                        //}
+                        Bitmap bitmap = new Bitmap(Convert.ToInt32(glass1.Width), Convert.ToInt32(glass1.Length));
+                        Last_posX = 0;
+                        Last_posY = 0;
+
+                        if (Convert.ToDouble(glass1.Length) >= 10000 || Convert.ToDouble(glass1.Width) >= 10000)
+                        {
+                            scale = 10;
+                        }
+                        if (Convert.ToDouble(glass1.Length) >= 100000 || Convert.ToDouble(glass1.Width) >= 100000)
+                        {
+                            scale = 100;
+                        }
+                        if (Convert.ToDouble(glass1.Length) >= 1000000 || Convert.ToDouble(glass1.Width) >= 1000000)
+                        {
+                            scale = 1000;
+                        }
+                        if (Convert.ToDouble(glass1.Length) >= 10000000 || Convert.ToDouble(glass1.Width) >= 10000000)
+                        {
+                            scale = 10000;
+                        }
                         if (glass1.Glass_info.First().Pieces != null)
                         {
                             using (Graphics graphics = Graphics.FromImage(bitmap))
@@ -1172,10 +1162,12 @@ namespace CGC.Funkcje.CutFuncFolder
                                     }
                                 }
                             }
-                            Last_posX += (Convert.ToInt32(glass1.Width));
+                            Last_posX += (Convert.ToInt32(glass1.Width)/scale);
                         }
+                        bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
+                        glass_count++;
                     }
-                    bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
+                    //bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
                 }
                 catch (Exception e)
                 {
@@ -1195,21 +1187,25 @@ namespace CGC.Funkcje.CutFuncFolder
 
                 PdfSection section = doc.Sections.Add();
 
-                PdfPageBase page = doc.Pages.Add();
+                for (int i = 0; i < 4/*Convert.ToInt32(receiver.glass_count)*/; i++)
+                {
 
-                PdfImage image = PdfImage.FromFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".jpg");
+                    PdfPageBase page = doc.Pages.Add();
 
-                float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
+                    PdfImage image = PdfImage.FromFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + "_" + i + ".jpg");
 
-                float heightFitRate = image.PhysicalDimension.Height / page.Canvas.ClientSize.Height;
+                    float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
 
-                float fitRate = Math.Max(widthFitRate, heightFitRate);
+                    float heightFitRate = image.PhysicalDimension.Height / page.Canvas.ClientSize.Height;
 
-                float fitWidth = image.PhysicalDimension.Width / fitRate;
+                    float fitRate = Math.Max(widthFitRate, heightFitRate);
 
-                float fitHeight = image.PhysicalDimension.Height / fitRate;
+                    float fitWidth = image.PhysicalDimension.Width / fitRate;
 
-                page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
+                    float fitHeight = image.PhysicalDimension.Height / fitRate;
+
+                    page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
+                }
 
                 doc.SaveToFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
 

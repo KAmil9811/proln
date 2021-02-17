@@ -11,7 +11,6 @@ namespace CGC.Helpers
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            //var temp = context.HttpContext.Items["User"].ToString();
             var user = (User)context.HttpContext.Items["User"];
             if (user == null)
             {

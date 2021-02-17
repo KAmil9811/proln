@@ -1,8 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { GlassTable } from './GlassTable';
 import './GlassWarehouse.css'
-import Sidebar from '../Sidebar';
-import TestS from '../TestS';
+import Sidebar from '../Sidebar2/Sidebar';
 
 export class GlassWarehouse extends Component {
     displayName = GlassWarehouse.name;
@@ -119,20 +118,15 @@ export class GlassWarehouse extends Component {
         else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
                 <div className="Glass_Warehause">
-
-                    <TestS />
-                    <div className="title">
-                        <h1 className="titletext">Magazine</h1>
-                    </div>
+                    
+                    
+                    <Sidebar /> 
                     <div className="Glass_Warehause_c">
-
-                        <button type="button" className="success_glas_magazine" onClick={this.gotohell}>Add glass</button>
-
-                        <div className="tableglass">
-
-                            <GlassTable />
-                        </div>
+                       < div className="t" />
+                         
+                         
                     </div>
+                    <div className="nextlin" />
                 </div>
             );
         }
@@ -141,21 +135,25 @@ export class GlassWarehouse extends Component {
             return (
                 <div className="Glass_Warehause">
 
-                    <TestS />
+                 
                     <div className="title">
                         <h1 className="titletext">Magazine</h1>
                     
                     </div>
                     
-
+                   
 
                     <div className="Glass_Warehause_c">
+                        
+                        <button type="button" className="success_glas_magazine" onClick={this.gotohell}>Add glass</button>
 
                         <div className="tableglass">
 
                             <GlassTable />
                         </div>
+
                     </div>
+                    <div className= "nextlin"/>
                 </div>
             );
         }

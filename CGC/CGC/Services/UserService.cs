@@ -36,10 +36,15 @@ namespace CGC.Services
         {
             var user = userBaseReturn.GetUsersToLogin().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
 
-            // return null if user not found
             if (user == null) return null;
 
-            // authentication successful so generate jwt token
+            //if(user.Session_Start == true)
+            //{
+            //    var token = generateJwtToken(user);
+
+            //    return new AuthenticateResponse(user, token);
+            //}
+
             var token = generateJwtToken(user);
 
             return new AuthenticateResponse(user, token);

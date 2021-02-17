@@ -1,8 +1,6 @@
 ﻿
 @media all and (min-width: 480px) {
-    .Glass_Warehause_c {
-        padding: 60px 0;
-    }
+
 
         .Glass_Warehause_c form {
             margin: 0 auto;
@@ -10,8 +8,16 @@
         }
 }
 
+.t {
+    width: 100%;
+    height: 60px;
+    background-color:deeppink;
+
+
+}
+
 .nextline {
-    clear: both;
+    clear:both;
 }
 
 .conteiner_gll {

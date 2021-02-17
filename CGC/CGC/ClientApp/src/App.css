@@ -443,7 +443,7 @@ label {
 .conteiner_mw,
 .AddAcount_c,
 .UserChange_c,
-.Glass_Warehause_c,
+
 .AddGlass_c,
 .GlassEdit_c,
 .SavedProject_c,
@@ -464,7 +464,29 @@ label {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    clear: both;
+   
+}
+.Glass_Warehause {
+    margin-top: 0;
+    width: 100%;
+    float: left;
+   
+    height: 100vh;
+}
+
+.Glass_Warehause_c {
+    margin-top: 0;
+    width: 300px;
+    z-index: 100;
+    float:left ;
+ 
+    
+    background-color: aqua;
+    height: 100vh;
+}
+
+.s {
+    float: left;
 }
 
 .table_corection {

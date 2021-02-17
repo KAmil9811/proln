@@ -24,10 +24,12 @@ export class Test extends Component {
                 columns: [],
                 rows: []
             },
+            jpegs:[],
         }
     }
 
     componentDidMount() {
+        this.jpgPrint;
         const receiver = {
             order: {
                 id_order: sessionStorage.getItem('idOpti'),
@@ -57,6 +59,7 @@ export class Test extends Component {
                 sessionStorage.setItem('kolor', json[0].color)
                 sessionStorage.setItem('typ', json[0].type)
                 sessionStorage.setItem('grubosc', json[0].hight)
+                sessionStorage.setItem('ilosc', json.lenght-1)
                 for (var i = 0; i < json.length - 1; i++) {
                     table3.push({
                         length: json[i].length,
@@ -307,7 +310,19 @@ export class Test extends Component {
             />
         )
     }
+    jpgPrint =() => {
+        var jpegvar = '';
+        for (var i = 0; i < sessionStorage.getItem('ilosc'); i++) {
+            jpegvar = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + "_" + i +  ".pdf"
+            this.setState({
+                jpegs: this.state.jpegs.concat(this.jpegvar)
+            })
+        }
+        console.log('kur nie wiem xd')
+        var aaa = this.state.jpegs
+        console.log(aaa)
 
+    }
 
     render() {
         let table1 = this.table();
@@ -343,6 +358,7 @@ export class Test extends Component {
                             <button className="prim_test" onClick={this.saveProject}>Save project</button>
                             <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
                             <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                            <button className="success_test" onClick={this.jpgPrint} >ilość jpegów</button>
                         </div>
                     </div>
                 </div>

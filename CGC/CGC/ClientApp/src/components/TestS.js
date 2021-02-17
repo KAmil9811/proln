@@ -10,21 +10,7 @@ import { IconContext } from 'react-icons/lib';
 import './Sidebar.css'
 
 
-const Titleee = styled.div`
-  background: #15171c;
-  height: 10px;
-  width: 100%;
-  display: flex;
-  color: #ffffff;
-  justify-content: flex-start;
-  align-items: center;
-  top:0;
-  position: fixed;
-  z-index: 100;
- 
-`
-
-const Nav = styled.div`
+const NavS = styled.div`
   background: #15171c;
   height: 80px;
   width: 100%;
@@ -63,16 +49,15 @@ const OutIcon = styled(Link)`
 
 
 
-const title = sessionStorage.getItem('title');
 
 const TestS = () => {
 
     return (
-        <Nav>
+        <NavS>
             <OutIcon to='/' >
                 <FiIcons.FiLogOut />
             </OutIcon>
-        </Nav>
+        </NavS>
     );
 
 }

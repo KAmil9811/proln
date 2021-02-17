@@ -34,5 +34,8 @@ namespace CGC.Entities
 
         public bool Deleted { get; set; }
         public string Token { get; set; }
+        public string Logged { get; set; }
+        public bool Session_Start { get; set; }
+        public bool Session_End { get; set; }
     }
 }

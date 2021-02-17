@@ -58,9 +58,10 @@ export class Login extends Component {
                 return(json)
             })
            .then(json => {
-                const access2 = json.message;
+               const access2 = json.message;
+               const access = json.status;
                 /*console.log(access2)*/
-               if (access2 == "Username or password is incorrect") {
+               if (access2 == "Username or password is incorrect" || access == 400 ) {
                    alert("Wrong e-mail or password!");
                }
                else {

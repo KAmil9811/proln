@@ -34,6 +34,7 @@ namespace CGC.Models
         public bool Deleted { get; set; }
         public string Token { get; set; }
 
+        public string Logged { get; set; }
 
         public AuthenticateResponse(Entities.User user, string token)
         {
@@ -50,6 +51,7 @@ namespace CGC.Models
             Order_management = user.Order_management;
             Cut_management = user.Cut_management;
             Error_Messege = user.Error_Messege;
+            Logged = user.Logged;
         }
     }
 }

@@ -41,5 +41,6 @@ namespace CGC.Models
         public string new_surname { get; set; }
         public string perm { get; set; }
         public string id_glass { get; set; }
+        public string glass_count { get; set; }
     }
 }

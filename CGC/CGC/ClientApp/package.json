@@ -13,7 +13,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "react-select": "^3.1.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "stylish-sidebar": "^1.1.4"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
