@@ -13,7 +13,7 @@
         /* width: -webkit-max-content; */
         width: -moz-max-content;
         width: 100%;
-        margin-top: 14vh;
+       
     }
 }
 
@@ -469,22 +469,23 @@ label {
 .Glass_Warehause {
     margin-top: 0;
     width: 100%;
-    float: left;
+   
    
     height: 100vh;
 }
 
 .Glass_Warehause_c {
     margin-top: 0;
-    width: 300px;
-    z-index: 100;
-    float:left ;
- 
-    
+    width: 100%;
     background-color: aqua;
-    height: 100vh;
+    height: 88vh;
+    
 }
-
+.Glass_Warehause_cc{
+    margin-top: 0;
+    background-color: green;
+    height: 100%;
+}
 .s {
     float: left;
 }
