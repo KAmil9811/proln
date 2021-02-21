@@ -30,6 +30,7 @@ export class Test extends Component {
 
     componentDidMount() {
         this.jpgPrint;
+        var jpegvar = '';
         const receiver = {
             order: {
                 id_order: sessionStorage.getItem('idOpti'),
@@ -50,16 +51,30 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
-             
-                return(json)
+                return (json)
+                
             })
             .then(json => {
+                for (var i = 0; i < sessionStorage.getItem('ilosc'); i++) {
+                    jpegvar = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + "_" + i + ".jpg"
+                    console.log(jpegvar)
+                    sessionStorage.setItem('obrazek', jpegvar)
+                    this.setState({
+                        jpegs: this.state.jpegs.concat(jpegvar)
+                    })
+                }
+                console.log('kur nie wiem')
+                var aaa = this.state.jpegs
+                console.log(aaa)
+
+
+
                 var table3 = [];
                 var table2 = [];
                 sessionStorage.setItem('kolor', json[0].color)
                 sessionStorage.setItem('typ', json[0].type)
                 sessionStorage.setItem('grubosc', json[0].hight)
-                sessionStorage.setItem('ilosc', json.lenght-1)
+                sessionStorage.setItem('ilosc', json.length)
                 for (var i = 0; i < json.length - 1; i++) {
                     table3.push({
                         length: json[i].length,
@@ -157,6 +172,22 @@ export class Test extends Component {
                     }
                 });
             })
+       /* var table4 = [];
+        for (var i = 0; i < sessionStorage.getItem('ilosc'); i++)  {
+            table4.push(this.state.jpegs[i])
+            
+        }
+        console.log("tablica czwarta")
+        console.log(this.state.jpegs)
+        var slides = table4
+        var str = '<ul>'
+        var aaaaaa = "Domi_1_green_normal_10_2.jpg"
+        slides.forEach(function (slide) {
+            str += '<li><img src="' + slide + '"/></li>';
+        });
+        str += '</ul>';
+
+        document.getElementById("slideContainer").innerHTML = str;*/
             
     }
 
@@ -240,6 +271,7 @@ export class Test extends Component {
             user: {
                 login: sessionStorage.getItem('login'),
             },
+            glass_count: sessionStorage.getItem('ilosc')
         }
         fetch(`api/Cut/CreatePdf`, {
             method: "post",
@@ -310,23 +342,20 @@ export class Test extends Component {
             />
         )
     }
-    jpgPrint =() => {
-        var jpegvar = '';
-        for (var i = 0; i < sessionStorage.getItem('ilosc'); i++) {
-            jpegvar = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + "_" + i +  ".pdf"
-            this.setState({
-                jpegs: this.state.jpegs.concat(this.jpegvar)
-            })
-        }
-        console.log('kur nie wiem xd')
-        var aaa = this.state.jpegs
-        console.log(aaa)
+        
+    obrazki() {
 
     }
 
     render() {
         let table1 = this.table();
         let table2 = this.table2();
+        var a = 'href'
+        for (var i; i < sessionStorage.getItem('ilosc'); i++) {
+            
+            document.write(i)
+            
+        }
         let href = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".jpg"
         let href2 = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
         if (sessionStorage.getItem('valid') === '') {
@@ -353,13 +382,13 @@ export class Test extends Component {
                     <div className="table3">
                         <h2>Products</h2>
                         {table2}
-                        <img src={href}/>
+                        <img src={href} />
                         <div>
                             <button className="prim_test" onClick={this.saveProject}>Save project</button>
                             <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
                             <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
-                            <button className="success_test" onClick={this.jpgPrint} >ilość jpegów</button>
                         </div>
+                        <div id="slideContainer"></div>
                     </div>
                 </div>
             );

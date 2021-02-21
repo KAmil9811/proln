@@ -119,14 +119,18 @@ export class GlassWarehouse extends Component {
             return (
                 <div className="Glass_Warehause">
                     
+                    < div className="t" />
                     
-                    <Sidebar /> 
                     <div className="Glass_Warehause_c">
-                       < div className="t" />
+                        <Sidebar /> 
+                        <div className="Glass_Warehause_cc">
+
+                            Wyłącz to
                          
-                         
+                        </div> 
+                        <div className="nextlin" />
                     </div>
-                    <div className="nextlin" />
+                   
                 </div>
             );
         }
