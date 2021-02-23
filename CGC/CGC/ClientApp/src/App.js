@@ -46,7 +46,9 @@ import { AllMachineHistory } from './components/history/AllMachineHistory';
 
 import './App.css';
 //import Sidebar from './components/Sidebar';
-import Sidebar from './components/Sidebar2/Sidebar';
+import Sidebar from './components/Sidebar';
+import { Sidebar1 } from './components/Sidebar2/Sidebar';
+//import Sidebar from './components/Sidebar2/Sidebar';      
 import TestS from './components/TestS';
 import TestSS from './components/TestSS';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';

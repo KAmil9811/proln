@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { GlassTable } from './GlassTable';
 import './GlassWarehouse.css'
-import Sidebar from '../Sidebar2/Sidebar';
+import Sidebar1 from '../Sidebar2/Sidebar';
 
 export class GlassWarehouse extends Component {
     displayName = GlassWarehouse.name;
@@ -122,7 +122,7 @@ export class GlassWarehouse extends Component {
                     < div className="t" />
                     
                     <div className="Glass_Warehause_c">
-                        <Sidebar /> 
+                        <Sidebar1 /> 
                         <div className="Glass_Warehause_cc">
 
                             Wyłącz to

@@ -1,6 +1,11 @@
 ﻿import React from 'react';
 
 import styled from '@emotion/styled';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
+import * as IoIcons from 'react-icons/io';
+import * as RiIcons from 'react-icons/ri';
+import { SidebarData1 } from './Sidebardata';
 
 const SidebarConteiner = styled.div`
  
@@ -22,16 +27,33 @@ letter-spacing: 6px;
 
 
 `
-const Sidebar = props => {
+
+const MenuItemConteiner = styled.div``;
+const MenuItem = styled.div`
+text-align: center;
+padding: 6px 20px;
+font-weight: 600;
+color: rgba(19,15,64);
+
+
+
+`;
+const Sidebar1 = props => {
 
     const header = 'CGC'
-    const menuItems = ['Home', 'Control_panel']
-    return <SidebarConteiner>
+ 
+    const menuItemsJSX = SidebarData1.map((item, index) => {
+        return (
+            <MenuItem key={index}>{item}</MenuItem>
+        )
+    })
+    return (<SidebarConteiner>
         <SidebarHeader>{header}</SidebarHeader>
-
+        <MenuItemConteiner>{menuItemsJSX}</MenuItemConteiner>
        
     </SidebarConteiner>
+  )
 
 
 }
-export default Sidebar
+export default Sidebar1
