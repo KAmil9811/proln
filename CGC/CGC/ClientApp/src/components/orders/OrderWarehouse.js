@@ -48,14 +48,21 @@ export class OrderWarehouse extends Component {
     }*/
         historyOrder = (event) => {
             this.props.history.push('/order_history')
-        }
+    }
+
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
 
     render() {//  let history = this.history();
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
                     <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }

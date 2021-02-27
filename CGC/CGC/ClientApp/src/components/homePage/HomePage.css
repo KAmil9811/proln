@@ -1,4 +1,8 @@
-﻿@media all and (min-width: 480px) {
+﻿
+
+
+
+@media all and (min-width: 480px) {
     .homePage {
         padding: 60px 0;
     }
@@ -20,6 +24,7 @@
         }
 
     .ele3 {
+        background-image: url('production.png');
         height: 50px;
         width: 70vw;
         font-size: 15px;
@@ -134,20 +139,44 @@
     transform: scale(1.05);
     outline: 0;
 }
+.production {
+    background-image: url('production.png');
+}
+.magazine {
+    background-image: url('magazine.png');
+}
+.products {
+    background-image: url('products.png');
+}
+.orders {
+    background-image: url('orders.png');
+}
+.machines {
+    background-image: url('machines.png');
+}
+.account {
+    background-image: url('account.png');
+}
+.projects {
+    background-image: url('saved.png');
+}
+.control {
+    background-image: url('control.png');
+}
+
 
 .ele2, .ele3, .ele4 {
-    height: 50px;
-    width: 200px;
+    background-size:cover;
+    height: 300px;
+    width: 300px;
     font-size: 15px;
     font-weight: 900;
     text-align: center;
     float: left;
     margin-left: 13%;
     margin-top: 10%;
-    background-color: #00cccc;
     padding: 12px 24px;
     margin-bottom: 0;
-    background-image: none;
     color: white;
     border-radius: 22px;
     border-bottom: none;

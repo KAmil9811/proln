@@ -88,6 +88,12 @@ export class SavedPrint extends Component {
         sessionStorage.setItem('id_order', id);
         this.props.history.push('/pick_machine');
     }
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
 
     render() {
         let href = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('kolor') + "_" + sessionStorage.getItem('typ') + "_" + sessionStorage.getItem('grubosc')+ ".jpg"
@@ -96,7 +102,7 @@ export class SavedPrint extends Component {
             return (
                 <div className="HomePage">
                     <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }

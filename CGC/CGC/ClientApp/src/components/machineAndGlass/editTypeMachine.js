@@ -43,6 +43,12 @@ export class MachineTypeEdit extends Component {
                 }
             })
     }
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
 
     return = (event) => {
         event.preventDefault();
@@ -55,7 +61,7 @@ export class MachineTypeEdit extends Component {
             return (
                 <div className="HomePage">
                     <h1>Check if you have perrmission to this panel</h1>
-                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                    <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
         }
@@ -100,7 +106,7 @@ export class MachineTypeEdit extends Component {
             return (
                 <div className="HomePage">
                     <h1>Check if you have perrmission to this panel</h1>
-                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                    <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
         }

@@ -32,6 +32,13 @@ export class ControlPanel2 extends Component {
         sessionStorage.removeItem('cutManagement')
         this.props.history.push('/')
     }
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
+
 
     homePage = (event) => {
         this.props.history.push('/home')
@@ -162,7 +169,7 @@ export class ControlPanel2 extends Component {
             return (
                 <div className="HomePage">
                     <h1>Zaloguj się, aby usyskać dostęp!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Logowanie</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Logowanie</button>
                 </div>
             );
         }
@@ -196,7 +203,7 @@ export class ControlPanel2 extends Component {
             return (
                 <div className="HomePage">
                     <h1>Check if you have perrmission to this panel</h1>
-                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                    <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>
                 
                 )

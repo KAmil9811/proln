@@ -18,7 +18,6 @@ export class EmailChange extends Component {
             }
             
         }
-        if (receiver.user.password === sessionStorage.getItem('password')) {
                 //Przekazujesz User już i nowy email
                 fetch(`api/Users/Change_Email`, {
                     method: "post",
@@ -42,15 +41,18 @@ export class EmailChange extends Component {
                             this.props.history.push('/userpanel')
                         }
                     })
-            }
-            else {
-                alert("Wrong password!")
-            }
+            
         }
     
 
     cancelChanging = (event) => {
         this.props.history.push('/userpanel')
+    }
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
     }
 
     render() {
@@ -58,7 +60,7 @@ export class EmailChange extends Component {
             return (
                 <div className="HomePage">
                     <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }

@@ -1,7 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { GlassTable } from './GlassTable';
 import './GlassWarehouse.css'
-import Sidebar1 from '../Sidebar2/Sidebar';
+
+import Sidebar from '../Sidebar';
 
 export class GlassWarehouse extends Component {
     displayName = GlassWarehouse.name;
@@ -32,7 +33,13 @@ export class GlassWarehouse extends Component {
         this.props.history.push('/home')
     }
 
-  
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
+
 
     historyGlass = (event) => {
         this.props.history.push('/glass_history')
@@ -111,27 +118,40 @@ export class GlassWarehouse extends Component {
             return (
                 <div className="HomePage">
                     <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
         else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
+                
                 <div className="Glass_Warehause">
-                    
-                    < div className="t" />
-                    
-                    <div className="Glass_Warehause_c">
-                        <Sidebar1 /> 
-                        <div className="Glass_Warehause_cc">
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Magazine</h1>
 
-                            Wyłącz to
-                         
-                        </div> 
-                        <div className="nextlin" />
                     </div>
                    
-                </div>
+                    
+                    
+
+
+
+                    <div className="Glass_Warehause_c">
+
+                        <button type="button" className="success_glas_magazine" onClick={this.gotohell}>Add glass</button>
+
+                        <div className="tableglass">
+
+                            <GlassTable />
+                        </div>
+
+                    </div>
+                    <div className="nextlin" />
+                    </div>
+                
+
+
             );
         }
 

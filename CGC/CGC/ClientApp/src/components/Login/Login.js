@@ -62,7 +62,7 @@ export class Login extends Component {
                const access = json.status;
                 /*console.log(access2)*/
                if (access2 == "Username or password is incorrect" || access == 400 ) {
-                   alert("Wrong e-mail or password!");
+                   alert("Wrong login or password!");
                }
                else {
                     sessionStorage.setItem('token', json.token);
@@ -97,8 +97,8 @@ export class Login extends Component {
 
                     <h1 className="tit_text">Login</h1>
                 </div>
-                <form>
-                    <div className="Login_c">
+                <form className="all">
+                    <div className="Login">
                         <div className="form-group">
                             <label>Login:</label>
                             <input
