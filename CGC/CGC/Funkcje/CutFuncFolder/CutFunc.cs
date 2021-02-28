@@ -1,4 +1,6 @@
-﻿using CGC.Funkcje.CutFuncFolder.CutBase;
+﻿using Azure.Storage;
+using Azure.Storage.Blobs;
+using CGC.Funkcje.CutFuncFolder.CutBase;
 using CGC.Funkcje.MagazineFuncFolder.MagazineBase;
 using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Funkcje.ProductFuncFolder.ProductBase;
@@ -11,6 +13,7 @@ using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -290,7 +293,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         {
                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30, 29, 4, 32)))
                             {
-                                graphics.FillRectangle(myBrush, new Rectangle((Last_posX) / scale, (Last_posY) / scale, (int)(Convert.ToDouble(glass1.Width) / scale), (int)(Convert.ToDouble(glass1.Length) / scale))); // whatever
+                                graphics.FillRectangle(myBrush, new Rectangle((Last_posX) , (Last_posY) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) ))); // whatever
                                                                                                                                                                                      // and so on...
                             } // myBrush will be disposed at this line
                             bitmap.Save("Project.jpg");
@@ -308,7 +311,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                         using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                         {
                                             //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
-                                            graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
+                                            graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) , ((int)piece.Y) , ((int)piece.Widht) , ((int)piece.Lenght) ));
                                             graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), (float)piece.X + (float)piece.Widht / 2 - 45, (float)piece.Y + (float)piece.Lenght / 2 - 20);
                                         }
                                         bitmap.Save(user.Login + order.Id_Order + ".jpg");
@@ -321,7 +324,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                         using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                         {
                                             //graphics.FillRectangle(myBrush, new Rectangle((int)piece.X + Last_posX, (int)piece.Y, (int)piece.Widht, (int)piece.Lenght));
-                                            graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
+                                            graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) , ((int)piece.Y) , ((int)piece.Widht) , ((int)piece.Lenght) ));
                                             System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
                                             drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
                                             graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), (float)piece.X + (float)piece.Widht / 2 - 20, (float)piece.Y + (float)piece.Lenght / 2 - 45, drawFormat);
@@ -852,6 +855,25 @@ namespace CGC.Funkcje.CutFuncFolder
         }
         */
 
+        public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName)
+        {
+            // Create a URI to the blob
+            Uri blobUri = new Uri("https://inzcgc.blob.core.windows.net/cgc/" + fileName);
+
+            // Create StorageSharedKeyCredentials object by reading
+            // the values from the configuration (appsettings.json)
+            StorageSharedKeyCredential storageCredentials =
+                new StorageSharedKeyCredential("inzcgc", "p4AuZxD5JNaLYH3mAH2hQR0cFDbFByr0KicHy8vxQoTpWq31CfTZpigPbe4IHbpVO60kw0YKeMHxJCk8bwRr / g ==");
+
+            // Create the blob client.
+            BlobClient blobClient = new BlobClient(blobUri, storageCredentials);
+
+            // Upload the file
+            await blobClient.UploadAsync(fileStream);
+
+            return await Task.FromResult(true);
+        }
+
         public List<Glass> Magic(Receiver receiver)
         {
             List<Glass> wynik = new List<Glass>();
@@ -864,7 +886,6 @@ namespace CGC.Funkcje.CutFuncFolder
             Random random = new Random();
             bool kon = false;
             int kontrol;
-            int scale = 1;
 
 
             Package packages = new Package { Item = new List<Item>() };
@@ -1105,8 +1126,8 @@ namespace CGC.Funkcje.CutFuncFolder
                     PaintX += Convert.ToInt32(glass2.Width);
                 }
 
-                PaintX += 100;
-                PaintY += 100;
+                //PaintX += 100;
+                //PaintY += 100;
 
                 try
                 {
@@ -1124,30 +1145,15 @@ namespace CGC.Funkcje.CutFuncFolder
                         Last_posX = 0;
                         Last_posY = 0;
 
-                        if (Convert.ToDouble(glass1.Length) >= 10000 || Convert.ToDouble(glass1.Width) >= 10000)
-                        {
-                            scale = 10;
-                        }
-                        if (Convert.ToDouble(glass1.Length) >= 100000 || Convert.ToDouble(glass1.Width) >= 100000)
-                        {
-                            scale = 100;
-                        }
-                        if (Convert.ToDouble(glass1.Length) >= 1000000 || Convert.ToDouble(glass1.Width) >= 1000000)
-                        {
-                            scale = 1000;
-                        }
-                        if (Convert.ToDouble(glass1.Length) >= 10000000 || Convert.ToDouble(glass1.Width) >= 10000000)
-                        {
-                            scale = 10000;
-                        }
-                        
+    
                         if (glass1.Glass_info.First().Pieces != null)
                         {
                             using (Graphics graphics = Graphics.FromImage(bitmap))
                             {
                                 using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30, 29, 4, 32)))
                                 {
-                                    graphics.FillRectangle(myBrush, new Rectangle((Last_posX) / scale, (Last_posY) / scale, (int)(Convert.ToDouble(glass1.Width) / scale), (int)(Convert.ToDouble(glass1.Length) / scale)));
+                                    graphics.FillRectangle(myBrush, new Rectangle(Last_posX, Last_posY, Convert.ToInt16(glass1.Width), Convert.ToInt16(glass1.Length)));
+                                    graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(Last_posX, Last_posY, Convert.ToInt16(glass1.Width), Convert.ToInt16(glass1.Length)));
                                 }
                             }
 
@@ -1155,7 +1161,8 @@ namespace CGC.Funkcje.CutFuncFolder
                             {
                                 using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30, 29, 4, 32)))
                                 {
-                                    graphics.FillRectangle(myBrush, new Rectangle((Last_posX2) / scale, (Last_posY2) / scale, (int)(Convert.ToDouble(glass1.Width) / scale), (int)(Convert.ToDouble(glass1.Length) / scale)));
+                                    graphics.FillRectangle(myBrush, new Rectangle((int)(Last_posX2 ), (int)(Last_posY2 ), (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
+                                    //graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((Last_posX2) , (Last_posY2) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
                                 }
                             }
 
@@ -1170,7 +1177,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                         {
                                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                             {                                                
-                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)(piece.X + Last_posX), (int)(piece.Y ), (int)(piece.Widht), (int)(piece.Lenght)));
                                                 graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX + (float)piece.X + (float)piece.Widht / 2 - 45, Last_posY + (float)piece.Y + (float)piece.Lenght / 2 - 20);
                                             }
                                         }
@@ -1179,7 +1186,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                         {
                                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                             {
-                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX2) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)(piece.X + Last_posX2 ), (int)(piece.Y ), (int)(piece.Widht ), (int)(piece.Lenght )));
                                                 graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX2 + (float)piece.X + (float)piece.Widht / 2 - 45, Last_posY2 + (float)piece.Y + (float)piece.Lenght / 2 - 20);
                                             }
                                         }
@@ -1190,7 +1197,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                         {
                                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                             {
-                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)(piece.X + Last_posX ), (int)(piece.Y ), (int)(piece.Widht ), (int)(piece.Lenght )));
                                                 System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
                                                 drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
                                                 graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX + (float)piece.X + (float)piece.Widht / 2 - 20, Last_posY + (float)piece.Y + (float)piece.Lenght / 2 - 45, drawFormat);
@@ -1201,7 +1208,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                         {
                                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(255, piece.Rgb[0], piece.Rgb[1], piece.Rgb[2])))
                                             {
-                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(((int)piece.X + Last_posX2) / scale, ((int)piece.Y) / scale, ((int)piece.Widht) / scale, ((int)piece.Lenght) / scale));
+                                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((int)(piece.X + Last_posX2 ), (int)(piece.Y ), (int)(piece.Widht ), (int)(piece.Lenght )));
                                                 System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
                                                 drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
                                                 graphics.DrawString(piece.Widht.ToString() + 'x' + piece.Lenght.ToString(), new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX2 + (float)piece.X + (float)piece.Widht / 2 - 20, Last_posY2 + (float)piece.Y + (float)piece.Lenght / 2 - 45, drawFormat);
@@ -1210,13 +1217,41 @@ namespace CGC.Funkcje.CutFuncFolder
                                     }
                                 }
                             }
-                            Last_posX += (Convert.ToInt32(glass1.Width)/scale);
-                            Last_posX2 += (Convert.ToInt32(glass1.Width) / scale);
+                            Last_posX += (int) (Convert.ToInt32(glass1.Width) );
+                            Last_posX2 += (int) (Convert.ToInt32(glass1.Width) );
                         }
                         bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
+
+                        ImageCodecInfo jpgEncoder = ImageCodecInfo.GetImageEncoders().Single(x => x.FormatDescription == "JPEG");
+                        Encoder encoder2 = System.Drawing.Imaging.Encoder.Quality;
+                        EncoderParameters parameters = new System.Drawing.Imaging.EncoderParameters(1);
+                        EncoderParameter parameter = new EncoderParameter(encoder2, 50L);
+                        parameters.Param[0] = parameter;
+
+                        System.IO.Stream stream = new MemoryStream();
+                        bitmap.Save(stream, jpgEncoder, parameters);              
+
+                        var bytes = ((MemoryStream)stream).ToArray();
+                        System.IO.Stream inputStream = new MemoryStream(bytes);
+
+                        UploadFileToStorage(inputStream, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
                         glass_count++;
                     }
+
+                    ImageCodecInfo jpgEncoder2 = ImageCodecInfo.GetImageEncoders().Single(x => x.FormatDescription == "JPEG");
+                    Encoder encoder22 = System.Drawing.Imaging.Encoder.Quality;
+                    EncoderParameters parameters2 = new System.Drawing.Imaging.EncoderParameters(1);
+                    EncoderParameter parameter2 = new EncoderParameter(encoder22, 50L);
+                    parameters2.Param[0] = parameter2;
+
+                    System.IO.Stream stream2 = new MemoryStream();
+                    bitmapAll.Save(stream2, jpgEncoder2, parameters2);
+
+                    var bytes2 = ((MemoryStream)stream2).ToArray();
+                    System.IO.Stream inputStream2 = new MemoryStream(bytes2);
+
                     bitmapAll.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
+                    UploadFileToStorage(inputStream2, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
                 }
                 catch (Exception e)
                 {
@@ -1253,7 +1288,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                     float fitHeight = image.PhysicalDimension.Height / fitRate;
 
-                    page.Canvas.DrawImage(image, 30, 30, fitWidth, fitHeight);
+                    page.Canvas.DrawImage(image, 0, 0, fitWidth, fitHeight);
                 }
 
                 doc.SaveToFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
