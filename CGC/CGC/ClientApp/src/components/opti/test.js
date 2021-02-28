@@ -51,11 +51,12 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
+                console.log(json)
                 return (json)
                 
             })
             .then(json => {
-                for (var i = 0; i < sessionStorage.getItem('ilosc'); i++) {
+               /* for (var i = 0; i < sessionStorage.getItem('ilosc'); i++) {
                     jpegvar = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + "_" + i + ".jpg"
                     console.log(jpegvar)
                     sessionStorage.setItem('obrazek', jpegvar)
@@ -65,7 +66,7 @@ export class Test extends Component {
                 }
                 console.log('kur nie wiem')
                 var aaa = this.state.jpegs
-                console.log(aaa)
+                console.log(aaa)*/
 
 
 
@@ -85,8 +86,6 @@ export class Test extends Component {
                         ids: json[i].glass_info[0].id,
                         status: json[i].status,
                         desk: json[i].desk,
-
-
                     })
                 };
                 this.setState({
@@ -132,6 +131,9 @@ export class Test extends Component {
                         rows: table3
                     }
                 });
+                sessionStorage.setItem('uncat2', json[json.length - 1].color)
+                console.log('Uncat2====')
+                console.log(sessionStorage.getItem('uncat2'))
                 for (var i = 0; i < json.length-1; i++) {
                     for (var j = 0; j < json[i].glass_info.length; j++) {
                         for (var x = 0; x < json[i].glass_info[j].pieces.length; x++) {
@@ -260,7 +262,7 @@ export class Test extends Component {
 
     }
 
-    generator = (event) => {
+  generator = (event) => {
         const receiver = {
             order: {
                 id_order: sessionStorage.getItem('idOpti'),
@@ -359,8 +361,8 @@ export class Test extends Component {
             document.write(i)
             
         }
-        let href = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".jpg"
-        let href2 = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
+        let href = sessionStorage.getItem('uncat2')
+        let href2 = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePage">
@@ -371,27 +373,28 @@ export class Test extends Component {
         }
         else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div className="tescik" >
+                <div >
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Cut project</h1>
                     </div>
-
-                    <h3>{sessionStorage.getItem('uncat')}</h3>
-                    <div className="table2">
-                        <h2>Glasses</h2>
-                        {table1}
-                    </div>
-                    <div className="table3">
-                        <h2>Products</h2>
-                        {table2}
-                        <img src={href} />
-                        <div>
-                            <button className="prim_test" onClick={this.saveProject}>Save project</button>
-                            <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
-                            <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                    <div className="tescik" >
+                        <h3>{sessionStorage.getItem('uncat')}</h3>
+                            <div className="table2">
+                                <h2>Glasses</h2>
+                                {table1}
+                             </div>
+                        <div className="table3">
+                            <h2>Products</h2>
+                            {table2}
+                            <img src={href} />
+                            <div>
+                                <button className="prim_test" onClick={this.saveProject}>Save project</button>
+                                <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
+                                <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                            </div>
+                            <div id="slideContainer"></div>
                         </div>
-                        <div id="slideContainer"></div>
                     </div>
                 </div>
             );

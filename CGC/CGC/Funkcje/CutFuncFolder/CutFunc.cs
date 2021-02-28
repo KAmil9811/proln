@@ -1,5 +1,6 @@
 ﻿using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using CGC.Funkcje.CutFuncFolder.CutBase;
 using CGC.Funkcje.MagazineFuncFolder.MagazineBase;
 using CGC.Funkcje.OrderFuncFolder.OrderBase;
@@ -7,6 +8,9 @@ using CGC.Funkcje.ProductFuncFolder.ProductBase;
 using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Sharp3DBinPacking;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
@@ -855,7 +859,7 @@ namespace CGC.Funkcje.CutFuncFolder
         }
         */
 
-        public static async Task<bool> UploadFileToStorage(Stream fileStream, string fileName)
+        public void UploadFileToStorage(Stream fileStream, string fileName)
         {
             // Create a URI to the blob
             Uri blobUri = new Uri("https://inzcgc.blob.core.windows.net/cgc/" + fileName);
@@ -869,9 +873,7 @@ namespace CGC.Funkcje.CutFuncFolder
             BlobClient blobClient = new BlobClient(blobUri, storageCredentials);
 
             // Upload the file
-            await blobClient.UploadAsync(fileStream);
-
-            return await Task.FromResult(true);
+            blobClient.UploadAsync(fileStream);
         }
 
         public List<Glass> Magic(Receiver receiver)
@@ -1066,6 +1068,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
                 Glass tmp2 = new Glass { Glass_info = new List<Glass_Id>() };
                 tmp2.Error_Messege = "Not enough place for: ";
+                tmp2.Color = "https://inzcgc.blob.core.windows.net/cgc/" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg";
                 wynik.Add(tmp2);
 
                 if (wynik.Count < backup.Item.Count)
@@ -1135,6 +1138,15 @@ namespace CGC.Funkcje.CutFuncFolder
 
                     Bitmap bitmapAll = new Bitmap(Convert.ToInt32(PaintX), Convert.ToInt32(PaintY));
 
+
+                    for (int Xcount = 0; Xcount < bitmapAll.Width; Xcount++)
+                    {
+                        for (int Ycount = 0; Ycount < bitmapAll.Height; Ycount++)
+                        {
+                            bitmapAll.SetPixel(Xcount, Ycount, Color.Gray);
+                        }
+                    }
+
                     foreach (Glass glass1 in wynik)
                     {
                         if(glass1 == wynik.Last())
@@ -1142,6 +1154,15 @@ namespace CGC.Funkcje.CutFuncFolder
                             break;
                         }
                         Bitmap bitmap = new Bitmap(Convert.ToInt32(glass1.Width), Convert.ToInt32(glass1.Length));
+
+                        for (int Xcount = 0; Xcount < bitmap.Width; Xcount++)
+                        {
+                            for (int Ycount = 0; Ycount < bitmap.Height; Ycount++)
+                            {
+                                bitmap.SetPixel(Xcount, Ycount, Color.Gray);
+                            }
+                        }
+
                         Last_posX = 0;
                         Last_posY = 0;
 
@@ -1220,7 +1241,7 @@ namespace CGC.Funkcje.CutFuncFolder
                             Last_posX += (int) (Convert.ToInt32(glass1.Width) );
                             Last_posX2 += (int) (Convert.ToInt32(glass1.Width) );
                         }
-                        bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
+                        //bitmap.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
 
                         ImageCodecInfo jpgEncoder = ImageCodecInfo.GetImageEncoders().Single(x => x.FormatDescription == "JPEG");
                         Encoder encoder2 = System.Drawing.Imaging.Encoder.Quality;
@@ -1235,6 +1256,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         System.IO.Stream inputStream = new MemoryStream(bytes);
 
                         UploadFileToStorage(inputStream, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
+
                         glass_count++;
                     }
 
@@ -1250,7 +1272,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     var bytes2 = ((MemoryStream)stream2).ToArray();
                     System.IO.Stream inputStream2 = new MemoryStream(bytes2);
 
-                    bitmapAll.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
+                    //bitmapAll.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
                     UploadFileToStorage(inputStream2, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
                 }
                 catch (Exception e)
@@ -1267,16 +1289,39 @@ namespace CGC.Funkcje.CutFuncFolder
         {
             try
             {
+
                 PdfDocument doc = new PdfDocument();
 
                 PdfSection section = doc.Sections.Add();
 
+                string connectionString = "DefaultEndpointsProtocol=https;AccountName=inzcgc;AccountKey=p4AuZxD5JNaLYH3mAH2hQR0cFDbFByr0KicHy8vxQoTpWq31CfTZpigPbe4IHbpVO60kw0YKeMHxJCk8bwRr/g==;EndpointSuffix=core.windows.net";
+
+                string containerName = "cgc";
+
+                // Get a reference to a container
+                BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+
+
                 for (int i = 0; i < Convert.ToInt32(receiver.glass_count) -1; i++)
                 {
+                    string blobName = receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + "_" + i + ".jpg";
+
+                    BlobClient blob = container.GetBlobClient(blobName);
 
                     PdfPageBase page = doc.Pages.Add();
 
-                    PdfImage image = PdfImage.FromFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + "_" + i + ".jpg");
+                    PdfImage image;// = PdfImage.FromFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + "_" + i + ".jpg");
+
+                    string downloadFilePath = "https://inzcgc.blob.core.windows.net/cgc/" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + "_" + i + ".jpg";
+
+                    using (System.IO.Stream memStream = new System.IO.MemoryStream())
+                    {
+                        blob.DownloadTo(memStream);
+                        image = PdfImage.FromStream(memStream);
+                    }
+
+                    //blob.DownloadToAsync(downloadFilePath);
+
 
                     float widthFitRate = image.PhysicalDimension.Width / page.Canvas.ClientSize.Width;
 
@@ -1292,6 +1337,20 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
 
                 doc.SaveToFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
+
+                /*ImageCodecInfo jpgEncoder = ImageCodecInfo.GetImageEncoders().Single(x => x.FormatDescription == "JPEG");
+                Encoder encoder2 = System.Drawing.Imaging.Encoder.Quality;
+                EncoderParameters parameters = new System.Drawing.Imaging.EncoderParameters(1);
+                EncoderParameter parameter = new EncoderParameter(encoder2, 50L);
+                parameters.Param[0] = parameter;*/
+
+                System.IO.Stream stream = new MemoryStream();
+                doc.SaveToStream(stream);
+
+                var bytes = ((MemoryStream)stream).ToArray();
+                System.IO.Stream inputStream = new MemoryStream(bytes);
+
+                UploadFileToStorage(inputStream, receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
 
                 doc.Close();
 
