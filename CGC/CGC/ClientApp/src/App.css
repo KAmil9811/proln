@@ -1,11 +1,16 @@
 ﻿
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
+html{
+    position:relative;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Lato', sans-serif;
+  
 }
 
 @media (max-width: 767px) {
@@ -415,8 +420,42 @@ label {
 }
 /*Pasek nawigacyjny najeżdza na widoki(muszą być wszystkie)*/
 
+.success_login2 {
+    background-color: #00c851;
+    height: 3rem;
+    width: 12rem;
+    padding: 6px 6px;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    background-image: none;
+    color: white;
+    border-radius: 13px;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-left: auto;
+    margin-right: auto;
+    /* position: center;*/
+   
+}
 
+    .success_login2:hover {
+        background-color: #339933;
+        transform: scale(1.05);
+        border-bottom: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        outline: 0;
+    }
 
+.HomePageFail {
+    text-align: center;
+  
+}
 .EmailChange_c,
 .EditOrder_c,
 .PasswordChange_c,
@@ -443,7 +482,6 @@ label {
 .conteiner_mw,
 .AddAcount_c,
 .UserChange_c,
-
 .AddGlass_c,
 .GlassEdit_c,
 .SavedProject_c,
@@ -458,34 +496,17 @@ label {
 .TypeEdit_c,
 .AddCutMachine_c,
 .tescik,
-.order_warehouse_conteiner {
+.Glass_Warehause_c,
+.order_warehouse_conteiner,
+.selection_of_orders_conteiner {
     z-index: 0;
-    margin-top: 16vh;
-    width: 100%;
-    margin-left: auto;
+    margin-top: 100px;
+    margin-left: 10vw;
     margin-right: auto;
-   
-}
-.Glass_Warehause {
-    margin-top: 0;
-    width: 100%;
-   
-   
-    height: 100vh;
 }
 
-.Glass_Warehause_c {
-    margin-top: 0;
-    width: 100%;
-    background-color: aqua;
-    height: 88vh;
-    
-}
-.Glass_Warehause_cc{
-    margin-top: 0;
-    background-color: green;
-    height: 100%;
-}
+
+
 .s {
     float: left;
 }

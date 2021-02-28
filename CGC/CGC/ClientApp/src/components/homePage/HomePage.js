@@ -64,17 +64,21 @@ export class HomePage extends Component {
         this.props.history.push('/userpanel')
 
     }
-        goback = (event) => {
-            this.props.history.push('/')
-        }
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
+
 
         render() {
 
         if (sessionStorage.getItem('valid') === '') {
             return (
-                <div className="HomePage">
-                    <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                <div className="HomePageFail">
+                    <h1 className="texth1">Log in to have access!</h1>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -87,15 +91,15 @@ export class HomePage extends Component {
                             <h1 className="titletext">Home page</h1>
                         </div>
                         <div className="conteiner">
-                            <button className="ele3" onClick={this.Production}>Production</button>
-                            <button className="ele2" onClick={this.glassWarehouse}>Magazine</button>
-                            <button className="ele2" onClick={this.readyGlassWarehouse}>Products</button>
+                            <button  className="ele3 production" onClick={this.Production}></button>
+                            <button className="ele2 magazine" onClick={this.glassWarehouse}></button>
+                            <button className="ele2 products" onClick={this.readyGlassWarehouse}></button>
 
-                            <button className="ele2" onClick={this.orderWarehouse}>Orders</button>
-                            <button className="ele2" onClick={this.machineWarehouse}>Machines</button>
-                            <button className="ele2" onClick={this.userPanel}>Your account</button>
-                            <button className="ele2" onClick={this.saveProject}>Saved projects</button>
-                            <button className="ele4" onClick={this.controlPanel}>Control panel</button>
+                            <button className="ele2 orders" onClick={this.orderWarehouse}></button>
+                            <button className="ele2 machines" onClick={this.machineWarehouse}></button>
+                            <button className="ele2 account" onClick={this.userPanel}></button>
+                            <button className="ele2 projects" onClick={this.saveProject}></button>
+                            <button className="ele4 control" onClick={this.controlPanel}></button>
                         </div>
                     </form>
                 </div>

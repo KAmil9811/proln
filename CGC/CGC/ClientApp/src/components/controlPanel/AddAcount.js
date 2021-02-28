@@ -93,6 +93,13 @@ export class AddAcount extends Component{
     cancelAdding = (event) => {
         this.props.history.push('/controlpaneladmin')
     }
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
+
 
     permRender() {
         if (sessionStorage.getItem('manager') === 'true') {
@@ -162,7 +169,7 @@ export class AddAcount extends Component{
             return (
                 <div className="HomePage">
                     <h1>Log in or check if you have perrmission to this panel</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }

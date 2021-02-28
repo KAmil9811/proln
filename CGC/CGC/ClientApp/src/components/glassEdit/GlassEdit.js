@@ -106,7 +106,12 @@ export class GlassEdit extends Component {
         sessionStorage.removeItem('owner');
         this.props.history.push('/glasswarehouse');
     }
-
+    goback = (event) => {
+        this.props.history.push('/')
+    }
+    goback2 = (event) => {
+        this.props.history.push('/home')
+    }
 
     colorsSelector = (event) => {
         var tab = []
@@ -135,7 +140,7 @@ export class GlassEdit extends Component {
             return (
                 <div className="HomePage">
                     <h1>Log in to have access!</h1>
-                    <button type="submit" className="success_login" onClick={this.goback} >Log in</button>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
             );
         }
@@ -245,7 +250,7 @@ export class GlassEdit extends Component {
             return (
                 <div className="HomePage">
                     <h1>Check if you have perrmission to this panel</h1>
-                    <button type="submit" className="success_login" onClick={this.goback2} >Back to home page</button>
+                    <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>
             );
 

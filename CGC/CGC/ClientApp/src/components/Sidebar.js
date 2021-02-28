@@ -1,13 +1,15 @@
-﻿import React, { useState } from 'react';
+﻿
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as FiIcons from 'react-icons/fi';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
+import { SidebarData2 } from './SidebarData2';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
-import './Sidebar.css' 
+import './second.css';
 
 
 const Titleee = styled.div`
@@ -35,7 +37,6 @@ const Nav = styled.div`
   position: fixed;
   z-index: 100;
  
-
   
 `;
 
@@ -47,7 +48,6 @@ const NavIcon = styled(Link)`
   justify-content: flex-start;
   align-items: center;
   color: #fff;
-
 `;
 const OutIcon = styled(Link)`
  
@@ -74,14 +74,13 @@ const SidebarNav = styled.nav`
   width: 250px;
   display: flex;
   justify-content: center;
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 80px;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
-min-height: 100vh;
+min-height: 100%;
     height: auto;
-    height: 100%;
 `;
 
 const SidebarWrap = styled.div`
@@ -89,54 +88,67 @@ const SidebarWrap = styled.div`
 `;
 
 
+
 const title = sessionStorage.getItem('title');
-
-
 
 const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
+    const [sidebar2, setSidebar2] = useState(true);
 
     const showSidebar = () => {
         setSidebar(!sidebar);
-     
-    };
-
-
-
-
- 
-   
-
-    return (
-        <div>
-            
-            <Nav>
-              
-                <NavIcon to='#'>
-                    <FaIcons.FaBars onClick={showSidebar} />
-                </NavIcon>
-
-               
-              
-                <OutIcon to='/' >
-                    <FiIcons.FiLogOut/>
-                </OutIcon>
-            </Nav>
-            <IconContext.Provider value={{ color: '#fff' }}>
-                <SidebarNav sidebar={sidebar}>
-                    <SidebarWrap>
+        setSidebar2(!sidebar2);
+    }
+    if (sidebar == true) {
+        return (
+            <div>
+                <IconContext.Provider value={{ color: '#fff' }}>
+                    <Nav>
                         <NavIcon to='#'>
-                            <AiIcons.AiOutlineClose onClick={showSidebar} />
+                            <FaIcons.FaBars onClick={showSidebar} />
                         </NavIcon>
-                        
-                        {SidebarData.map((item, index) => {
-                            return <SubMenu item={item} key={index} />;
-                        })}
-                    </SidebarWrap>
-                </SidebarNav>
-            </IconContext.Provider>
+
+                        <OutIcon to='/' >
+                            <FiIcons.FiLogOut />
+                        </OutIcon>
+                    </Nav>
+                    <SidebarNav sidebar={sidebar}>
+                        <SidebarWrap>
+                           
+                            {SidebarData.map((item, index) => {
+                                return <SubMenu item={item} key={index} />;
+                            })}
+                        </SidebarWrap>
+                    </SidebarNav>
+                </IconContext.Provider>
         </div>
-    );
+        );
+    }
+    else {
+        return (
+            <div>
+                <IconContext.Provider value={{ color: '#fff' }}>
+                    <Nav>
+                        <NavIcon to='#'>
+                            <FaIcons.FaBars onClick={showSidebar} />
+                        </NavIcon>
+                        <OutIcon to='/' >
+                            <FiIcons.FiLogOut />
+                        </OutIcon>
+
+                    </Nav>
+
+                    <SidebarNav sidebar={sidebar2} className="second">
+                        <SidebarWrap >
+                            {SidebarData2.map((item, index) => {
+                                return <SubMenu item={item} key={index} />;
+                            })}
+                        </SidebarWrap>
+                    </SidebarNav>
+                </IconContext.Provider>
+            </div>
+        );
+    }
 };
 
-export  default Sidebar;
+export default Sidebar;
