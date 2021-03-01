@@ -5,6 +5,7 @@ import { OptiTableItems } from './OptiTableItems'
 import Sidebar from '../Sidebar';
 import { MDBDataTable } from 'mdbreact';
 import { MDBDataTableV5 } from 'mdbreact';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export class Test extends Component {
     constructor(props) {
@@ -24,11 +25,13 @@ export class Test extends Component {
                 columns: [],
                 rows: []
             },
-            jpegs:[],
+            jpegs: [],
+            isLoading: true, 
         }
     }
 
     componentDidMount() {
+        
         this.jpgPrint;
         var jpegvar = '';
         const receiver = {
@@ -42,6 +45,7 @@ export class Test extends Component {
                 login: sessionStorage.getItem('login'),
             },
         }
+        console.log(new Date())
         fetch(`api/Cut/Magic`, {
             method: "post",
             body: JSON.stringify(receiver),
@@ -51,7 +55,9 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
+                console.log(new Date())
                 console.log(json)
+               
                 return (json)
                 
             })
@@ -173,7 +179,11 @@ export class Test extends Component {
                         rows: table2
                     }
                 });
+                this.setState({
+                    isLoading: false
+                })
             })
+        
        /* var table4 = [];
         for (var i = 0; i < sessionStorage.getItem('ilosc'); i++)  {
             table4.push(this.state.jpegs[i])
@@ -190,7 +200,36 @@ export class Test extends Component {
         str += '</ul>';
 
         document.getElementById("slideContainer").innerHTML = str;*/
-            
+
+        const receiver2 = {
+            order: {
+                id_order: sessionStorage.getItem('idOpti'),
+                color: sessionStorage.getItem('colorOpti'),
+                type: sessionStorage.getItem('typeOpti'),
+                thickness: sessionStorage.getItem('thicknessOpti'),
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
+            glass_count: sessionStorage.getItem('ilosc')
+        }
+        console.log('PDF gene')
+        fetch(`api/Cut/CreatePdf`, {
+            method: "post",
+            body: JSON.stringify(receiver2),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+            })
+        document.getElementById
+
+
+
     }
 
 
@@ -262,7 +301,7 @@ export class Test extends Component {
 
     }
 
-  generator = (event) => {
+ /* generator = (event) => {
         const receiver = {
             order: {
                 id_order: sessionStorage.getItem('idOpti'),
@@ -288,7 +327,8 @@ export class Test extends Component {
                
             })
         document.getElementById
-    }
+    }*/
+
 
 
 
@@ -372,37 +412,47 @@ export class Test extends Component {
             );
         }
         else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
-            return (
-                <div >
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Cut project</h1>
-                    </div>
-                    <div className="tescik" >
-                        <h3>{sessionStorage.getItem('uncat')}</h3>
+            if (this.state.isLoading === true) {
+                return (
+                    <ClipLoader loading={this.state.isLoading} size={150} />
+                )
+            }
+            else {
+                return (
+                    <div >
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Cut project</h1>
+                        </div>
+                        <div className="tescik" >
+
+                            <h3>{sessionStorage.getItem('uncat')}</h3>
                             <div className="table2">
                                 <h2>Glasses</h2>
                                 {table1}
-                             </div>
-                        <div className="table3">
-                            <h2>Products</h2>
-                            {table2}
-                            <img src={href} />
-                            <div>
-                                <button className="prim_test" onClick={this.saveProject}>Save project</button>
-                                <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
-                                <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
                             </div>
-                            <div id="slideContainer"></div>
+                            <div className="table3">
+                                <h2>Products</h2>
+                                {table2}
+                                <img src={href} />
+                                <div>
+                                    <button className="prim_test" onClick={this.saveProject}>Save project</button>
+                                    <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
+                                    <a href={href2} download><button className="success_test" /*onClick = { this.generator }*/ >Generate PDF </button></a>
+                                </div>
+                                <div id="slideContainer"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
+                );
+            }
+
         }
         else {
 
             return (
                 <div className="tescik" >
+                    <ClipLoader loading={this.state.isLoading} size={150} />
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Cut project</h1>
