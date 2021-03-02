@@ -405,7 +405,7 @@ export class Test extends Component {
         let href2 = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
         if (sessionStorage.getItem('valid') === '') {
             return (
-                <div className="HomePage">
+                <div className="HomePageFail">
                     <h1>Log in to have access!</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>

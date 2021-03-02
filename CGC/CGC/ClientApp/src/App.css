@@ -477,12 +477,12 @@ label {
 .save_project_conteiner,
 .machine_warhouse_conteiner,
 .conteiner_rgw,
-.AddOrder1_c,
+
 .AddType_c,
 .conteiner_mw,
 .AddAcount_c,
 .UserChange_c,
-.AddGlass_c,
+
 .GlassEdit_c,
 .SavedProject_c,
 .AddOrder2_c,
@@ -497,12 +497,25 @@ label {
 .AddCutMachine_c,
 .tescik,
 .Glass_Warehause_c,
-.order_warehouse_conteiner,
-.selection_of_orders_conteiner {
+.order_warehouse_conteiner
+ {
     z-index: 0;
     margin-top: 100px;
     margin-left: 10vw;
     margin-right: auto;
+}
+
+
+
+
+.AddGlass_c,
+.AddOrder1_c
+{
+    z-index: 0;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 420px;
 }
 
 

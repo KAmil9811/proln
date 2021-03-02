@@ -48,7 +48,7 @@ export class ReadyPackages extends Component {
     render() {
         if (sessionStorage.getItem('valid') === '') {
             return (
-                <div className="HomePage">
+                <div className="HomePageFail">
                     <h1>Log in to have access!</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>

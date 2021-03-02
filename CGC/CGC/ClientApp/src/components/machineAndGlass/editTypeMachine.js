@@ -59,7 +59,7 @@ export class MachineTypeEdit extends Component {
     render() {
         if (sessionStorage.getItem('valid') === '') {
             return (
-                <div className="HomePage">
+                < div className = "HomePageFail" >
                     <h1>Check if you have perrmission to this panel</h1>
                     <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>
@@ -104,7 +104,7 @@ export class MachineTypeEdit extends Component {
         }
         else {
             return (
-                <div className="HomePage">
+                <div className="HomePageFail">
                     <h1>Check if you have perrmission to this panel</h1>
                     <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>

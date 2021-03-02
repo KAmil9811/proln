@@ -116,7 +116,7 @@ export class CutMachineEdit extends Component {
         let typeTable = this.table();
         if (sessionStorage.getItem('valid') === '') {
             return (
-                <div className="HomePage">
+                <div className="HomePageFail">
                     <h1>Log in to have access!</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
@@ -142,7 +142,7 @@ export class CutMachineEdit extends Component {
         }
         else {
             return (
-                <div className="HomePage">
+                <div className="HomePageFail">
                     <h1>Check if you have perrmission to this panel</h1>
                     <button type="submit" className="success_login2" onClick={this.goback2} >Back to home page</button>
                 </div>

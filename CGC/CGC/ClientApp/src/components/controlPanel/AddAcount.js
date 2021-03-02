@@ -167,7 +167,7 @@ export class AddAcount extends Component{
         var perm = this.permRender()
         if ((sessionStorage.getItem('valid') === '') && (sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') ) {
             return (
-                <div className="HomePage">
+                <div className="HomePageFail">
                     <h1>Log in or check if you have perrmission to this panel</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
                 </div>
