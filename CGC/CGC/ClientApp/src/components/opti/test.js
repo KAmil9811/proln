@@ -396,11 +396,11 @@ export class Test extends Component {
         let table1 = this.table();
         let table2 = this.table2();
         var a = 'href'
-        for (var i; i < sessionStorage.getItem('ilosc'); i++) {
+       /* for (var i; i < sessionStorage.getItem('ilosc'); i++) {
             
             document.write(i)
             
-        }
+        }*/
         let href = sessionStorage.getItem('uncat2')
         let href2 = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
         if (sessionStorage.getItem('valid') === '') {
@@ -449,27 +449,33 @@ export class Test extends Component {
 
         }
         else {
-
-            return (
-                <div className="tescik" >
+            if (this.state.isLoading === true) {
+                return (
                     <ClipLoader loading={this.state.isLoading} size={150} />
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Cut project</h1>
-                    </div>
-                    <div className="test_c">
-                        <h3>{sessionStorage.getItem('uncat')}</h3>
-                        <div className="table2">
-                            <h2>Glasses</h2>
-                            {table1}
+                )
+            }
+            else {
+
+                return (
+                    <div className="tescik" >
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Cut project</h1>
                         </div>
-                        <div className="table3">
-                            <h2>Products</h2>
-                            {table2}
+                        <div className="test_c">
+                            <h3>{sessionStorage.getItem('uncat')}</h3>
+                            <div className="table2">
+                                <h2>Glasses</h2>
+                                {table1}
+                            </div>
+                            <div className="table3">
+                                <h2>Products</h2>
+                                {table2}
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
+                );
+            }
         }
     }
 }

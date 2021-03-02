@@ -168,7 +168,7 @@ export class ControlPanel2 extends Component {
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePageFail">
-                    <h1>Zaloguj się, aby usyskać dostęp!</h1>
+                    <h1>Log in to have access!</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Logowanie</button>
                 </div>
             );

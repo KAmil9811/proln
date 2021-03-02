@@ -462,12 +462,11 @@ label {
 .user_change_conteiner,
 .conteiner_cp,
 .cut_machine_edit,
-.EditTypeM_c,
-.AddTypeMachine_c,
+
+
 .glass_attributes_conteiner,
-.AddColor_c,
-.addType,
-.addCutMachine,
+
+
 .EditColor,
 .user_history_conteiner,
 .add_acount_conteiner,
@@ -494,7 +493,7 @@ label {
 .PasswordReset2_c,
 .Login_c,
 .TypeEdit_c,
-.AddCutMachine_c,
+
 .tescik,
 .Glass_Warehause_c,
 .order_warehouse_conteiner
@@ -505,12 +504,14 @@ label {
     margin-right: auto;
 }
 
+.AddCutMachine_c,
+.EditTypeM_c,
+.AddTypeMachine_c,
 
-
-
-.AddGlass_c,
 .AddOrder1_c
-{
+.AddColor_c,
+.addType,
+.addCutMachine {
     z-index: 0;
     margin-top: 100px;
     margin-left: auto;
@@ -518,6 +519,16 @@ label {
     max-width: 420px;
 }
 
+
+
+.AddGlass_c {
+    z-index: 0;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 420px;
+    m
+}
 
 
 .s {

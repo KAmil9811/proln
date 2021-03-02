@@ -35,13 +35,14 @@ export class SavedPrint extends Component {
             }
         })
             .then(res => res.json())
-            .then(json => {
+               .then(json => {
+                console.log(json)
                 
                 var table2 = []
-                
-                sessionStorage.setItem('kolor', json[0].color)
+               // ZAKOMENTOWANE BO NIC NIE ZWRACAŁO
+               /* sessionStorage.setItem('kolor', json.color)
                 sessionStorage.setItem('grubosc', json[0].hight)
-                sessionStorage.setItem('typ', json[0].type)
+                sessionStorage.setItem('typ', json[0].type)*/
             })
     }
 
