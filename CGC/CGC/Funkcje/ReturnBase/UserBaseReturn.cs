@@ -216,7 +216,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager;", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Manager", SqlDbType.Bit).Value = 0;
+            command.Parameters.Add("@Manager", SqlDbType.Bit).Value = false;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -251,8 +251,8 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager and Super_Admin = @Super_Admin;", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Manager", SqlDbType.VarBinary).Value = 0;
-            command.Parameters.Add("@Super_Admin", SqlDbType.VarBinary).Value = 0;
+            command.Parameters.Add("@Manager", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Super_Admin", SqlDbType.Bit).Value = false;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -288,9 +288,9 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager and Super_Admin = @Super_Admin and Admin = @Admin;", connect.cnn);
                 connect.cnn.Open();
 
-                command.Parameters.Add("@Manager", SqlDbType.VarBinary).Value = 0;
-                command.Parameters.Add("@Super_Admin", SqlDbType.VarBinary).Value = 0;
-                command.Parameters.Add("@Admin", SqlDbType.VarBinary).Value = 0;
+                command.Parameters.Add("@Manager", SqlDbType.Bit).Value = false;
+                command.Parameters.Add("@Super_Admin", SqlDbType.Bit).Value = false;
+                command.Parameters.Add("@Admin", SqlDbType.Bit).Value = false;
 
                 SqlDataReader sqlDataReader = command.ExecuteReader();
                 while (sqlDataReader.Read())

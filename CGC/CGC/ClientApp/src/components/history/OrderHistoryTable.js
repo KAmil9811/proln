@@ -26,11 +26,10 @@ export class OrderHistoryTable extends Component {
         }
         
         fetch(`api/Order/Return_Order_History`, {
-            method: "POST",
+            method: "GET",
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(receiver),
+            }
         })
             .then(res => res.json())
             .then(json => {

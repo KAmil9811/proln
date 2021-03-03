@@ -43,6 +43,7 @@ namespace CGC.Models
             Surname = user.Surname;
             Login = user.Login;
             Token = token;
+            Email = user.Email;
             Admin = user.Admin;
             Super_Admin = user.Super_Admin;
             Manager = user.Manager;

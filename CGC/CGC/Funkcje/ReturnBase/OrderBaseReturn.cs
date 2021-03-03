@@ -395,13 +395,11 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
-        public List<Order_History> Return_Order_History(string order_id)
+        public List<Order_History> Return_Order_History()
         {
             List<Order_History> order_Histories = new List<Order_History>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Order_History] WHERE Id_Order = @Id_Order;", connect.cnn);
-
-            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order_id;
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order_History];", connect.cnn);
 
             connect.cnn.Open();
 
