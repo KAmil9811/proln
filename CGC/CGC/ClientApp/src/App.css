@@ -41,12 +41,17 @@ html{
     }
 }
 
+/*Tu */
+::-webkit-scrollbar {
+    display: none;
+}
 
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/
     /* background-color: #c5c5d3;*/
     background-color: #e8e8ed;
+    height: 100% !important;
 }
 
 th {
