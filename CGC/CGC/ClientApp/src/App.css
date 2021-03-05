@@ -41,11 +41,35 @@ html{
     }
 }
 
-/*Tu */
+
 ::-webkit-scrollbar {
-    display: none;
+    overflow-x: hidden;
+    overflow-x: no-display;
 }
 
+::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(13deg, #15171c 46%,#15171c 51%);
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(13deg, #656767 14%,#656767 64%);
+    }
+
+::-webkit-scrollbar-track {
+    background: #15171c;
+    border-radius: 10px;
+}
+
+.scroller {
+    display: none;
+    overflow-x: hidden;
+}
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/

@@ -37,6 +37,7 @@ const Nav = styled.div`
   top:0;
   position: fixed;
   z-index: 100;
+  
  
   
 `;
@@ -76,12 +77,12 @@ const SidebarNav = styled.nav`
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 0px;
+  top: 80px;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
     height: 100%;
-overflow: scroll;
+overflow-y: scroll;
 `;
 
 const SidebarWrap = styled.div`
@@ -117,13 +118,13 @@ const Sidebar = () => {
                     </Nav>
                     <SidebarNav sidebar={sidebar}>
                         <SidebarWrap>
-                            <div className="scrollbar scrollbar-primary">
+                            
 
                                 {SidebarData.map((item, index) => {
                                     return <SubMenu item={item} key={index} />;
                                 })}
 
-                            </div>
+                            
 
                         </SidebarWrap>
                     </SidebarNav>
