@@ -99,5 +99,53 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             return temp;
         }
+
+        public List<Cut_Project> Get_Cut_Project(string status, string status2)
+        {
+            List<Cut_Project> temp = new List<Cut_Project>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status OR Status = @Status2;", connect.cnn);
+
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
+            command.Parameters.Add("@Status2", SqlDbType.VarChar, 40).Value = status2;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Cut_Project cut_Project = new Cut_Project();
+                cut_Project.Cut_id = sqlDataReader["Cut_id"].ToString();
+                cut_Project.Order_id = sqlDataReader["Order_id"].ToString();
+                cut_Project.Status = sqlDataReader["Status"].ToString();
+
+                temp.Add(cut_Project);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            foreach (Cut_Project cut in temp)
+            {
+                command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order;", connect.cnn);
+
+                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = cut.Order_id;
+
+                connect.cnn.Open();
+
+                sqlDataReader = command.ExecuteReader();
+                while (sqlDataReader.Read())
+                {
+                    cut.Priority = sqlDataReader["Priority"].ToString();
+                    cut.Deadline = sqlDataReader["Deadline"].ToString();
+                    cut.Status = sqlDataReader["Status"].ToString();
+                }
+                sqlDataReader.Close();
+                command.Dispose();
+                connect.cnn.Close();
+            }
+
+            return temp;
+        }
     }
 }

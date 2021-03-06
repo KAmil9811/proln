@@ -198,7 +198,7 @@ namespace CGC.Controllers
             return cutFunc.Post_Production(receiver);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("Start_Production")]
         public async Task<string> Start_Production([FromBody] Receiver receiver)
         {

@@ -6,6 +6,7 @@ using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Funkcje.ProductFuncFolder.ProductBase;
 using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Models;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Sharp3DBinPacking;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
@@ -68,7 +69,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
         public List<Cut_Project> Return_Cut_Project()
         {
-            return cutBaseReturn.Get_Cut_Project("Saved");
+            return cutBaseReturn.Get_Cut_Project("Saved", "On production");
         }
 
         public List<Glass> Return_Porject(Receiver receiver)
@@ -192,47 +193,46 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            if (wynik.Count < backup.Item.Count)
+
+            List<int> Done = new List<int>();
+            Glass tmp2 = new Glass {Glass_info = new List<Glass_Id>() };
+            tmp2.Error_Messege = "Noe enough place for: ";
+
+            Glass_Id glass_Id3 = new Glass_Id();
+
+            foreach (Item itm in backup.Item)
             {
-                List<int> Done = new List<int>();
-                Glass tmp = new Glass {Glass_info = new List<Glass_Id>() };
-                tmp.Error_Messege = "Noe enough place for: ";
-
-                Glass_Id glass_Id = new Glass_Id();
-
-                foreach (Item itm in backup.Item)
+                foreach (Glass temp in wynik)
                 {
-                    foreach (Glass temp in wynik)
+                    foreach (Glass_Id glass_Ids in temp.Glass_info)
                     {
-                        foreach (Glass_Id glass_Ids in temp.Glass_info)
+                        foreach (Piece piece in glass_Ids.Pieces)
                         {
-                            foreach (Piece piece in glass_Ids.Pieces)
+                            if (itm.Id == piece.Id)
                             {
-                                if (itm.Id == piece.Id)
-                                {
-                                    Done.Add(Convert.ToInt32(itm.Id));
-                                }
+                                Done.Add(Convert.ToInt32(itm.Id));
                             }
                         }
                     }
                 }
-
-                for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
-                {
-                    Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = Convert.ToDouble(packages.Item[i].Length), Widht = Convert.ToDouble(packages.Item[i].Width) };
-                    glass_Id.Pieces.Add(piece);
-                    tmp.Error_Messege = tmp.Error_Messege + ", " + packages.Item[i].Id;
-                }
-                tmp.Glass_info.Add(glass_Id);
-                wynik.Add(tmp);
             }
+
+            for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
+            {
+                Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = Convert.ToDouble(packages.Item[i].Length), Widht = Convert.ToDouble(packages.Item[i].Width) };
+                glass_Id3.Pieces.Add(piece);
+                tmp2.Error_Messege = tmp2.Error_Messege + ", " + packages.Item[i].Id;
+            }
+            tmp2.Glass_info.Add(glass_Id3);
+            wynik.Add(tmp2);
+            
 
 
             foreach (Glass gl in wynik)
             {
-                foreach (Glass_Id glass_Id in gl.Glass_info)
+                foreach (Glass_Id glass_Id2 in gl.Glass_info)
                 {
-                    cutCheck.Los_Rgb(glass_Id.Pieces);
+                    cutCheck.Los_Rgb(glass_Id2.Pieces);
                 }
             }
 
@@ -296,7 +296,7 @@ namespace CGC.Funkcje.CutFuncFolder
                             using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30, 29, 4, 32)))
                             {
                                 graphics.FillRectangle(myBrush, new Rectangle((int)(Last_posX2), (int)(Last_posY2), (int)(Convert.ToDouble(glass1.Width)), (int)(Convert.ToDouble(glass1.Length))));
-                                //graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((Last_posX2) , (Last_posY2) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
+                                graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((Last_posX2) , (Last_posY2) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
                             }
                         }
 
@@ -368,7 +368,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     var bytes = ((MemoryStream)stream).ToArray();
                     System.IO.Stream inputStream = new MemoryStream(bytes);
 
-                    UploadFileToStorage(inputStream, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
+                    UploadFileToStorageAsync(inputStream, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
 
                     glass_count++;
                 }
@@ -386,7 +386,7 @@ namespace CGC.Funkcje.CutFuncFolder
                 System.IO.Stream inputStream2 = new MemoryStream(bytes2);
 
                 //bitmapAll.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
-                UploadFileToStorage(inputStream2, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
+                UploadFileToStorageAsync(inputStream2, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
             }
             catch (Exception e)
             {
@@ -907,21 +907,28 @@ namespace CGC.Funkcje.CutFuncFolder
         }
         */
 
-        public void UploadFileToStorage(Stream fileStream, string fileName)
+        public async System.Threading.Tasks.Task UploadFileToStorageAsync(Stream fileStream, string fileName)
         {
-            // Create a URI to the blob
-            Uri blobUri = new Uri("https://inzcgc.blob.core.windows.net/cgc/" + fileName);
+            try
+            {
+                // Create a URI to the blob
+                Uri blobUri = new Uri("https://inzcgc.blob.core.windows.net/cgc/" + fileName);
 
-            // Create StorageSharedKeyCredentials object by reading
-            // the values from the configuration (appsettings.json)
-            StorageSharedKeyCredential storageCredentials =
-                new StorageSharedKeyCredential("inzcgc", "p4AuZxD5JNaLYH3mAH2hQR0cFDbFByr0KicHy8vxQoTpWq31CfTZpigPbe4IHbpVO60kw0YKeMHxJCk8bwRr / g ==");
+                // Create StorageSharedKeyCredentials object by reading
+                // the values from the configuration (appsettings.json)
+                StorageSharedKeyCredential storageCredentials =
+                    new StorageSharedKeyCredential("inzcgc", "p4AuZxD5JNaLYH3mAH2hQR0cFDbFByr0KicHy8vxQoTpWq31CfTZpigPbe4IHbpVO60kw0YKeMHxJCk8bwRr / g ==");
 
-            // Create the blob client.
-            BlobClient blobClient = new BlobClient(blobUri, storageCredentials);
+                // Create the blob client.
+                BlobClient blobClient = new BlobClient(blobUri, storageCredentials);
 
-            // Upload the file
-            blobClient.UploadAsync(fileStream);
+                // Upload the file
+                blobClient.Upload(fileStream, true);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
         }
 
         public List<Glass> Magic(Receiver receiver)
@@ -1131,7 +1138,7 @@ namespace CGC.Funkcje.CutFuncFolder
                 if (wynik.Count < backup.Item.Count)
                 {
                     List<int> Done = new List<int>();
-                    Glass_Id glass_Id = new Glass_Id();
+                    Glass_Id glass_Id = new Glass_Id {Pieces = new List<Piece>() };
 
                     foreach (Item itm in backup.Item)
                     {
@@ -1240,7 +1247,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                 using (System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.FromArgb(30, 29, 4, 32)))
                                 {
                                     graphics.FillRectangle(myBrush, new Rectangle((int)(Last_posX2 ), (int)(Last_posY2 ), (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
-                                    //graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((Last_posX2) , (Last_posY2) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
+                                    graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((Last_posX2) , (Last_posY2) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
                                 }
                             }
 
@@ -1312,7 +1319,7 @@ namespace CGC.Funkcje.CutFuncFolder
                         var bytes = ((MemoryStream)stream).ToArray();
                         System.IO.Stream inputStream = new MemoryStream(bytes);
 
-                        UploadFileToStorage(inputStream, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
+                        UploadFileToStorageAsync(inputStream, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + "_" + glass_count + ".jpg");
 
                         glass_count++;
                     }
@@ -1330,7 +1337,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     System.IO.Stream inputStream2 = new MemoryStream(bytes2);
 
                     //bitmapAll.Save(@".\ClientApp\public\" + user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
-                    UploadFileToStorage(inputStream2, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
+                    UploadFileToStorageAsync(inputStream2, user.Login + "_" + order.Id_Order + "_" + order.color + "_" + order.type + "_" + order.thickness + ".jpg");
                 }
                 catch (Exception e)
                 {
@@ -1407,7 +1414,7 @@ namespace CGC.Funkcje.CutFuncFolder
                 var bytes = ((MemoryStream)stream).ToArray();
                 System.IO.Stream inputStream = new MemoryStream(bytes);
 
-                UploadFileToStorage(inputStream, receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
+                UploadFileToStorageAsync(inputStream, receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
 
                 doc.Close();
 

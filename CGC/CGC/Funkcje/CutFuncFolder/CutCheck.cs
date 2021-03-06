@@ -323,6 +323,10 @@ namespace CGC.Funkcje.CutFuncFolder
             {
                 foreach (Piece piece in pieces)
                 {
+                    if (piece.Rgb == null)
+                    {
+                        piece.Rgb = new List<int>();
+                    }
                     piece.Rgb.Add(random.Next(0, 255));
                     piece.Rgb.Add(random.Next(0, 255));
                     piece.Rgb.Add(random.Next(0, 255));

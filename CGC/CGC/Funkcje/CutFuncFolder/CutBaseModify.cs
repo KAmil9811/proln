@@ -251,7 +251,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Zajeta";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "In use";
             command.Parameters.Add("@Last_Cut_id", SqlDbType.VarChar, 40).Value = cut_Project.Cut_id;
 
 
@@ -264,7 +264,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id", SqlDbType.VarChar).Value = cut_Project.Cut_id;
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "W trakcie ciecia";
+            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "On production";
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
