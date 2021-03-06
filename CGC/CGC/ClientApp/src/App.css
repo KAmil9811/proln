@@ -29,16 +29,20 @@ html{
     .phone {
         visibility: hidden
     }
+   
+
 }
 
 @media all and (max-width: 800px) {
-    .success_login, .hhh {
+    .hhh {
         visibility: hidden
     }
 
     .aaaaaaaa {
         visibility: hidden
     }
+
+   
 }
 
 
@@ -51,6 +55,7 @@ body {
     /* background-color: #c5c5d3;*/
     background-color: #e8e8ed;
     height: 100% !important;
+    overflow: hidden;
 }
 
 th {
@@ -85,32 +90,9 @@ th {
 
 
 
-﻿::-webkit-scrollbar {
-    width: 13px;
-    height: 13px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(13deg, #15171c 64%, #15171c 14%);
-    border-radius: 10px;
-}
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(13deg, #656767 64%, #656767 14%);
-    }
-
-::-webkit-scrollbar-track {
-    background: #ffffff;
-    border-radius: 10px;
-}
-
-﻿.scrollbar {
-    overflow-y: scroll;
-}
-
-.scroller {
+﻿
+::-webkit-scrollbar {
     display: none;
-    overflow-x: hidden;
 }
 
 label {
@@ -516,11 +498,11 @@ label {
 .conteiner,
 .ResetPassword_c,
 .PasswordReset2_c,
-.Login_c,
 .tescik,
 .Glass_Picker_c,
 .Glass_Warehause_c,
 .order_warehouse_conteiner,
+.HomePage_c,
 .one_order_conteiner {
     z-index: 0;
     margin-top: 100px;
@@ -548,11 +530,15 @@ label {
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
-    max-width: 420px;
+    min-width: 320px;
 }
-
-
-
+.Login_c {
+    z-index: 0;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 320px;
+}
 .AddGlass_c {
     z-index: 0;
     margin-top: 100px;

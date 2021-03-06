@@ -90,7 +90,7 @@ export class HomePage extends Component {
                         <div className="title">
                             <h1 className="titletext">Home page</h1>
                         </div>
-                        <div className="conteiner">
+                        <div className="HomePage_c">
                             <div className="butoniki">
                                 <button className="ele3 production" onClick={this.Production}></button>
                             </div>

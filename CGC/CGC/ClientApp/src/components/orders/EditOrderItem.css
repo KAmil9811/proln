@@ -1,4 +1,19 @@
-﻿.danger_edit_order_item {
+﻿
+
+@media all and (min-width: 480px) {
+    .Edit_order_item_c {
+    padding: 60px 0;
+    }
+
+    .Edit_order_item form {
+    margin: 0 auto;
+    max-width: 320px;
+    }
+}
+
+
+
+.danger_edit_order_item {
     background-color: #ff3547;
     height: 3rem;
     width: 12rem;

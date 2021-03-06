@@ -99,8 +99,8 @@ export class Login extends Component {
 
                     <h1 className="tit_text">Login</h1>
                 </div>
-                <form className="all">
-                    <div className="Login">
+                <form>
+                    <div className="Login_c">
                         <div className="form-group">
                             <label>Login:</label>
                             <input
@@ -124,7 +124,7 @@ export class Login extends Component {
                         </div>
                     </div>
                     <div>
-                        <button type="submit" className="success_login" onClick={this.handleLoging} >Log in</button>
+                        <button type="submit" className="successs_login" onClick={this.handleLoging} >Log in</button>
                         <button className="danger_resset_pass" onClick={this.resetPassword1} >Reset password</button>
 
 

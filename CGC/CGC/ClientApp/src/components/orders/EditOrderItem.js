@@ -157,7 +157,7 @@ export class EditOrderItem extends Component {
         }
         else if (sessionStorage.getItem('orderManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             return (
-                <div>
+                <div className="Edit_order_item">
                     <Sidebar />
                     <div className="title">
                         <h1 className="titletext">Edit items</h1>
