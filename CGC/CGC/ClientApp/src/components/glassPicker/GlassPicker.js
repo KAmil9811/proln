@@ -225,35 +225,14 @@ export class GlassPicker extends Component {
 
     pick = (event) => {
         event.preventDefault();
-        /*const receiver = {
-            user: {
-                login: sessionStorage.getItem('login')
-            },
-            glass_Id: this.state.send
-        }
-
-        fetch(`api/Magazine/Remove_Glass`, {
-            method: "post",
-            body: JSON.stringify(receiver),
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            }
-        })
-
-            .then(res => res.json())
-            .then(json => {
-
-                return (json);
-            })
-            .then(json => {
-
-                alert("You deleted selected glass")
-                window.location.reload();
+        sessionStorage.setItem('glass_id', this.state.send)
+        console.log(sessionStorage.getItem('glass_id'))
+        this.props.history.push('/test')
 
 
-            })*/
-        /*this.props.history.push('/test')*/
+
+       
+        
     }
 
     render() {

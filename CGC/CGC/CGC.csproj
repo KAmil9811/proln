@@ -18,6 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Aspose.PDF" Version="21.1.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0" />
+    <PackageReference Include="FreeSpire.PDF" Version="7.2.0" />
     <PackageReference Include="IdentityServer3" Version="2.6.3" />
     <PackageReference Include="iTextSharp" Version="5.5.13.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
@@ -30,7 +31,6 @@
     <PackageReference Include="Optivem.Atomiv.Infrastructure.FluentValidation" Version="1.0.33" />
     <PackageReference Include="Optivem.Framework.Infrastructure.FluentValidation" Version="1.0.23" />
     <PackageReference Include="Sharp3DBinPacking" Version="2.0.0" />
-    <PackageReference Include="Spire.PDF" Version="7.1.10" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\NewFile.txt" />
     <None Remove="ClientApp\src\components\Test_SS.js" />
   </ItemGroup>
 

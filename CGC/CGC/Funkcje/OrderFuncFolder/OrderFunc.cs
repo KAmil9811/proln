@@ -55,7 +55,6 @@ namespace CGC.Funkcje.OrderFuncFolder
             List<Order> temp = new List<Order>();
             List<Order> temp2 = new List<Order>();
             List<Item> itemstemp = new List<Item>();
-            List<Item> items;
 
             Order order = receiver.order;
             order.items = new List<Item>();
@@ -65,24 +64,18 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             try
             {
-                items = orderBaseReturn.GetLastItem();
-                last_free_id = items.Last().sort + 1;
+                last_free_id = orderBaseReturn.GetLastItem().Last().sort + 1;
             }
-            catch (Exception e)
+            catch
             {
                 last_free_id = 1;
             }
 
-            for (int i = 0; i <= receiver.iteme.Count; i= i +6)
+            for (int i = 0; i <= receiver.iteme.Count; i += 6)
             {
                 Item item = new Item { Width = receiver.iteme[0], Length = receiver.iteme[1], Thickness = receiver.iteme[2], Color = receiver.iteme[3], Amount = receiver.iteme[4], Type = receiver.iteme[5] };
                 order.items.Add(item);
             }
-
-            //foreach (Item item in receiver.iteme)
-            //{
-            //    order.items.Add(item);
-            //}
 
             try
             {
@@ -92,10 +85,9 @@ namespace CGC.Funkcje.OrderFuncFolder
                 {
                     orderer.Priority = orderer.Id_Order;
                 }
-                code2 = temp2.OrderBy(ord => ord.Priority).Last().Id_Order;
-                code = Int32.Parse(code2) + 1;
+                code = orderBaseReturn.GetLastOrder().Last().sort + 1;
             }
-            catch (Exception e)
+            catch
             {
                 code = 1;
             }
@@ -193,7 +185,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             User user = receiver.user;
             Item items = receiver.item;
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
@@ -201,10 +193,9 @@ namespace CGC.Funkcje.OrderFuncFolder
                     {
                         if (item.Id == items.Id)
                         {
-                            return orderBaseModify.Edit_Order_Items(usere, order, items);
+                            orderBaseModify.Edit_Order_Items(usere, order, items);
                         }
                     }
-                    order.Error_Messege = "Item not exist";
                     temp.Add(order);
                     return temp;
                 }
@@ -225,7 +216,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             User user = receiver.user;
             string name = receiver.new_name;
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
@@ -248,17 +239,18 @@ namespace CGC.Funkcje.OrderFuncFolder
         {
             List<Order> temp = new List<Order>();
 
-            foreach (User use in userBaseReturn.GetUser(user.Login))
+            if(orderBaseReturn.GetOrder(order.Id_Order).First().Status != "Ready")
+            {
+                order.Error_Messege = "Order is not ready";
+                temp.Add(order);
+                return temp;
+            }
+
+            foreach (User use in userBaseReturn.GetUser(user.Login, false))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin == true || use.Order_management == true)
                 {
-                    if (order.Status == "Ready")
-                    {
-                        return orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order));
-                    }
-                    order.Error_Messege = "Order is not ready";
-                    temp.Add(order);
-                    return temp;
+                    return orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order));
                 }
                 order.Error_Messege = "User no permission";
                 temp.Add(order);
@@ -276,20 +268,25 @@ namespace CGC.Funkcje.OrderFuncFolder
             Order order = new Order { Id_Order = items.First().Order_id };
             List<Item> temp2 = orderBaseReturn.GetItems(order);
 
-            foreach (Item itm in items) 
+
+            foreach (Item item in orderBaseReturn.GetItems(order))
             {
-                foreach (Item item in orderBaseReturn.GetItems(order))
+                foreach (Item itm in items)
                 {
-                    if (item.Status != "Ready" && item.Id == itm.Id)
+                    if (item.Id == itm.Id)
                     {
-                        temp_item.Error_Messege = "Items are not ready";
-                        temp.Add(temp_item);
-                        return temp;
+                        if (item.Status != "Ready")
+                        {
+                            temp_item.Error_Messege = "Items are not ready";
+                            temp.Add(temp_item);
+                            return temp;
+                        }
+                        break;
                     }
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUser(user.Login))
+            foreach (User use in userBaseReturn.GetUser(user.Login, false))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true)
                 {
@@ -314,16 +311,20 @@ namespace CGC.Funkcje.OrderFuncFolder
             {
                 foreach (int it in items)
                 {
-                    if (it.ToString() == item.Id && item.Status == "Deleted")
-                    {         
-                        item.Error_Messege = "Items have been already deleted";
-                        temp.Add(item);
-                        return temp;                   
+                    if (it.ToString() == item.Id)
+                    {
+                        if (item.Status == "Deleted")
+                        {
+                            item.Error_Messege = "Items have been already deleted";
+                            temp.Add(item);
+                            return temp;
+                        }
+                        break;
                     }
                 }
             }
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {

@@ -15,7 +15,8 @@ export class Test extends Component {
             value2: '',
             table: [],
             pieces: [],
-            glass_ids: [],
+            glass_ids: '',
+            piecesbackend:[],
             position: '',
             table: {
                 columns: [],
@@ -44,7 +45,10 @@ export class Test extends Component {
             user: {
                 login: sessionStorage.getItem('login'),
             },
+            id: sessionStorage.getItem('glass_id'),
         }
+        console.log('Receiver do magica')
+        console.log(receiver)
         console.log(new Date())
         fetch(`api/Cut/Magic`, {
             method: "post",
@@ -56,6 +60,7 @@ export class Test extends Component {
             .then(res => res.json())
             .then(json => {
                 console.log(new Date())
+                console.log('Tu sprawdź id')
                 console.log(json)
                
                 return (json)
@@ -134,9 +139,13 @@ export class Test extends Component {
                                 width: 30
                             },
                         ],
-                        rows: table3
-                    }
+                        rows: table3,
+                        
+
+                    },
+                    glass_ids: table3,
                 });
+
                 sessionStorage.setItem('uncat2', json[json.length - 1].color)
                 console.log('Uncat2====')
                 console.log(sessionStorage.getItem('uncat2'))
@@ -146,7 +155,7 @@ export class Test extends Component {
                             table2.push({
                                 length: json[i].glass_info[0].pieces[x].lenght,
                                 width: json[i].glass_info[0].pieces[x].widht,
-                                ids: json[i].glass_info[0].pieces[x].id,
+                                id: json[i].glass_info[0].pieces[x].id,
                             })
 
                         }
@@ -171,17 +180,22 @@ export class Test extends Component {
                             },
                             {
                                 label: 'No.',
-                                field: 'ids',
+                                field: 'id',
                                 sort: 'asc',
                                 width: 30
                             },
                         ],
                         rows: table2
-                    }
+                    },
+                    piecesbackend: table2,
                 });
                 this.setState({
                     isLoading: false
                 })
+                console.log('TABLE2 HERE')
+                console.log(table2)
+                console.log('GLASSS IDS')
+                console.log(this.state.glass_ids)
             })
         
        /* var table4 = [];
@@ -228,7 +242,8 @@ export class Test extends Component {
             })
         document.getElementById
 
-
+        console.log('Receiver do magica')
+        console.log(receiver)
 
     }
 
@@ -255,7 +270,8 @@ export class Test extends Component {
         })
             .then(res => res.json())
             .then(json => {
-              
+                console.log('Sprawdzonko here')
+                console.log(json)
                 return (json)
             })
             .then(json => {
@@ -270,8 +286,8 @@ export class Test extends Component {
         event.preventDefault();
         const receiver = {
             glasses:
-                this.state.glass_ids
-            ,
+                this.state.glass_ids,
+                pieces: this.state.piecesbackend,
             order: {
                 id_order: sessionStorage.getItem('idOpti')
             },
@@ -286,16 +302,20 @@ export class Test extends Component {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
             .then(json => {
-                
-                sessionStorage.setItem('id_order', json.order.id_order);
+                console.log('Sprawdzonko here')
+                console.log(json)
+                sessionStorage.setItem('id_order', json);
                 return (json)
             })
-        //this.props.history.push('/glasswarehouse');
+    /*this.props.history.push('/home');*/
+        console.log('receiver here')
+        console.log(receiver)
 
        
 

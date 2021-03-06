@@ -23,6 +23,7 @@ namespace CGC.Models
         public string color { get; set; }
         public string type { get; set; }
         public string thickness { get; set; }
+        public int sort { get; set; }
 
         public string Error_Messege { get; set; }
     }

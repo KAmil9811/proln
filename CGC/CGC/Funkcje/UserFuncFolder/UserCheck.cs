@@ -32,9 +32,9 @@ namespace CGC.Funkcje.UserFuncFolder
 
         //Funckje pomocnicze
 
-        public bool Is_Email_Exist(string email)
+        public bool Is_Email_Exist(string email, List<User> users)
         {
-            foreach (User user in userBaseReturn.GetUsers())
+            foreach (User user in users)
             {
                 if (user.Email == email)
                 {
@@ -44,9 +44,9 @@ namespace CGC.Funkcje.UserFuncFolder
             return false;
         }
 
-        public bool Is_Login_Exist(string login)
+        public bool Is_Login_Exist(string login, List<User> users)
         {
-            foreach (User user in userBaseReturn.GetUsers())
+            foreach (User user in users)
             {
                 if (user.Login == login)
                 {

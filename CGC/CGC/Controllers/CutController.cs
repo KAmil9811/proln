@@ -48,7 +48,7 @@ namespace CGC.Controllers
         }
 
         [HttpPost("Return_Glass_To_Cut")]
-        public async Task<List<Glass>> Return_Glass_To_Cut([FromBody] Receiver receiver)
+        public async Task<List<Glass_Receiver>> Return_Glass_To_Cut([FromBody] Receiver receiver)
         {
             return cutFunc.Return_Glass_To_Cut(receiver);
         }

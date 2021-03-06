@@ -26,5 +26,6 @@ namespace CGC.Models
 
         public double WidthSort { get; set; }
         public double LengthSort { get; set; }
+        public string Ids { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿import { MDBScrollbar} from 'mdbreact';
 import React, { useState } from 'react';
+
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
@@ -10,7 +11,8 @@ import { SidebarData2 } from './SidebarData2';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 import './second.css';
-import "./scrollbar.css";
+import './scrollbar.css';
+
 
 
 const Titleee = styled.div`
@@ -119,14 +121,29 @@ const Sidebar = () => {
                     </Nav>
                     <SidebarNav sidebar={sidebar}>
                         <SidebarWrap>
+
+
+                           
+
+
+                            {SidebarData.map((item, index) => {
+
+                                return <SubMenu item={item} key={index} />;
+                            })}
+
+                            
                             
                             <div className="side_bar">
                                 {SidebarData.map((item, index) => {
                                     return <SubMenu item={item} key={index} />;
                                 })}
+
                             </div>
                            
 
+
+
+    
                         </SidebarWrap>
                     </SidebarNav>
                 </IconContext.Provider>

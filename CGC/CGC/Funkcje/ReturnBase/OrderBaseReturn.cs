@@ -395,6 +395,29 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
+        public List<Order> GetLastOrder()
+        {
+            List<Order> temp = new List<Order>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Order] ORDER BY convert(int, Id_Order) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Order order = new Order();
+                order.sort = Convert.ToInt32(sqlDataReader["Id_Order"]);
+
+                temp.Add(order);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            //temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
+
+            return temp;
+        }
+
         public List<Order_History> Return_Order_History()
         {
             List<Order_History> order_Histories = new List<Order_History>();

@@ -35,7 +35,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             }
         }
 
-        public int Save_Project(Order order, int code, List<Glass> glasses)
+        public int Save_Project(User user, Order order, int code, List<Glass> glasses, List<Piece> pieces)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                         command = new SqlCommand(query, connect.cnn);
 
                         command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = code.ToString();
-                        command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = glass.Glass_info.First().Id;
+                        command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = glass.Ids;
 
                         connect.cnn.Open();
                         command.ExecuteNonQuery();
@@ -69,7 +69,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
                         foreach (Item item in orderBaseReturn.GetItems(order))
                         {
-                            foreach (Piece piece in glass.Glass_info.First().Pieces)
+                            foreach (Piece piece in pieces)
                             {
                                 if (piece.Id == item.Id)
                                 {
@@ -96,7 +96,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             string userhistory = "You saved project: " + code;
 
-            //insertHistory.Insert_User_History(userhistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login);
 
             return code;
         }
