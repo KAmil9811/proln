@@ -1,16 +1,11 @@
 ﻿using Azure.Storage;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using CGC.Funkcje.CutFuncFolder.CutBase;
 using CGC.Funkcje.MagazineFuncFolder.MagazineBase;
 using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Funkcje.ProductFuncFolder.ProductBase;
 using CGC.Funkcje.UserFuncFolder.UserReturn;
 using CGC.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Sharp3DBinPacking;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
@@ -20,8 +15,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Ubiety.Dns.Core;
 
 namespace CGC.Funkcje.CutFuncFolder
 {
@@ -1391,7 +1384,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     page.Canvas.DrawImage(image, 0, 0, fitWidth, fitHeight);
                 }
 
-                doc.SaveToFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
+                //doc.SaveToFile(@".\ClientApp\public\" + receiver.user.Login + "_" + receiver.order.Id_Order + "_" + receiver.order.color + "_" + receiver.order.type + "_" + receiver.order.thickness + ".pdf");
 
                 /*ImageCodecInfo jpgEncoder = ImageCodecInfo.GetImageEncoders().Single(x => x.FormatDescription == "JPEG");
                 Encoder encoder2 = System.Drawing.Imaging.Encoder.Quality;
