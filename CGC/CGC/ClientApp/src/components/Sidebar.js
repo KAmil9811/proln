@@ -77,7 +77,7 @@ const SidebarNav = styled.nav`
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 80px;
+  top: 0px;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
@@ -87,7 +87,8 @@ overflow-y: scroll;
 
 const SidebarWrap = styled.div`
   width: 100%;
-    margin-top: 80px;
+   margin-top: 80px;
+
 `;
 
 

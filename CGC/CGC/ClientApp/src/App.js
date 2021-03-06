@@ -59,7 +59,7 @@ import { SavedPrint } from './components/opti/SavedPrint';
 import { SavedProjects } from './components/Production/SavedProjects';
 
 import { download } from './components/opti/Project.pdf'
-
+import { GlassPicker } from './components/glassPicker/GlassPicker';
 
 
 export default class App extends Component {
@@ -119,7 +119,7 @@ export default class App extends Component {
                     <Route path='/pick_machine' component={PickMachine} />
                     <Route path='/saved_projects' component={SavedProjects} />
                     <Route path='/show_save' component={SavedPrint} />
-
+                    <Route path='/glass_picker' component={GlassPicker} />
                 </Switch>
             </Router >
 

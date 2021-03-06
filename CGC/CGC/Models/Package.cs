@@ -12,6 +12,7 @@ namespace CGC.Models
         public string Owner { get; set; }
         public string Id_Order { get; set; }
         public double Thickness { get; set; }
+        public string Thickness2 { get; set; }
 
         public List<Item> Item { get; set; }
     }

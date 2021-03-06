@@ -18,6 +18,7 @@ export class PackagesTable extends Component {
 
     componentDidMount() {
         var table3 = [];
+        var table4 = [];
         const receiver = {
             order: {
                 id_order: sessionStorage.getItem('orderId2')
@@ -42,7 +43,8 @@ export class PackagesTable extends Component {
                         owner: json[i].owner,
                         type: json[i].type,
                         thickness: json[i].thickness,
-                        more: <Link to="/test"> <button className="success_t" id={i}
+                       
+                        more: <Link to="/glass_picker"> <button className="success_t" id={i}
                             onClick={(e) => {
                                 sessionStorage.setItem('idOpti', table3[e.target.id].id)
                                 sessionStorage.setItem('colorOpti', table3[e.target.id].color)
@@ -52,6 +54,11 @@ export class PackagesTable extends Component {
                             }
                             } > Select </button></Link>
                     })
+                     sessionStorage.setItem('colorpick', json[i].color)
+                     sessionStorage.setItem('typepick', json[i].type)
+                     sessionStorage.setItem('thicknesspick', json[i].thickness)
+                    sessionStorage.setItem('ownerpick', json[i].owner) 
+                      
                 };
                 this.setState({
                     table: {
@@ -95,6 +102,7 @@ export class PackagesTable extends Component {
                         ],
                         rows: table3
                     }
+                    
                 });
             })
     }

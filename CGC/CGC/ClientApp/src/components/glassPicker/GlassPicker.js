@@ -2,11 +2,8 @@
 import { MDBDataTable } from 'mdbreact';
 import { MDBDataTableV5 } from 'mdbreact';
 import { Link } from 'react-router-dom';
-import './GlassTable.css';
 import Sidebar from '../Sidebar';
-import { Route, withRouter } from 'react-router-dom';
-
-import { history } from 'react-router-dom';
+import './GlassPicker.css'
 
 
 export class GlassPicker extends Component {
@@ -27,10 +24,21 @@ export class GlassPicker extends Component {
     componentDidMount() {
         var table2 = [];
         var tableIds = [];
-        fetch(`api/Magazine/Return_All_Glass`, {
+        const receiver = {
+            id: sessionStorage.getItem('idOpti'),
+            package: {
+                color: sessionStorage.getItem('colorpick'),
+                type: sessionStorage.getItem('typepick'),
+                thickness2: sessionStorage.getItem('thicknesspick'),
+                owner: sessionStorage.getItem('ownerpick'),
+                } 
+
+        }
+        fetch(`api/Cut/Return_Glass_To_Cut`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -48,24 +56,7 @@ export class GlassPicker extends Component {
                             desk: json[i].desk,
                             choice: <input type="checkbox" id={'check' + i} className={i} onClick={(e) => { this.check(e.target.id, table2[e.target.className].id, i) }} />,
                             id: '',
-                            edit:
-                                <Link to="/glass_edit"><button className="info_t" id={i}
-                                    onClick={
-                                        (e) => {
-                                            //console.log(e.target.id);
-                                            sessionStorage.setItem('length', json[e.target.id].length);
-                                            sessionStorage.setItem('width', json[e.target.id].width);
-                                            sessionStorage.setItem('thickness', json[e.target.id].hight);
-                                            sessionStorage.setItem('color', json[e.target.id].color);
-                                            sessionStorage.setItem('type', json[e.target.id].type);
-                                            //sessionStorage.setItem('amount', json[e.target.id].length);
-                                            sessionStorage.setItem('owner', json[e.target.id].owner);
-                                            sessionStorage.setItem('desk', json[e.target.id].desk);
-                                            sessionStorage.setItem('id', JSON.stringify(json[e.target.id].glass_Id));
-                                        }
-                                    }>Edit</button>
-                                </Link>
-
+                           
                         })
                     }
                     else {
@@ -138,24 +129,18 @@ export class GlassPicker extends Component {
                                     width: 150
                                 },
                                 {
-                                    label: 'Edit',
-                                    field: 'edit',
-                                    sort: 'asc',
-                                    width: 150
-                                },
-                                {
                                     label: '',
                                     field: 'choice',
-                                    /*sort: 'asc',*/
+                                   sort: 'asc',
                                     width: 150
-                                }
+                                },
 
-                                /* {
+                                 {
                                      label: 'Usuń',
                                      field: 'action',
                                      sort: 'asc',
                                      width: 150
-                                 },*/
+                                 },
 
                             ],
                             rows: table2
@@ -214,6 +199,7 @@ export class GlassPicker extends Component {
                     });
                 }
             })
+        console.log(receiver)
     };
 
     check(number, id, miejsce) {
@@ -267,23 +253,36 @@ export class GlassPicker extends Component {
 
 
             })*/
+        /*this.props.history.push('/test')*/
     }
 
     render() {
         let xd = this.table();
-        return (
-
-            <div>
-                <div className="glass_table_b">
-                    <button className="danger_glas_magazine" onClick={this.pick}> Pick selected </button>
-
+        if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
+            return (
+                <div className="Glass_Picker">
+                    <Sidebar />
+                    <div className="title">
+                        <h1 className="titletext">Pick glass to cut kurwa</h1>
+                    </div>
+                    <div className="Glass_Picker_c">
+                    
+                        <button className="danger_glas_magazine" onClick={this.pick}> Pick selected </button>
+                    
+                        { xd }
+                    </div>
                 </div>
+            )
 
-                {xd}
-
-
-            </div>
-        )
+        }
+        else {
+            return (
+                <div className="HomePageFail">
+                    <h1>Log in to have access!</h1>
+                    <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
+                </div>
+            );
+        }
     }
 
 

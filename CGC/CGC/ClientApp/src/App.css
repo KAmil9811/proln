@@ -40,11 +40,8 @@ html{
         visibility: hidden
     }
 }
-
-
 ::-webkit-scrollbar {
     overflow-x: hidden;
-    overflow-x: no-display;
 }
 
 ::-webkit-scrollbar {
@@ -62,14 +59,18 @@ html{
     }
 
 ::-webkit-scrollbar-track {
-    background: #15171c;
     border-radius: 10px;
+    background: #15171c;
+    padding-top:80px;
 }
 
 .scroller {
     display: none;
     overflow-x: hidden;
+    
 }
+
+
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/
@@ -487,8 +488,8 @@ label {
 }
 .EmailChange_c,
 .EditOrder_c,
-.PasswordChange_c,
-.user_change_conteiner,
+
+
 .conteiner_cp,
 .cut_machine_edit,
 .glass_attributes_conteiner,
@@ -519,19 +520,23 @@ label {
 .order_warehouse_conteiner,
 .one_order_conteiner {
     z-index: 0;
-    margin-top: 100px;
-    margin-left: 10vw;
+    margin-top:100px;
+    margin-left: 100px;
     margin-right: auto;
 }
 .Edit_order_item_c,
 .AddType_c,
+.EmailChange_c,
 .TypeEdit_c,
+.PasswordChange_c,
 .AddCutMachine_c,
 .EditTypeM_c,
 .AddTypeMachine_c,
-.AddOrder1_c
+.AddOrder1_c,
 .AddColor_c,
 .addType,
+.user_change_conteiner,
+.UserChange_c,
 .addCutMachine {
     z-index: 0;
     margin-top: 100px;
