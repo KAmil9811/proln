@@ -158,6 +158,7 @@ export class GlassWarehouse extends Component {
         else {
             return (
                 <div className="Glass_Warehause">
+                    <Sidebar />
 
                  
                     <div className="title">

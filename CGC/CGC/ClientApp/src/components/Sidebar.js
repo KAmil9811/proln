@@ -1,4 +1,4 @@
-﻿
+﻿import { MDBScrollbar} from 'mdbreact';
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ import { SidebarData2 } from './SidebarData2';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 import './second.css';
+import "./scrollbar.css";
 
 
 
@@ -38,6 +39,7 @@ const Nav = styled.div`
   top:0;
   position: fixed;
   z-index: 100;
+  
  
   
 `;
@@ -77,21 +79,24 @@ const SidebarNav = styled.nav`
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 80px;
+  top: 0px;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
-min-height: 100%;
-    height: auto;
+    height: 100%;
+overflow-y: scroll;
 `;
 
 const SidebarWrap = styled.div`
   width: 100%;
+   margin-top: 80px;
+
 `;
 
 
 
 const title = sessionStorage.getItem('title');
+const scrollContainerStyle = {maxHeight: "400px" };
 
 const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
@@ -116,6 +121,7 @@ const Sidebar = () => {
                     </Nav>
                     <SidebarNav sidebar={sidebar}>
                         <SidebarWrap>
+<<<<<<< HEAD
 
                            
 
@@ -126,6 +132,16 @@ const Sidebar = () => {
                             })}
 
                             
+=======
+                            
+
+                                {SidebarData.map((item, index) => {
+                                    return <SubMenu item={item} key={index} />;
+                                })}
+
+                            
+
+>>>>>>> cbc4346c78ea0636846f39ee63935ab75e3f9b64
                         </SidebarWrap>
                     </SidebarNav>
                 </IconContext.Provider>

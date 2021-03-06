@@ -395,6 +395,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
+<<<<<<< HEAD
         public List<Order> GetLastOrder()
         {
             List<Order> temp = new List<Order>();
@@ -419,12 +420,13 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
         }
 
         public List<Order_History> Return_Order_History(string order_id)
+=======
+        public List<Order_History> Return_Order_History()
+>>>>>>> cbc4346c78ea0636846f39ee63935ab75e3f9b64
         {
             List<Order_History> order_Histories = new List<Order_History>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Order_History] WHERE Id_Order = @Id_Order;", connect.cnn);
-
-            command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = order_id;
+            SqlCommand command = new SqlCommand("SELECT * FROM [Order_History];", connect.cnn);
 
             connect.cnn.Open();
 

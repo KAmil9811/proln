@@ -162,7 +162,7 @@ export class EditOrderItem extends Component {
                     <div className="title">
                         <h1 className="titletext">Edit items</h1>
                     </div>
-                    <div className="userChange">
+                    <div className="Edit_order_item_c">
                         <form>
                             <div className="form-group">
                                 <label>Length</label>

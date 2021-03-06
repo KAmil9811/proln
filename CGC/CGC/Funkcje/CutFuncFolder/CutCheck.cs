@@ -215,11 +215,15 @@ namespace CGC.Funkcje.CutFuncFolder
         {
             Package package = receiver.package;
             List<Glass> glasses = new List<Glass>();
-            List<Item> Sort__items;
 
-            Sort__items = (List<Item>)package.Item.OrderBy(ordere => ordere.Width).ThenBy(ordere => ordere.Length);
+            Order order = new Order { Id_Order = receiver.id };
+            try
+            {
+                var Sort__items = orderBaseReturn.GetItems(order).OrderBy(iteme => iteme.Width).ThenBy(iteme => iteme.Length);
+            
+            //Sort__items = (List<Item>)package.Item.OrderBy(ordere => ordere.Width).ThenBy(ordere => ordere.Length);
 
-            Glass glasss = new Glass { Type = package.Type, Color = package.Color, Hight = package.Thickness.ToString() , Length = Sort__items.First().Length, Width = Sort__items.First().Width};
+            Glass glasss = new Glass { Owner = package.Owner, Type = package.Type, Color = package.Color, Hight = package.Thickness2 , Length = Sort__items.First().Length, Width = Sort__items.First().Width};
 
             foreach (Glass glasse in magazineBaseReturn.Getglass(glasss))
             {
@@ -227,6 +231,11 @@ namespace CGC.Funkcje.CutFuncFolder
                 {
                     glasses.Add(glasse);
                 }
+            }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
             }
             return glasses;
         }

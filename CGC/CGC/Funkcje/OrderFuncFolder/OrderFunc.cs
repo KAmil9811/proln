@@ -45,9 +45,9 @@ namespace CGC.Funkcje.OrderFuncFolder
             return orderBaseReturn.GetItems(receiver.order);
         }
         
-        public List<Order_History> Return_Order_History(Receiver receiver)
+        public List<Order_History> Return_Order_History()
         {
-            return orderBaseReturn.Return_Order_History(receiver.order.Id_Order);
+            return orderBaseReturn.Return_Order_History();
         }
 
         public List<Order> Add_Order(Receiver receiver)
