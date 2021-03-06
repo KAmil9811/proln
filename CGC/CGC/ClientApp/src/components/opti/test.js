@@ -425,20 +425,39 @@ export class Test extends Component {
         let href2 = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('colorOpti') + "_" + sessionStorage.getItem('typeOpti') + "_" + sessionStorage.getItem('thicknessOpti') + ".pdf"
         if (sessionStorage.getItem('valid') === '') {
             return (
+                <div>
+                    <div className="phone">
+                        <h1>No access on the phone</h1>
+                    </div>
+                    <div className="aaaaaaaa" >
                 <div className="HomePageFail">
                     <h1>Log in to have access!</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
+                        </div>
+                    </div>
                 </div>
             );
         }
         else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             if (this.state.isLoading === true) {
                 return (
-                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div>
+                        <div className="phone">
+                            <h1>No access on the phone</h1>
+                        </div>
+                        <div className="aaaaaaaa" >
+                            <ClipLoader loading={this.state.isLoading} size={150} />
+                        </div></div>
+
                 )
             }
             else {
                 return (
+                    <div>
+                        <div className="phone">
+                            <h1>No access on the phone</h1>
+                        </div>
+                        <div className="aaaaaaaa" >
                     <div >
                         <Sidebar />
                         <div className="title">
@@ -463,6 +482,8 @@ export class Test extends Component {
                                 <div id="slideContainer"></div>
                             </div>
                         </div>
+                            </div>
+                        </div>
                     </div>
                 );
             }
@@ -477,6 +498,11 @@ export class Test extends Component {
             else {
 
                 return (
+                    <div>
+                        <div className="phone">
+                            <h1>No access on the phone</h1>
+                        </div>
+                        <div className="aaaaaaaa" >
                     <div className="tescik" >
                         <Sidebar />
                         <div className="title">
@@ -491,6 +517,8 @@ export class Test extends Component {
                             <div className="table3">
                                 <h2>Products</h2>
                                 {table2}
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>

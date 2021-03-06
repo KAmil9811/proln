@@ -1,4 +1,4 @@
-﻿import { MDBScrollbar} from 'mdbreact';
+﻿
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ import { SidebarData2 } from './SidebarData2';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 import './second.css';
-import './scrollbar.css';
+
 
 
 
@@ -84,7 +84,8 @@ const SidebarNav = styled.nav`
   transition: 350ms;
   z-index: 10;
     height: 100%;
-overflow-y: scroll;
+  overflow-y: scroll;
+  
 `;
 
 const SidebarWrap = styled.div`
@@ -123,22 +124,12 @@ const Sidebar = () => {
                         <SidebarWrap>
 
 
-                           
-
-
-                            {SidebarData.map((item, index) => {
-
-                                return <SubMenu item={item} key={index} />;
-                            })}
-
                             
-                            
-                            <div className="side_bar">
                                 {SidebarData.map((item, index) => {
                                     return <SubMenu item={item} key={index} />;
                                 })}
 
-                            </div>
+                            
                            
 
 

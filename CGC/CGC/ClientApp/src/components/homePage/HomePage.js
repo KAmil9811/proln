@@ -91,15 +91,30 @@ export class HomePage extends Component {
                             <h1 className="titletext">Home page</h1>
                         </div>
                         <div className="conteiner">
-                            <button  className="ele3 production" onClick={this.Production}></button>
+                            <div className="butoniki">
+                                <button className="ele3 production" onClick={this.Production}></button>
+                            </div>
+                            <div className="butoniki">
                             <button className="ele2 magazine" onClick={this.glassWarehouse}></button>
+                            </div>
+                            <div className="butoniki">
                             <button className="ele2 products" onClick={this.readyGlassWarehouse}></button>
-
-                            <button className="ele2 orders" onClick={this.orderWarehouse}></button>
-                            <button className="ele2 machines" onClick={this.machineWarehouse}></button>
-                            <button className="ele2 account" onClick={this.userPanel}></button>
-                            <button className="ele2 projects" onClick={this.saveProject}></button>
-                            <button className="ele4 control" onClick={this.controlPanel}></button>
+                            </div>
+                            <div className="butoniki">
+                                <button className="ele2 orders" onClick={this.orderWarehouse}></button>
+                            </div>
+                            <div className="butoniki">
+                                <button className="ele2 machines" onClick={this.machineWarehouse}></button>
+                            </div>
+                            <div className="butoniki">
+                                <button className="ele2 account" onClick={this.userPanel}></button>
+                            </div>
+                            <div className="butoniki">
+                                <button className="ele2 projects" onClick={this.saveProject}></button>
+                            </div>
+                            <div className="butoniki">
+                                <button className="ele4 control" onClick={this.controlPanel}></button>
+                            </div>
                         </div>
                     </form>
                 </div>
