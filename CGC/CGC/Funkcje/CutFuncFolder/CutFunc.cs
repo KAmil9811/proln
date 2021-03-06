@@ -56,7 +56,7 @@ namespace CGC.Funkcje.CutFuncFolder
             return cutCheck.Return_Package_To_Cut(receiver);
         }
 
-        public List<Glass> Return_Glass_To_Cut(Receiver receiver)
+        public List<Glass_Receiver> Return_Glass_To_Cut(Receiver receiver)
         {
             return cutCheck.Return_Glass_To_Cut(receiver);
         }
@@ -936,6 +936,8 @@ namespace CGC.Funkcje.CutFuncFolder
             Random random = new Random();
             bool kon = false;
             int kontrol;
+            List<Glass> glass_to_cut;
+            List<string> id_to_cut = receiver.glass_Id;
 
 
             Package packages = new Package { Item = new List<Item>() };
@@ -958,7 +960,12 @@ namespace CGC.Funkcje.CutFuncFolder
                 }
             }
 
-            Glass search = new Glass { Color = item1.Color, Type = item1.Type, Hight = item1.Thickness, Owner = order.Owner, Length = "0", Width = "0"};
+            foreach(string id in id_to_cut)
+            {
+                glasses.Add(magazineBaseReturn.Getglass(id).First());
+            }
+
+            /*Glass search = new Glass { Color = item1.Color, Type = item1.Type, Hight = item1.Thickness, Owner = order.Owner, Length = "0", Width = "0"};
 
             foreach (Glass glass in magazineBaseReturn.Getglass(search))
             {
@@ -979,7 +986,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     }
                 }
                 glasses.Add(glass1);
-            }
+            }*/
 
             var sort_glasses = glasses.OrderByDescending(gla => gla.Length).ThenByDescending(gla => gla.Width);
 

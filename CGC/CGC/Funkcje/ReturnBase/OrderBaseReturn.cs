@@ -395,7 +395,6 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
-<<<<<<< HEAD
         public List<Order> GetLastOrder()
         {
             List<Order> temp = new List<Order>();
@@ -419,10 +418,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
-        public List<Order_History> Return_Order_History(string order_id)
-=======
         public List<Order_History> Return_Order_History()
->>>>>>> cbc4346c78ea0636846f39ee63935ab75e3f9b64
         {
             List<Order_History> order_Histories = new List<Order_History>();
 

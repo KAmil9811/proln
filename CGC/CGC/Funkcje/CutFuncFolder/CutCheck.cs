@@ -211,10 +211,10 @@ namespace CGC.Funkcje.CutFuncFolder
             return wynik;
         }
 
-        public List<Glass> Return_Glass_To_Cut(Receiver receiver)
+        public List<Glass_Receiver> Return_Glass_To_Cut(Receiver receiver)
         {
             Package package = receiver.package;
-            List<Glass> glasses = new List<Glass>();
+            List<Glass_Receiver> glasses = new List<Glass_Receiver>();
 
             Order order = new Order { Id_Order = receiver.id };
             try
@@ -225,7 +225,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             Glass glasss = new Glass { Owner = package.Owner, Type = package.Type, Color = package.Color, Hight = package.Thickness2 , Length = Sort__items.First().Length, Width = Sort__items.First().Width};
 
-            foreach (Glass glasse in magazineBaseReturn.Getglass(glasss))
+            foreach (Glass_Receiver glasse in magazineBaseReturn.GetglassToCut(glasss))
             {
                 if (Convert.ToDouble(Sort__items.First().Length) <= Convert.ToDouble(glasse.Length) && Convert.ToDouble(Sort__items.First().Width) <= Convert.ToDouble(glasse.Width))
                 {

@@ -121,7 +121,7 @@ const Sidebar = () => {
                     </Nav>
                     <SidebarNav sidebar={sidebar}>
                         <SidebarWrap>
-<<<<<<< HEAD
+
 
                            
 
@@ -132,16 +132,13 @@ const Sidebar = () => {
                             })}
 
                             
-=======
                             
 
                                 {SidebarData.map((item, index) => {
                                     return <SubMenu item={item} key={index} />;
                                 })}
 
-                            
-
->>>>>>> cbc4346c78ea0636846f39ee63935ab75e3f9b64
+                           
                         </SidebarWrap>
                     </SidebarNav>
                 </IconContext.Provider>
