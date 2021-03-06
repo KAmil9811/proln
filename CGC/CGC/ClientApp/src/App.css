@@ -45,13 +45,6 @@ html{
 
 
 
-.scroller {
-    display: none;
-    overflow-x: hidden;
-    
-}
-
-
 body {
     /* background-image: url("../connectwork/75375624_264099878214580_5973773756546441470_n.png");*/
     /* background-image: url("../connectwork/connectwork.png");*/
@@ -89,6 +82,36 @@ th {
         -o-transition: all 0.3s linear;
         transition: all 0.3s linear;
     }
+
+
+
+﻿::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(13deg, #15171c 64%, #15171c 14%);
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(13deg, #656767 64%, #656767 14%);
+    }
+
+::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 10px;
+}
+
+﻿.scrollbar {
+    overflow-y: scroll;
+}
+
+.scroller {
+    display: none;
+    overflow-x: hidden;
+}
 
 label {
     color: black;
@@ -501,7 +524,10 @@ label {
 .one_order_conteiner {
     z-index: 0;
     margin-top: 100px;
-    margin-left: 100px;
+    /*margin-left: 100px; Kamil tu na pewno nic nie zmieniał ( a przynajmniej taka jest wersja dla Ady psuja <3 )
+    margin-right: auto;*/
+    width: 80vw;
+    margin-left: auto;
     margin-right: auto;
 }
 .Edit_order_item_c,

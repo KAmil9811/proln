@@ -1160,6 +1160,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     for (int i = wynik.Count - 1; i < packages.Item.Count; i++)
                     {
                         Piece piece = new Piece { Id = packages.Item[i].Id, Lenght = Convert.ToDouble(packages.Item[i].Length), Widht = Convert.ToDouble(packages.Item[i].Width) };
+                        
                         glass_Id.Pieces.Add(piece);
                         tmp2.Error_Messege = tmp2.Error_Messege + ", " + packages.Item[i].Id;
                     }

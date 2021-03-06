@@ -1,5 +1,10 @@
 ﻿
 
+.butoniki {
+    width: 20vw;
+    height: 21vw;
+    float: left;
+}
 
 
 @media all and (min-width: 480px) {
@@ -14,10 +19,17 @@
 }
 
 @media all and (max-width: 800px) {
-    .homePage {
+    .ele2, .ele3, .ele4 {
+        height: 60vw !important;
+        width: 60vw !important;
+        margin-left: 15vw !important;
+    }
+        .homePage {
         padding: 60px 0;
     }
-
+    .butoniki {
+        float: none;
+    }
         .homePage form {
             margin: 0 auto;
             max-width: 320px;
@@ -167,8 +179,8 @@
 
 .ele2, .ele3, .ele4 {
     background-size:cover;
-    height: 300px;
-    width: 300px;
+    height: 15vw;
+    width: 15vw;
     font-size: 15px;
     font-weight: 900;
     text-align: center;
