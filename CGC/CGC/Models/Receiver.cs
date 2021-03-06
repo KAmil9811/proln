@@ -22,7 +22,7 @@ namespace CGC.Models
         public List<int> item_Id { get; set; }
         public List<Package> packages { get; set; }
         public List<Product> products { get; set; }
-
+        public List<Piece> pieces { get; set; }
         public List<string> iteme { get; set; }
 
         public string id { get; set; }

@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\NewFile.txt" />
     <None Remove="ClientApp\src\components\Test_SS.js" />
   </ItemGroup>
 

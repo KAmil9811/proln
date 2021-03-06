@@ -67,6 +67,7 @@ namespace CGC.Funkcje.UserFuncFolder
         {
             User user = receiver.user;
             User admin = receiver.admin;
+            List<User> users = userBaseReturn.GetUsers();
 
             List<User> temp = new List<User>();
             bool check;
@@ -79,7 +80,7 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            check = userCheck.Is_Email_Exist(user.Email);
+            check = userCheck.Is_Email_Exist(user.Email, users);
             if (check == true)
             {
                 admin.Error_Messege = "Email has been already taken";
@@ -95,7 +96,7 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            check = userCheck.Is_Login_Exist(user.Login);
+            check = userCheck.Is_Login_Exist(user.Login, users);
             if (check == true)
             {
                 admin.Error_Messege = "Login has been already taken";
@@ -217,7 +218,6 @@ namespace CGC.Funkcje.UserFuncFolder
             user.Error_Messege = "";
             temporary.Add(user);
             return temporary;
-
         }
 
         public User Edit_Email_Admin(Receiver receiver)
@@ -234,7 +234,7 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            check = userCheck.Is_Email_Exist(user.Email);
+            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers());
             if (check == true)
             {
                 admin.Error_Messege = "E-mail has been already taken";
@@ -337,7 +337,7 @@ namespace CGC.Funkcje.UserFuncFolder
             admin.Error_Messege = "Admin not found";
             return admin;
         }
-        //do zmiany
+
         public User Set_Permissions_Admin(Receiver receiver)
         {
             User admin = receiver.admin;
@@ -420,7 +420,7 @@ namespace CGC.Funkcje.UserFuncFolder
 
             bool check;
 
-            check = userCheck.Is_Email_Exist(user.Email);
+            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers());
             if (check == true)
             {
                 user.Error_Messege = "E-mail has been already taken";
