@@ -120,12 +120,12 @@ const Sidebar = () => {
                     <SidebarNav sidebar={sidebar}>
                         <SidebarWrap>
                             
-
+                            <div className="side_bar">
                                 {SidebarData.map((item, index) => {
                                     return <SubMenu item={item} key={index} />;
                                 })}
-
-                            
+                            </div>
+                           
 
                         </SidebarWrap>
                     </SidebarNav>

@@ -25,6 +25,8 @@ export class Login extends Component {
         sessionStorage.setItem('valid', '')
         var title = 'Home'
         sessionStorage.setItem('title', title)
+        sessionStorage.setItem('sidebar', false);
+        sessionStorage.setItem('sidebar2', true);
     }
 
     resetPassword1 = (event) => {
