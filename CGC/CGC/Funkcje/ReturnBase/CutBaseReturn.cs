@@ -138,7 +138,6 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                 {
                     cut.Priority = sqlDataReader["Priority"].ToString();
                     cut.Deadline = sqlDataReader["Deadline"].ToString();
-                    cut.Status = sqlDataReader["Status"].ToString();
                 }
                 sqlDataReader.Close();
                 command.Dispose();

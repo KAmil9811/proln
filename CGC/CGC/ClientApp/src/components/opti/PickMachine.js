@@ -71,6 +71,7 @@ export class PickMachine extends Component {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })
@@ -80,11 +81,9 @@ export class PickMachine extends Component {
                 return (json)
             })
 
-        if (window.confirm("Czy chcesz dodać odpadki do magazynu?")) {
-            this.props.history.push('/add_glass');
-        } else {
+       
             this.props.history.push('/selection_of_orders');
-        }
+        
 
         /*this.props.history.push('/glasswarehouse');
 

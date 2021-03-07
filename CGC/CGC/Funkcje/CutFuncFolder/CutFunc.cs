@@ -1,6 +1,7 @@
 ﻿using Azure.Storage;
 using Azure.Storage.Blobs;
 using CGC.Funkcje.CutFuncFolder.CutBase;
+using CGC.Funkcje.MachineFuncFolder.MachineBase;
 using CGC.Funkcje.MagazineFuncFolder.MagazineBase;
 using CGC.Funkcje.OrderFuncFolder.OrderBase;
 using CGC.Funkcje.ProductFuncFolder.ProductBase;
@@ -28,6 +29,7 @@ namespace CGC.Funkcje.CutFuncFolder
         private UserBaseReturn userBaseReturn = new UserBaseReturn();
         private CutBaseModify cutBaseModify = new CutBaseModify();
         private ProductBaseReturn productBaseReturn = new ProductBaseReturn();
+        private MachineBaseReturn machineBaseReturn = new MachineBaseReturn();
 
         private static CutFunc m_oInstance = null;
         private static readonly object m_oPadLock = new object();
@@ -753,42 +755,32 @@ namespace CGC.Funkcje.CutFuncFolder
         public string Post_Production(Receiver receiver)
         {
             User user = receiver.user;
-            Machines machines = receiver.machines;
             Cut_Project cut_Project = receiver.cut_Project;
+            Order order = receiver.order;
+            Machines machines = machineBaseReturn.GetMachine(cut_Project.Cut_id).First();
 
-            foreach (Cut_Project cut in cutBaseReturn.GetCut_Project())
+            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order))
             {
-                if (cut.Cut_id == cut_Project.Cut_id)
+                foreach (Item item in orderBaseReturn.GetItems(ord, cut_Project.Cut_id))
                 {
-                    foreach (Order ord in orderBaseReturn.GetOrders())
+                    int code;
+                    try
                     {
-                        if (ord.Id_Order == cut.Order_id)
-                        {
-                            foreach (Item item in orderBaseReturn.GetItems(ord))
-                            {
-                                if (item.Cut_id == cut.Cut_id)
-                                {
-                                    int code;
-                                    try
-                                    {
-                                        code = Convert.ToInt32(productBaseReturn.GetProducts().OrderBy(pro => pro.Id).Last().Id) + 1;
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        code = 1;
-                                    }
-
-                                    cutBaseModify.Post_Production(user, ord, item, code);
-                                }
-                            }
-                        }
+                        code = productBaseReturn.GetLastProduct().Last().sort + 1;
                     }
-                }
+                    catch (Exception e)
+                    {
+                        code = 1;
+                    }
+
+                    cutBaseModify.Post_Production(user, ord, item, code);
+                }               
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+
+            foreach (User usere in userBaseReturn.GetUser(user.Login))
             {
-                if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
+                if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true)
                 {
                     return cutBaseModify.Post_Production_step2(user, machines, cut_Project);
                 }
@@ -1201,14 +1193,18 @@ namespace CGC.Funkcje.CutFuncFolder
                 {
                     int glass_count = 0;
 
-                    Bitmap bitmapAll = new Bitmap(Convert.ToInt32(PaintX), Convert.ToInt32(PaintY));
+                    Bitmap bitmapAll = new Bitmap(Convert.ToInt32(PaintX), Convert.ToInt32(PaintY) + 15);
 
 
                     for (int Xcount = 0; Xcount < bitmapAll.Width; Xcount++)
                     {
-                        for (int Ycount = 0; Ycount < bitmapAll.Height; Ycount++)
+                        for (int Ycount = 0; Ycount < bitmapAll.Height - 15; Ycount++)
                         {
                             bitmapAll.SetPixel(Xcount, Ycount, Color.Gray);
+                        }
+                        for (int Ycount = bitmapAll.Height; Ycount < bitmapAll.Height; Ycount++)
+                        {
+                            bitmapAll.SetPixel(Xcount, Ycount, Color.White);
                         }
                     }
 
@@ -1218,13 +1214,17 @@ namespace CGC.Funkcje.CutFuncFolder
                         {
                             break;
                         }
-                        Bitmap bitmap = new Bitmap(Convert.ToInt32(glass1.Width), Convert.ToInt32(glass1.Length));
+                        Bitmap bitmap = new Bitmap(Convert.ToInt32(glass1.Width), Convert.ToInt32(glass1.Length) + 15);
 
                         for (int Xcount = 0; Xcount < bitmap.Width; Xcount++)
                         {
-                            for (int Ycount = 0; Ycount < bitmap.Height; Ycount++)
+                            for (int Ycount = 0; Ycount < bitmap.Height - 15; Ycount++)
                             {
                                 bitmap.SetPixel(Xcount, Ycount, Color.Gray);
+                            }
+                            for (int Ycount = bitmap.Height; Ycount < bitmap.Height; Ycount++)
+                            {
+                                bitmap.SetPixel(Xcount, Ycount, Color.White);
                             }
                         }
 
@@ -1240,6 +1240,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                 {
                                     graphics.FillRectangle(myBrush, new Rectangle(Last_posX, Last_posY, Convert.ToInt16(glass1.Width), Convert.ToInt16(glass1.Length)));
                                     graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle(Last_posX, Last_posY, Convert.ToInt16(glass1.Width), Convert.ToInt16(glass1.Length)));
+                                    graphics.DrawString(glass1.Width + 'x' + glass1.Length, new Font("Arial", 16), new SolidBrush(Color.Black), Convert.ToInt32(glass1.Width)/2, Convert.ToInt32(glass1.Length) + 10);
                                 }
                             }
 
@@ -1249,6 +1250,7 @@ namespace CGC.Funkcje.CutFuncFolder
                                 {
                                     graphics.FillRectangle(myBrush, new Rectangle((int)(Last_posX2 ), (int)(Last_posY2 ), (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
                                     graphics.DrawRectangle(new Pen(Brushes.Black, 5), new Rectangle((Last_posX2) , (Last_posY2) , (int)(Convert.ToDouble(glass1.Width) ), (int)(Convert.ToDouble(glass1.Length) )));
+                                    graphics.DrawString(glass1.Width + 'x' + glass1.Length, new Font("Arial", 16), new SolidBrush(Color.Black), Last_posX2 + Convert.ToInt32(glass1.Width) / 2, Last_posY2 + Convert.ToInt32(glass1.Length) + 10);
                                 }
                             }
 
@@ -1344,6 +1346,11 @@ namespace CGC.Funkcje.CutFuncFolder
                 {
                     e.ToString();
                 }
+
+
+                Receiver receive2 = new Receiver {order = order, user = user, glass_count = wynik.Count.ToString() };
+                CreatePdf(receive2);
+
                 return wynik;
             }
             //błąd nie ma takiego usera

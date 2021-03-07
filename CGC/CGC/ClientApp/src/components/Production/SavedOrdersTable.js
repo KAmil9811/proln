@@ -30,7 +30,7 @@ export class SavedOrdersTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-               
+               console.log(json)
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         number: json[i].order_id,
@@ -45,7 +45,9 @@ export class SavedOrdersTable extends Component {
                         choose: <Link to="/show_save"> <button className="success_t" id={i}
                             onClick={(e) => {
                                 //this.chooseOrder( table2[e.target.id].number);
+                                sessionStorage.setItem('sevedprojectstatus', json[e.target.id].status)
                                 sessionStorage.setItem('cutId2', table2[e.target.id].cut_id)
+                                sessionStorage.setItem('orderId3', table2[e.target.id].number)
                                 sessionStorage.setItem('orderId2', table2[e.target.id].number)
                             }
                             } > Select </button></Link>

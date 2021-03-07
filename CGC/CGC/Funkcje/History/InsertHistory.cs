@@ -92,7 +92,7 @@ namespace CGC.Funkcje.History
         public void Insert_Machine_History(string Cut_id, string Login, string Description, string No)
         {
             string data = DateTime.Now.ToString("g");
-            string query = "INSERT INTO dbo.Machines_History_All(Date, Cut_Id, Login, Description, No) VALUES(@data, @Cut_Id, @Login, @Description, @No)";
+            string query = "INSERT INTO dbo.Machines_History(Date, Cut_Id, Login, Description, No) VALUES(@data, @Cut_Id, @Login, @Description, @No)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;

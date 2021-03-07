@@ -63,6 +63,42 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return temp;
         }
 
+        public List<Machines> GetMachine(string cut_id)
+        {
+            List<Machines> temp = new List<Machines>();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines] WHERE Last_Cut_id = @Last_Cut_id;", connect.cnn);
+
+            command.Parameters.Add("@Last_Cut_id", SqlDbType.VarChar, 40).Value = cut_id;
+
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines machines = new Machines();
+                machines.No = sqlDataReader["No"].ToString();
+                machines.Status = sqlDataReader["Status"].ToString();
+                machines.Type = sqlDataReader["Type"].ToString();
+                machines.Stan = Convert.ToBoolean(sqlDataReader["Stan"]);
+
+                try
+                {
+                    machines.Last_Cut_id = sqlDataReader["Last_Cut_id"].ToString();
+                }
+                catch (Exception e)
+                {
+                    machines.Last_Cut_id = "0";
+                }
+
+                temp.Add(machines);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+            return temp;
+        }
+
         public List<Machines> GetMachines(string status, bool stan)
         {
             List<Machines> temp = new List<Machines>();

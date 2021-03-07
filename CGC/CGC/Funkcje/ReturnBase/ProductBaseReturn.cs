@@ -142,5 +142,28 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
 
             return temp;
         }
+
+        public List<Product> GetLastProduct()
+        {
+            List<Product> temp = new List<Product>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Product] ORDER BY convert(int, Id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product product = new Product();
+                product.sort = Convert.ToInt32(sqlDataReader["Id"]);
+
+                temp.Add(product);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            //temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
+
+            return temp;
+        }
     }  
 }

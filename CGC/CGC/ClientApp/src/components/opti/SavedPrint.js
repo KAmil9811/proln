@@ -89,6 +89,37 @@ export class SavedPrint extends Component {
         sessionStorage.setItem('id_order', id);
         this.props.history.push('/pick_machine');
     }
+
+    endOrder = (event) => {
+        const receiver = {
+            cut_Project:{
+                cut_id: sessionStorage.getItem('cutId2'),
+            },
+            order: {
+                id_order: sessionStorage.getItem('orderId3'),
+            },
+            user: {
+                login: sessionStorage.getItem('login'),
+            },
+        }
+        fetch(`api/Cut/Post_Production`, {
+            method: "post",
+            body: JSON.stringify(receiver),
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(json);
+                this.props.history.push('/home')
+            })
+        console.log(receiver)
+    }
+
+
     goback = (event) => {
         this.props.history.push('/')
     }
@@ -108,29 +139,56 @@ export class SavedPrint extends Component {
             );
         }
         else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
-            return (
-                <div >
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Cut project</h1>
-                    </div>
+            if (sessionStorage.getItem('sevedprojectstatus') === "Saved") {
+                return (
+                    <div >
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Cut project</h1>
+                        </div>
 
-                    <h3>{sessionStorage.getItem('uncat')}</h3>
-                    <div className="table2">
-                        <h2>Glasses</h2>
-                        <GlassTableProject/>
-                    </div>
-                    <div className="table3">
-                        <h2>Products</h2>
-                        <ItemsTable/>
-                        <img src={href} />
-                        <div>
-                            <button className="success_test" onClick={this.cutOrder}>cut</button>
-                            <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                        <h3>{sessionStorage.getItem('uncat')}</h3>
+                        <div className="table2">
+                            <h2>Glasses</h2>
+                            <GlassTableProject />
+                        </div>
+                        <div className="table3">
+                            <h2>Products</h2>
+                            <ItemsTable />
+                            <img src={href} />
+                            <div>
+                                <button className="success_test" onClick={this.cutOrder}>Cut</button>
+                                <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
+                );
+            }
+            else {
+                return (
+                    <div >
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Cut project</h1>
+                        </div>
+
+                        <h3>{sessionStorage.getItem('uncat')}</h3>
+                        <div className="table2">
+                            <h2>Glasses</h2>
+                            <GlassTableProject />
+                        </div>
+                        <div className="table3">
+                            <h2>Products</h2>
+                            <ItemsTable />
+                            <img src={href} />
+                            <div>
+                                <button className="success_test" onClick={this.endOrder}>End production</button>
+                                <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
         }
         else {
 

@@ -227,7 +227,7 @@ export class Test extends Component {
             },
             glass_count: sessionStorage.getItem('ilosc')
         }
-        console.log('PDF gene')
+        /*console.log('PDF gene')
         fetch(`api/Cut/CreatePdf`, {
             method: "post",
             body: JSON.stringify(receiver2),
@@ -240,7 +240,7 @@ export class Test extends Component {
             .then(json => {
                 console.log(json)
             })
-        document.getElementById
+        document.getElementById*/
 
         console.log('Receiver do magica')
         console.log(receiver)

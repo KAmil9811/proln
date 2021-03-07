@@ -151,38 +151,45 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
         public void Post_Production(User user, Order ord, Item item, int code)
         {
-            string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
-            SqlCommand command = new SqlCommand(query, connect.cnn);
+            try
+            {
+                string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
+                SqlCommand command = new SqlCommand(query, connect.cnn);
 
-            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = code.ToString();
-            command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
-            command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
-            command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
-            command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
+                command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = code.ToString();
+                command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
+                command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+                command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
+                command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
 
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
 
-            query = "UPDATE dbo.[Item] SET Product_id = @Product_id, Status = @Status WHERE Id = @Id";
-            command = new SqlCommand(query, connect.cnn);
+                query = "UPDATE dbo.[Item] SET Product_id = @Product_id, Status = @Status WHERE Id = @Id";
+                command = new SqlCommand(query, connect.cnn);
 
-            command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
-            command.Parameters.Add("@Product_id", SqlDbType.VarChar, 40).Value = code.ToString();
-            command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+                command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
+                command.Parameters.Add("@Product_id", SqlDbType.VarChar, 40).Value = code.ToString();
+                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
 
-            connect.cnn.Open();
-            command.ExecuteNonQuery();
-            command.Dispose();
-            connect.cnn.Close();
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
 
-            string producthistory = "Product has been cutted";
-            string orderhistory = item.Id + " has been cutted";
+                string producthistory = "Product has been cutted";
+                string orderhistory = item.Id + " has been cutted";
 
-            insertHistory.InsertProductHistory(code.ToString(), user.Login, producthistory);
-            insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
+                insertHistory.InsertProductHistory(code.ToString(), user.Login, producthistory);
+                insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
+            }
+            catch(Exception e)
+            {
+                e.ToString();
+            }
 
         }
 

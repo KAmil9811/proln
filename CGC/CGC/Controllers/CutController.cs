@@ -192,6 +192,7 @@ namespace CGC.Controllers
             return cutFunc.Remove_Project(receiver);
         }
 
+        [Authorize]
         [HttpPost("Post_Production")]
         public async Task<string> Post_Production([FromBody] Receiver receiver)
         {

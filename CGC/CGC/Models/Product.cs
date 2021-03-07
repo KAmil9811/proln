@@ -15,5 +15,6 @@ namespace CGC.Models
         public string Id_order { get; set; }
         public string Cut_id { get; set; }
         public string Error_Messege { get; set; }
+        public int sort { get; set; }
     }
 }
