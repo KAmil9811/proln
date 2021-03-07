@@ -75,7 +75,8 @@ namespace CGC.Funkcje.MachineFuncFolder
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    return machineBaseModify.Add_Machine(usere, machines);
+                    string LastGlobalIdMachine = machineBaseReturn.GetLastGlobalIdMachine(user.Company).Last().Global_Id.ToString();
+                    return machineBaseModify.Add_Machine(usere, machines, LastGlobalIdMachine);
                 }
             }
             machines.Error_Message = "User not found";
@@ -194,8 +195,8 @@ namespace CGC.Funkcje.MachineFuncFolder
                             return temp;
                         }
                     }
-
-                    return machineBaseModify.Add_Type_Admin(usere, type);
+                    string LastGlobalIdType = machineBaseReturn.GetLastGlobalIdTypes(user.Company).Last();
+                    return machineBaseModify.Add_Type_Admin(usere, type, LastGlobalIdType);
                 }
             }
             temp.Add("User not found, or password is wrong");

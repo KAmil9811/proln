@@ -38,5 +38,6 @@ namespace CGC.Models
         public double WidthSort { get; set; }
         public double LengthSort { get; set; }
         public string Error_Messege { get; set; }
+        public int Global_Id { get; set; }
     }
 }

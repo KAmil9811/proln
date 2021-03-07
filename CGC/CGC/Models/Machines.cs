@@ -15,5 +15,6 @@ namespace CGC.Models
 
         public string Error_Message { get; set; }
 
+        public int Global_Id { get; set; }
     }
 }

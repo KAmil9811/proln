@@ -393,6 +393,52 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return userHistories;
         }
 
+        public List<User> GetLastGlobalIdUser(string company)
+        {
+            List<User> temp = new List<User>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [User] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                User user = new User();
+                user.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(user);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
+        public List<UserHistory> GetLastGlobalIdUserHistory(string company)
+        {
+            List<UserHistory> temp = new List<UserHistory>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [User_History] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                UserHistory userHistory = new UserHistory();
+                userHistory.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(userHistory);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
         public List<Entities.User> GetUsersToLogin()
         {
             List<Entities.User> temp = new List<Entities.User>();

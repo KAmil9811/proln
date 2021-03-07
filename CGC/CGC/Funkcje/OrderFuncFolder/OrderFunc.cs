@@ -149,7 +149,9 @@ namespace CGC.Funkcje.OrderFuncFolder
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    return orderBaseModify.Add_Order(usere, order);
+                    string LastGlobalIdOrder = orderBaseReturn.GetLastGlobalIdOrder(user.Company).Last().Global_Id.ToString();
+                    string LastGlobalIdItem = orderBaseReturn.GetLastGlobalIdItem(user.Company).Last().Global_Id.ToString();
+                    return orderBaseModify.Add_Order(usere, order, LastGlobalIdOrder, LastGlobalIdItem);
                 }
             }
 

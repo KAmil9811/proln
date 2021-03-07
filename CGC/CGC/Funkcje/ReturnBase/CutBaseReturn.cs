@@ -152,5 +152,28 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             return temp;
         }
+
+        public List<Cut_Project> GetLastGlobalIdCutProject(string company)
+        {
+            List<Cut_Project> temp = new List<Cut_Project>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Cut_Project] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Cut_Project cut_Project = new Cut_Project();
+                cut_Project.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(cut_Project);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace CGC.Models
         public string Date { get; set; }
         public string Description { get; set; }
         public string Id { get; set; }
+        public int Global_Id { get; set; }
     }
 }

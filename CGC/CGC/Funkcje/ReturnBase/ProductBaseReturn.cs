@@ -172,5 +172,52 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
 
             return temp;
         }
+
+        public List<Product> GetLastGlobalIdProduct(string company)
+        {
+            List<Product> temp = new List<Product>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product product = new Product();
+                product.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(product);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
+
+        public List<Product_History> GetLastGlobalIdProductHistory(string company)
+        {
+            List<Product_History> temp = new List<Product_History>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product_History] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product_History product_History = new Product_History();
+                product_History.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(product_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
     }  
 }

@@ -15,5 +15,6 @@ namespace CGC.Models
         public string Priority { get; set; }
         public List<Item> Items { get; set; }
         public List<Glass> Glasses { get; set; }
+        public int Global_Id { get; set; }
     }
 }

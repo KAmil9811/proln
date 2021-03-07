@@ -33,13 +33,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             }
         }
 
-        public List<Machines> Add_Machine(User user, Machines machines)
+        public List<Machines> Add_Machine(User user, Machines machines, string LastGlobalIdMachine)
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "INSERT INTO dbo.Machines(No, Status, Type, Stan, Company) VALUES(@No, @Status, @Type, @Stan, @Company)";
+            string query = "INSERT INTO dbo.Machines(Global_id, No, Status, Type, Stan, Company) VALUES(@Global_id, @No, @Status, @Type, @Stan, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
+            command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdMachine;
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
             command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = machines.Type;
@@ -176,13 +177,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return temp;
         }
 
-        public List<string> Add_Type_Admin(User user, string type)
+        public List<string> Add_Type_Admin(User user, string type, string LastGlobalIdType)
         {
             List<string> temp = new List<string>();
 
-            string query = "INSERT INTO dbo.Machines_Type(Type, Company) VALUES(@Type, @Company)";
+            string query = "INSERT INTO dbo.Machines_Type(Global_id, Type, Company) VALUES(@Global_id, @Type, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
+            command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdType;
             command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = type;
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 

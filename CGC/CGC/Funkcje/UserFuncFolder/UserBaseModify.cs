@@ -32,13 +32,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
         private Connect connect = new Connect();
         private InsertHistory insertHistory = new InsertHistory();
 
-        public List<User> Add_User(User user, User admin)
+        public List<User> Add_User(User user, User admin, string LastGlobalId)
         {
             List<User> temp = new List<User>();
 
-            string query = "INSERT INTO dbo.[User](Login,Password,Email,Name,Surname,Admin,Super_Admin,Manager,Magazine_management,Machine_management,Order_management,Cut_management,Reset_pass,Deleted,Id,Company) VALUES(@Login, @Password, @Email, @Name, @Surname, @Admin, @Super_Admin, @Manager, @Magazine_management, @Machine_management, @Order_management, @Cut_management, @Reset_pass, @Deleted, @Id, @Company)";
+            string query = "INSERT INTO dbo.[User](Global_id, Login,Password,Email,Name,Surname,Admin,Super_Admin,Manager,Magazine_management,Machine_management,Order_management,Cut_management,Reset_pass,Deleted,Id,Company) VALUES(@Global_id, @Login, @Password, @Email, @Name, @Surname, @Admin, @Super_Admin, @Manager, @Magazine_management, @Machine_management, @Order_management, @Cut_management, @Reset_pass, @Deleted, @Id, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
+            command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalId;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = user.Login;
             command.Parameters.Add("@Password", SqlDbType.VarChar, 40).Value = user.Password;
             command.Parameters.Add("@Email", SqlDbType.VarChar, 40).Value = user.Email;

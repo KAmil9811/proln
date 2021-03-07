@@ -33,7 +33,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             }
         }
 
-        public List<Glass> Add_Glass(User user, Glass glass, int code, List<Glass> glasses)
+        public List<Glass> Add_Glass(User user, Glass glass, int code, List<Glass> glasses, string LastGlobalIdGlass)
         {
             List<Glass> temp = new List<Glass>();
             glass.Glass_info = new List<Glass_Id>();
@@ -55,9 +55,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
                 code++;
 
-                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id, Company) VALUES(@Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code, @Company)";
+                string query = "INSERT INTO dbo.Glass(Global_id, Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id, Company) VALUES(@Global_id, @Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code, @Company)";
 
                 SqlCommand command = new SqlCommand(query, connect.cnn);
+
+                command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdGlass;
                 command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
                 command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
                 command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
@@ -86,6 +88,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 //SetOrderStan();
                 glasses.Add(glass);
                 temp.Add(glass);
+
+                LastGlobalIdGlass = (Convert.ToInt32(LastGlobalIdGlass) + 1).ToString();
             }
             return temp;
         }
@@ -207,12 +211,13 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<string> Add_Type_Admin(User user, string type)
+        public List<string> Add_Type_Admin(User user, string type, string LastGlobalIdType)
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("INSERT INTO dbo.Glass_type(Type, Company) VALUES(@type, @Company)", connect.cnn);
+            SqlCommand command = new SqlCommand("INSERT INTO dbo.Glass_type(Global_id, Type, Company) VALUES(@Global_id, @type, @Company)", connect.cnn);
 
+            command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdType;
             command.Parameters.Add("@type", SqlDbType.VarChar, 40).Value = type;
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
@@ -231,12 +236,13 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<string> Add_Color_Admin(User user, string color)
+        public List<string> Add_Color_Admin(User user, string color, string LastGlobalIdColor)
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("INSERT INTO dbo.Color(Color, Company) VALUES(@Color, @Company)", connect.cnn);
+            SqlCommand command = new SqlCommand("INSERT INTO dbo.Color(Global_id, Color, Company) VALUES(@Global_id, @Color, @Company)", connect.cnn);
 
+            command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdColor;
             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = color;
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 

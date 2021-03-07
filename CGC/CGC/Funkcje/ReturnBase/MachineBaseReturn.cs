@@ -228,5 +228,96 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             connect.cnn.Close();
             return temp;
         }
+
+        public List<Machines> GetLastGlobalIdMachine(string company)
+        {
+            List<Machines> temp = new List<Machines>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines machines = new Machines();
+                machines.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(machines);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
+        public List<string> GetLastGlobalIdTypes(string company)
+        {
+            List<string> temp = new List<string>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_Type] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                string Global_id = sqlDataReader["Global_id"].ToString();
+
+                temp.Add(Global_id);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
+        public List<Machines_History> GetLastGlobalIdMachineHistory(string company)
+        {
+            List<Machines_History> temp = new List<Machines_History>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_History] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines_History machines_History = new Machines_History();
+                machines_History.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(machines_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
+        public List<Machines_History_All> GetLastGlobalIdMachineHistoryAll(string company)
+        {
+            List<Machines_History_All> temp = new List<Machines_History_All>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_History_All] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines_History_All machines_History_All = new Machines_History_All();
+                machines_History_All.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+
+                temp.Add(machines_History_All);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
     }
 }
