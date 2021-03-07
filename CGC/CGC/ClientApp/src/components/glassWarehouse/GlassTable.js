@@ -27,10 +27,17 @@ export class GlassTable extends Component {
     componentDidMount() {
         var table2 = [];       
         var tableIds = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Magazine/Return_All_Glass`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -241,6 +248,7 @@ export class GlassTable extends Component {
         event.preventDefault();
         const receiver = {
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             glass_Id: this.state.send

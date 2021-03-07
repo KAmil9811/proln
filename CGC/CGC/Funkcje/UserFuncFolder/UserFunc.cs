@@ -35,24 +35,24 @@ namespace CGC.Funkcje.UserFuncFolder
         private UserBaseModify userBaseModify = new UserBaseModify();
         
         //Zwrawcanie rekordow z bazy -->
-        public List<User> Return_All_Users()
+        public List<User> Return_All_Users(Receiver receiver)
         {
-            return userBaseReturn.GetUsers_Manager();
+            return userBaseReturn.GetUsers_Manager(receiver.user.Company);
         }
 
-        public List<User> Return_All_SuperAdmin()
+        public List<User> Return_All_SuperAdmin(Receiver receiver)
         {
-            return userBaseReturn.GetUsers_Admin();
+            return userBaseReturn.GetUsers_Admin(receiver.user.Company);
         }
 
-        public List<User> Return_All_Admin()
+        public List<User> Return_All_Admin(Receiver receiver)
         {
-           return userBaseReturn.GetUsers_Admin();
+           return userBaseReturn.GetUsers_Admin(receiver.user.Company);
         }
         
-        public List<UserHistory> Return_Users_History()
+        public List<UserHistory> Return_Users_History(Receiver receiver)
         {
-            return userBaseReturn.GetAllUserHistory();
+            return userBaseReturn.GetAllUserHistory(receiver.user.Company);
         }
         
         public List<UserHistory> Return_User_History(Receiver receiver)
@@ -67,7 +67,7 @@ namespace CGC.Funkcje.UserFuncFolder
         {
             User user = receiver.user;
             User admin = receiver.admin;
-            List<User> users = userBaseReturn.GetUsers();
+            List<User> users = userBaseReturn.GetUsers(user.Company);
 
             List<User> temp = new List<User>();
             bool check;
@@ -112,9 +112,9 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            user.Id = userBaseReturn.GetUsers().OrderByDescending(x=> x.Id).First().Id;
+            user.Id = userBaseReturn.GetUsers(user.Company).OrderByDescending(x=> x.Id).First().Id;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login, false))
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false, user.Company))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin == true)
                 {
@@ -160,7 +160,7 @@ namespace CGC.Funkcje.UserFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUser(receiver.user.Login))
+            foreach (User use in userBaseReturn.GetUser(receiver.user.Login, user.Company))
             {
                 if (receiver.user.Email != use.Email)
                 {
@@ -234,16 +234,16 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers());
+            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers(user.Company));
             if (check == true)
             {
                 admin.Error_Messege = "E-mail has been already taken";
                 return admin;
             }
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login, false))
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                     return userBaseModify.Change_Email_Admin(user, admin);
                 }
@@ -261,9 +261,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User adm in userBaseReturn.GetUser(admin.Login,false))
+            foreach (User adm in userBaseReturn.GetUser(admin.Login,false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                     if (usere.Deleted == true)
                     {
@@ -290,9 +290,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User adm in userBaseReturn.GetUser(admin.Login,false))
+            foreach (User adm in userBaseReturn.GetUser(admin.Login,false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                     if (usere.Deleted == true)
                     {
@@ -325,9 +325,9 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login,false))
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                     return userBaseModify.Change_Password_Admin(user, admin);
                 }
@@ -343,9 +343,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login,false))
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                     return userBaseModify.Change_Permision(user, admin);
                 }
@@ -361,9 +361,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login,false))
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                      return userBaseModify.Change_Name_Admin(user, admin);               
                 }
@@ -379,9 +379,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login, false))
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false, user.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
                 {
                     return userBaseModify.Change_Surname_Admin(user, admin);
                 }
@@ -400,7 +400,7 @@ namespace CGC.Funkcje.UserFuncFolder
             User user = receiver.user;
             List<User> temp = new List<User>();
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false, user.Company))
             {
                 if (usere.Password == user.Password)
                 {
@@ -420,7 +420,7 @@ namespace CGC.Funkcje.UserFuncFolder
 
             bool check;
 
-            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers());
+            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers(user.Company));
             if (check == true)
             {
                 user.Error_Messege = "E-mail has been already taken";
@@ -437,7 +437,7 @@ namespace CGC.Funkcje.UserFuncFolder
             }
 
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false, user.Company))
             {
                 if (usere.Password == user.Password)
                 {
@@ -465,7 +465,7 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false, user.Company))
             {
                 if (usere.Password == user.Password)
                 {
@@ -483,11 +483,11 @@ namespace CGC.Funkcje.UserFuncFolder
             List<User> temp = new List<User>();
             Helper helper;
 
-            foreach (User usere in userBaseReturn.GetUserByEmail(user.Email))
+            foreach (User usere in userBaseReturn.GetUserByEmail(user.Email, user.Company))
             {
                 Send_Mail send_Mail = new Send_Mail();
 
-                helper = send_Mail.Reset_Pass_Code(usere.Email);
+                helper = send_Mail.Reset_Pass_Code(usere.Email, user.Company);
 
                 if (helper.check == true)
                 {
@@ -512,7 +512,7 @@ namespace CGC.Funkcje.UserFuncFolder
             List<User> temp = new List<User>();
             Helper helper;
 
-            foreach (User usere in userBaseReturn.GetUserByCode(user.Reset_pass))
+            foreach (User usere in userBaseReturn.GetUserByCode(user.Reset_pass, user.Company))
             {
                 Send_Mail send_Mail = new Send_Mail();
 

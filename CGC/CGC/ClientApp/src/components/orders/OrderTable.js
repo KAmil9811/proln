@@ -21,10 +21,17 @@ export class OrderTable extends Component {
 
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Order/Return_All_Orders`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())

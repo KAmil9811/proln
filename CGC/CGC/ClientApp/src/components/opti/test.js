@@ -43,6 +43,7 @@ export class Test extends Component {
                 thickness: sessionStorage.getItem('thicknessOpti'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
             id: sessionStorage.getItem('glass_id'),
@@ -54,6 +55,7 @@ export class Test extends Component {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })
@@ -223,6 +225,7 @@ export class Test extends Component {
                 thickness: sessionStorage.getItem('thicknessOpti'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
             glass_count: sessionStorage.getItem('ilosc')
@@ -256,7 +259,10 @@ export class Test extends Component {
             ,
             order: {
                 id_order: sessionStorage.getItem('idOpti')
-            }
+            },
+            user: {
+                company: sessionStorage.getItem('company'),
+            },
 
         }
 
@@ -265,6 +271,7 @@ export class Test extends Component {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })
@@ -292,6 +299,7 @@ export class Test extends Component {
                 id_order: sessionStorage.getItem('idOpti')
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
 

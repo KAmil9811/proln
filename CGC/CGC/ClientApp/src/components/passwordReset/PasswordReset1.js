@@ -14,7 +14,10 @@ export class PasswordReset1 extends Component {
         }
         else {
             const receiver = {
-                user: { email: this.refs.email.value }
+                user: {
+                    email: this.refs.email.value,                    
+                    company: this.refs.firm.value
+                }
                
             }
             fetch(`api/Users/Reset_Password_Code`, {
@@ -71,8 +74,19 @@ export class PasswordReset1 extends Component {
                                                     id="inputEmail"
                                                     placeholder="Enter email that is conected with your account"
                                                     ref="email"
-                                                />
-                                            </div>
+                                                    />
+                                             </div>
+                                                <div className="form-group">
+                                                    <label>Firm:</label>
+                                                    <input
+                                                        type="text"
+                                                        name="Firm"
+                                                        className="form-control"
+                                                        id="inputFirm"
+                                                        placeholder="Firm"
+                                                        ref="firm"
+                                                    />
+                                                </div>
                                             <div className="reset">
                                                 <button type="reset" className="danger_reset1" onClick={this.cancelPasswordReset1}>Cancel</button>
                                 <button type="submit" className="success_reset1" onClick={this.handlePasswordReset1} >Continue</button>

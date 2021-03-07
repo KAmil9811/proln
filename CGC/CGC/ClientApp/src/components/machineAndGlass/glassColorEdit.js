@@ -14,6 +14,7 @@ export class GlassColorEdit extends Component {
         event.preventDefault();
         const receiver = {
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             new_color: this.refs.color.value,

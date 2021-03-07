@@ -21,10 +21,17 @@ export class MachineTable extends Component {
 
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Machine/Return_All_Machines`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -151,6 +158,7 @@ this.setState({
     machineBroken(id, status ) {
         const receiver = {
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             machines: {
@@ -212,6 +220,7 @@ this.setState({
     delete(id, deleted) {
         const receiver = {
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             machines: {

@@ -15,10 +15,17 @@ export class PickMachine extends Component {
     
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Cut/Return_Machine_To_Cut`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -62,6 +69,7 @@ export class PickMachine extends Component {
                 Cut_id: sessionStorage.getItem('id_order')
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
         }

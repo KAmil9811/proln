@@ -22,10 +22,17 @@ export class OrdersTable extends Component {
     //`api/Order/Return_All_Orders`
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Cut/Return_Orders_To_Cut`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -108,6 +115,9 @@ export class OrdersTable extends Component {
         const receiver = {
             order: {
                 id_order: id
+            },
+            user: {
+                company: sessionStorage.getItem('company'),
             }
         }
         

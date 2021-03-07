@@ -130,14 +130,15 @@ namespace CGC.Funkcje.CutFuncFolder
             return package.Item.Last();
         }
 
-        public List<Order> Return_Orders_To_Cut()
+        public List<Order> Return_Orders_To_Cut(Receiver receiver)
         {
             List<Order> orders = new List<Order>();
             List<Order> sort_orders = new List<Order>();
+            User user = receiver.user;
 
-            foreach (Order order in orderBaseReturn.GetOrders("Awaiting", "Stopped", false, false))
+            foreach (Order order in orderBaseReturn.GetOrders("Awaiting", "Stopped", false, false, user.Company))
             {
-                if (orderCheck.Avaible_Cut_Check(order) == true)
+                if (orderCheck.Avaible_Cut_Check(order, user) == true)
                 {
                     order.Deadline2 = Convert.ToDateTime(order.Deadline);
                     orders.Add(order);
@@ -154,15 +155,16 @@ namespace CGC.Funkcje.CutFuncFolder
             Order order = receiver.order;
             List<Package> temp = new List<Package>();
             List<Package> wynik = new List<Package>();
+            User user = receiver.user;
             bool kontrol;
 
-            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order))
+            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order, user.Company))
             {
                 order.Owner = ord.Owner;
                 break;
             }
 
-            foreach(Item item in orderBaseReturn.GetItems(order))
+            foreach(Item item in orderBaseReturn.GetItems(order, user.Company))
             {
                 if (item.Status == "Awaiting" && item.Cut_id == "0")
                 {
@@ -196,7 +198,7 @@ namespace CGC.Funkcje.CutFuncFolder
                     kontrol = false;
                     Glass glasss = new Glass { Type = item.Type, Color = item.Color, Hight = item.Thickness, Owner = order.Owner, Length = item.Length, Width = item.Width };
 
-                    foreach (Glass glass in magazineBaseReturn.Getglass(glasss))
+                    foreach (Glass glass in magazineBaseReturn.Getglass(glasss, user.Company))
                     {
                         wynik.Add(pack);
                         kontrol = true;
@@ -215,17 +217,18 @@ namespace CGC.Funkcje.CutFuncFolder
         {
             Package package = receiver.package;
             List<Glass_Receiver> glasses = new List<Glass_Receiver>();
+            User user = receiver.user;
 
             Order order = new Order { Id_Order = receiver.id };
             try
             {
-                var Sort__items = orderBaseReturn.GetItems(order).OrderBy(iteme => iteme.Width).ThenBy(iteme => iteme.Length);
+                var Sort__items = orderBaseReturn.GetItems(order, user.Company).OrderBy(iteme => iteme.Width).ThenBy(iteme => iteme.Length);
             
             //Sort__items = (List<Item>)package.Item.OrderBy(ordere => ordere.Width).ThenBy(ordere => ordere.Length);
 
             Glass glasss = new Glass { Owner = package.Owner, Type = package.Type, Color = package.Color, Hight = package.Thickness2 , Length = Sort__items.First().Length, Width = Sort__items.First().Width};
 
-            foreach (Glass_Receiver glasse in magazineBaseReturn.GetglassToCut(glasss))
+            foreach (Glass_Receiver glasse in magazineBaseReturn.GetglassToCut(glasss, user.Company))
             {
                 if (Convert.ToDouble(Sort__items.First().Length) <= Convert.ToDouble(glasse.Length) && Convert.ToDouble(Sort__items.First().Width) <= Convert.ToDouble(glasse.Width))
                 {
@@ -240,9 +243,9 @@ namespace CGC.Funkcje.CutFuncFolder
             return glasses;
         }
 
-        public List<Machines> Return_Machine_To_Cut()
+        public List<Machines> Return_Machine_To_Cut(Receiver receiver)
         {
-            return machineBaseReturn.GetMachines("Ready", false);
+            return machineBaseReturn.GetMachines("Ready", false, receiver.user.Company);
         }
 
         public CutBin Packing(CutBin cutBin)

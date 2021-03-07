@@ -14,6 +14,7 @@ export class MachineTypeEdit extends Component {
         event.preventDefault();
         const receiver = {
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             new_type: this.refs.type.value,

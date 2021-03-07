@@ -59,6 +59,7 @@ export class GlassWarehouse extends Component {
         else {
             const receiver = {
                 user: {
+                    company: sessionStorage.getItem('company'),
                     login: sessionStorage.getItem('login')
                 },
                 id_glass: sessionStorage.getItem('idg')
@@ -68,6 +69,7 @@ export class GlassWarehouse extends Component {
                 method: "post",
                 body: JSON.stringify(receiver),
                 headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                     'Content-Type': 'application/json'
                 }
             })

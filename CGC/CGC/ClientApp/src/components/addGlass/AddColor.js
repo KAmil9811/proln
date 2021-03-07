@@ -14,6 +14,7 @@ export class AddColor extends Component {
         const receiver = {
             color: this.refs.color.value,
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             }
         }

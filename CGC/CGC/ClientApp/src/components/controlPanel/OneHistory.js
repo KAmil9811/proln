@@ -21,6 +21,7 @@ export class OneHistory extends Component {
         var table2 = [];
         const receiver = {
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             }
         }

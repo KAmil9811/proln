@@ -31,14 +31,14 @@ namespace CGC.Funkcje.ProductFuncFolder
             }
         }
 
-        public List<Product> Get_Products()
+        public List<Product> Get_Products(Receiver receiver)
         {
-            return productBaseReturn.GetProducts("Ready");
+            return productBaseReturn.GetProducts("Ready", receiver.user.Company);
         }
 
         public List<Product_History> Get_Product_History(Receiver receiver)
         {
-            return productBaseReturn.GetProductHistory(Convert.ToInt32(receiver.id));
+            return productBaseReturn.GetProductHistory(Convert.ToInt32(receiver.id), receiver.user.Company);
         }
 
         public List<Product> Released_Product(User user, List<int> product_id)
@@ -49,7 +49,7 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (int pro2 in product_id)
             {
-                foreach (Product pro in productBaseReturn.GetProduct(pro2.ToString()))
+                foreach (Product pro in productBaseReturn.GetProduct(pro2.ToString(), user.Company))
                 {
                     products_to_change.Add(pro);
                 }
@@ -65,7 +65,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUser(user.Login, false))
+            foreach (User use in userBaseReturn.GetUser(user.Login, false, user.Company))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Magazine_management == true)
                 {
@@ -89,7 +89,7 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (int pro2 in product_id)
             {
-                foreach (Product pro in productBaseReturn.GetProduct(pro2.ToString()))
+                foreach (Product pro in productBaseReturn.GetProduct(pro2.ToString(), user.Company))
                 {
                     products_to_delete.Add(pro);
                 }
@@ -105,7 +105,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUser(user.Login))
+            foreach (User use in userBaseReturn.GetUser(user.Login, user.Company))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Magazine_management == true)
                 {

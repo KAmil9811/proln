@@ -26,6 +26,9 @@ export class SingleMachineHistoryTable extends Component {
         const receiver = {
             machines: {
                 no: sessionStorage.getItem('no')
+            },
+            user: {
+                company: sessionStorage.getItem('company'),
             }
         }
        
@@ -34,6 +37,7 @@ export class SingleMachineHistoryTable extends Component {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })

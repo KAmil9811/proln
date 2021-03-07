@@ -55,7 +55,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
                 code++;
 
-                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id) VALUES(@Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code)";
+                string query = "INSERT INTO dbo.Glass(Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id, Company) VALUES(@Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code, @Company)";
 
                 SqlCommand command = new SqlCommand(query, connect.cnn);
                 command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
@@ -69,6 +69,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
                 command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
                 command.Parameters.Add("@code", SqlDbType.VarChar, 40).Value = code.ToString();
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
                 command.Dispose();
@@ -77,8 +78,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 string userhistory = "You added glass " + code;
                 string magazinehistory = "Glass " + code + " has been added";
 
-                insertHistory.Insert_User_History(userhistory, user.Login);
-                insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
                 glass.Glass_info.Add(new Glass_Id { Id = (code).ToString() });
 
@@ -95,7 +96,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
             foreach (int glass_Id in glass.Glass_id)
             {
-                string query = "UPDATE dbo.[Glass] SET Hight = @Hight, Width = @Width, Length = @Length, Type = @Type, Color = @Color, Owner = @Owner, Desk = @Desk WHERE Glass_Id = @Glass_Id;";
+                string query = "UPDATE dbo.[Glass] SET Hight = @Hight, Width = @Width, Length = @Length, Type = @Type, Color = @Color, Owner = @Owner, Desk = @Desk WHERE Glass_Id = @Glass_Id AND Company = @Company;";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
@@ -107,6 +108,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
 
                 command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = glass_Id.ToString();
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -116,8 +118,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 string userhistory = "You edited glass " + glass_Id;
                 string magazinehistory = "Glass " + glass_Id + " has been edited";
 
-                insertHistory.Insert_User_History(userhistory, user.Login);
-                insertHistory.Insert_Magazine_History(magazinehistory, user.Login);                
+                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);                
             }
             temp.Add(glass);
             return temp;
@@ -132,11 +134,12 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             {
                 try
                 {
-                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
+                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id AND Company = @Company;";
                     SqlCommand command = new SqlCommand(query, connect.cnn);
 
                     command.Parameters.Add("@Removed", SqlDbType.Bit).Value = true;
                     command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id_glasse.ToString();
+                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                     connect.cnn.Open();
                     command.ExecuteNonQuery();
@@ -146,8 +149,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                     string userhistory = "You deleted glass " + id_glasse;
                     string magazinehistory = "Glass " + id_glasse + " has been deleted";
 
-                    insertHistory.Insert_User_History(userhistory, user.Login);
-                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+                    insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
                     //SetOrderStan();
 
@@ -172,11 +175,12 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             {
                 try
                 {
-                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id;";
+                    string query = "UPDATE dbo.[Glass] SET Removed = @Removed WHERE Glass_Id = @Glass_Id AND Company = @Company;";
                     SqlCommand command = new SqlCommand(query, connect.cnn);
 
                     command.Parameters.Add("@Removed", SqlDbType.Bit).Value = false;
                     command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id_glasse.ToString();
+                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                     connect.cnn.Open();
                     command.ExecuteNonQuery();
@@ -186,8 +190,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                     string userhistory = "You restored glass " + id_glasse;
                     string magazinehistory = "Glass " + id_glasse + " has been restored";
 
-                    insertHistory.Insert_User_History(userhistory, user.Login);
-                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+                    insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
                     //SetOrderStan();
 
@@ -207,8 +211,10 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("INSERT INTO dbo.Glass_type(Type) VALUES(@type)", connect.cnn);
+            SqlCommand command = new SqlCommand("INSERT INTO dbo.Glass_type(Type, Company) VALUES(@type, @Company)", connect.cnn);
+
             command.Parameters.Add("@type", SqlDbType.VarChar, 40).Value = type;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -218,8 +224,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             string userhistory = "You added new glass type: " + type;
             string magazinehistory = "Glass type " + type + " has been added";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
             temp.Add(type);
             return temp;
@@ -229,9 +235,10 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("INSERT INTO dbo.Color(Color) VALUES(@Color)", connect.cnn);
+            SqlCommand command = new SqlCommand("INSERT INTO dbo.Color(Color, Company) VALUES(@Color, @Company)", connect.cnn);
 
             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = color;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -241,8 +248,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             string userhistory = "You add new glass color: " + color;
             string magazinehistory = "Glass color " + color + " has been added";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
             temp.Add(color);
             return temp;
@@ -252,10 +259,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("UPDATE dbo.Glass_type SET Type = @new_type WHERE Type = @old_type", connect.cnn);
+            SqlCommand command = new SqlCommand("UPDATE dbo.Glass_type SET Type = @new_type WHERE Type = @old_type AND Company = @Company", connect.cnn);
 
             command.Parameters.Add("@new_type", SqlDbType.VarChar, 40).Value = new_type;
             command.Parameters.Add("@old_type", SqlDbType.VarChar, 40).Value = old_type;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             try
             {
@@ -271,10 +279,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             }
 
 
-            command = new SqlCommand("UPDATE dbo.Glass SET Type = @new_type WHERE Type = @old_type", connect.cnn);
+            command = new SqlCommand("UPDATE dbo.Glass SET Type = @new_type WHERE Type = @old_type AND Company = @Company", connect.cnn);
 
             command.Parameters.Add("@new_type", SqlDbType.VarChar, 40).Value = new_type;
             command.Parameters.Add("@old_type", SqlDbType.VarChar, 40).Value = old_type;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -285,8 +294,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             string userhistory = "You changed glass type from " + old_type + " to: " + new_type;
             string magazinehistory = "Glass type " + old_type + " has been changed to: " + new_type;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
             temp.Add(new_type);
             return temp;
@@ -296,10 +305,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("UPDATE dbo.Color SET Color = @new_color WHERE Color = @old_color", connect.cnn);
+            SqlCommand command = new SqlCommand("UPDATE dbo.Color SET Color = @new_color WHERE Color = @old_color AND Company = @Company", connect.cnn);
 
             command.Parameters.Add("@new_color", SqlDbType.VarChar, 40).Value = new_color;
             command.Parameters.Add("@old_color", SqlDbType.VarChar, 40).Value = old_color;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             try
             {
@@ -314,10 +324,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 return temp;
             }
 
-            command = new SqlCommand("UPDATE dbo.Glass SET Color = @new_color WHERE Color = @old_color", connect.cnn);
+            command = new SqlCommand("UPDATE dbo.Glass SET Color = @new_color WHERE Color = @old_color AND Company = @Company", connect.cnn);
 
             command.Parameters.Add("@new_color", SqlDbType.VarChar, 40).Value = new_color;
             command.Parameters.Add("@old_color", SqlDbType.VarChar, 40).Value = old_color;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -327,8 +338,8 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             string userhistory = "You changed glass color from " + old_color + " to: " + new_color;
             string magazinehistory = "Glass color " + old_color + " has been changed to: " + new_color;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
             temp.Add(old_color);
             return temp;

@@ -10,7 +10,11 @@ export class PasswordReset2 extends Component {
     handlePasswordReset2 = (event) => {
         event.preventDefault();
         const receiver = {
-            user: {Reset_pass: this.refs.code.value}
+            user: {
+                
+                Reset_pass: this.refs.code.value,
+                company: this.refs.firm.value
+            }
             
         }
         fetch(`api/Users/Reset_Password_Pass`, {
@@ -70,7 +74,18 @@ export class PasswordReset2 extends Component {
                                                 placeholder="Enter code"
                                                 ref="code"
                                             />
-                                        </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Firm:</label>
+                                <input
+                                    type="text"
+                                    name="Firm"
+                                    className="form-control"
+                                    id="inputFirm"
+                                    placeholder="Firm"
+                                    ref="firm"
+                                />
+                            </div>
 
 
 

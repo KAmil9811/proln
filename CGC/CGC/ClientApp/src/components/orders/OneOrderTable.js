@@ -223,7 +223,10 @@ export class OneOrderTable extends Component {
     sendId = (event) => {
         event.preventDefault();
         const receiver = {
-            user: { login: sessionStorage.getItem('login') },
+            user: {
+                company: sessionStorage.getItem('company'),
+                login: sessionStorage.getItem('login')
+            },
             item_Id: this.state.send,
             order: { id_order :sessionStorage.getItem('orderId') },
         }

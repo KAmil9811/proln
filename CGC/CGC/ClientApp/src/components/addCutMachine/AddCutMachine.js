@@ -18,12 +18,18 @@ export class AddCutMachine extends Component {
     componentDidMount() {
         
         var table3 = [];
-        
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
 
         fetch(`api/Machine/Return_All_Type`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -48,6 +54,7 @@ export class AddCutMachine extends Component {
                 type: this.state.value
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             }
         }

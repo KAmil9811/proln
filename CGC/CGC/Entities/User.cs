@@ -31,6 +31,7 @@ namespace CGC.Entities
 
         public string Error_Messege { get; set; }
         public string Reset_pass { get; set; }
+        public string Company { get; set; }
 
         public bool Deleted { get; set; }
         public string Token { get; set; }

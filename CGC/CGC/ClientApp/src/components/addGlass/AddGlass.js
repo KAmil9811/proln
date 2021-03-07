@@ -19,10 +19,17 @@ export class AddGlass extends Component {
     componentDidMount() {
         var table2 = [];
         var table3 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Magazine/Return_All_Colors`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -78,6 +85,7 @@ export class AddGlass extends Component {
                     count: this.refs.amount.value,
                 },
                 user: {
+                    company: sessionStorage.getItem('company'),
                     login: sessionStorage.getItem('login'),
                 }
             }

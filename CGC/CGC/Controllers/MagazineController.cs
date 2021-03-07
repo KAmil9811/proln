@@ -57,28 +57,28 @@ namespace CGC.Controllers
         //}
 
         
-        [HttpGet("Return_All_Colors")]
-        public async Task<List<string>> Return_All_Colors()
+        [HttpPost("Return_All_Colors")]
+        public async Task<List<string>> Return_All_Colors([FromBody] Receiver receiver)
         {
-            return magazineFunc.Return_All_Colors();
+            return magazineFunc.Return_All_Colors(receiver);
         }
 
-        [HttpGet("Return_All_Glass")]
-        public async Task<List<Glass_Receiver>> Return_All_Glass()
+        [HttpPost("Return_All_Glass")]
+        public async Task<List<Glass_Receiver>> Return_All_Glass([FromBody] Receiver receiver)
         {
-            return magazineFunc.Return_All_Glass();
+            return magazineFunc.Return_All_Glass(receiver);
         }
 
-        [HttpGet("Return_All_Type")]
-        public async Task<List<string>> Return_All_Type()
+        [HttpPost("Return_All_Type")]
+        public async Task<List<string>> Return_All_Type([FromBody] Receiver receiver)
         {
-            return magazineFunc.Return_All_Type();
+            return magazineFunc.Return_All_Type(receiver);
         }
 
-        [HttpGet("Return_Magazine_History")]
-        public async Task<List<Magazine_History>> Return_Magazine_History()
+        [HttpPost("Return_Magazine_History")]
+        public async Task<List<Magazine_History>> Return_Magazine_History([FromBody] Receiver receiver)
         {
-            return magazineFunc.Return_Magazine_History();
+            return magazineFunc.Return_Magazine_History(receiver);
         }
 
         [Authorize]

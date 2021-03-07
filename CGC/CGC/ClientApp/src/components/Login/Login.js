@@ -37,7 +37,8 @@ export class Login extends Component {
         event.preventDefault();
         const model = {
             login: this.refs.login.value,
-            password: this.refs.password.value
+            password: this.refs.password.value,
+            company: this.refs.firm.value
             
         }
 
@@ -69,7 +70,7 @@ export class Login extends Component {
                else {
                     sessionStorage.setItem('token', json.token);
                     sessionStorage.setItem('email', json.email);
-                    sessionStorage.setItem('login', json.login);
+                   sessionStorage.setItem('company', this.refs.firm.value);
                     sessionStorage.setItem('name', json.name);
                     sessionStorage.setItem('surname', json.surname);
                     // permissions
@@ -101,6 +102,17 @@ export class Login extends Component {
                 </div>
                 <form>
                     <div className="Login_c">
+                        <div className="form-group">
+                            <label>Firm:</label>
+                            <input
+                                type="text"
+                                name="Firm"
+                                className="form-control"
+                                id="inputFirm"
+                                placeholder="Firm"
+                                ref="firm"
+                            />
+                        </div>
                         <div className="form-group">
                             <label>Login:</label>
                             <input

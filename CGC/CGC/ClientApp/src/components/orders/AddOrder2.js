@@ -60,10 +60,17 @@ export class AddOrderTwo extends Component {
     componentDidMount() {
         var table2 = [];
         var table3 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Magazine/Return_All_Colors`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -81,9 +88,11 @@ export class AddOrderTwo extends Component {
             })
 
         fetch(`api/Magazine/Return_All_Type`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -111,6 +120,7 @@ export class AddOrderTwo extends Component {
             },
             iteme: this.state.tabliastringow,
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             }
         }

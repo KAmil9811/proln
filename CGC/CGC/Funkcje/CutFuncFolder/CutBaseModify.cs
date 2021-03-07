@@ -39,12 +39,13 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
         {
             try
             {
-                string query = "INSERT INTO dbo.[Cut_Project](Cut_id, Order_id, Status) VALUES(@Cut_id,@Order_id, @Status)";
+                string query = "INSERT INTO dbo.[Cut_Project](Cut_id, Order_id, Status, Company) VALUES(@Cut_id,@Order_id, @Status, @Company)";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = code.ToString();
                 command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Saved";
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -55,11 +56,12 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                 {
                     if (glass.Error_Messege == null)
                     {
-                        query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id";
+                        query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id WHERE Glass_Id = @Glass_Id AND Company = @Company";
                         command = new SqlCommand(query, connect.cnn);
 
                         command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = code.ToString();
                         command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = glass.Ids;
+                        command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                         connect.cnn.Open();
                         command.ExecuteNonQuery();
@@ -67,17 +69,18 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                         connect.cnn.Close();
 
 
-                        foreach (Item item in orderBaseReturn.GetItems(order))
+                        foreach (Item item in orderBaseReturn.GetItems(order, user.Company))
                         {
                             foreach (Piece piece in pieces)
                             {
                                 if (piece.Id == item.Id)
                                 {
-                                    query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id";
+                                    query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id WHERE Id = @Id AND Company = @Company";
                                     command = new SqlCommand(query, connect.cnn);
 
                                     command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = code.ToString();
                                     command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
+                                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                                     connect.cnn.Open();
                                     command.ExecuteNonQuery();
@@ -96,7 +99,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             string userhistory = "You saved project: " + code;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
 
             return code;
         }
@@ -105,11 +108,12 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
         {
             List<Cut_Project> cut_Projects = new List<Cut_Project>();
 
-            string query = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id,)";
+            string query = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id AND Company = @Company;)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = cut_Project.Cut_id;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Deleted";
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -117,11 +121,12 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             connect.cnn.Close();
 
 
-            query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id2 WHERE Cut_id = @Cut_id";
+            query = "UPDATE dbo.[Glass] SET Cut_id = @Cut_id2 WHERE Cut_id = @Cut_id AND Company = @Company";
             command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id2", SqlDbType.VarChar, 40).Value = "0";
             command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = cut_Project.Cut_id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -130,11 +135,12 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
 
 
-            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id2 WHERE Cut_id = @Cut_id";
+            query = "UPDATE dbo.[Item] SET Cut_id = @Cut_id2 WHERE Cut_id = @Cut_id AND Company = @Company";
             command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id2", SqlDbType.Int).Value = "0";
             command.Parameters.Add("@Cut_id", SqlDbType.Int).Value = cut_Project.Cut_id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -143,7 +149,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             string userhistory = "You deleted project: " + cut_Project.Cut_id;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
 
             cut_Projects.Add(cut_Project);
             return cut_Projects;
@@ -153,7 +159,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
         {
             try
             {
-                string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order)";
+                string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order, Company) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order, @Company)";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = code.ToString();
@@ -162,18 +168,20 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
                 command.Parameters.Add("@Id_item", SqlDbType.VarChar, 40).Value = item.Id;
                 command.Parameters.Add("@Id_order", SqlDbType.VarChar, 40).Value = ord.Id_Order;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
                 command.Dispose();
                 connect.cnn.Close();
 
-                query = "UPDATE dbo.[Item] SET Product_id = @Product_id, Status = @Status WHERE Id = @Id";
+                query = "UPDATE dbo.[Item] SET Product_id = @Product_id, Status = @Status WHERE Id = @Id AND Company = @Company";
                 command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
                 command.Parameters.Add("@Product_id", SqlDbType.VarChar, 40).Value = code.ToString();
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -183,8 +191,8 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                 string producthistory = "Product has been cutted";
                 string orderhistory = item.Id + " has been cutted";
 
-                insertHistory.InsertProductHistory(code.ToString(), user.Login, producthistory);
-                insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order);
+                insertHistory.InsertProductHistory(code.ToString(), user.Login, producthistory, user.Company);
+                insertHistory.Insert_Order_History(orderhistory, user.Login, ord.Id_Order, user.Company);
             }
             catch(Exception e)
             {
@@ -195,46 +203,49 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
         public string Post_Production_step2(User user, Machines machines, Cut_Project cut_Project)
         {
-            string query2 = "UPDATE dbo.[Glass] SET Used = @Used WHERE Cut_id = @Cut_id";
+            string query2 = "UPDATE dbo.[Glass] SET Used = @Used WHERE Cut_id = @Cut_id AND Company = @Company";
             SqlCommand command2 = new SqlCommand(query2, connect.cnn);
 
             command2.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = cut_Project.Cut_id;
             command2.Parameters.Add("@Used", SqlDbType.Bit).Value = 1;
+            command2.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command2.ExecuteNonQuery();
             command2.Dispose();
             connect.cnn.Close();
 
-            foreach(Glass gl in magazineBaseReturn.Getglass())
+            foreach(Glass gl in magazineBaseReturn.Getglass(user.Company))
             {
                 foreach(Glass_Id glass_Id in gl.Glass_info)
                 {
                     if(glass_Id.Cut_id == cut_Project.Cut_id)
                     {
                         string magazinehistory = "Glass " + glass_Id.Id + " has been used";
-                        insertHistory.Insert_Magazine_History(magazinehistory, user.Login);
+                        insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
                     }
                 }
             }
 
 
-            string query3 = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id";
+            string query3 = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id AND Company = @Company";
             SqlCommand command3 = new SqlCommand(query3, connect.cnn);
 
             command3.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = cut_Project.Cut_id;
             command3.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+            command3.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command3.ExecuteNonQuery();
             command3.Dispose();
             connect.cnn.Close();
 
-            string query4 = "Update dbo.[Machines] SET Status = @Status WHERE No = @No";
+            string query4 = "Update dbo.[Machines] SET Status = @Status WHERE No = @No AND Company = @Company";
             SqlCommand command4 = new SqlCommand(query4, connect.cnn);
 
             command4.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command4.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
+            command4.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
 
             connect.cnn.Open();
@@ -246,20 +257,21 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             string userhistory = "You cutted project " + cut_Project.Cut_id;
             string machinehistory = "Project " + cut_Project.Cut_id + " has been cutted";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History(cut_Project.Cut_id, user.Login, machinehistory, machines.No);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History(cut_Project.Cut_id, user.Login, machinehistory, machines.No, user.Company);
 
             return "Ready";
         }
 
-        public string Start_Production(Machines machines, Cut_Project cut_Project)
+        public string Start_Production(Machines machines, Cut_Project cut_Project, User user)
         {
-            string query = "Update dbo.[Machines] SET Status = @Status, Last_Cut_id = @Last_Cut_id WHERE No = @No";
+            string query = "Update dbo.[Machines] SET Status = @Status, Last_Cut_id = @Last_Cut_id WHERE No = @No AND Company = @Company";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "In use";
             command.Parameters.Add("@Last_Cut_id", SqlDbType.VarChar, 40).Value = cut_Project.Cut_id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
 
             connect.cnn.Open();
@@ -267,11 +279,12 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command.Dispose();
             connect.cnn.Close();
 
-            query = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id";
+            query = "UPDATE dbo.[Cut_Project] SET Status = @Status WHERE Cut_id = @Cut_id AND Company = @Company";
             command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Cut_id", SqlDbType.VarChar).Value = cut_Project.Cut_id;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "On production";
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();

@@ -22,6 +22,9 @@ export class PackagesTable extends Component {
         const receiver = {
             order: {
                 id_order: sessionStorage.getItem('orderId2')
+            },
+            user: {
+                company: sessionStorage.getItem('company'),
             }
         }
        

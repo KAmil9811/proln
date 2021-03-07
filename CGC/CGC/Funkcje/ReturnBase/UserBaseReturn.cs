@@ -30,13 +30,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             }
         }
 
-        public List<User> GetUser(string login)
+        public List<User> GetUser(string login, string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Login = @Login;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Login = @Login AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = login;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -58,6 +59,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -66,14 +68,15 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUser(string login, bool deleted)
+        public List<User> GetUser(string login, bool deleted, string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Login = @Login AND Deleted = @Deleted;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Login = @Login AND Deleted = @Deleted AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = login;
             command.Parameters.Add("@Deleted", SqlDbType.VarChar, 40).Value = deleted;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -95,6 +98,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -103,13 +107,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUserByEmail(string email)
+        public List<User> GetUserByEmail(string email, string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Email = @Email;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Email = @Email AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Email", SqlDbType.VarChar, 40).Value = email;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -131,6 +136,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -139,13 +145,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUserByCode(string code)
+        public List<User> GetUserByCode(string code, string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Reset_pass = @Reset_pass;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Reset_pass = @Reset_pass AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Reset_pass", SqlDbType.VarChar, 40).Value = code;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -167,6 +174,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -175,11 +183,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUsers()
+        public List<User> GetUsers(string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Company = @Company;", connect.cnn);
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
             connect.cnn.Open();
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
@@ -201,6 +212,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -209,12 +221,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUsers_Manager()
+        public List<User> GetUsers_Manager(string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager AND Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             command.Parameters.Add("@Manager", SqlDbType.Bit).Value = false;
 
@@ -236,6 +250,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -244,15 +259,16 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUsers_Super_Admin()
+        public List<User> GetUsers_Super_Admin(string company)
         {
             List<User> temp = new List<User>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager and Super_Admin = @Super_Admin;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager and Super_Admin = @Super_Admin AND Company = @Company;", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Manager", SqlDbType.Bit).Value = false;
             command.Parameters.Add("@Super_Admin", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -272,6 +288,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 temp.Add(user);
             }
             sqlDataReader.Close();
@@ -280,17 +297,18 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<User> GetUsers_Admin()
+        public List<User> GetUsers_Admin(string company)
         {
             List<User> temp = new List<User>();
             try
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager and Super_Admin = @Super_Admin and Admin = @Admin;", connect.cnn);
+                SqlCommand command = new SqlCommand("SELECT * FROM [User] WHERE Manager = @Manager and Super_Admin = @Super_Admin and Admin = @Admin AND Company = @Company;", connect.cnn);
                 connect.cnn.Open();
 
                 command.Parameters.Add("@Manager", SqlDbType.Bit).Value = false;
                 command.Parameters.Add("@Super_Admin", SqlDbType.Bit).Value = false;
                 command.Parameters.Add("@Admin", SqlDbType.Bit).Value = false;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
                 SqlDataReader sqlDataReader = command.ExecuteReader();
                 while (sqlDataReader.Read())
@@ -310,6 +328,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                     user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                     user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                     user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                    user.Company = sqlDataReader["Company"].ToString();
                     temp.Add(user);
                 }
                 sqlDataReader.Close();
@@ -323,12 +342,14 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return temp;
         }
 
-        public List<UserHistory> GetAllUserHistory()
+        public List<UserHistory> GetAllUserHistory(string company)
         {
             List<UserHistory> userHistories = new List<UserHistory>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User_History];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User_History] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -346,14 +367,15 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
             return userHistories;
         }
 
-        public List<UserHistory> GetAllUserHistory(string Login)
+        public List<UserHistory> GetAllUserHistory(string Login, string company)
         {
             List<UserHistory> userHistories = new List<UserHistory>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [User_History] Where Login = @Login;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [User_History] Where Login = @Login AND Company = @Company;", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -403,6 +425,7 @@ namespace CGC.Funkcje.UserFuncFolder.UserReturn
                 user.Cut_management = Convert.ToBoolean(sqlDataReader["Cut_management"]);
                 user.Reset_pass = sqlDataReader["Reset_pass"].ToString();
                 user.Deleted = Convert.ToBoolean(sqlDataReader["Deleted"]);
+                user.Company = sqlDataReader["Company"].ToString();
                 try
                 {
                     user.Session_Start = Convert.ToBoolean(sqlDataReader["Session_Start"]);

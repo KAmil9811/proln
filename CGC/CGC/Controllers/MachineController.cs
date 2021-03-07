@@ -30,16 +30,16 @@ namespace CGC.Controllers
             }
         }
 
-        [HttpGet("Return_All_Type")]
-        public async Task<List<string>> Return_All_Type()
+        [HttpPost("Return_All_Type")]
+        public async Task<List<string>> Return_All_Type([FromBody] Receiver receiver)
         {
-            return machineFunc.Return_All_Type();
+            return machineFunc.Return_All_Type(receiver);
         }
 
-        [HttpGet("Return_All_Machines")]
-        public async Task<List<Machines>> Return_All_Machines()
+        [HttpPost("Return_All_Machines")]
+        public async Task<List<Machines>> Return_All_Machines([FromBody] Receiver receiver)
         {
-            return machineFunc.Return_All_Machines();
+            return machineFunc.Return_All_Machines(receiver);
         }
         
         [HttpPost("Return_Machines_History")]
@@ -48,10 +48,10 @@ namespace CGC.Controllers
             return machineFunc.Return_Machines_History(receiver);
         }
         
-        [HttpGet("Return_All_Machines_History")]
-        public async Task<List<Machines_History_All>> Return_All_Machines_History()
+        [HttpPost("Return_All_Machines_History")]
+        public async Task<List<Machines_History_All>> Return_All_Machines_History([FromBody] Receiver receiver)
         {
-            return machineFunc.Return_All_Machines_History();
+            return machineFunc.Return_All_Machines_History(receiver);
         }
 
         [Authorize]

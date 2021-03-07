@@ -20,14 +20,16 @@ export class OrderHistoryTable extends Component {
     componentDidMount() {
         var table2 = [];
         const receiver = {
-            order: {
-                id_order:  1,
+            user: {
+                company: sessionStorage.getItem('company'),
             }
         }
         
         fetch(`api/Order/Return_Order_History`, {
-            method: "GET",
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })

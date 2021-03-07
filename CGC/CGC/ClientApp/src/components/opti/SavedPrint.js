@@ -24,6 +24,7 @@ export class SavedPrint extends Component {
             },
             id: sessionStorage.getItem('cutId2'),
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
         }
@@ -65,6 +66,7 @@ export class SavedPrint extends Component {
                 type:sessionStorage.getItem('typ'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
         }
@@ -99,6 +101,7 @@ export class SavedPrint extends Component {
                 id_order: sessionStorage.getItem('orderId3'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
         }

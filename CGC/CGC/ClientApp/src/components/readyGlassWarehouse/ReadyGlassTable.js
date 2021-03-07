@@ -24,10 +24,17 @@ export class ReadyGlassTable extends Component {
 
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Product/Get_Products`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -184,7 +191,10 @@ export class ReadyGlassTable extends Component {
     sendId = (event) => {
         event.preventDefault();
         const receiver = {
-            user: { login: sessionStorage.getItem('login') },
+            user: {
+                company: sessionStorage.getItem('company'),
+                login: sessionStorage.getItem('login')
+            },
             product_id: this.state.send,
 
         }
@@ -194,6 +204,7 @@ export class ReadyGlassTable extends Component {
                 receiver
             ),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })
@@ -215,6 +226,7 @@ export class ReadyGlassTable extends Component {
         const receiver = {
             product_id: this.state.send,
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             }
         }
@@ -225,6 +237,7 @@ export class ReadyGlassTable extends Component {
                 method: "post",
                 body: JSON.stringify(receiver),
                 headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                     'Content-Type': 'application/json'
                 }
             })

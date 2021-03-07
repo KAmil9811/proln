@@ -26,7 +26,7 @@ namespace CGC.Controllers
             if (response == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            userBasemodify.Insert_token(response.Login, response.Token);
+            userBasemodify.Insert_token(response.Login, response.Token, response.Company);
 
             return Ok(response);
         }

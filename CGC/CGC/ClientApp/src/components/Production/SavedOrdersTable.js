@@ -22,10 +22,17 @@ export class SavedOrdersTable extends Component {
     //`api/Order/Return_All_Orders`
     componentDidMount() {
         var table2 = [];
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
         fetch(`api/Cut/Return_All_Project`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())
@@ -105,6 +112,9 @@ export class SavedOrdersTable extends Component {
         const receiver = {
             order: {
                 id_order: id
+            },
+            user: {
+                company: sessionStorage.getItem('company'),
             }
         }
         
@@ -112,6 +122,7 @@ export class SavedOrdersTable extends Component {
             method: "post",
             body: JSON.stringify(receiver),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
 

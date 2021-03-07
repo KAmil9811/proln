@@ -34,7 +34,7 @@ namespace CGC.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = userBaseReturn.GetUsersToLogin().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password);
+            var user = userBaseReturn.GetUsersToLogin().SingleOrDefault(x => x.Login == model.Login && x.Password == model.Password && x.Company == model.Company);
 
             if (user == null) return null;
 

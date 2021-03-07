@@ -29,28 +29,28 @@ namespace CGC.Controllers
             }
         }
 
-        [HttpGet("Return_All_Users")]
-        public List<User> Return_All_Users()
+        [HttpPost("Return_All_Users")]
+        public List<User> Return_All_Users([FromBody] Receiver receiver)
         {       
-            return userFunc.Return_All_Users();
+            return userFunc.Return_All_Users(receiver);
         }
 
-        [HttpGet("Return_All_SuperAdmin")]
-        public async Task<List<User>> Return_All_SuperAdmin()
+        [HttpPost("Return_All_SuperAdmin")]
+        public async Task<List<User>> Return_All_SuperAdmin([FromBody] Receiver receiver)
         {
-            return userFunc.Return_All_SuperAdmin();
+            return userFunc.Return_All_SuperAdmin(receiver);
         }
 
-        [HttpGet("Return_All_Admin")]
-        public async Task<List<User>> Return_All_Admin()
+        [HttpPost("Return_All_Admin")]
+        public async Task<List<User>> Return_All_Admin([FromBody] Receiver receiver)
         {
-            return userFunc.Return_All_Admin();
+            return userFunc.Return_All_Admin(receiver);
         }
 
-        [HttpGet("Return_Users_History")]
-        public async Task<List<UserHistory>> Return_Users_History()
+        [HttpPost("Return_Users_History")]
+        public async Task<List<UserHistory>> Return_Users_History([FromBody] Receiver receiver)
         {
-            return userFunc.Return_Users_History();
+            return userFunc.Return_Users_History(receiver);
         }
 
         [HttpPost("Return_User_History")]

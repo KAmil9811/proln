@@ -30,12 +30,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             }
         }
 
-        public List<Glass> Getglass()
+        public List<Glass> Getglass(string company)
         {
             List<Glass_Receiver> temp2 = new List<Glass_Receiver>();
             List<Glass> temp = new List<Glass>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -99,11 +101,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Glass> Getglass(Glass glasss)
+        public List<Glass> Getglass(Glass glasss, string company)
         {
             List<Glass_Receiver> temp2 = new List<Glass_Receiver>();
             List<Glass> temp = new List<Glass>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Width >= @Width AND Length >= @Length AND Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2);", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Width >= @Width AND Length >= @Length AND Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2 AND Company = @Company);", connect.cnn);
 
             command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glasss.Hight);
             command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glasss.Width);
@@ -115,6 +117,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glasss.Color;
             command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glasss.Owner;
             command.Parameters.Add("@Owner2", SqlDbType.VarChar, 40).Value = "";
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -182,15 +185,16 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Glass> Getglass(string id)
+        public List<Glass> Getglass(string id, string company)
         {
             List<Glass_Receiver> temp2 = new List<Glass_Receiver>();
             List<Glass> temp = new List<Glass>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used AND Removed = @Removed AND Glass_Id = @Glass_Id;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used AND Removed = @Removed AND Glass_Id = @Glass_Id AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Used", SqlDbType.Bit).Value = false;
             command.Parameters.Add("@Removed", SqlDbType.Bit).Value = false;
             command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -258,15 +262,16 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Glass> Getglass(int cut_id)
+        public List<Glass> Getglass(int cut_id, string company)
         {
             List<Glass_Receiver> temp2 = new List<Glass_Receiver>();
             List<Glass> temp = new List<Glass>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Used", SqlDbType.Bit).Value = false;
             command.Parameters.Add("@Removed", SqlDbType.Bit).Value = false;
             command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = cut_id.ToString();
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -334,10 +339,10 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Glass_Receiver> GetglassToCut(Glass glasss)
+        public List<Glass_Receiver> GetglassToCut(Glass glasss, string company)
         {
             List<Glass_Receiver> temp = new List<Glass_Receiver>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Width >= @Width AND Length >= @Length AND Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2);", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Width >= @Width AND Length >= @Length AND Used = @Used AND Removed = @Removed AND Cut_id = @Cut_id AND Hight = @Hight AND Type = @Type AND Color = @Color AND (Owner = @Owner OR Owner = @Owner2) AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glasss.Hight);
             command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glasss.Width);
@@ -349,6 +354,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glasss.Color;
             command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glasss.Owner;
             command.Parameters.Add("@Owner2", SqlDbType.VarChar, 40).Value = "";
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -385,13 +391,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Glass_Receiver> Getglass(bool used, bool removed)
+        public List<Glass_Receiver> Getglass(bool used, bool removed, string company)
         {
             List<Glass_Receiver> temp = new List<Glass_Receiver>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used and Removed = @Removed;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass] WHERE Used = @Used and Removed = @Removed AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Used", SqlDbType.Bit).Value = used;
             command.Parameters.Add("@Removed", SqlDbType.Bit).Value = removed;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -428,12 +435,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<string> GetColor()
+        public List<string> GetColor(string company)
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Color];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Color] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -447,12 +456,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<string> GetTypes()
+        public List<string> GetTypes(string company)
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Glass_type];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Glass_type] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -466,12 +477,14 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             return temp;
         }
 
-        public List<Magazine_History> GetMagazineHistories()
+        public List<Magazine_History> GetMagazineHistories(string company)
         {
             List<Magazine_History> magazine_Histories = new List<Magazine_History>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Magazine_History];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Magazine_History] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

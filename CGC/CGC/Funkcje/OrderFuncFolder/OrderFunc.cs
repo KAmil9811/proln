@@ -35,19 +35,19 @@ namespace CGC.Funkcje.OrderFuncFolder
             }
         }
 
-        public List<Order> Return_All_Orders()
+        public List<Order> Return_All_Orders(Receiver receiver)
         {
-            return orderBaseReturn.GetOrders(false, false);
+            return orderBaseReturn.GetOrders(false, false, receiver.user.Company);
         }
 
         public List<Item> Return_All_Items(Receiver receiver)
         {            
-            return orderBaseReturn.GetItems(receiver.order);
+            return orderBaseReturn.GetItems(receiver.order, receiver.user.Company);
         }
         
-        public List<Order_History> Return_Order_History()
+        public List<Order_History> Return_Order_History(Receiver receiver)
         {
-            return orderBaseReturn.Return_Order_History();
+            return orderBaseReturn.Return_Order_History(receiver.user.Company);
         }
 
         public List<Order> Add_Order(Receiver receiver)
@@ -64,7 +64,7 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             try
             {
-                last_free_id = orderBaseReturn.GetLastItem().Last().sort + 1;
+                last_free_id = orderBaseReturn.GetLastItem(user.Company).Last().sort + 1;
             }
             catch
             {
@@ -79,13 +79,13 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             try
             {
-                temp2 = orderBaseReturn.GetOrders();
+                temp2 = orderBaseReturn.GetOrders(user.Company);
 
                 foreach (Order orderer in temp2)
                 {
                     orderer.Priority = orderer.Id_Order;
                 }
-                code = orderBaseReturn.GetLastOrder().Last().sort + 1;
+                code = orderBaseReturn.GetLastOrder(user.Company).Last().sort + 1;
             }
             catch
             {
@@ -145,7 +145,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             }
 
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login,false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login,false, user.Company))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
@@ -165,7 +165,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             Order order = receiver.order;
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
@@ -185,11 +185,11 @@ namespace CGC.Funkcje.OrderFuncFolder
             User user = receiver.user;
             Item items = receiver.item;
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false, user.Company))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    foreach (Item item in orderBaseReturn.GetItems(order))
+                    foreach (Item item in orderBaseReturn.GetItems(order, user.Company))
                     {
                         if (item.Id == items.Id)
                         {
@@ -216,11 +216,11 @@ namespace CGC.Funkcje.OrderFuncFolder
             User user = receiver.user;
             string name = receiver.new_name;
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false, user.Company))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order))
+                    foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order, user.Company))
                     {
                         return orderBaseModify.Set_stan(usere, ord, name);
                     }
@@ -239,18 +239,18 @@ namespace CGC.Funkcje.OrderFuncFolder
         {
             List<Order> temp = new List<Order>();
 
-            if(orderBaseReturn.GetOrder(order.Id_Order).First().Status != "Ready")
+            if(orderBaseReturn.GetOrder(order.Id_Order, user.Company).First().Status != "Ready")
             {
                 order.Error_Messege = "Order is not ready";
                 temp.Add(order);
                 return temp;
             }
 
-            foreach (User use in userBaseReturn.GetUser(user.Login, false))
+            foreach (User use in userBaseReturn.GetUser(user.Login, false, user.Company))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin == true || use.Order_management == true)
                 {
-                    return orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order));
+                    return orderBaseModify.ReleasedOrder(use, order, orderBaseReturn.GetItems(order, user.Company));
                 }
                 order.Error_Messege = "User no permission";
                 temp.Add(order);
@@ -266,10 +266,10 @@ namespace CGC.Funkcje.OrderFuncFolder
             List<Item> temp = new List<Item>();
             Item temp_item = new Item();
             Order order = new Order { Id_Order = items.First().Order_id };
-            List<Item> temp2 = orderBaseReturn.GetItems(order);
+            List<Item> temp2 = orderBaseReturn.GetItems(order, user.Company);
 
 
-            foreach (Item item in orderBaseReturn.GetItems(order))
+            foreach (Item item in orderBaseReturn.GetItems(order, user.Company))
             {
                 foreach (Item itm in items)
                 {
@@ -286,7 +286,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUser(user.Login, false))
+            foreach (User use in userBaseReturn.GetUser(user.Login, false, user.Company))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin || use.Order_management == true)
                 {
@@ -307,7 +307,7 @@ namespace CGC.Funkcje.OrderFuncFolder
             List<Item> temp = new List<Item>();
             User user = receiver.user;
 
-            foreach (Item item in orderBaseReturn.GetItems(receiver.order))
+            foreach (Item item in orderBaseReturn.GetItems(receiver.order, user.Company))
             {
                 foreach (int it in items)
                 {
@@ -324,11 +324,11 @@ namespace CGC.Funkcje.OrderFuncFolder
                 }
             }
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login, false))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, false, user.Company))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Order_management == true)
                 {
-                    return orderBaseModify.Remove_Item(usere, receiver.order, items, orderBaseReturn.GetItems(receiver.order));
+                    return orderBaseModify.Remove_Item(usere, receiver.order, items, orderBaseReturn.GetItems(receiver.order, user.Company));
                 }
                 Item iteme2 = new Item();
                 iteme2.Error_Messege = "User no permission";

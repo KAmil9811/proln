@@ -37,10 +37,10 @@ namespace CGC.Controllers
         OrderFunc orderFunc = new OrderFunc();
 
         
-        [HttpGet("Return_All_Orders")]
-        public async Task<List<Order>> Return_All_Orders()
+        [HttpPost("Return_All_Orders")]
+        public async Task<List<Order>> Return_All_Orders([FromBody] Receiver receiver)
         {
-            return orderFunc.Return_All_Orders();
+            return orderFunc.Return_All_Orders(receiver);
         }
 
         [HttpPost("Return_All_Items")]
@@ -49,10 +49,10 @@ namespace CGC.Controllers
             return orderFunc.Return_All_Items(receiver);
         }
 
-        [HttpGet("Return_Order_History")]
-        public async Task<List<Order_History>> Return_Order_History()
+        [HttpPost("Return_Order_History")]
+        public async Task<List<Order_History>> Return_Order_History([FromBody] Receiver receiver)
         {
-            return orderFunc.Return_Order_History();
+            return orderFunc.Return_Order_History(receiver);
         }
 
         [Authorize]

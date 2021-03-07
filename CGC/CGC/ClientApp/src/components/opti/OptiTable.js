@@ -24,6 +24,7 @@ export class OptiTable extends Component {
                 id_order: sessionStorage.getItem('idOpti'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
             item:  {

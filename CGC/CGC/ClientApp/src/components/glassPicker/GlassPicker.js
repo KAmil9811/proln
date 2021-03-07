@@ -31,7 +31,10 @@ export class GlassPicker extends Component {
                 type: sessionStorage.getItem('typepick'),
                 thickness2: sessionStorage.getItem('thicknesspick'),
                 owner: sessionStorage.getItem('ownerpick'),
-                } 
+            } ,
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
 
         }
         fetch(`api/Cut/Return_Glass_To_Cut`, {

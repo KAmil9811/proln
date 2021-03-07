@@ -24,6 +24,11 @@ export class UsersTable extends Component {
     componentDidMount() {
         var table = [];
         var link = '';
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            },
+        }
         const model = {
             client_id: sessionStorage.getItem('token'),
         }
@@ -37,10 +42,10 @@ export class UsersTable extends Component {
             link = 'api/Users/Return_All_Admin'
         }
         fetch(`${link}`, {
-            method: "get",
-            /*body: JSON.stringify(
-                model
-            ),*/
+            method: "post",
+            body: JSON.stringify(
+                receiver
+            ),
             headers: {
                 'Authorization': 'Bearer ' + sessionStorage.getItem('token'), 
                 'Content-Type': 'application/json',
@@ -161,6 +166,7 @@ export class UsersTable extends Component {
                 login: user
             },
             admin: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             }
         }

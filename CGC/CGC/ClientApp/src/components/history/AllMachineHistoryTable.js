@@ -19,12 +19,18 @@ export class AllMachineHistoryTable extends Component {
 
     componentDidMount() {
         var table2 = [];
-
+        const receiver = {
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
+        }
 
         fetch(`api/Machine/Return_All_Machines_History`, {
+            method: "post",
+            body: JSON.stringify(receiver),
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
             }
         })
             .then(res => res.json())

@@ -35,6 +35,7 @@ namespace CGC.Models
         public string Token { get; set; }
 
         public string Logged { get; set; }
+        public string Company { get; set; }
 
         public AuthenticateResponse(Entities.User user, string token)
         {
@@ -53,6 +54,7 @@ namespace CGC.Models
             Cut_management = user.Cut_management;
             Error_Messege = user.Error_Messege;
             Logged = user.Logged;
+            Company = user.Company;
         }
     }
 }

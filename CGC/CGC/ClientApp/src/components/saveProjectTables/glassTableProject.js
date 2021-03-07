@@ -25,6 +25,7 @@ export class GlassTableProject extends Component {
             },
             id: sessionStorage.getItem('cutId2'),
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             },
         }

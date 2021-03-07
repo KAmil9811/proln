@@ -21,6 +21,7 @@ export class EditOrder extends Component {
                 id_order: sessionStorage.getItem('orderId'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             }
         }
@@ -39,6 +40,7 @@ export class EditOrder extends Component {
                 id_order: sessionStorage.getItem('orderId'),
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
             }
         }

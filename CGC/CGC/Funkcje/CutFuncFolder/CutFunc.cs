@@ -49,9 +49,9 @@ namespace CGC.Funkcje.CutFuncFolder
             }
         }
 
-        public List<Order> Return_Orders_To_Cut()
+        public List<Order> Return_Orders_To_Cut(Receiver receiver)
         {
-            return cutCheck.Return_Orders_To_Cut();
+            return cutCheck.Return_Orders_To_Cut(receiver);
         }
 
         public List<Package> Return_Package_To_Cut(Receiver receiver)
@@ -64,14 +64,14 @@ namespace CGC.Funkcje.CutFuncFolder
             return cutCheck.Return_Glass_To_Cut(receiver);
         }
 
-        public List<Machines> Return_Machine_To_Cut()
+        public List<Machines> Return_Machine_To_Cut(Receiver receiver)
         {
-            return cutCheck.Return_Machine_To_Cut();
+            return cutCheck.Return_Machine_To_Cut(receiver);
         }
 
-        public List<Cut_Project> Return_Cut_Project()
+        public List<Cut_Project> Return_Cut_Project(Receiver receiver)
         {
-            return cutBaseReturn.Get_Cut_Project("Saved", "On production");
+            return cutBaseReturn.Get_Cut_Project("Saved", "On production", receiver.user.Company);
         }
 
         public List<Glass> Return_Porject(Receiver receiver)
@@ -90,7 +90,7 @@ namespace CGC.Funkcje.CutFuncFolder
             Package packages = new Package { Item = new List<Item>()};
             Package backup = new Package { Item = new List<Item>() };
 
-            foreach (Item item in orderBaseReturn.GetItems(order))
+            foreach (Item item in orderBaseReturn.GetItems(order, user.Company))
             {
                 if (item.Cut_id == cut_id.ToString())
                 {
@@ -108,7 +108,7 @@ namespace CGC.Funkcje.CutFuncFolder
             cutCheck.Set_Package(packages);
             cutCheck.Sort_Package(packages);
 
-            glasses = magazineBaseReturn.Getglass(cut_id);
+            glasses = magazineBaseReturn.Getglass(cut_id, user.Company);
 
             var sort_glasses = glasses.OrderBy(glasse => glasse.Width).ThenBy(glasses2 => glasses2.Length);
 
@@ -690,15 +690,16 @@ namespace CGC.Funkcje.CutFuncFolder
         public int Save_Project(Receiver receiver)
         {    
             List<Glass> glasses = receiver.glasses;
+            User user = receiver.user;
             Order order = receiver.order;
             int code;
             List<Piece> pieces = receiver.pieces;
-            List<Item> items = orderBaseReturn.GetItems(order);
-            User user = receiver.user;
+            List<Item> items = orderBaseReturn.GetItems(order, user.Company);
+            
 
             try
             {
-                code = Convert.ToInt32(cutBaseReturn.GetCut_Project().OrderBy(cutid => cutid.Cut_id).Last().Cut_id) + 1;
+                code = Convert.ToInt32(cutBaseReturn.GetCut_Project(user.Company).OrderBy(cutid => cutid.Cut_id).Last().Cut_id) + 1;
             }
             catch (Exception e)
             {
@@ -742,7 +743,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             Cut_Project cut_Project = receiver.cut_Project;
             order.Id_Order = cut_Project.Order_id;
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true))
                 {
@@ -757,16 +758,16 @@ namespace CGC.Funkcje.CutFuncFolder
             User user = receiver.user;
             Cut_Project cut_Project = receiver.cut_Project;
             Order order = receiver.order;
-            Machines machines = machineBaseReturn.GetMachine(cut_Project.Cut_id).First();
+            Machines machines = machineBaseReturn.GetMachine(cut_Project.Cut_id, user.Company).First();
 
-            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order))
+            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order, user.Company))
             {
                 foreach (Item item in orderBaseReturn.GetItems(ord, cut_Project.Cut_id))
                 {
                     int code;
                     try
                     {
-                        code = productBaseReturn.GetLastProduct().Last().sort + 1;
+                        code = productBaseReturn.GetLastProduct(user.Company).Last().sort + 1;
                     }
                     catch (Exception e)
                     {
@@ -778,7 +779,7 @@ namespace CGC.Funkcje.CutFuncFolder
             }
 
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Cut_management == true)
                 {
@@ -791,11 +792,11 @@ namespace CGC.Funkcje.CutFuncFolder
 
         public string Start_Production(Receiver receiver)
         {
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(receiver.user.Company))
             {
                 if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin == true || usere.Cut_management == true))
                 {
-                    cutBaseModify.Start_Production(receiver.machines, receiver.cut_Project);
+                    cutBaseModify.Start_Production(receiver.machines, receiver.cut_Project, receiver.user);
                 }
             }
             return "Error";
@@ -947,9 +948,9 @@ namespace CGC.Funkcje.CutFuncFolder
             int Last_posX = 0, Last_posY = 0, PaintX = 0, PaintY =0;
             int Last_posX2 = 0, Last_posY2 = 0;
 
-            List<Glass> tempo = magazineBaseReturn.Getglass();
+            List<Glass> tempo = magazineBaseReturn.Getglass(user.Company);
 
-            foreach (Order ord in orderBaseReturn.GetOrders())
+            foreach (Order ord in orderBaseReturn.GetOrders(user.Company))
             {
                 if (ord.Id_Order == order.Id_Order)
                 {
@@ -991,7 +992,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             var sort_glasses = glasses.OrderByDescending(gla => gla.Length).ThenByDescending(gla => gla.Width);
 
-            foreach (Item item in orderBaseReturn.GetItems(order, item1))
+            foreach (Item item in orderBaseReturn.GetItems(order, item1, user.Company))
             {
                 if (Convert.ToDouble(item.Width) <= Convert.ToDouble(sort_glasses.First().Width) && Convert.ToDouble(item.Length) <= Convert.ToDouble(sort_glasses.First().Length))
                 {
@@ -1011,7 +1012,7 @@ namespace CGC.Funkcje.CutFuncFolder
             cutCheck.Sort_Package(packages);
 
 
-            foreach (User usere in userBaseReturn.GetUser(user.Login))
+            foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
             {
                 foreach (Glass glass in sort_glasses)
                 {

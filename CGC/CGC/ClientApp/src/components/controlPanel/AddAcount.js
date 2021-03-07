@@ -27,6 +27,7 @@ export class AddAcount extends Component{
         }
         const receiver = {
             admin: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             user: {

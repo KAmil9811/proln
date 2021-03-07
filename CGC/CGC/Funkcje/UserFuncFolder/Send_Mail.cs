@@ -45,10 +45,10 @@ namespace CGC.Models
             return result;
         }
 
-        public bool Check_Code(string code)
+        public bool Check_Code(string code, string company)
         {
 
-            foreach (User user in userBaseReturn.GetUsers())
+            foreach (User user in userBaseReturn.GetUsers(company))
             {
                 if (code == user.Reset_pass)
                 {
@@ -58,28 +58,28 @@ namespace CGC.Models
             return true;
         }
 
-        public void Repeat(string code)
+        public void Repeat(string code, string company)
         {
             var temp = rand.Next(100000, 999999);
             bool check;
 
-            check = Check_Code(code);
+            check = Check_Code(code, company);
             if (check == false)
             {
                 temp = rand.Next(100000, 999999);
                 code = temp.ToString();
-                Repeat(code);
+                Repeat(code, company);
             }
         }
 
         Random rand = new Random();
-        public Helper Reset_Pass_Code(string email)
+        public Helper Reset_Pass_Code(string email, string company)
         {
             Helper helper = new Helper();
             var temp = rand.Next(100000, 999999);
             string code = temp.ToString();
 
-            Repeat(code);
+            Repeat(code, company);
 
             try
             {

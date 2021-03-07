@@ -46,7 +46,7 @@ namespace CGC.Funkcje.ProductFuncFolder
             string orderhistory;
             SqlCommand command;
 
-            foreach (Item item in orderBaseReturn.GetItems(new Order { Id_Order = order_id }))
+            foreach (Item item in orderBaseReturn.GetItems(new Order { Id_Order = order_id }, user.Company))
             {
                 if (item.Status != "Released" && item.Status != "Deleted")
                 {
@@ -62,11 +62,12 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (Product pro in products_to_change)
             {
-                query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
+                query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id AND Company = @Company;";
                 command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = pro.Id;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -76,14 +77,15 @@ namespace CGC.Funkcje.ProductFuncFolder
                 userhistory = "You changed product status " + pro.Id + " to released";
                 string producthistory = "Product has been released";
 
-                insertHistory.Insert_User_History(userhistory, user.Login);
-                insertHistory.InsertProductHistory(pro.Id, producthistory, user.Login);
+                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                insertHistory.InsertProductHistory(pro.Id, producthistory, user.Login, user.Company);
 
-                query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
+                query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id AND Company = @Company;";
                 command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = pro.Id_item;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -91,17 +93,18 @@ namespace CGC.Funkcje.ProductFuncFolder
                 connect.cnn.Close();
 
                 orderhistory = "Item has been released " + pro.Id_item;
-                insertHistory.Insert_Order_History(orderhistory, user.Login, pro.Id_order);
+                insertHistory.Insert_Order_History(orderhistory, user.Login, pro.Id_order, user.Company);
 
                 wynik.Add(pro);
             }
 
 
-            query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id;";
+            query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id AND Company = @Company;";
             command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
             command.Parameters.Add("@Order_Id", SqlDbType.VarChar, 40).Value = order_id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -111,8 +114,8 @@ namespace CGC.Funkcje.ProductFuncFolder
             userhistory = "You changed order status " + order_id + " to released";
             orderhistory = "Order has been released";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Order_History(orderhistory, user.Login, order_id);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Order_History(orderhistory, user.Login, order_id, user.Company);
 
             return wynik;
         }
@@ -124,11 +127,12 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (Product pro in products_to_change)
             {
-                string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
+                string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id AND Company = @Company;";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = pro.Id;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -138,14 +142,15 @@ namespace CGC.Funkcje.ProductFuncFolder
                 string userhistory = "You changed product status " + pro.Id + " to released";
                 string producthistory = "Product has been released";
 
-                insertHistory.Insert_User_History(userhistory, user.Login);
-                insertHistory.InsertProductHistory(pro.Id, producthistory, user.Login);
+                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                insertHistory.InsertProductHistory(pro.Id, producthistory, user.Login, user.Company);
 
-                query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id;";
+                query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id AND Company = @Company;";
                 command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Released";
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = pro.Id_item;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -153,7 +158,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 connect.cnn.Close();
 
                 string orderhistory = "Item has been released " + pro.Id_item;
-                insertHistory.Insert_Order_History(orderhistory, user.Login, pro.Id_order);
+                insertHistory.Insert_Order_History(orderhistory, user.Login, pro.Id_order, user.Company);
 
                 wynik.Add(pro);
                 Ordr_ids.Add(pro.Id_order);
@@ -164,7 +169,7 @@ namespace CGC.Funkcje.ProductFuncFolder
                 bool check = true;
                 Order order = new Order { Id_Order = Ord_Id };
 
-                foreach (Item item in orderBaseReturn.GetItems(order))
+                foreach (Item item in orderBaseReturn.GetItems(order, user.Company))
                 {
                     if (item.Status != "Released" && item.Status != "Deleted")
                     {
@@ -175,11 +180,12 @@ namespace CGC.Funkcje.ProductFuncFolder
 
                 if (check == true)
                 {
-                    string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id;";
+                    string query = "UPDATE dbo.[Order] SET Released = @Released WHERE Order_Id = @Order_Id AND Company = @Company;";
                     SqlCommand command = new SqlCommand(query, connect.cnn);
 
                     command.Parameters.Add("@Released", SqlDbType.Bit).Value = true;
                     command.Parameters.Add("@Order_Id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                     connect.cnn.Open();
                     command.ExecuteNonQuery();
@@ -189,8 +195,8 @@ namespace CGC.Funkcje.ProductFuncFolder
                     string userhistory = "You changed order status " + order.Id_Order + " to released";
                     string orderhistory = "Order has been released";
 
-                    insertHistory.Insert_User_History(userhistory, user.Login);
-                    insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order);
+                    insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                    insertHistory.Insert_Order_History(orderhistory, user.Login, order.Id_Order, user.Company);
                 }
             }
             return wynik;
@@ -204,11 +210,12 @@ namespace CGC.Funkcje.ProductFuncFolder
 
             foreach (Product product in products_to_change)
             {
-                string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id;";
+                string query = "UPDATE dbo.[Product] SET Status = @Status WHERE Id = @Id AND Company = @Company;";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Deleted";
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = product.Id;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -218,16 +225,17 @@ namespace CGC.Funkcje.ProductFuncFolder
                 userhistory = "You deleted product " + product.Id.ToString();
                 Producthistory = "Product has been deleted";
 
-                insertHistory.InsertProductHistory(product.Id, user.Login, Producthistory);
-                insertHistory.Insert_User_History(userhistory, user.Login);
+                insertHistory.InsertProductHistory(product.Id, user.Login, Producthistory, user.Company);
+                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
 
 
-                query = "UPDATE dbo.[Item] SET Status = @Status, Product_Id = @Product_Id WHERE Id = @Id;";
+                query = "UPDATE dbo.[Item] SET Status = @Status, Product_Id = @Product_Id WHERE Id = @Id AND Company = @Company;";
                 command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Awaiting";
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = product.Id_item;
                 command.Parameters.Add("@Product_Id", SqlDbType.VarChar, 40).Value = "0";
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();

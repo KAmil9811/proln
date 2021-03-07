@@ -14,6 +14,7 @@ export class PasswordChange extends Component {
             user: {
                 login: sessionStorage.getItem('login'),
                 password: this.refs.oldPassword.value,
+                company: sessionStorage.getItem('company'),
             },
             new_password: this.refs.newPassword.value,
 
