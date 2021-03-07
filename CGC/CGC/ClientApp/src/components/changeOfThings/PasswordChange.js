@@ -20,51 +20,37 @@ export class PasswordChange extends Component {
 
 
             /*oldPassword2: this.refs.oldPassword2.value,*/
-            
-           /* newPassword2: this.refs.newPassword2.value*/
-        }
-         
-        if (receiver.user.password === this.refs.oldPassword2.value) {
-            if (receiver.user.password === sessionStorage.getItem('password')) {
-                if (receiver.new_password === this.refs.newPassword2.value) {
 
-                    //Przekazujesz User nowe hasło i nowe hasło (do potwierdzenia)
-                    fetch(`api/Users/Change_Password`, {
-                        method: "post",
-                        body: JSON.stringify(receiver),
-                        headers: {
-                            'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-                            'Content-Type': 'application/json'
-                        }
-                   })
-                       
-                        .then(res => res.json())
-                        .then(json => {
-                            console.log(json)
-                            return (json)
-                        })
-                       
-                       .then(json => {
-                           if (json[0].error_Messege === "Wrong_old_password") {
-                               alert("Wrong old password!")
-                            }
-                           else {
-                               sessionStorage.setItem('password', json[0].password)
-                               this.props.history.push('/userpanel')
-                            }
-                       })      
+            /* newPassword2: this.refs.newPassword2.value*/
+        }
+        //Przekazujesz User nowe hasło i nowe hasło (do potwierdzenia)
+        fetch(`api/Users/Change_Password`, {
+            method: "post",
+            body: JSON.stringify(receiver),
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        })
+
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                return (json)
+            })
+
+            .then(json => {
+                if (json[0].error_Messege === "Incorrect login or password") {
+                    alert("Wrong old password!")
+                }
+                else if (json[0].error_Messege === "Incorrect password") {
+                    alert("Wrong new password!")
                 }
                 else {
-                    alert("The passwords don't match!")
+                    sessionStorage.setItem('password', json[0].password)
+                    this.props.history.push('/userpanel')
                 }
-            }
-            else {
-                alert("Wrong old password!")
-            }
-        }
-        else {
-            alert("The old passwords don't match!")
-        }
+            })
     }
 
     cancelChanging = (event) => {
@@ -109,18 +95,6 @@ export class PasswordChange extends Component {
                                 />
                             </div>
                             <div className="form-group">
-
-                                <label>Repeat old password:</label>
-                                <input
-                                    type="password"
-                                    name="Password"
-                                    className="form-control"
-                                    id="inputOldPassword2"
-                                    placeholder="*********"
-                                    ref="oldPassword2"
-                                />
-                            </div>
-                            <div className="form-group">
                                 <label>Enter new password:</label>
                                 <input
                                     type="password"
@@ -129,17 +103,6 @@ export class PasswordChange extends Component {
                                     id="inputNewPassword"
                                     placeholder="*********"
                                     ref="newPassword"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Repeat new password:</label>
-                                <input
-                                    type="password"
-                                    name="Password"
-                                    className="form-control"
-                                    id="inputNewPassword2"
-                                    placeholder="*********"
-                                    ref="newPassword2"
                                 />
                             </div>
                             <div className="form-group">

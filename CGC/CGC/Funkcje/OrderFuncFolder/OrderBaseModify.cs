@@ -43,29 +43,32 @@ namespace CGC.Funkcje.OrderFuncFolder
                 SqlCommand command;
                 foreach (Item item in order.items)
                 {
-                    query = "INSERT INTO dbo.[Item](Global_id, Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Cut_id, Order_id, Product_Id, Company) VALUES(@Global_id, @Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Cut_id, @Order_id, @Product_Id, @Company)";
-                    command = new SqlCommand(query, connect.cnn);
+                    if (Convert.ToDouble(item.Width) <= 5000 && Convert.ToDouble(item.Length) <= 5000 && Convert.ToDouble(item.Width) >= 200 && Convert.ToDouble(item.Length) >= 200) {
 
-                    command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdItem;
-                    command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
-                    command.Parameters.Add("@Weight", SqlDbType.Float).Value = Convert.ToDouble(item.Width);
-                    command.Parameters.Add("@Height", SqlDbType.Float).Value = Convert.ToDouble(item.Thickness);
-                    command.Parameters.Add("@Lenght", SqlDbType.Float).Value = Convert.ToDouble(item.Length);
-                    command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
-                    command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
-                    command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Awaiting";
-                    command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
-                    command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
-                    command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
-                    command.Parameters.Add("@Product_Id", SqlDbType.VarChar, 40).Value = "0";
-                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
+                        query = "INSERT INTO dbo.[Item](Global_id, Id, Weight, Height, Lenght, Glass_Type, Color, Status,Desk, Cut_id, Order_id, Product_Id, Company) VALUES(@Global_id, @Id, @Weight,@Height, @Lenght, @Glass_Type, @Color, @Status, @Desk, @Cut_id, @Order_id, @Product_Id, @Company)";
+                        command = new SqlCommand(query, connect.cnn);
 
-                    connect.cnn.Open();
-                    command.ExecuteNonQuery();
-                    command.Dispose();
-                    connect.cnn.Close();
+                        command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdItem;
+                        command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = item.Id;
+                        command.Parameters.Add("@Weight", SqlDbType.Float).Value = Convert.ToDouble(item.Width);
+                        command.Parameters.Add("@Height", SqlDbType.Float).Value = Convert.ToDouble(item.Thickness);
+                        command.Parameters.Add("@Lenght", SqlDbType.Float).Value = Convert.ToDouble(item.Length);
+                        command.Parameters.Add("@Glass_Type", SqlDbType.VarChar, 40).Value = item.Type;
+                        command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = item.Color;
+                        command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Awaiting";
+                        command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";
+                        command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
+                        command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
+                        command.Parameters.Add("@Product_Id", SqlDbType.VarChar, 40).Value = "0";
+                        command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
-                    LastGlobalIdItem = (Convert.ToInt32(LastGlobalIdItem) + 1).ToString();
+                        connect.cnn.Open();
+                        command.ExecuteNonQuery();
+                        command.Dispose();
+                        connect.cnn.Close();
+
+                        LastGlobalIdItem = (Convert.ToInt32(LastGlobalIdItem) + 1).ToString();
+                    }
                 }
 
                 query = "INSERT INTO dbo.[Order](Global_id, Id_Order,Owner,Status,Priority,Deadline,Stan,Deletead,Frozen,Released, Company) VALUES(@Global_id, @Id_Order, @Owner, @Status, @Priority, @Deadline, @Stan, @Deletead, @Frozen, @Released, @Company)";

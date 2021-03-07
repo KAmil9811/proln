@@ -37,13 +37,18 @@ export class SavedPrint extends Component {
         })
             .then(res => res.json())
                .then(json => {
+                console.log('Saved print')
                 console.log(json)
                 
                 var table2 = []
                // ZAKOMENTOWANE BO NIC NIE ZWRACAŁO
-               /* sessionStorage.setItem('kolor', json.color)
+               sessionStorage.setItem('kolor', json[0].color)
                 sessionStorage.setItem('grubosc', json[0].hight)
-                sessionStorage.setItem('typ', json[0].type)*/
+                   sessionStorage.setItem('typ', json[0].type)
+                   console.log('kolor grubść typ')
+                   console.log(sessionStorage.getItem('kolor'))
+                   console.log(sessionStorage.getItem('grubosc'))
+                   console.log(sessionStorage.getItem('typ'))
             })
     }
 
@@ -56,7 +61,7 @@ export class SavedPrint extends Component {
         this.props.history.push('/saved_projects')
 
     }
-    generator = (event) => {
+    /*generator = (event) => {
         
         const receiver = {
             order: {
@@ -83,7 +88,7 @@ export class SavedPrint extends Component {
                 console.log(json);
             })
         document.getElementById
-    }
+    }*/
 
     cutOrder = (event) => {
         event.preventDefault();
@@ -131,8 +136,8 @@ export class SavedPrint extends Component {
     }
 
     render() {
-        let href = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('kolor') + "_" + sessionStorage.getItem('typ') + "_" + sessionStorage.getItem('grubosc')+ ".jpg"
-        let href2 = sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('kolor') + "_" + sessionStorage.getItem('typ') + "_" + sessionStorage.getItem('grubosc') +  ".pdf"
+        let href = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('kolor') + "_" + sessionStorage.getItem('typ') + "_" + sessionStorage.getItem('grubosc')+ ".jpg"
+        let href2 = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('kolor') + "_" + sessionStorage.getItem('typ') + "_" + sessionStorage.getItem('grubosc') +  ".pdf"
         if (sessionStorage.getItem('valid') === '') {
             return (
                 <div className="HomePageFail">
@@ -161,7 +166,7 @@ export class SavedPrint extends Component {
                             <img src={href} />
                             <div>
                                 <button className="success_test" onClick={this.cutOrder}>Cut</button>
-                                <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                                <a href={href2} download><button className="success_test" /*onClick={this.generator} */>Generate PDF </button></a>
                             </div>
                         </div>
                     </div>

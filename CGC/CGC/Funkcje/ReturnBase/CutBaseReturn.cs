@@ -49,6 +49,23 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
                 temp.Add(cut_Project);
             }
+
+            //foreach(Cut_Project cut in temp)
+            //{
+            //    command = new SqlCommand("SELECT * FROM [Order] WHERE Company = @Company AND Order_id = @Order_id;", connect.cnn);
+            //    connect.cnn.Open();
+
+            //    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //    command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = cut.Order_id;
+
+            //    sqlDataReader = command.ExecuteReader();
+
+            //    while (sqlDataReader.Read())
+            //    {
+            //        cut.Owner = sqlDataReader["Owner"].ToString();
+            //    }
+            //}
+
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
@@ -95,6 +112,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                     cut.Priority = sqlDataReader["Priority"].ToString();
                     cut.Deadline = sqlDataReader["Deadline"].ToString();
                     cut.Status = sqlDataReader["Status"].ToString();
+                    cut.Owner = sqlDataReader["Owner"].ToString();
                 }
                 sqlDataReader.Close();
                 command.Dispose();
@@ -144,6 +162,7 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
                 {
                     cut.Priority = sqlDataReader["Priority"].ToString();
                     cut.Deadline = sqlDataReader["Deadline"].ToString();
+                    cut.Owner = sqlDataReader["Owner"].ToString();
                 }
                 sqlDataReader.Close();
                 command.Dispose();

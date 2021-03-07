@@ -255,11 +255,12 @@ export class Test extends Component {
         event.preventDefault();
         const receiver = {
             glasses:
-                this.state.glass_ids
-            ,
+                this.state.glass_ids,
+                
             order: {
                 id_order: sessionStorage.getItem('idOpti')
             },
+            pieces: this.state.piecesbackend,
             user: {
                 company: sessionStorage.getItem('company'),
             },
@@ -294,10 +295,11 @@ export class Test extends Component {
         const receiver = {
             glasses:
                 this.state.glass_ids,
-                pieces: this.state.piecesbackend,
+                
             order: {
                 id_order: sessionStorage.getItem('idOpti')
             },
+            pieces: this.state.piecesbackend,
             user: {
                 company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login'),
@@ -321,7 +323,7 @@ export class Test extends Component {
                 sessionStorage.setItem('id_order', json);
                 return (json)
             })
-    /*this.props.history.push('/home');*/
+    this.props.history.push('/home');
         console.log('receiver here')
         console.log(receiver)
 
@@ -484,7 +486,7 @@ export class Test extends Component {
                                 <img src={href} />
                                 <div>
                                     <button className="prim_test" onClick={this.saveProject}>Save project</button>
-                                    <button className="success_test" onClick={this.cutOrder}>Save and cut</button>
+                                    
                                     <a href={href2} download><button className="success_test" /*onClick = { this.generator }*/ >Generate PDF </button></a>
                                 </div>
                                 <div id="slideContainer"></div>
@@ -536,4 +538,4 @@ export class Test extends Component {
     }
 }
 
-
+/*<button className="success_test" onClick={this.cutOrder}>Save and cut</button>*/

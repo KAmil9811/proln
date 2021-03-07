@@ -57,7 +57,9 @@ export class GlassTableProject extends Component {
 
 
                     })
-
+                    /*sessionStorage.setItem('kolor', json.color)
+                    sessionStorage.setItem('grubosc', json[0].hight)
+                    sessionStorage.setItem('typ', json[0].type)*/
                   
                 };
                 this.setState({

@@ -395,6 +395,8 @@ namespace CGC.Funkcje.CutFuncFolder
                 e.ToString();
             }
 
+            Receiver receive2 = new Receiver { order = order, user = user, glass_count = wynik.Count.ToString() };
+            CreatePdf(receive2);
 
             return wynik;
         }
@@ -696,7 +698,6 @@ namespace CGC.Funkcje.CutFuncFolder
             List<Piece> pieces = receiver.pieces;
             List<Item> items = orderBaseReturn.GetItems(order, user.Company);
             
-
             try
             {
                 code = Convert.ToInt32(cutBaseReturn.GetCut_Project(user.Company).OrderBy(cutid => cutid.Cut_id).Last().Cut_id) + 1;
@@ -793,7 +794,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
         public string Start_Production(Receiver receiver)
         {
-            foreach (User usere in userBaseReturn.GetUsers(receiver.user.Company))
+            foreach (User usere in userBaseReturn.GetUser(receiver.user.Login,receiver.user.Company))
             {
                 if (usere.Login == receiver.user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin == true || usere.Cut_management == true))
                 {

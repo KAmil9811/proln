@@ -55,41 +55,44 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
                 code++;
 
-                string query = "INSERT INTO dbo.Glass(Global_id, Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id, Company) VALUES(@Global_id, @Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code, @Company)";
+                if (Convert.ToDouble(glass.Width) <= 5000 && Convert.ToDouble(glass.Length) <= 5000 && Convert.ToDouble(glass.Width) >= 200 && Convert.ToDouble(glass.Length) >=200)
+                {
+                    string query = "INSERT INTO dbo.Glass(Global_id, Hight,Width,Length,Used,Removed,Type,Color,Owner,Desk,Cut_id,Glass_Id, Company) VALUES(@Global_id, @Hight, @Width, @Length, @Used, @Removed, @Type, @Color, @Owner, @Desk, @Cut_id, @code, @Company)";
 
-                SqlCommand command = new SqlCommand(query, connect.cnn);
+                    SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdGlass;
-                command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
-                command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
-                command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
-                command.Parameters.Add("@Used", SqlDbType.Bit).Value = 0;
-                command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 0;
-                command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
-                command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
-                command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
-                command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
-                command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
-                command.Parameters.Add("@code", SqlDbType.VarChar, 40).Value = code.ToString();
-                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
-                connect.cnn.Open();
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connect.cnn.Close();
+                    command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdGlass;
+                    command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
+                    command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
+                    command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
+                    command.Parameters.Add("@Used", SqlDbType.Bit).Value = 0;
+                    command.Parameters.Add("@Removed", SqlDbType.Bit).Value = 0;
+                    command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
+                    command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
+                    command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
+                    command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
+                    command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = "0";
+                    command.Parameters.Add("@code", SqlDbType.VarChar, 40).Value = code.ToString();
+                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
+                    connect.cnn.Open();
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+                    connect.cnn.Close();
 
-                string userhistory = "You added glass " + code;
-                string magazinehistory = "Glass " + code + " has been added";
+                    string userhistory = "You added glass " + code;
+                    string magazinehistory = "Glass " + code + " has been added";
 
-                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
-                insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
+                    insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+                    insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);
 
-                glass.Glass_info.Add(new Glass_Id { Id = (code).ToString() });
+                    glass.Glass_info.Add(new Glass_Id { Id = (code).ToString() });
 
-                //SetOrderStan();
-                glasses.Add(glass);
-                temp.Add(glass);
+                    //SetOrderStan();
+                    glasses.Add(glass);
+                    temp.Add(glass);
 
-                LastGlobalIdGlass = (Convert.ToInt32(LastGlobalIdGlass) + 1).ToString();
+                    LastGlobalIdGlass = (Convert.ToInt32(LastGlobalIdGlass) + 1).ToString();
+                }
             }
             return temp;
         }

@@ -66,7 +66,7 @@ export class PickMachine extends Component {
                 no: this.refs.type.value
             },
             cut_Project: {
-                Cut_id: sessionStorage.getItem('id_order')
+                Cut_id: sessionStorage.getItem('cutId2')
             },
             user: {
                 company: sessionStorage.getItem('company'),
