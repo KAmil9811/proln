@@ -122,13 +122,14 @@ export class Login extends Component {
                                 ref="password"
                             />
                         </div>
-                    </div>
-                    <div>
-                        <button type="submit" className="successs_login" onClick={this.handleLoging} >Log in</button>
-                        <button className="danger_resset_pass" onClick={this.resetPassword1} >Reset password</button>
+                        <div className="buttonLogin">
+                            <button type="submit" className="successs_login" onClick={this.handleLoging} >Log in</button>
+                            <button className="danger_resset_pass" onClick={this.resetPassword1} >Reset password</button>
 
 
+                        </div>
                     </div>
+                   
                 </form>
             </div>
 
