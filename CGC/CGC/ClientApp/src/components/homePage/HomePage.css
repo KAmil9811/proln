@@ -36,7 +36,7 @@
         }
 
     .ele3 {
-        background-image: url('production.png');
+        background-image: url('production.jpg');
         height: 50px;
         width: 70vw;
         font-size: 15px;
@@ -152,28 +152,28 @@
     outline: 0;
 }
 .production {
-    background-image: url('production.png');
+    background-image: url('production.jpg');
 }
 .magazine {
-    background-image: url('magazine.png');
+    background-image: url('magazine.jpg');
 }
 .products {
-    background-image: url('products.png');
+    background-image: url('products.jpg');
 }
 .orders {
-    background-image: url('orders.png');
+    background-image: url('orders.jpg');
 }
 .machines {
-    background-image: url('machines.png');
+    background-image: url('machines.jpg');
 }
 .account {
-    background-image: url('account.png');
+    background-image: url('account.jpg');
 }
 .projects {
-    background-image: url('saved.png');
+    background-image: url('saved.jpg');
 }
 .control {
-    background-image: url('control.png');
+    background-image: url('control.jpg');
 }
 
 
