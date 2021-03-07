@@ -202,10 +202,11 @@ export class AddGlass extends Component {
 
                                 <div className="form-group">
 
-                                    <label>Length</label>
+                                    <label>Length (min.200, max.5000mm)</label>
                                     <input
                                         type="number"
                                         min="1"
+                                        max="5000"
                                         name="Height"
                                         className="form-control"
                                         id="inputHeight"
@@ -214,10 +215,11 @@ export class AddGlass extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Width</label>
+                                    <label>Width (min.200, max.5000mm)</label>
                                     <input
                                         type="number"
-                                        min="1"
+                                        min="200"
+                                        max="5000"
                                         className="form-control"
                                         id="inputWidth"
                                         placeholder="Enter width in millimeters"
@@ -268,10 +270,11 @@ export class AddGlass extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Amount</label>
+                                    <label>Amount (min.1, max.100)</label>
                                     <input
                                         type="number"
-                                        min='1'
+                                        min="1"
+                                        max="100"
                                         className="form-control"
                                         id="inputDesk"
                                         placeholder="Enter amount"
