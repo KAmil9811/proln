@@ -40,10 +40,10 @@ export class MachineTable extends Component {
                 for (var i = 0; i < json.length; i++) {
                     var deleted = '';
                     if (json[i].stan === false) {
-                        deleted = 'Aktywna'
+                        deleted = 'Active'
                     }
                     else {
-                        deleted = 'Usunięta'
+                        deleted = 'Deleted'
                     }
                     if (sessionStorage.getItem('machineMenagment') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
                         table2.push({

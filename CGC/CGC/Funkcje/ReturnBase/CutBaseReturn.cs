@@ -173,6 +173,12 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             command.Dispose();
             connect.cnn.Close();
 
+            if (temp.Count == 0)
+            {
+                temp.Add(new Cut_Project { Global_Id = 1 });
+            }
+
+
             return temp;
         }
     }

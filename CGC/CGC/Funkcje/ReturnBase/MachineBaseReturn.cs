@@ -229,6 +229,34 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return temp;
         }
 
+        public List<Machines> GetLastMachine(string company)
+        {
+            List<Machines> temp = new List<Machines>();
+            SqlCommand command = new SqlCommand("Select TOP(1) No From [Machines] WHERE Company = @Company ORDER BY convert(int, No) DESC ", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Machines machines = new Machines();
+                machines.No = (Convert.ToInt32(sqlDataReader["No"]) + 1).ToString();
+
+                temp.Add(machines);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Machines { Global_Id = 1 });
+            }
+
+            return temp;
+        }
+
         public List<Machines> GetLastGlobalIdMachine(string company)
         {
             List<Machines> temp = new List<Machines>();
@@ -248,6 +276,11 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Machines { Global_Id = 1 });
+            }
 
             return temp;
         }
@@ -270,6 +303,11 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add("1");
+            }
 
             return temp;
         }
@@ -294,6 +332,11 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             command.Dispose();
             connect.cnn.Close();
 
+            if (temp.Count == 0)
+            {
+                temp.Add(new Machines_History { Global_Id = 1 });
+            }
+
             return temp;
         }
 
@@ -316,6 +359,13 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Machines_History_All { Global_Id = 1 });
+            }
+
+            return temp;
 
             return temp;
         }

@@ -62,7 +62,7 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             try
             {
-                temper = Convert.ToInt32(machineBaseReturn.GetMachines(user.Company).OrderBy(mach => mach.No).Last().No) + 1;
+                temper = Convert.ToInt32(machineBaseReturn.GetLastMachine(user.Company).Last().No);
             }
             catch (Exception e)
             {

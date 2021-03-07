@@ -98,33 +98,31 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         {
             List<Glass> temp = new List<Glass>();
 
-            foreach (int glass_Id in glass.Glass_id)
-            {
-                string query = "UPDATE dbo.[Glass] SET Hight = @Hight, Width = @Width, Length = @Length, Type = @Type, Color = @Color, Owner = @Owner, Desk = @Desk WHERE Glass_Id = @Glass_Id AND Company = @Company;";
-                SqlCommand command = new SqlCommand(query, connect.cnn);
+            string query = "UPDATE dbo.[Glass] SET Hight = @Hight, Width = @Width, Length = @Length, Type = @Type, Color = @Color, Owner = @Owner, Desk = @Desk WHERE Glass_Id = @Glass_Id AND Company = @Company;";
+            SqlCommand command = new SqlCommand(query, connect.cnn);
 
-                command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
-                command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
-                command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
-                command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
-                command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
-                command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
-                command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
+            command.Parameters.Add("@Hight", SqlDbType.Float).Value = Convert.ToDouble(glass.Hight);
+            command.Parameters.Add("@Width", SqlDbType.Float).Value = Convert.ToDouble(glass.Width);
+            command.Parameters.Add("@Length", SqlDbType.Float).Value = Convert.ToDouble(glass.Length);
+            command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = glass.Type;
+            command.Parameters.Add("@Color", SqlDbType.VarChar, 40).Value = glass.Color;
+            command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = glass.Owner;
+            command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = glass.Desk;
 
-                command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = glass_Id.ToString();
-                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
+            command.Parameters.Add("@Glass_Id", SqlDbType.VarChar, 40).Value = glass.Ids;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
-                connect.cnn.Open();
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connect.cnn.Close();
+            connect.cnn.Open();
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connect.cnn.Close();
 
-                string userhistory = "You edited glass " + glass_Id;
-                string magazinehistory = "Glass " + glass_Id + " has been edited";
+            string userhistory = "You edited glass " + glass.Ids;
+            string magazinehistory = "Glass " + glass.Ids + " has been edited";
 
-                insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
-                insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);                
-            }
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Magazine_History(magazinehistory, user.Login, user.Company);                
+            
             temp.Add(glass);
             return temp;
         }

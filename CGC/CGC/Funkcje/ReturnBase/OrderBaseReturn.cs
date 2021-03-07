@@ -481,7 +481,13 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             command.Dispose();
             connect.cnn.Close();
 
+            if (temp.Count == 0)
+            {
+                temp.Add(new Item { Global_Id = 1 });
+            }
+
             return temp;
+
         }
 
         public List<Order> GetLastOrder(string company)
@@ -521,13 +527,18 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             while (sqlDataReader.Read())
             {
                 Order order = new Order();
-                order.sort = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
+                order.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
 
                 temp.Add(order);
             }
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Order { Global_Id = 1 });
+            }
 
             return temp;
         }
@@ -579,6 +590,11 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Order_History { Global_Id = 1 });
+            }
 
             return temp;
         }

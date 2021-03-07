@@ -763,7 +763,7 @@ namespace CGC.Funkcje.CutFuncFolder
 
             foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order, user.Company))
             {
-                foreach (Item item in orderBaseReturn.GetItems(ord, cut_Project.Cut_id))
+                foreach (Item item in orderBaseReturn.GetItems(ord, cut_Project.Cut_id, user.Company))
                 {
                     int code;
                     try
@@ -951,21 +951,18 @@ namespace CGC.Funkcje.CutFuncFolder
 
             List<Glass> tempo = magazineBaseReturn.Getglass(user.Company);
 
-            foreach (Order ord in orderBaseReturn.GetOrders(user.Company))
+            foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order, user.Company))
             {
-                if (ord.Id_Order == order.Id_Order)
-                {
-                    order.Owner = ord.Owner;
-                    order.color = item1.Color;
-                    order.thickness = item1.Thickness;
-                    order.type = item1.Type;
-                    break;
-                }
+                order.Owner = ord.Owner;
+                order.color = item1.Color;
+                order.thickness = item1.Thickness;
+                order.type = item1.Type;
+                break;
             }
 
             foreach(string id in id_to_cut)
             {
-                glasses.Add(magazineBaseReturn.Getglass(id).First());
+                glasses.Add(magazineBaseReturn.Getglass(id,user.Company).First());
             }
 
             /*Glass search = new Glass { Color = item1.Color, Type = item1.Type, Hight = item1.Thickness, Owner = order.Owner, Length = "0", Width = "0"};

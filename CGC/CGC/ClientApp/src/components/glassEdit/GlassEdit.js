@@ -72,12 +72,12 @@ export class GlassEdit extends Component {
             glass: {
                 type: this.refs.type.value,
                 hight: this.refs.thickness.value,
-                width: this.refs.width.value,
+                width: this.refs.width.value, 
                 length: this.refs.length.value,
                 color: this.refs.color.value,
                 owner: this.refs.owner.value,
                 desk: sessionStorage.getItem('desk'),
-                glass_Id: JSON.parse(sessionStorage.getItem('id')),
+                Ids: JSON.parse(sessionStorage.getItem('id')),
             },
             //glass_Id:{}
                        

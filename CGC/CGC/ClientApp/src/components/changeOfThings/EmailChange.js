@@ -14,10 +14,9 @@ export class EmailChange extends Component {
             user: {
                 password: this.refs.password.value,
                 email: this.refs.newEmail.value,
-                company: this.refs.firm.value,
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             }
-            
         }
                 //Przekazujesz User już i nowy email
                 fetch(`api/Users/Change_Email`, {
@@ -75,17 +74,6 @@ export class EmailChange extends Component {
                     </div>
                     <form>
                         <div className="EmailChange_c">
-                            <div className="form-group">
-                                <label>Firm:</label>
-                                <input
-                                    type="text"
-                                    name="Firm"
-                                    className="form-control"
-                                    id="inputFirm"
-                                    placeholder="Firm"
-                                    ref="firm"
-                                />
-                            </div>
                             <div className="form-group">
                                 <label>Your password:</label>
                                 <input

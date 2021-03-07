@@ -19,7 +19,7 @@ namespace CGC.Models
         public List<Glass_Id> glass_Ids { get; set; }
         public List<string> glass_Id { get; set; }
         public List<int> product_Id { get; set; }
-        public List<int> item_Id { get; set; }
+        public List<string> item_Id { get; set; }
         public List<Package> packages { get; set; }
         public List<Product> products { get; set; }
         public List<Piece> pieces { get; set; }

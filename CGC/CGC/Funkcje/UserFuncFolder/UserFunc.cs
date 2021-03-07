@@ -57,7 +57,7 @@ namespace CGC.Funkcje.UserFuncFolder
         
         public List<UserHistory> Return_User_History(Receiver receiver)
         {
-            return userBaseReturn.GetAllUserHistory(receiver.user.Login);
+            return userBaseReturn.GetAllUserHistory(receiver.user.Login, receiver.user.Company);
         }
 
         //<-- Zwrawcanie rekordow z bazy
@@ -262,9 +262,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User adm in userBaseReturn.GetUser(admin.Login,false, user.Company))
+            foreach (User adm in userBaseReturn.GetUser(admin.Login,false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                     if (usere.Deleted == true)
                     {
@@ -291,9 +291,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User adm in userBaseReturn.GetUser(admin.Login,false, user.Company))
+            foreach (User adm in userBaseReturn.GetUser(admin.Login,false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                     if (usere.Deleted == true)
                     {
@@ -326,9 +326,9 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login,false, user.Company))
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                     return userBaseModify.Change_Password_Admin(user, admin);
                 }
@@ -344,9 +344,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login,false, user.Company))
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                     return userBaseModify.Change_Permision(user, admin);
                 }
@@ -362,9 +362,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login,false, user.Company))
+            foreach (User use in userBaseReturn.GetUser(admin.Login,false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                      return userBaseModify.Change_Name_Admin(user, admin);               
                 }
@@ -380,9 +380,9 @@ namespace CGC.Funkcje.UserFuncFolder
             User admin = receiver.admin;
             User user = receiver.user;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login, false, user.Company))
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                     return userBaseModify.Change_Surname_Admin(user, admin);
                 }
