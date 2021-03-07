@@ -193,6 +193,11 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             command.Dispose();
             connect.cnn.Close();
 
+            if (temp.Count == 0)
+            {
+                temp.Add(new Product { Global_Id = 1 });
+            }
+
             return temp;
         }
 
@@ -216,6 +221,11 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Product_History { Global_Id = 1 });
+            }
 
             return temp;
         }

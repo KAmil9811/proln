@@ -63,7 +63,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
-                    string LastGlobalIdGlass = magazineBaseReturn.GetLastGlobalIdGlass(user.Company).Last().Glass_Id.ToString() + 1;
+                    string LastGlobalIdGlass = magazineBaseReturn.GetLastGlobalIdGlass(user.Company).Last().Global_Id.ToString();
                     return magazineBaseModify.Add_Glass(usere, glass, code, magazineBaseReturn.Getglass(user.Company), LastGlobalIdGlass);
                 }
             }
@@ -77,7 +77,7 @@ namespace CGC.Funkcje.MagazineFuncFolder
             List<Glass> temp = new List<Glass>();
             User user = receiver.user;
             Glass glass = receiver.glass;
-            glass.Glass_id = receiver.glass.Glass_id;
+            //glass.Glass_id = receiver.glass.Glass_id;
 
             foreach (User usere in userBaseReturn.GetUser(user.Login, false, user.Company))
             {

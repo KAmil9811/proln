@@ -305,7 +305,14 @@ namespace CGC.Funkcje.OrderFuncFolder
 
         public List<Item> Remove_Item(Receiver receiver)
         {
-            List<int> items = receiver.item_Id;
+            List<string> tempo = receiver.item_Id;
+            List<int> items = new List<int>();
+
+            foreach(string t in tempo)
+            {
+                items.Add(Convert.ToInt32(t));
+            }
+
             List<Item> temp = new List<Item>();
             User user = receiver.user;
 

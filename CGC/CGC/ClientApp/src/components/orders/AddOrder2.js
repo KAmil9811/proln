@@ -207,13 +207,13 @@ export class AddOrderTwo extends Component {
                         field: 'amount',
                         sort: 'asc',
                         width: 150
-                    },
+                    },/*
                     {
                         label: 'Delete',
                         field: 'action',
                         sort: 'asc',
                         width: 150
-                    }
+                    }*/
                 ],
                 rows: this.state.table.rows.concat([{
                     width:  this.refs.width.value,

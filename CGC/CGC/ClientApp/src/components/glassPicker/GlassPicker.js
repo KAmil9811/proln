@@ -138,13 +138,6 @@ export class GlassPicker extends Component {
                                     width: 150
                                 },
 
-                                 {
-                                     label: 'Usuń',
-                                     field: 'action',
-                                     sort: 'asc',
-                                     width: 150
-                                 },
-
                             ],
                             rows: table2
                         }
@@ -245,7 +238,7 @@ export class GlassPicker extends Component {
                 <div className="Glass_Picker">
                     <Sidebar />
                     <div className="title">
-                        <h1 className="titletext">Pick glass to cut kurwa</h1>
+                        <h1 className="titletext">Pick glass to cut </h1>
                     </div>
                     <div className="Glass_Picker_c">
                     

@@ -32,6 +32,7 @@ export class OneHistory extends Component {
                 receiver
             ),
             headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
                 'Content-Type': 'application/json'
             }
         })

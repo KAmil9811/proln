@@ -438,7 +438,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         public List<Glass_Receiver> GetLastGlobalIdGlass(string company)
         {
             List<Glass_Receiver> temp = new List<Glass_Receiver>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Glass] ORDER BY convert(int, Global_id) DESC WHERE Company = @Company", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Glass] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
@@ -447,13 +447,18 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             while (sqlDataReader.Read())
             {
                 Glass_Receiver glass_Receiver = new Glass_Receiver();
-                glass_Receiver.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]);
+                glass_Receiver.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
 
                 temp.Add(glass_Receiver);
             }
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if(temp.Count == 0)
+            {
+                temp.Add(new Glass_Receiver { Global_Id = 1 });
+            }
 
             return temp;
         }
@@ -493,7 +498,7 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
                 SqlDataReader sqlDataReader = command.ExecuteReader();
                 while (sqlDataReader.Read())
                 {
-                    string Global_id = sqlDataReader["Global_id"].ToString();
+                    string Global_id = (Convert.ToInt16(sqlDataReader["Global_id"]) + 1).ToString();
 
                     temp.Add(Global_id);
                 }
@@ -504,6 +509,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             catch(Exception e)
             {
                 e.ToString();
+            }
+
+            if (temp.Count == 0)
+            {
+                temp.Add("1");
             }
 
             return temp;
@@ -548,6 +558,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add("1");
+            }
 
             return temp;
         }
@@ -597,6 +612,11 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             sqlDataReader.Close();
             command.Dispose();
             connect.cnn.Close();
+
+            if (temp.Count == 0)
+            {
+                temp.Add(new Magazine_History { Global_Id = 1 });
+            }
 
             return temp;
         }

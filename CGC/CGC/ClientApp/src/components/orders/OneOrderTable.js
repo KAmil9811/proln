@@ -23,7 +23,10 @@ export class OneOrderTable extends Component {
 
     componentDidMount() {
         const receiver = {
-            order: { id_order: sessionStorage.getItem('orderId') }
+            order: { id_order: sessionStorage.getItem('orderId') },
+            user: {
+                company: sessionStorage.getItem('company'),
+            }
         }
         fetch(`api/Order/Return_All_Items`, {
             method: "post",
@@ -237,7 +240,8 @@ export class OneOrderTable extends Component {
                 receiver
             ),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
             }
         })
             .then(res => res.json())
