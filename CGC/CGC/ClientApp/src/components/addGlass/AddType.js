@@ -42,6 +42,7 @@ export class AddType extends Component {
                     this.props.history.push('/glassatibutes')
                 }
             })
+        console.log(receiver)
     }
 
     cancelAddType = (event) => {

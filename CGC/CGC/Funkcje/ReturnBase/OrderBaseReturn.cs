@@ -439,7 +439,7 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
         public List<Item> GetLastItem(string company)
         {
             List<Item> temp = new List<Item>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Item] ORDER BY convert(int, Id) DESC WHERE Company = @Company", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Item] WHERE Company = @Company ORDER BY convert(int, Id) DESC", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
@@ -461,10 +461,33 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             return temp;
         }
 
+        public List<Item> GetLastGlobalIdItem(string company)
+        {
+            List<Item> temp = new List<Item>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Item] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Item item = new Item();
+                item.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
+
+                temp.Add(item);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
         public List<Order> GetLastOrder(string company)
         {
             List<Order> temp = new List<Order>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Id_Order From [Order] ORDER BY convert(int, Id_Order) DESC WHERE Company = @Company", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Id_Order From [Order] WHERE Company = @Company ORDER BY convert(int, Id_Order) DESC", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
@@ -482,6 +505,29 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             connect.cnn.Close();
 
             //temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
+
+            return temp;
+        }
+
+        public List<Order> GetLastGlobalIdOrder(string company)
+        {
+            List<Order> temp = new List<Order>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Order] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Order order = new Order();
+                order.sort = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
+
+                temp.Add(order);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
 
             return temp;
         }
@@ -512,6 +558,29 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
             connect.cnn.Close();
 
             return order_Histories;
+        }
+
+        public List<Order_History> GetLastGlobalIdOrderHistory(string company)
+        {
+            List<Order_History> temp = new List<Order_History>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Order_History] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Order_History order_History = new Order_History();
+                order_History.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
+
+                temp.Add(order_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
         }
     }
 }

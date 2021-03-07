@@ -12,5 +12,6 @@ namespace CGC.Models
         public string Cut_Id { get; set; }     
         public string Login { get; set; }
         public string Description { get; set; }
+        public int Global_Id { get; set; }
     }
 }

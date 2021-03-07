@@ -35,13 +35,14 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             }
         }
 
-        public int Save_Project(User user, Order order, int code, List<Glass> glasses, List<Piece> pieces)
+        public int Save_Project(User user, Order order, int code, List<Glass> glasses, List<Piece> pieces, string LastGlobalIdProject)
         {
             try
             {
-                string query = "INSERT INTO dbo.[Cut_Project](Cut_id, Order_id, Status, Company) VALUES(@Cut_id,@Order_id, @Status, @Company)";
+                string query = "INSERT INTO dbo.[Cut_Project](Global_id, Cut_id, Order_id, Status, Company) VALUES(@Global_id, @Cut_id,@Order_id, @Status, @Company)";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
+                command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdProject;
                 command.Parameters.Add("@Cut_id", SqlDbType.VarChar, 40).Value = code.ToString();
                 command.Parameters.Add("@Order_id", SqlDbType.VarChar, 40).Value = order.Id_Order;
                 command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Saved";
@@ -155,13 +156,14 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             return cut_Projects;
         }
 
-        public void Post_Production(User user, Order ord, Item item, int code)
+        public void Post_Production(User user, Order ord, Item item, int code, string LastGlobalIdProduct)
         {
             try
             {
-                string query = "INSERT INTO dbo.[Product](Id,Owner,Desk,Status,Id_item,Id_order, Company) VALUES(@Id,@Owner,@Desk,@Status,@Id_item,@Id_order, @Company)";
+                string query = "INSERT INTO dbo.[Product](Global_id, Id,Owner,Desk,Status,Id_item,Id_order, Company) VALUES(@Global_id, @Id,@Owner,@Desk,@Status,@Id_item,@Id_order, @Company)";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
+                command.Parameters.Add("@Global_id", SqlDbType.VarChar, 40).Value = LastGlobalIdProduct;
                 command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = code.ToString();
                 command.Parameters.Add("@Owner", SqlDbType.VarChar, 40).Value = ord.Owner;
                 command.Parameters.Add("@Desk", SqlDbType.VarChar, 40).Value = "";

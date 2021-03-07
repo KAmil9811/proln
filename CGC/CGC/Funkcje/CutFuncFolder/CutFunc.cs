@@ -730,8 +730,8 @@ namespace CGC.Funkcje.CutFuncFolder
                     }
                 }
             }
-             
-            return cutBaseModify.Save_Project(user, order, code, glasses, pieces);
+            string LastGlobalIdProject = cutBaseReturn.GetLastGlobalIdCutProject(user.Company).Last().Global_Id.ToString();
+            return cutBaseModify.Save_Project(user, order, code, glasses, pieces, LastGlobalIdProject);
 
         }
 
@@ -759,6 +759,7 @@ namespace CGC.Funkcje.CutFuncFolder
             Cut_Project cut_Project = receiver.cut_Project;
             Order order = receiver.order;
             Machines machines = machineBaseReturn.GetMachine(cut_Project.Cut_id, user.Company).First();
+            string LastGlobalIdProduct = productBaseReturn.GetLastGlobalIdProduct(user.Company).Last().Global_Id.ToString();
 
             foreach (Order ord in orderBaseReturn.GetOrder(order.Id_Order, user.Company))
             {
@@ -773,8 +774,8 @@ namespace CGC.Funkcje.CutFuncFolder
                     {
                         code = 1;
                     }
-
-                    cutBaseModify.Post_Production(user, ord, item, code);
+                    cutBaseModify.Post_Production(user, ord, item, code, LastGlobalIdProduct);
+                    LastGlobalIdProduct = (Convert.ToInt32(LastGlobalIdProduct) + 1).ToString();
                 }               
             }
 

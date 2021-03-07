@@ -63,7 +63,8 @@ namespace CGC.Funkcje.MagazineFuncFolder
             {
                 if (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Magazine_management == true)
                 {
-                    return magazineBaseModify.Add_Glass(usere, glass, code, magazineBaseReturn.Getglass(user.Company));
+                    string LastGlobalIdGlass = magazineBaseReturn.GetLastGlobalIdGlass(user.Company).Last().Glass_Id.ToString() + 1;
+                    return magazineBaseModify.Add_Glass(usere, glass, code, magazineBaseReturn.Getglass(user.Company), LastGlobalIdGlass);
                 }
             }
             glass.Error_Messege = "Uzytkownik nie istnieje";
@@ -165,7 +166,8 @@ namespace CGC.Funkcje.MagazineFuncFolder
                             return temp;
                         }
                     }
-                    return magazineBaseModify.Add_Type_Admin(usere, type);
+                    string LastGlobalIdType = magazineBaseReturn.GetLastGlobalIdTypes(user.Company).Last() + 1;
+                    return magazineBaseModify.Add_Type_Admin(usere, type, LastGlobalIdType);
                 }
             }
             temp.Add("User not exist, os password is wrong");
@@ -190,7 +192,8 @@ namespace CGC.Funkcje.MagazineFuncFolder
                             return temp;
                         }
                     }
-                    return magazineBaseModify.Add_Color_Admin(usere, color);
+                    string LastGlobalIdColor = magazineBaseReturn.GetLastGlobalIdColor(user.Company).Last() + 1;
+                    return magazineBaseModify.Add_Color_Admin(usere, color, LastGlobalIdColor);
                 }
             }
             temp.Add("User not exist, os password is wrong");

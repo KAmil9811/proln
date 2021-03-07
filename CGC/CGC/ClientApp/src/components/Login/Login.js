@@ -69,7 +69,9 @@ export class Login extends Component {
                }
                else {
                     sessionStorage.setItem('token', json.token);
-                    sessionStorage.setItem('email', json.email);
+                   sessionStorage.setItem('email', json.email);
+
+                   sessionStorage.setItem('login', json.login);
                    sessionStorage.setItem('company', this.refs.firm.value);
                     sessionStorage.setItem('name', json.name);
                     sessionStorage.setItem('surname', json.surname);

@@ -118,7 +118,8 @@ namespace CGC.Funkcje.UserFuncFolder
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin == true)
                 {
-                    return userBaseModify.Add_User(user,use);
+                    string LastGlobalId = userBaseReturn.GetLastGlobalIdUser(admin.Company).Last().Global_Id.ToString();
+                    return userBaseModify.Add_User(user,use,LastGlobalId);
                 }
             }
             admin.Error_Messege = "Admin not found";

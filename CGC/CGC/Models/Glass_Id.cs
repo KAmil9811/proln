@@ -12,5 +12,6 @@ namespace CGC.Models
         public bool Removed { get; set; }
         public string Cut_id { get; set; }
         public List<Piece> Pieces { get; set; }
+        public int Global_Id { get; set; }
     }
 }

@@ -151,7 +151,7 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
         public List<Product> GetLastProduct(string company)
         {
             List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Product] ORDER BY convert(int, Id) DESC WHERE Company = @Company", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Product] WHERE Company = @Company ORDER BY convert(int, Id) DESC", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
@@ -169,6 +169,53 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             connect.cnn.Close();
 
             //temp.Sort((item1, item2) => (item1.Id.CompareTo(item2.Id)));
+
+            return temp;
+        }
+
+        public List<Product> GetLastGlobalIdProduct(string company)
+        {
+            List<Product> temp = new List<Product>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product product = new Product();
+                product.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
+
+                temp.Add(product);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
+
+            return temp;
+        }
+
+
+        public List<Product_History> GetLastGlobalIdProductHistory(string company)
+        {
+            List<Product_History> temp = new List<Product_History>();
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product_History] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
+            SqlDataReader sqlDataReader = command.ExecuteReader();
+            while (sqlDataReader.Read())
+            {
+                Product_History product_History = new Product_History();
+                product_History.Global_Id = Convert.ToInt32(sqlDataReader["Global_id"]) + 1;
+
+                temp.Add(product_History);
+            }
+            sqlDataReader.Close();
+            command.Dispose();
+            connect.cnn.Close();
 
             return temp;
         }
