@@ -48,6 +48,7 @@ export class AddCutMachine extends Component {
                 type: this.state.value
             },
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             }
         }

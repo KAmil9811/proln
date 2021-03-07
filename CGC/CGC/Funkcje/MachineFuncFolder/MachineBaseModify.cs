@@ -37,13 +37,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "INSERT INTO dbo.Machines(No, Status, Type, Stan) VALUES(@No, @Status, @Type, @Stan)";
+            string query = "INSERT INTO dbo.Machines(No, Status, Type, Stan, Company) VALUES(@No, @Status, @Type, @Stan, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = "Ready";
             command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = machines.Type;
             command.Parameters.Add("@Stan", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
 
@@ -56,8 +57,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You added machine " + machines.No;
             string machinehistoryall = "Machine has been added";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall, user.Company);
 
             temp.Add(machines);
             return temp;
@@ -67,11 +68,12 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "UPDATE  Machines SET Status = @Status  WHERE No = @No;";
+            string query = "UPDATE  Machines SET Status = @Status  WHERE No = @No AND Company = @Company;";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = machines.Status;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
 
@@ -83,8 +85,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You changed machine status from " + machines.No + " to " + machines.Status;
             string machinehistoryall = "Machine status has been changed to " + machines.Status;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall, user.Company);
 
             temp.Add(machines);
             return temp;
@@ -94,11 +96,12 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "UPDATE Machines SET Typ = @Typ  WHERE No = @No;";
+            string query = "UPDATE Machines SET Typ = @Typ  WHERE No = @No AND Company = @Company;";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Typ", SqlDbType.VarChar, 40).Value = machines.Type;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
 
@@ -110,8 +113,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You changed machine type from " + machines.No + " to " + machines.Type;
             string machinehistoryall = "Machine type has been changed to " + machines.Type;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall, user.Company);
 
             temp.Add(machines);
             return temp;
@@ -121,11 +124,12 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "UPDATE dbo.[Machines] SET Stan = @Stan WHERE No = @No;";
+            string query = "UPDATE dbo.[Machines] SET Stan = @Stan WHERE No = @No AND Company = @Company;";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Stan", SqlDbType.Bit).Value = true;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
 
@@ -137,8 +141,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You deleted machine " + machines.No;
             string machinehistoryall = "Machine has been deleted";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall, user.Company);
 
             temp.Add(machines);
             return temp;
@@ -148,11 +152,12 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<Machines> temp = new List<Machines>();
 
-            string query = "UPDATE dbo.[Machines] SET Stan = @Stan WHERE No = @No;";
+            string query = "UPDATE dbo.[Machines] SET Stan = @Stan WHERE No = @No AND Company = @Company;";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = machines.No;
             command.Parameters.Add("@Stan", SqlDbType.Bit).Value = false;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
 
@@ -164,8 +169,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You restored machine " + machines.No;
             string machinehistoryall = "Machine has been restored";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(machines.No, user.Login, machinehistoryall, user.Company);
 
             temp.Add(machines);
             return temp;
@@ -175,10 +180,11 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<string> temp = new List<string>();
 
-            string query = "INSERT INTO dbo.Machines_Type(Type) VALUES(@Type)";
+            string query = "INSERT INTO dbo.Machines_Type(Type, Company) VALUES(@Type, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Type", SqlDbType.VarChar, 40).Value = type;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
 
@@ -190,8 +196,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You added new machine type: " + type;
             string machinehistoryall = type + " has been added";
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(user.Login, machinehistoryall, user.Company);
 
             temp.Add(type);
             return temp;
@@ -201,24 +207,26 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("UPDATE dbo.Machines_Type SET Type = @new_type WHERE Type = @old_type;", connect.cnn);
+            SqlCommand command = new SqlCommand("UPDATE dbo.Machines_Type SET Type = @new_type WHERE Type = @old_type AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@new_type", SqlDbType.VarChar, 40).Value = new_type;
             command.Parameters.Add("@old_type", SqlDbType.VarChar, 40).Value = old_type;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
             command.Dispose();
             connect.cnn.Close();
 
-            foreach (Machines machines in  machineBaseReturn.GetMachines())
+            foreach (Machines machines in machineBaseReturn.GetMachines(user.Company))
             {
                 if (machines.Type == old_type)
                 {
-                    command = new SqlCommand("UPDATE dbo.Machines SET Type = @new_type WHERE Type = @old_type;", connect.cnn);
+                    command = new SqlCommand("UPDATE dbo.Machines SET Type = @new_type WHERE Type = @old_type AND Company = @Company;", connect.cnn);
 
                     command.Parameters.Add("@new_type", SqlDbType.VarChar, 40).Value = new_type;
                     command.Parameters.Add("@old_type", SqlDbType.VarChar, 40).Value = old_type;
+                    command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
 
                     connect.cnn.Open();
                     command.ExecuteNonQuery();
@@ -230,8 +238,8 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             string userhistory = "You changed machine type from " + old_type + " to " + new_type;
             string machinehistoryall = old_type + " has been changed to " + new_type;
 
-            insertHistory.Insert_User_History(userhistory, user.Login);
-            insertHistory.Insert_Machine_History_All(user.Login, machinehistoryall);
+            insertHistory.Insert_User_History(userhistory, user.Login, user.Company);
+            insertHistory.Insert_Machine_History_All(user.Login, machinehistoryall, user.Company);
 
             temp.Add(new_type);
             return temp;

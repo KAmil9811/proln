@@ -30,14 +30,14 @@ namespace CGC.Funkcje.OrderFuncFolder
             }
         }
 
-        public int Avaible_Cut(Order order)
+        public int Avaible_Cut(Order order, User user)
         {
             int count = 0;
-            foreach (Item item in orderBaseReturn.GetItems(order))
+            foreach (Item item in orderBaseReturn.GetItems(order, user.Company))
             {
                 if (item.Status == "Awaiting" && item.Cut_id == "0")
                 {
-                    foreach (Glass glass in magazineBaseReturn.Getglass())
+                    foreach (Glass glass in magazineBaseReturn.Getglass(user.Company))
                     {
                         if (Convert.ToDouble(item.Width) <= Convert.ToDouble(glass.Width) && Convert.ToDouble(item.Thickness) == Convert.ToDouble(glass.Hight) && Convert.ToDouble(item.Length) <= Convert.ToDouble(glass.Length) && glass.Color == item.Color && glass.Type == item.Type && (glass.Owner == order.Owner || glass.Owner == ""))
                         {
@@ -55,10 +55,10 @@ namespace CGC.Funkcje.OrderFuncFolder
             return count;
         }
 
-        public bool Avaible_Cut_Check(Order order)
+        public bool Avaible_Cut_Check(Order order, User user)
         {
             List<Glass> temp;
-            List<Item> temp2 = orderBaseReturn.GetItems(order);
+            List<Item> temp2 = orderBaseReturn.GetItems(order, user.Company);
 
             temp2.OrderBy(it => it.WidthSort).ThenBy(it => it.LengthSort);
 
@@ -67,7 +67,7 @@ namespace CGC.Funkcje.OrderFuncFolder
                 if (item.Status == "Awaiting" && (item.Cut_id == "0" || item.Cut_id == ""))
                 {
                     Glass glasse = new Glass { Color = item.Color, Type = item.Type, Hight = item.Thickness, Owner = order.Owner, Length = item.Length, Width = item.Width};
-                    temp = magazineBaseReturn.Getglass(glasse);
+                    temp = magazineBaseReturn.Getglass(glasse, user.Company);
                     temp.OrderBy(gl => gl.WidthSort).ThenBy(gl => gl.LengthSort);
                     
 

@@ -34,6 +34,6 @@ namespace CGC.Models
 
         public bool Deleted { get; set; }
         public string Token { get; set; }
-
+        public string Company { get; set; }
     }
 }

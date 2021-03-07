@@ -35,10 +35,10 @@ namespace CGC.Controllers
         }
 
                
-        [HttpGet("Get_Products")]
-        public async Task<List<Product>> Get_Products()
+        [HttpPost("Get_Products")]
+        public async Task<List<Product>> Get_Products([FromBody] Receiver receiver)
         {
-            return productFunc.Get_Products();
+            return productFunc.Get_Products(receiver);
         }
         
         [HttpPost("Get_Product_History")]

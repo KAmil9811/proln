@@ -35,10 +35,10 @@ namespace CGC.Controllers
             }
         }
 
-        [HttpGet("Return_Orders_To_Cut")]
-        public async Task<List<Order>> Return_Orders_To_Cut()
+        [HttpPost("Return_Orders_To_Cut")]
+        public async Task<List<Order>> Return_Orders_To_Cut([FromBody] Receiver receiver)
         {
-            return cutFunc.Return_Orders_To_Cut();
+            return cutFunc.Return_Orders_To_Cut(receiver);
         }
 
         [HttpPost("Return_Package_To_Cut")]
@@ -53,16 +53,16 @@ namespace CGC.Controllers
             return cutFunc.Return_Glass_To_Cut(receiver);
         }
 
-        [HttpGet("Return_Machine_To_Cut")]
-        public async Task<List<Machines>> Return_Machine_To_Cut()
+        [HttpPost("Return_Machine_To_Cut")]
+        public async Task<List<Machines>> Return_Machine_To_Cut([FromBody] Receiver receiver)
         {
-            return cutFunc.Return_Machine_To_Cut();
+            return cutFunc.Return_Machine_To_Cut(receiver);
         }
 
-        [HttpGet("Return_All_Project")]
-        public async Task<List<Cut_Project>> Return_All_Project()
+        [HttpPost("Return_All_Project")]
+        public async Task<List<Cut_Project>> Return_All_Project([FromBody] Receiver receiver)
         {
-            return cutFunc.Return_Cut_Project();
+            return cutFunc.Return_Cut_Project(receiver);
         }
 
         [HttpPost("Return_Porject")]

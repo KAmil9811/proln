@@ -14,6 +14,7 @@ export class AddType extends Component {
         const receiver = {
             type: this.refs.type.value,
             user: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             }
         }

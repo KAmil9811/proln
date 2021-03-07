@@ -32,16 +32,17 @@ namespace CGC.Funkcje.History
 
         //Wprowadzanie historii
 
-        public void Insert_User_History(string Description, string Login)
+        public void Insert_User_History(string Description, string Login, string company)
         {
             string data = DateTime.Now.ToString("g");
 
-            string query = "INSERT INTO dbo.User_History(Data, Description, Login) VALUES(@data, @Description, @Login)";
+            string query = "INSERT INTO dbo.User_History(Data, Description, Login, Company) VALUES(@data, @Description, @Login, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -49,16 +50,17 @@ namespace CGC.Funkcje.History
             connect.cnn.Close();
         }
 
-        public void Insert_Machine_History_All(string No, string Login, string Description)
+        public void Insert_Machine_History_All(string No, string Login, string Description, string company)
         {
             string data = DateTime.Now.ToString("g");
-            string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description) VALUES(@Date, @No, @Login, @Description)";
+            string query = "INSERT INTO dbo.Machines_History_All(Date,No, Login, Description, Company) VALUES(@Date, @No, @Login, @Description, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@Date", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = No;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -66,17 +68,18 @@ namespace CGC.Funkcje.History
             connect.cnn.Close();
         }
 
-        public void Insert_Machine_History_All(string Login, string Description)
+        public void Insert_Machine_History_All(string Login, string Description, string company)
         {
             try
             {
                 string data = DateTime.Now.ToString("g");
-                string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description) VALUES(@data, @Login, @Description)";
+                string query = "INSERT INTO dbo.Machines_History_All(Date, Login, Description, Company) VALUES(@data, @Login, @Description, @Company)";
                 SqlCommand command = new SqlCommand(query, connect.cnn);
 
                 command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
                 command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
                 command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
                 connect.cnn.Open();
                 command.ExecuteNonQuery();
@@ -89,10 +92,10 @@ namespace CGC.Funkcje.History
             }
         }
 
-        public void Insert_Machine_History(string Cut_id, string Login, string Description, string No)
+        public void Insert_Machine_History(string Cut_id, string Login, string Description, string No, string company)
         {
             string data = DateTime.Now.ToString("g");
-            string query = "INSERT INTO dbo.Machines_History(Date, Cut_Id, Login, Description, No) VALUES(@data, @Cut_Id, @Login, @Description, @No)";
+            string query = "INSERT INTO dbo.Machines_History(Date, Cut_Id, Login, Description, No, Company) VALUES(@data, @Cut_Id, @Login, @Description, @No, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
@@ -100,6 +103,7 @@ namespace CGC.Funkcje.History
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = No;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -107,16 +111,17 @@ namespace CGC.Funkcje.History
             connect.cnn.Close();
         }
 
-        public void Insert_Magazine_History(string Description, string Login)
+        public void Insert_Magazine_History(string Description, string Login, string company)
         {
             string data = DateTime.Now.ToString("g");
-            string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description) VALUES(@data, @Login, @Description)";
+            string query = "INSERT INTO dbo.Magazine_History(Data, Login, Description, Company) VALUES(@data, @Login, @Description, @Company)";
 
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -124,16 +129,17 @@ namespace CGC.Funkcje.History
             connect.cnn.Close();
         }
 
-        public void Insert_Order_History(string Description, string Login, string Id_Order)
+        public void Insert_Order_History(string Description, string Login, string Id_Order, string company)
         {
             string data = DateTime.Now.ToString("g");
-            string query = "INSERT INTO dbo.[Order_History](Date, Login, Description, Id_Order) VALUES(@data, @Login, @Description, @Id_Order)";
+            string query = "INSERT INTO dbo.[Order_History](Date, Login, Description, Id_Order, Company) VALUES(@data, @Login, @Description, @Id_Order, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
             command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = Id_Order;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();
@@ -141,16 +147,17 @@ namespace CGC.Funkcje.History
             connect.cnn.Close();
         }
 
-        public void InsertProductHistory(string Id, string Login, string Description)
+        public void InsertProductHistory(string Id, string Login, string Description, string company)
         {
             string data = DateTime.Now.ToString("g");
-            string query = "INSERT INTO dbo.[Product_History](Data, Login, Description, Id) VALUES(@data, @Login, @Description, @Id)";
+            string query = "INSERT INTO dbo.[Product_History](Data, Login, Description, Id, Company) VALUES(@data, @Login, @Description, @Id, @Company)";
             SqlCommand command = new SqlCommand(query, connect.cnn);
 
             command.Parameters.Add("@data", SqlDbType.VarChar, 40).Value = data;
             command.Parameters.Add("@Login", SqlDbType.VarChar, 40).Value = Login;
             command.Parameters.Add("@Description", SqlDbType.VarChar, 40).Value = Description;
             command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = Id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
             command.ExecuteNonQuery();

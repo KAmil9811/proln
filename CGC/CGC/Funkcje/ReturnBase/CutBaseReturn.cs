@@ -30,12 +30,14 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             }
         }
 
-        public List<Cut_Project> GetCut_Project()
+        public List<Cut_Project> GetCut_Project(string company)
         {
             List<Cut_Project> temp = new List<Cut_Project>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -53,13 +55,14 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             return temp;
         }
 
-        public List<Cut_Project> Get_Cut_Project(string status)
+        public List<Cut_Project> Get_Cut_Project(string status, string company)
         {
             List<Cut_Project> temp = new List<Cut_Project>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -79,9 +82,10 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             foreach(Cut_Project cut in temp)
             {
-                command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order;", connect.cnn);
+                command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order AND Company = @Company;", connect.cnn);
 
                 command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = cut.Order_id;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
                 connect.cnn.Open();
 
@@ -100,14 +104,15 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
             return temp;
         }
 
-        public List<Cut_Project> Get_Cut_Project(string status, string status2)
+        public List<Cut_Project> Get_Cut_Project(string status, string status2, string company)
         {
             List<Cut_Project> temp = new List<Cut_Project>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE Status = @Status OR Status = @Status2;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Cut_Project] WHERE (Status = @Status OR Status = @Status2) AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
             command.Parameters.Add("@Status2", SqlDbType.VarChar, 40).Value = status2;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -127,9 +132,10 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
 
             foreach (Cut_Project cut in temp)
             {
-                command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order;", connect.cnn);
+                command = new SqlCommand("SELECT * FROM [Order] WHERE Id_Order = @Id_Order AND Company = @Company;", connect.cnn);
 
                 command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = cut.Order_id;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
                 connect.cnn.Open();
 

@@ -19,6 +19,7 @@ export class UserChanging extends Component {
         event.preventDefault();
         const receiver = {
             admin: {
+                company: sessionStorage.getItem('company'),
                 login: sessionStorage.getItem('login')
             },
             user: {

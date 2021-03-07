@@ -30,12 +30,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             }
         }
 
-        public List<Machines> GetMachines()
+        public List<Machines> GetMachines(string company)
         {
             List<Machines> temp = new List<Machines>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -63,13 +65,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return temp;
         }
 
-        public List<Machines> GetMachine(string cut_id)
+        public List<Machines> GetMachine(string cut_id, string company)
         {
             List<Machines> temp = new List<Machines>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines] WHERE Last_Cut_id = @Last_Cut_id;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines] WHERE Last_Cut_id = @Last_Cut_id AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Last_Cut_id", SqlDbType.VarChar, 40).Value = cut_id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -99,14 +102,15 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return temp;
         }
 
-        public List<Machines> GetMachines(string status, bool stan)
+        public List<Machines> GetMachines(string status, bool stan, string company)
         {
             List<Machines> temp = new List<Machines>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines] WHERE Status = @Status AND Stan = @Stan;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines] WHERE Status = @Status AND Stan = @Stan AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
             command.Parameters.Add("@Stan", SqlDbType.Bit).Value = stan;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -136,14 +140,15 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return temp;
         }
 
-        public List<Machines_History_All> GetMachinesHistoryAll()
+        public List<Machines_History_All> GetMachinesHistoryAll(string company)
         {
             List<Machines_History_All> machines_History_Alls = new List<Machines_History_All>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History_All];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History_All] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
 
-      
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {
@@ -173,13 +178,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return machines_History_Alls;
         }
 
-        public List<Machines_History> GetMachinesHistory(string No)
+        public List<Machines_History> GetMachinesHistory(string No, string company)
         {
             List<Machines_History> machines_Historys = new List<Machines_History>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History] WHERE No = @No;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_History] WHERE No = @No AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@No", SqlDbType.VarChar, 40).Value = No;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -202,12 +208,14 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             return machines_Historys;
         }
 
-        public List<string> Get_Types()
+        public List<string> Get_Types(string company)
         {
             List<string> temp = new List<string>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_Type];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Machines_Type] WHERE Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

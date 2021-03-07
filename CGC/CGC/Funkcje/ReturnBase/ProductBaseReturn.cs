@@ -30,14 +30,15 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
 
         private Connect connect = new Connect();
 
-        public List<Product_History> GetProductHistory(int Id)
+        public List<Product_History> GetProductHistory(int Id, string company)
         {
             List<Product_History> product_Histories = new List<Product_History>();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM [Product_History] WHERE Id = @Id;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Product_History] WHERE Id = @Id AND Company = @Company;", connect.cnn);
             connect.cnn.Open();
 
             command.Parameters.Add("@Id", SqlDbType.VarChar,40).Value = Id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -56,12 +57,13 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             return product_Histories;
         }
 
-        public List<Product> GetProduct(string id)
+        public List<Product> GetProduct(string id, string company)
         {
             List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Product] WHERE Id = @Id;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Product] WHERE Id = @Id AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Id", SqlDbType.VarChar, 40).Value = id;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -86,11 +88,13 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             return temp;
         }
 
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(string company)
         {
             List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Product];", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Product] AND Company = @Company;", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -113,12 +117,13 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             return temp;
         }
 
-        public List<Product> GetProducts(string status)
+        public List<Product> GetProducts(string status, string company)
         {
             List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("SELECT * FROM [Product] Where Status = @Status;", connect.cnn);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Product] Where Status = @Status AND Company = @Company;", connect.cnn);
 
             command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             connect.cnn.Open();
 
@@ -143,11 +148,13 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
             return temp;
         }
 
-        public List<Product> GetLastProduct()
+        public List<Product> GetLastProduct(string company)
         {
             List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Product] ORDER BY convert(int, Id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Id From [Product] ORDER BY convert(int, Id) DESC WHERE Company = @Company", connect.cnn);
             connect.cnn.Open();
+
+            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

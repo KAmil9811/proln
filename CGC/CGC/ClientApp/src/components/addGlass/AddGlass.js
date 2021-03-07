@@ -78,6 +78,7 @@ export class AddGlass extends Component {
                     count: this.refs.amount.value,
                 },
                 user: {
+                    company: sessionStorage.getItem('company'),
                     login: sessionStorage.getItem('login'),
                 }
             }

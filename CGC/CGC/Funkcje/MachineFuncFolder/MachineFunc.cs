@@ -33,23 +33,23 @@ namespace CGC.Funkcje.MachineFuncFolder
         private MachineBaseReturn machineBaseReturn = new MachineBaseReturn();
         private UserBaseReturn userBaseReturn = new UserBaseReturn();
 
-        public List<string> Return_All_Type()
+        public List<string> Return_All_Type(Receiver receiver)
         {
-            return machineBaseReturn.Get_Types();
+            return machineBaseReturn.Get_Types(receiver.user.Company);
         }
-        public List<Machines> Return_All_Machines()
+        public List<Machines> Return_All_Machines(Receiver receiver)
         {
-            return machineBaseReturn.GetMachines();
+            return machineBaseReturn.GetMachines(receiver.user.Company);
         }
 
         public List<Machines_History> Return_Machines_History(Receiver receiver)
         {
-            return machineBaseReturn.GetMachinesHistory(receiver.machines.No);
+            return machineBaseReturn.GetMachinesHistory(receiver.machines.No, receiver.user.Company);
         }
 
-        public List<Machines_History_All> Return_All_Machines_History()
+        public List<Machines_History_All> Return_All_Machines_History(Receiver receiver)
         {
-            return machineBaseReturn.GetMachinesHistoryAll();
+            return machineBaseReturn.GetMachinesHistoryAll(receiver.user.Company);
         }
 
         public List<Machines> Add_Machine(Receiver receiver)
@@ -62,7 +62,7 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             try
             {
-                temper = Convert.ToInt32(machineBaseReturn.GetMachines().OrderBy(mach => mach.No).Last().No) + 1;
+                temper = Convert.ToInt32(machineBaseReturn.GetMachines(user.Company).OrderBy(mach => mach.No).Last().No) + 1;
             }
             catch (Exception e)
             {
@@ -71,7 +71,7 @@ namespace CGC.Funkcje.MachineFuncFolder
 
             machines.No = temper.ToString();
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
@@ -99,11 +99,11 @@ namespace CGC.Funkcje.MachineFuncFolder
                 machines.Status = "Ready";
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    foreach (Machines edit_machines in machineBaseReturn.GetMachines())
+                    foreach (Machines edit_machines in machineBaseReturn.GetMachines(user.Company))
                     {
                         if (edit_machines.No == machines.No)
                         {
@@ -127,7 +127,7 @@ namespace CGC.Funkcje.MachineFuncFolder
             Machines machines = receiver.machines;
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
@@ -145,7 +145,7 @@ namespace CGC.Funkcje.MachineFuncFolder
             Machines machines = receiver.machines;
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
@@ -164,7 +164,7 @@ namespace CGC.Funkcje.MachineFuncFolder
             Machines machines = receiver.machines;
             User user = receiver.user;
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
@@ -182,11 +182,11 @@ namespace CGC.Funkcje.MachineFuncFolder
             string type = receiver.type;
             List<string> temp = new List<string>();
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (user.Login == usere.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    foreach (string types in machineBaseReturn.Get_Types())
+                    foreach (string types in machineBaseReturn.Get_Types(user.Company))
                     {
                         if (types == type)
                         {
@@ -208,7 +208,7 @@ namespace CGC.Funkcje.MachineFuncFolder
             string old_type = receiver.old_type;
             List<string> temp = new List<string>();
 
-            foreach (string type in machineBaseReturn.Get_Types())
+            foreach (string type in machineBaseReturn.Get_Types(user.Company))
             {
                 if (type == new_type)
                 {
@@ -217,11 +217,11 @@ namespace CGC.Funkcje.MachineFuncFolder
                 }
             }
 
-            foreach (User usere in userBaseReturn.GetUsers())
+            foreach (User usere in userBaseReturn.GetUsers(user.Company))
             {
                 if (usere.Login == user.Login && (usere.Manager == true || usere.Super_Admin == true || usere.Admin || usere.Machine_management == true))
                 {
-                    foreach (string type in machineBaseReturn.Get_Types())
+                    foreach (string type in machineBaseReturn.Get_Types(user.Company))
                     {
                         if (type == old_type)
                         {
