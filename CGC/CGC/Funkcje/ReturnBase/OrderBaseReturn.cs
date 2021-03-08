@@ -464,10 +464,10 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
         public List<Item> GetLastGlobalIdItem(string company)
         {
             List<Item> temp = new List<Item>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Item] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Item] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -518,10 +518,10 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
         public List<Order> GetLastGlobalIdOrder(string company)
         {
             List<Order> temp = new List<Order>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Order] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Order] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -574,10 +574,10 @@ namespace CGC.Funkcje.OrderFuncFolder.OrderBase
         public List<Order_History> GetLastGlobalIdOrderHistory(string company)
         {
             List<Order_History> temp = new List<Order_History>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Order_History] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Order_History] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

@@ -71,9 +71,9 @@ namespace CGC.Funkcje.OrderFuncFolder
                 last_free_id = 1;
             }
 
-            for (int i = 0; i <= receiver.iteme.Count; i += 6)
+            for (int i = 0; i < receiver.iteme.Count; i += 6)
             {
-                Item item = new Item { Width = receiver.iteme[0], Length = receiver.iteme[1], Thickness = receiver.iteme[2], Color = receiver.iteme[3], Amount = receiver.iteme[4], Type = receiver.iteme[5] };
+                Item item = new Item { Width = receiver.iteme[i], Length = receiver.iteme[i+1], Thickness = receiver.iteme[i+2], Color = receiver.iteme[i+3], Amount = receiver.iteme[i+4], Type = receiver.iteme[i+5] };
                 order.items.Add(item);
             }
 

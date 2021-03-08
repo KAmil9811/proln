@@ -241,7 +241,9 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             while (sqlDataReader.Read())
             {
                 Machines machines = new Machines();
-                machines.No = (Convert.ToInt32(sqlDataReader["No"]) + 1).ToString();
+
+                string no = sqlDataReader["No"].ToString();
+                machines.No = (Convert.ToInt32(no) + 1).ToString();
 
                 temp.Add(machines);
             }
@@ -260,10 +262,10 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         public List<Machines> GetLastGlobalIdMachine(string company)
         {
             List<Machines> temp = new List<Machines>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC ", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines] ORDER BY convert(int, Global_id) DESC ", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -288,15 +290,16 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         public List<string> GetLastGlobalIdTypes(string company)
         {
             List<string> temp = new List<string>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_Type] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_Type] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {
-                string Global_id = sqlDataReader["Global_id"].ToString() + 1;
+                string Global_id = sqlDataReader["Global_id"].ToString();
+                Global_id = (Convert.ToInt32(Global_id) + 1).ToString();
 
                 temp.Add(Global_id);
             }
@@ -315,10 +318,10 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         public List<Machines_History> GetLastGlobalIdMachineHistory(string company)
         {
             List<Machines_History> temp = new List<Machines_History>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_History] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_History] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -343,10 +346,10 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
         public List<Machines_History_All> GetLastGlobalIdMachineHistoryAll(string company)
         {
             List<Machines_History_All> temp = new List<Machines_History_All>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_History_All] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Machines_History_All] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -364,8 +367,6 @@ namespace CGC.Funkcje.MachineFuncFolder.MachineBase
             {
                 temp.Add(new Machines_History_All { Global_Id = 1 });
             }
-
-            return temp;
 
             return temp;
         }

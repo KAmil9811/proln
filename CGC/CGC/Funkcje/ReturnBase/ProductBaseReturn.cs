@@ -176,10 +176,10 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
         public List<Product> GetLastGlobalIdProduct(string company)
         {
             List<Product> temp = new List<Product>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -205,10 +205,10 @@ namespace CGC.Funkcje.ProductFuncFolder.ProductBase
         public List<Product_History> GetLastGlobalIdProductHistory(string company)
         {
             List<Product_History> temp = new List<Product_History>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product_History] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Product_History] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

@@ -438,10 +438,10 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         public List<Glass_Receiver> GetLastGlobalIdGlass(string company)
         {
             List<Glass_Receiver> temp = new List<Glass_Receiver>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Glass] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Glass] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
@@ -490,15 +490,16 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
             List<string> temp = new List<string>();
             try
             {
-                SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Color] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+                SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Color] ORDER BY convert(int, Global_id) DESC", connect.cnn);
                 connect.cnn.Open();
 
-                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+                //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
                 SqlDataReader sqlDataReader = command.ExecuteReader();
                 while (sqlDataReader.Read())
                 {
-                    string Global_id = (Convert.ToInt16(sqlDataReader["Global_id"]) + 1).ToString();
+                    string Global_id = sqlDataReader["Global_id"].ToString();
+                    Global_id = (Convert.ToInt32(Global_id) + 1).ToString();
 
                     temp.Add(Global_id);
                 }
@@ -543,15 +544,16 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         public List<string> GetLastGlobalIdTypes(string company)
         {
             List<string> temp = new List<string>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Glass_type] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Glass_type] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
             {
-                string Global_id = (Convert.ToInt32(sqlDataReader["Global_id"]) + 1).ToString();
+                string Global_id = sqlDataReader["Global_id"].ToString();
+                Global_id = (Convert.ToInt32(Global_id) + 1).ToString();
 
                 temp.Add(Global_id);
             }
@@ -596,10 +598,10 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
         public List<Magazine_History> GetLastGlobalIdMagazineHistory(string company)
         {
             List<Magazine_History> temp = new List<Magazine_History>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Magazine_History] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Magazine_History] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())

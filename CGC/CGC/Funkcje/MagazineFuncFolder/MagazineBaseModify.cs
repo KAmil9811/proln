@@ -93,6 +93,13 @@ namespace CGC.Funkcje.MagazineFuncFolder.MagazineBase
 
                     LastGlobalIdGlass = (Convert.ToInt32(LastGlobalIdGlass) + 1).ToString();
                 }
+                else
+                {
+                    glass.Error_Messege = "Wrong size";
+                    glasses.Add(glass);
+                    temp.Add(glass);
+                    return temp;
+                }
             }
             return temp;
         }

@@ -175,10 +175,10 @@ namespace CGC.Funkcje.CutFuncFolder.CutBase
         public List<Cut_Project> GetLastGlobalIdCutProject(string company)
         {
             List<Cut_Project> temp = new List<Cut_Project>();
-            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Cut_Project] WHERE Company = @Company ORDER BY convert(int, Global_id) DESC", connect.cnn);
+            SqlCommand command = new SqlCommand("Select TOP(1) Global_id From [Cut_Project] ORDER BY convert(int, Global_id) DESC", connect.cnn);
             connect.cnn.Open();
 
-            command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
+            //command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = company;
 
             SqlDataReader sqlDataReader = command.ExecuteReader();
             while (sqlDataReader.Read())
