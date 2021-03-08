@@ -478,17 +478,21 @@ export class Test extends Component {
                             <h3>{sessionStorage.getItem('uncat')}</h3>
                             <div className="table2">
                                 <h2>Glasses</h2>
-                                {table1}
-                            </div>
+                                        {table1}
+
+                                        <div>
+                                            <button className="prim_test" onClick={this.saveProject}>Save project</button>
+
+                                            <a href={href2} download><button className="success_test" /*onClick = { this.generator }*/ >Generate PDF </button></a>
+                                        </div>
+
+                             </div>
+                             
                             <div className="table3">
                                 <h2>Products</h2>
                                 {table2}
                                 <img src={href} />
-                                <div>
-                                    <button className="prim_test" onClick={this.saveProject}>Save project</button>
-                                    
-                                    <a href={href2} download><button className="success_test" /*onClick = { this.generator }*/ >Generate PDF </button></a>
-                                </div>
+                               
                                 <div id="slideContainer"></div>
                             </div>
                         </div>

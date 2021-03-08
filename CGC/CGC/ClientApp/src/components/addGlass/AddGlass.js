@@ -90,7 +90,7 @@ export class AddGlass extends Component {
                 glass: {
                     hight: this.refs.height.value,
                     width: this.refs.width.value,
-                    length: this.refs.length.value,
+                    length: this.refs.length.value, 
                     owner: this.refs.owner.value,
                     desk: this.refs.desk.value,
                     color: this.refs.color.value,
