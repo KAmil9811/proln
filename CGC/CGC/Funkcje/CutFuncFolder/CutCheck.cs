@@ -223,10 +223,10 @@ namespace CGC.Funkcje.CutFuncFolder
             try
             {
                 var Sort__items = orderBaseReturn.GetItems(order, user.Company).OrderBy(iteme => iteme.Width).ThenBy(iteme => iteme.Length);
-            
-            //Sort__items = (List<Item>)package.Item.OrderBy(ordere => ordere.Width).ThenBy(ordere => ordere.Length);
 
-            Glass glasss = new Glass { Owner = package.Owner, Type = package.Type, Color = package.Color, Hight = package.Thickness2 , Length = Sort__items.First().Length, Width = Sort__items.First().Width};
+                //Sort__items = (List<Item>)package.Item.OrderBy(ordere => ordere.Width).ThenBy(ordere => ordere.Length);
+
+                Glass glasss = new Glass { Owner = package.Owner, Type = package.Type, Color = package.Color, Hight = package.Thickness2 }; //, Length = Sort__items.First().Length, Width = Sort__items.First().Width};
 
             foreach (Glass_Receiver glasse in magazineBaseReturn.GetglassToCut(glasss, user.Company))
             {

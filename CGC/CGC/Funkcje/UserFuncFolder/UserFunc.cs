@@ -67,7 +67,7 @@ namespace CGC.Funkcje.UserFuncFolder
         {
             User user = receiver.user;
             User admin = receiver.admin;
-            List<User> users = userBaseReturn.GetUsers(user.Company);
+            List<User> users = userBaseReturn.GetUsers(admin.Company);
 
             List<User> temp = new List<User>();
             bool check;
@@ -112,9 +112,9 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
-            user.Id = userBaseReturn.GetUsers(user.Company).OrderByDescending(x=> x.Id).First().Id;
+            user.Id = userBaseReturn.GetUsers(admin.Company).OrderByDescending(x=> x.Id).First().Id;
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login, false, user.Company))
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false, admin.Company))
             {
                 if (use.Manager == true || use.Super_Admin == true || use.Admin == true)
                 {
@@ -161,7 +161,7 @@ namespace CGC.Funkcje.UserFuncFolder
                 }
             }
 
-            foreach (User use in userBaseReturn.GetUser(receiver.user.Login, user.Company))
+            foreach (User use in userBaseReturn.GetUser(receiver.user.Login, receiver.admin.Company))
             {
                 if (receiver.user.Email != use.Email)
                 {
@@ -235,16 +235,16 @@ namespace CGC.Funkcje.UserFuncFolder
                 return admin;
             }
 
-            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers(user.Company));
+            check = userCheck.Is_Email_Exist(user.Email, userBaseReturn.GetUsers(admin.Company));
             if (check == true)
             {
                 admin.Error_Messege = "E-mail has been already taken";
                 return admin;
             }
 
-            foreach (User use in userBaseReturn.GetUser(admin.Login, false, user.Company))
+            foreach (User use in userBaseReturn.GetUser(admin.Login, false, admin.Company))
             {
-                foreach (User usere in userBaseReturn.GetUser(user.Login, user.Company))
+                foreach (User usere in userBaseReturn.GetUser(user.Login, admin.Company))
                 {
                     return userBaseModify.Change_Email_Admin(user, admin);
                 }

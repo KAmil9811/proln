@@ -143,6 +143,31 @@ namespace CGC.Funkcje.OrderFuncFolder
             }
         }
 
+        public void Edit_Order(User user, string status, string id_Order)
+        {
+            List<Order> temp = new List<Order>();
+
+            try
+            {
+                string query = "UPDATE dbo.[Order] SET Status = @Status WHERE Id_Order = @Id_Order AND Company = @Company;";
+                SqlCommand command = new SqlCommand(query, connect.cnn);
+
+                command.Parameters.Add("@Status", SqlDbType.VarChar, 40).Value = status;
+
+                command.Parameters.Add("@Id_Order", SqlDbType.VarChar, 40).Value = id_Order;
+                command.Parameters.Add("@Company", SqlDbType.VarChar, 40).Value = user.Company;
+
+                connect.cnn.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connect.cnn.Close();
+            }
+            catch
+            {
+
+            }
+        }
+
         public List<Order> Edit_Order_Items(User user, Order order, Item item)
         {
             List<Order> temp = new List<Order>();
@@ -363,7 +388,6 @@ namespace CGC.Funkcje.OrderFuncFolder
 
             try
             {
-
                 foreach (Item item in items)
                 {
                     query = "UPDATE dbo.[Item] SET Status = @Status WHERE Id = @Id AND Company = @Company;";
