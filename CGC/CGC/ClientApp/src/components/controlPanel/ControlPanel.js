@@ -96,13 +96,13 @@ export class ControlPanel extends Component {
 
     permRender() {
         if (sessionStorage.getItem('manager') === 'true') {
-            return (<option>Menedżer</option>)
+            return (<option>Manager</option>)
         }
         else if (sessionStorage.getItem('superAdmin') === 'true') {
             return (<option>Super admin</option>)
         }
         else if (sessionStorage.getItem('user') === 'true' && sessionStorage.getItem('magazineManagement') === 'true' ) {
-            return (<option>Pracownik</option>
+            return (<option>Employee</option>
             )
             /*else if (sessionStorage.getItem('magazineManagement') === 'true') {
                 return (<option>Magazynier</option>)

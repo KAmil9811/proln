@@ -164,7 +164,10 @@ export class AddOrderTwo extends Component {
         event.preventDefault();
         var table2 = [];
         if (this.refs.width.value === "" || this.refs.length.value === "" || this.refs.thickness.value === "" || this.refs.color.value === "" || this.refs.amount.value === "" || this.refs.type.value === "" ) {
-            alert("Wprowadź dane")
+            alert("Enter data")
+        }
+        else if (this.refs.width.value >= 5000 || this.refs.length.value >= 5000) {
+            alert("Length or width beyond the limit")
         }
         else {
 
@@ -310,7 +313,7 @@ export class AddOrderTwo extends Component {
 
                             <div className="form-group">
 
-                                <label>Length</label>
+                                <label>Length (max. 5000mm)</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -321,7 +324,7 @@ export class AddOrderTwo extends Component {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Width</label>
+                                <label>Width (max. 5000mm)</label>
                                 <input
                                     type="number"
                                     className="form-control"

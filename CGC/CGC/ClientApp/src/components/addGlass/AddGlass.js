@@ -70,16 +70,22 @@ export class AddGlass extends Component {
                 });
             })
     }
+   
 
     handleAddGlass = (event) => {
         event.preventDefault();
-        this.setState({
-            isLoading: true
-        })
+        
         if (this.refs.height.value === "" || this.refs.width.value === "" || this.refs.length.value === "" || this.refs.owner.value === "" || this.refs.desk.value === "" || this.refs.color.value === "" || this.refs.type.value === "" || this.refs.amount.value === "" ) {
             alert("Fill the data")
         }
+        else if (this.refs.length.value >= 5001 || this.refs.width.value >= 5001 || this.refs.amount.value >= 101 || this.refs.length.value <= 199 || this.refs.width.value <= 199) {
+            alert("Limit exceeded")
+            
+        }
         else {
+            this.setState({
+            isLoading: true
+            })
             const receiver = {
                 glass: {
                     hight: this.refs.height.value,
@@ -202,7 +208,7 @@ export class AddGlass extends Component {
 
                                 <div className="form-group">
 
-                                    <label>Length (min.200, max.5000mm)</label>
+                                    <label>Length (min. 200, max. 5000mm)</label>
                                     <input
                                         type="number"
                                         min="1"
@@ -215,7 +221,7 @@ export class AddGlass extends Component {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label>Width (min.200, max.5000mm)</label>
+                                    <label>Width (min. 200, max. 5000mm)</label>
                                     <input
                                         type="number"
                                         min="200"
