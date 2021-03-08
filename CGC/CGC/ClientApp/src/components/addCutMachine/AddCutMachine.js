@@ -34,7 +34,8 @@ export class AddCutMachine extends Component {
         })
             .then(res => res.json())
             .then(json => {
-               
+                console.log(json)
+                this.setState({ value: json[0] });
                 for (var i = 0; i < json.length; i++) {
                     table3.push({
                         type: json[i],
@@ -46,6 +47,8 @@ export class AddCutMachine extends Component {
                 });
             })
     }
+
+
 
     handleAddCutMachine = (event) => {
         event.preventDefault();

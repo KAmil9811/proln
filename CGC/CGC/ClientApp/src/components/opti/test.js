@@ -456,7 +456,10 @@ export class Test extends Component {
                             <h1>No access on the phone</h1>
                         </div>
                         <div className="aaaaaaaa" >
-                            <ClipLoader loading={this.state.isLoading} size={150} />
+                            <div className="Loading">
+                                <ClipLoader loading={this.state.isLoading} size={150} />
+                                <h1>Loading</h1>
+                            </div>
                         </div></div>
 
                 )
@@ -506,7 +509,10 @@ export class Test extends Component {
         else {
             if (this.state.isLoading === true) {
                 return (
-                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div className="Loading">
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <h1>Loading</h1>
+                    </div>
                 )
             }
             else {

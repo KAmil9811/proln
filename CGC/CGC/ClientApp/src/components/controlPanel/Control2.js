@@ -411,7 +411,10 @@ export class ControlPanel2 extends Component {
         else if (sessionStorage.getItem('machineMenagment') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             if (this.state.isLoading === true) {
                 return (
-                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div className="Loading">
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <h1>Loading...</h1>
+                    </div>
                 )
             }
             else {
@@ -432,8 +435,9 @@ export class ControlPanel2 extends Component {
                                     {userHistoryTable}
                                     {buttonAdd}
                                 </div>
-                                {xd}
-
+                                <div className="controlpaneltable">
+                                    {xd}
+                                </div>
                             </div>
                         </div>
                     </div>
