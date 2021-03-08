@@ -79,7 +79,6 @@ export class GlassPicker extends Component {
 
                 for (var k = 0; k < table2.length; k++) {
                     var amount = json[k].length;
-                    //console.log(amount)
                     for (var j = 0; j < amount; j++) {
                         table2[k].id = json[k].glass_Id
                     };
@@ -195,7 +194,6 @@ export class GlassPicker extends Component {
                     });
                 }
             })
-        console.log(receiver)
     };
 
     check(number, id, miejsce) {
@@ -222,7 +220,6 @@ export class GlassPicker extends Component {
     pick = (event) => {
         event.preventDefault();
         sessionStorage.setItem('glass_id', this.state.send)
-        console.log(sessionStorage.getItem('glass_id'))
         this.props.history.push('/test')
 
 

@@ -27,7 +27,12 @@ html{
     }
 }
 
-
+.prontjpg {
+    width: 80vw;
+    height: auto;
+    float: left;
+    margin-left: -35vw;
+}
 
 
 @media all and (min-width: 800px) {
@@ -501,14 +506,14 @@ label {
 .test_c,
 .PickMachine_c,
 .conteiner,
-.ResetPassword_c,
-.PasswordReset2_c,
+
 .tescik,
 .Glass_Picker_c,
 .Glass_Warehause_c,
 .order_warehouse_conteiner,
 .HomePage_c,
-.one_order_conteiner {
+.one_order_conteiner,
+.saveprintbody {
     z-index: 0;
     margin-top: 100px;
     /*margin-left: 100px; Kamil tu na pewno nic nie zmieniał ( a przynajmniej taka jest wersja dla Ady psuja <3 )
@@ -547,7 +552,6 @@ label {
     .UserChange_c,
     .addCutMachine,
     .Glass_Warehause_c,
-    .AddGlass_c,
     .conteiner_rgw,
     .conteiner_cp,
     .user_history_conteiner,
@@ -555,7 +559,9 @@ label {
     .order_warehouse_conteiner,
     .one_order_conteiner,
     .AddOrder2_c,
-    .GlassEdit_c {
+    .GlassEdit_c,
+    .AddGlass_c,
+    .saveprintbody {
         max-width: 80vw;
         margin-right: 5vw;
     }
@@ -588,7 +594,8 @@ label {
     .AddOrder2_c,
     .GlassEdit_c,
     .SavedProject_c,
-    .machine_warhouse_conteiner {
+    .machine_warhouse_conteiner,
+    .saveprintbody {
         max-width: 65vw !important;
         margin-right: 5vw !important;
         min-width: auto !important;
@@ -621,14 +628,15 @@ label {
     margin-right: auto;
     min-width: 320px;
 }
-
-    .Login_c {
-        z-index: 0;
-        margin-top: 100px;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 320px;
-    }
+.ResetPassword_c,
+.PasswordReset2_c,
+.Login_c {
+    z-index: 0;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 320px;
+}
 
     .AddGlass_c {
         z-index: 0;

@@ -46,7 +46,6 @@ export class UserChanging extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 return (json);
             })
             .then(json => {
@@ -93,7 +92,6 @@ export class UserChanging extends Component {
                     <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
-                        console.log(this.state)
                     }} >
                         <option value="user">Employee</option>
                         <option value="admin">Admin</option>
@@ -112,7 +110,6 @@ export class UserChanging extends Component {
                     <label>Uprawnienia:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
-                        console.log(this.state)
                     }} >
                         <option value="user">Employee</option>
                         <option value="admin">Admin</option>
@@ -130,7 +127,6 @@ export class UserChanging extends Component {
                     <label>Permission:</label><br />
                     <select onChange={(e) => {
                         this.setState({ value: e.target.value });
-                        console.log(this.state)
                     }} >
                         <option value="user">Employee</option>
                     </select><br />

@@ -59,7 +59,6 @@ export class GlassTable extends Component {
                                 <Link to="/glass_edit"><button className="info_t" id={i}
                                     onClick={
                                         (e) => {
-                                            //console.log(e.target.id);
                                             sessionStorage.setItem('length', json[e.target.id].length);
                                             sessionStorage.setItem('width', json[e.target.id].width);
                                             sessionStorage.setItem('thickness', json[e.target.id].hight);
@@ -92,7 +91,6 @@ export class GlassTable extends Component {
 
                 for (var k = 0; k < table2.length; k++) {
                     var amount = json[k].length;
-                    //console.log(amount)
                     for (var j = 0; j < amount; j++) {
                         table2[k].id = json[k].glass_Id
                     };

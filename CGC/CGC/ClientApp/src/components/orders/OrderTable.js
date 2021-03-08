@@ -36,7 +36,6 @@ export class OrderTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 for (var i = 0; i < json.length; i++) {
                    
                         table2.push({

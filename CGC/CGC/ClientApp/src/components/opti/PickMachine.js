@@ -1,4 +1,5 @@
 ﻿import React, { Component } from "react";
+import React, { Component } from "react";
 import Sidebar from '../Sidebar';
 import './PickMachine.css'
 
@@ -90,7 +91,7 @@ export class PickMachine extends Component {
             })
 
        
-            this.props.history.push('/selection_of_orders');
+        this.props.history.push('/saved_projects');
         
 
         /*this.props.history.push('/glasswarehouse');

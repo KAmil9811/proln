@@ -36,8 +36,7 @@ export class MachineTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log('maszyny')
-                console.log(json)
+               
                 for (var i = 0; i < json.length; i++) {
                     var deleted = '';
                     if (json[i].stan === false) {

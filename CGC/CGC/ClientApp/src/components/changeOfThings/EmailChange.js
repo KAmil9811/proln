@@ -29,7 +29,6 @@ export class EmailChange extends Component {
                 })
                     .then(res => res.json())
                     .then(json => {
-                        console.log(json)
                         return (json)
                     })
                     .then(json => {

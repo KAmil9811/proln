@@ -54,7 +54,6 @@ export class UsersTable extends Component {
             })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 for (var i = 0; i < json.length; i++) {
                     var deleted = '';
                     if (json[i].deleted === false) {

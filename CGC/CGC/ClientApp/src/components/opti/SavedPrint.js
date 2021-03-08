@@ -39,17 +39,13 @@ export class SavedPrint extends Component {
         })
             .then(res => res.json())
                .then(json => {
-                console.log('Saved print')
-                console.log(json)
+                
                 
                 var table2 = []
                sessionStorage.setItem('kolor', json[0].color)
                 sessionStorage.setItem('grubosc', json[0].hight)
                    sessionStorage.setItem('typ', json[0].type)
-                   console.log('kolor grubść typ')
-                   console.log(sessionStorage.getItem('kolor'))
-                   console.log(sessionStorage.getItem('grubosc'))
-                   console.log(sessionStorage.getItem('typ'))
+                  
                    this.setState({
                        isLoading: false
                    })
@@ -125,10 +121,10 @@ export class SavedPrint extends Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json);
+               
                 this.props.history.push('/home')
             })
-        console.log(receiver)
+       
     }
 
 
@@ -144,9 +140,16 @@ export class SavedPrint extends Component {
         let href2 = "https://inzcgc.blob.core.windows.net/cgc/" + sessionStorage.getItem('login') + "_" + sessionStorage.getItem('orderId2') + "_" + sessionStorage.getItem('kolor') + "_" + sessionStorage.getItem('typ') + "_" + sessionStorage.getItem('grubosc') +  ".pdf"
         if (sessionStorage.getItem('valid') === '') {
             return (
+                <div>
+                    <div className="phone">
+                        <h1>No access on the phone</h1>
+                    </div>
+                    <div className="aaaaaaaa" >
                 <div className="HomePageFail">
                     <h1>Log in to have access!</h1>
                     <button type="submit" className="success_login2" onClick={this.goback} >Log in</button>
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -155,32 +158,48 @@ export class SavedPrint extends Component {
             if (sessionStorage.getItem('sevedprojectstatus') === "Saved") {
                 if (this.state.isLoading === true) {
                     return (
+                        <div>
+                            <div className="phone">
+                                <h1>No access on the phone</h1>
+                            </div>
+                            <div className="aaaaaaaa" >
                         <div className="Loading">
                             <ClipLoader loading={this.state.isLoading} size={150} />
                             <h1>Loading...</h1>
+                                </div>
+                            </div>
                         </div>
                     )
                 }
                 else {
                     return (
+                        <div>
+                            <div className="phone">
+                                <h1>No access on the phone</h1>
+                            </div>
+                            <div className="aaaaaaaa" >
                         <div >
                             <Sidebar />
                             <div className="title">
                                 <h1 className="titletext">Cut project</h1>
                             </div>
-
+                            <div className="saveprintbody">
                             <h3>{sessionStorage.getItem('uncat')}</h3>
                             <div className="table2">
                                 <h2>Glasses</h2>
                                 <GlassTableProject />
+                                <div>
+                                    <button className="success_test" onClick={this.cutOrder}>Cut</button>
+                                    <a href={href2} download><button className="success_test" /*onClick={this.generator} */>Generate PDF </button></a>
+                                </div>
                             </div>
                             <div className="table3">
                                 <h2>Products</h2>
                                 <ItemsTable />
-                                <img src={href} />
-                                <div>
-                                    <button className="success_test" onClick={this.cutOrder}>Cut</button>
-                                    <a href={href2} download><button className="success_test" /*onClick={this.generator} */>Generate PDF </button></a>
+                                <img className="printjpg" src={href} />
+                                
+                                </div>
+                            </div>
                                 </div>
                             </div>
                         </div>
@@ -190,20 +209,32 @@ export class SavedPrint extends Component {
             else {
                 if (this.state.isLoading === true) {
                     return (
+                        <div>
+                            <div className="phone">
+                                <h1>No access on the phone</h1>
+                            </div>
+                            <div className="aaaaaaaa" >
                         <div className="Loading">
                             <ClipLoader loading={this.state.isLoading} size={150} />
                             <h1>Loading...</h1>
+                                </div>
+                            </div>
                         </div>
                     )
                 }
                 else {
                     return (
+                        <div>
+                            <div className="phone">
+                                <h1>No access on the phone</h1>
+                            </div>
+                            <div className="aaaaaaaa" >
                         <div >
                             <Sidebar />
                             <div className="title">
                                 <h1 className="titletext">Cut project</h1>
                             </div>
-
+                          <div className="saveprintbody">
                             <h3>{sessionStorage.getItem('uncat')}</h3>
                             <div className="table2">
                                 <h2>Glasses</h2>
@@ -217,8 +248,11 @@ export class SavedPrint extends Component {
                                     <button className="success_test" onClick={this.endOrder}>End production</button>
                                     <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
                                 </div>
-                            </div>
+                                        </div>
+                                        </div>
                         </div>
+                         </div >
+                        </div >
                     );
                 }
             }
@@ -226,15 +260,27 @@ export class SavedPrint extends Component {
         else {
             if (this.state.isLoading === true) {
                 return (
+                    <div>
+                        <div className="phone">
+                            <h1>No access on the phone</h1>
+                        </div>
+                        <div className="aaaaaaaa" >
                     <div className="Loading">
                         <ClipLoader loading={this.state.isLoading} size={150} />
                         <h1>Loading...</h1>
-                    </div>
+                            </div>
+                        </div >
+                    </div >
                 )
             }
             else {
 
                 return (
+                    <div>
+                        <div className="phone">
+                            <h1>No access on the phone</h1>
+                        </div>
+                        <div className="aaaaaaaa" >
                     <div >
                         <Sidebar />
                         <div className="title">
@@ -252,6 +298,8 @@ export class SavedPrint extends Component {
                             </div>
                         </div>
                     </div>
+                     </div >
+                        </div >
                 );
             }
         }

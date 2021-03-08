@@ -112,6 +112,14 @@ namespace CGC.Funkcje.UserFuncFolder
                 return temp;
             }
 
+            if(receiver.perm == "superAdmin")
+            {
+                user.Super_Admin = true;
+            }else if(receiver.perm == "admin")
+            {
+                user.Admin = true;
+            }
+
             user.Id = userBaseReturn.GetUsers(admin.Company).OrderByDescending(x=> x.Id).First().Id;
 
             foreach (User use in userBaseReturn.GetUser(admin.Login, false, admin.Company))

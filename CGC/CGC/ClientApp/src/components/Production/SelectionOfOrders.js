@@ -22,9 +22,7 @@ export class SelectionOfOrders extends Component {
     }
     componentDidMount() {
         var table2 = [];
-        console.log('start')
-        console.log(new Date())
-        console.log(this.state.isLoading)
+       
         const receiver = {
             user: {
                 company: sessionStorage.getItem('company'),
@@ -77,12 +75,6 @@ export class SelectionOfOrders extends Component {
                                 sort: 'asc',
                                 width: 150
                             },
-                            {
-                                label: 'X/Y/Z',
-                                field: 'x',
-                                sort: 'asc',
-                                width: 150
-                            },
 
                             {
                                 label: 'Priority',
@@ -112,12 +104,11 @@ export class SelectionOfOrders extends Component {
                     },
 
                 });
-                console.log('koniec')
-                console.log(new Date())
+               // console.log('koniec')
+               
                 this.setState({
                     isLoading: false
                 })
-                console.log(this.state.isLoading)
             })
     };
     chooseOrder(id) {

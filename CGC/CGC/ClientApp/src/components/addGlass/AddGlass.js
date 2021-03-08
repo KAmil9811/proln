@@ -115,8 +115,6 @@ export class AddGlass extends Component {
 
                 .then(res => res.json())
                 .then(json => {
-                    console.log('koniec')
-                    console.log(json)
                     return (json);
                     
                 })

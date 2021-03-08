@@ -37,7 +37,6 @@ export class SavedOrdersTable extends Component {
         })
             .then(res => res.json())
             .then(json => {
-               console.log(json)
                 for (var i = 0; i < json.length; i++) {
                     table2.push({
                         number: json[i].order_id,
@@ -48,7 +47,7 @@ export class SavedOrdersTable extends Component {
                         deadline: json[i].deadline,
                         items: json[i].items,
                         cut_id: json[i].cut_id,
-
+                        status: json[i].status,
                         choose: <Link to="/show_save"> <button className="success_t" id={i}
                             onClick={(e) => {
                                 //this.chooseOrder( table2[e.target.id].number);
@@ -78,6 +77,9 @@ export class SavedOrdersTable extends Component {
                                 sort: 'asc',
                                 width: 150
                             },
+                         
+
+
                             {
                                 label: 'Priority',
                                 field: 'priority',
@@ -90,12 +92,12 @@ export class SavedOrdersTable extends Component {
                                 sort: 'asc',
                                 width: 30
                             },
-                            /*{
+                            {
                                 label: 'Status',
                                 field: 'status',
                                 sort: 'asc',
                                 width: 30
-                            },*/
+                            },
                             {
                                 label: '',
                                 field: 'choose',

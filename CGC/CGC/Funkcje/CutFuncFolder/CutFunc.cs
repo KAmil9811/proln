@@ -157,6 +157,26 @@ namespace CGC.Funkcje.CutFuncFolder
                                     }
                                     if (kon == false)
                                     {
+                                        glass_Id2.Pieces.Add(new Piece { Rgb = new List<int>(), Id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) }); ;
+                                        Item iteme = new Item { Id = itm.Id };
+
+                                        Used.Add(iteme);
+                                        kon = false;
+                                        break;
+                                    }
+                                    kon = false;
+                                }
+                                else if (Convert.ToDouble(itm.Width) == Convert.ToDouble(cub.Height) && Convert.ToDouble(itm.Length) == Convert.ToDouble(cub.Width))
+                                {
+                                    foreach (Item i in Used)
+                                    {
+                                        if (i.Id == itm.Id)
+                                        {
+                                            kon = true;
+                                        }
+                                    }
+                                    if (kon == false)
+                                    {
                                         glass_Id2.Pieces.Add(new Piece { Rgb = new List<int>(), Id = itm.Id, X = Convert.ToDouble(cub.X), Y = Convert.ToDouble(cub.Y), Lenght = Convert.ToDouble(cub.Height), Widht = Convert.ToDouble(cub.Width) });
                                         Item iteme = new Item { Id = itm.Id };
 
@@ -202,7 +222,7 @@ namespace CGC.Funkcje.CutFuncFolder
             Glass tmp2 = new Glass {Glass_info = new List<Glass_Id>() };
             tmp2.Error_Messege = "Noe enough place for: ";
 
-            Glass_Id glass_Id3 = new Glass_Id();
+            Glass_Id glass_Id3 = new Glass_Id { Pieces = new List<Piece>()};
 
             foreach (Item itm in backup.Item)
             {
