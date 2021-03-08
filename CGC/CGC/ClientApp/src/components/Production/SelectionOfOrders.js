@@ -196,7 +196,10 @@ export class SelectionOfOrders extends Component {
         if (sessionStorage.getItem('valid') === '') {
             if (this.state.isLoading === true) {
                 return (
-                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div className="Loading">
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <h1>Loading...</h1>
+                    </div>
                 )
             } else {
                 return (
@@ -216,7 +219,10 @@ export class SelectionOfOrders extends Component {
         }
         else if (this.state.isLoading === true) {
                 return (
-                            <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div className="Loading">
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <h1>Loading...</h1>
+                    </div>
                 )
             }
             else {

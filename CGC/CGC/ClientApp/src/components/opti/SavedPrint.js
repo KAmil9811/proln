@@ -43,7 +43,6 @@ export class SavedPrint extends Component {
                 console.log(json)
                 
                 var table2 = []
-               // ZAKOMENTOWANE BO NIC NIE ZWRACAŁO
                sessionStorage.setItem('kolor', json[0].color)
                 sessionStorage.setItem('grubosc', json[0].hight)
                    sessionStorage.setItem('typ', json[0].type)
@@ -156,7 +155,10 @@ export class SavedPrint extends Component {
             if (sessionStorage.getItem('sevedprojectstatus') === "Saved") {
                 if (this.state.isLoading === true) {
                     return (
-                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <div className="Loading">
+                            <ClipLoader loading={this.state.isLoading} size={150} />
+                            <h1>Loading...</h1>
+                        </div>
                     )
                 }
                 else {
@@ -188,7 +190,10 @@ export class SavedPrint extends Component {
             else {
                 if (this.state.isLoading === true) {
                     return (
-                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <div className="Loading">
+                            <ClipLoader loading={this.state.isLoading} size={150} />
+                            <h1>Loading...</h1>
+                        </div>
                     )
                 }
                 else {
@@ -221,7 +226,10 @@ export class SavedPrint extends Component {
         else {
             if (this.state.isLoading === true) {
                 return (
-                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div className="Loading">
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <h1>Loading...</h1>
+                    </div>
                 )
             }
             else {

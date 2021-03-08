@@ -179,8 +179,10 @@ export class OrdersTable extends Component {
         let table = this.table();
         if (this.state.isLoading === false) {
             return (
-                <ClipLoader loading={this.state.isLoading} size={150} />
-
+                <div className="Loading">
+                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <h1>Loading...</h1>
+                </div>
 
             )
         }

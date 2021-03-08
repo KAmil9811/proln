@@ -19,7 +19,7 @@
 }
 
 .tableglass {
-    width: 96%;
+    /*width: 96%;*/
     margin-left: 2%;
 }
 
@@ -62,7 +62,7 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 6vw;
+    margin-right: 1.5rem;
     margin-left: auto;
     /* position: center;*/
     /* float: right;*/

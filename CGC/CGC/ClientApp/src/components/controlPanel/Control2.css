@@ -3,9 +3,10 @@
     transform: scale(1.05);
     outline: 0;
 }
-
+.prim_type_machine, .prim_color_glass_edit, .prim_all_user_history, .success_add_user{
+    margin-top:15px !important;
+}
 .success_add_user {
-    float: right;
     background-color: #00c851;
     height: 3rem;
     width: 12rem;
@@ -20,8 +21,6 @@
     border-top: none;
     border-left: none;
     border-right: none;
-    margin-right: 50px;
-    margin-top: 5px;
     position: center;
 }
 

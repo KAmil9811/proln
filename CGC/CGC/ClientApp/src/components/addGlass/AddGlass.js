@@ -193,7 +193,10 @@ export class AddGlass extends Component {
         else if (sessionStorage.getItem('magazineManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true'){
             if (this.state.isLoading === true) {
                 return (
-                    <ClipLoader loading={this.state.isLoading} size={150} />
+                    <div className="Loading">
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                        <h1>Loading...</h1>
+                    </div>
                 )
             }
             else {
