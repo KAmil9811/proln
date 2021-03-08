@@ -3,6 +3,7 @@ import './SavedPrint.css';
 import { ItemsTable } from '../saveProjectTables/ItemsTable'
 import { GlassTableProject } from '../saveProjectTables/glassTableProject'
 import Sidebar from '../Sidebar';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export class SavedPrint extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export class SavedPrint extends Component {
             value2: '',
             table: [],
             pieces: [],
-            glass_ids: []
+            glass_ids: [],
+            isLoading: true, 
 
         }
     }
@@ -49,6 +51,9 @@ export class SavedPrint extends Component {
                    console.log(sessionStorage.getItem('kolor'))
                    console.log(sessionStorage.getItem('grubosc'))
                    console.log(sessionStorage.getItem('typ'))
+                   this.setState({
+                       isLoading: false
+                   })
             })
     }
 
@@ -146,79 +151,101 @@ export class SavedPrint extends Component {
                 </div>
             );
         }
+        
         else if (sessionStorage.getItem('cutManagement') === 'true' || sessionStorage.getItem('superAdmin') === 'true' || sessionStorage.getItem('manager') === 'true' || sessionStorage.getItem('admin') === 'true') {
             if (sessionStorage.getItem('sevedprojectstatus') === "Saved") {
-                return (
-                    <div >
-                        <Sidebar />
-                        <div className="title">
-                            <h1 className="titletext">Cut project</h1>
-                        </div>
+                if (this.state.isLoading === true) {
+                    return (
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                    )
+                }
+                else {
+                    return (
+                        <div >
+                            <Sidebar />
+                            <div className="title">
+                                <h1 className="titletext">Cut project</h1>
+                            </div>
 
-                        <h3>{sessionStorage.getItem('uncat')}</h3>
-                        <div className="table2">
-                            <h2>Glasses</h2>
-                            <GlassTableProject />
-                        </div>
-                        <div className="table3">
-                            <h2>Products</h2>
-                            <ItemsTable />
-                            <img src={href} />
-                            <div>
-                                <button className="success_test" onClick={this.cutOrder}>Cut</button>
-                                <a href={href2} download><button className="success_test" /*onClick={this.generator} */>Generate PDF </button></a>
+                            <h3>{sessionStorage.getItem('uncat')}</h3>
+                            <div className="table2">
+                                <h2>Glasses</h2>
+                                <GlassTableProject />
+                            </div>
+                            <div className="table3">
+                                <h2>Products</h2>
+                                <ItemsTable />
+                                <img src={href} />
+                                <div>
+                                    <button className="success_test" onClick={this.cutOrder}>Cut</button>
+                                    <a href={href2} download><button className="success_test" /*onClick={this.generator} */>Generate PDF </button></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
+                    );
+                }
             }
             else {
-                return (
-                    <div >
-                        <Sidebar />
-                        <div className="title">
-                            <h1 className="titletext">Cut project</h1>
-                        </div>
+                if (this.state.isLoading === true) {
+                    return (
+                        <ClipLoader loading={this.state.isLoading} size={150} />
+                    )
+                }
+                else {
+                    return (
+                        <div >
+                            <Sidebar />
+                            <div className="title">
+                                <h1 className="titletext">Cut project</h1>
+                            </div>
 
-                        <h3>{sessionStorage.getItem('uncat')}</h3>
-                        <div className="table2">
-                            <h2>Glasses</h2>
-                            <GlassTableProject />
-                        </div>
-                        <div className="table3">
-                            <h2>Products</h2>
-                            <ItemsTable />
-                            <img src={href} />
-                            <div>
-                                <button className="success_test" onClick={this.endOrder}>End production</button>
-                                <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                            <h3>{sessionStorage.getItem('uncat')}</h3>
+                            <div className="table2">
+                                <h2>Glasses</h2>
+                                <GlassTableProject />
+                            </div>
+                            <div className="table3">
+                                <h2>Products</h2>
+                                <ItemsTable />
+                                <img src={href} />
+                                <div>
+                                    <button className="success_test" onClick={this.endOrder}>End production</button>
+                                    <a href={href2} download><button className="success_test" onClick={this.generator} >Generate PDF </button></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
+                    );
+                }
             }
         }
         else {
+            if (this.state.isLoading === true) {
+                return (
+                    <ClipLoader loading={this.state.isLoading} size={150} />
+                )
+            }
+            else {
 
-            return (
-                <div >
-                    <Sidebar />
-                    <div className="title">
-                        <h1 className="titletext">Cut project</h1>
-                    </div>
-                    <div className="test_c">
-                        <h3>{sessionStorage.getItem('uncat')}</h3>
-                        <div className="table2">
-                            <h2>Glasses</h2>
-                            <GlassTableProject />
+                return (
+                    <div >
+                        <Sidebar />
+                        <div className="title">
+                            <h1 className="titletext">Cut project</h1>
                         </div>
-                        <div className="table3">
-                            <h2>Products</h2>
-                            <ItemsTable />
+                        <div className="test_c">
+                            <h3>{sessionStorage.getItem('uncat')}</h3>
+                            <div className="table2">
+                                <h2>Glasses</h2>
+                                <GlassTableProject />
+                            </div>
+                            <div className="table3">
+                                <h2>Products</h2>
+                                <ItemsTable />
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
+                );
+            }
         }
        
     }

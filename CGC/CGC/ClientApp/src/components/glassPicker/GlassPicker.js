@@ -242,7 +242,7 @@ export class GlassPicker extends Component {
                     </div>
                     <div className="Glass_Picker_c">
                     
-                        <button className="danger_glas_magazine" onClick={this.pick}> Pick selected </button>
+                        <button className="success_glass_p " onClick={this.pick}> Pick selected </button>
                     
                         { xd }
                     </div>

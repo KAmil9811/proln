@@ -32,7 +32,10 @@ export class AddOrderOne extends Component {
             deadline: this.refs.deadline.value,
         }
         if (this.refs.client.value === "" || this.refs.priority.value === "" || this.refs.deadline.value === "") {
-            alert("Uzupełnij dane")
+            alert("Complete the data")
+        }
+        else if (this.refs.priority.value >=6) {
+            alert("Prioryt incorrect")
         }
         else {
         sessionStorage.setItem('client', order.client)

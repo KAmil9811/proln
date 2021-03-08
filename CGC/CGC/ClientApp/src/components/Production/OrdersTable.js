@@ -3,6 +3,7 @@ import { MDBDataTable } from 'mdbreact';
 import { MDBDataTableV5 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 export class OrdersTable extends Component {
@@ -11,7 +12,8 @@ export class OrdersTable extends Component {
         this.state = {
             table: {
                 columns: [],
-                rows: []
+                rows: [],
+                isLoading: false, 
             },
         };
     }
@@ -106,8 +108,10 @@ export class OrdersTable extends Component {
                             }
                         ],
                         rows: table2
-                    }
+                    },
+                    
                 });
+                sessionStorage.setItem('loading', true)
             })
     };
 
@@ -173,12 +177,22 @@ export class OrdersTable extends Component {
 
     render() {
         let table = this.table();
-        return (
+        if (this.state.isLoading === false) {
+            return (
+                <ClipLoader loading={this.state.isLoading} size={150} />
+
+
+            )
+        }
+        else {
+            return (
 
             <div>
                 {table}
             </div>
         )
+        }
+        
     }
 
 }
